@@ -1,0 +1,37 @@
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Nav from "./components/Nav";
+import Main from "./Pages/Main/Main";
+import PackageDetail from "./Pages/ProductDetail/PackageDetail/PackageDetail";
+import IndividualDetail from "./Pages/ProductDetail/IndividualDetail/IndividualDetail";
+import LoginKakao from "./Pages/Login/LoginKakao";
+import FormList from "./Pages/Form/FormList/FormList";
+import CafeInputForm from "./Pages/Form/FormInput/CafeInputForm";
+import CakeInputForm from "./Pages/Form/FormInput/CakeInputForm";
+import PackageInputForm from "./Pages/Form/FormInput/PackageInputForm";
+import FormDetail from "./Pages/Form/FormDetail/FormDetail";
+import AdminPage from "./Pages/AdminPage/AdminPage";
+import Footer from "./components/Footer";
+
+function Router() {
+  return (
+    <BrowserRouter>
+      <Nav />
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/packagedetail" element={<PackageDetail />} />
+        <Route path="/individualdetail" element={<IndividualDetail />} />
+        <Route path="/loginkakao" element={<LoginKakao />} />
+        <Route path="/formlist" element={<FormList />} />
+        <Route path="/cafeinputform" element={<CafeInputForm />} />
+        <Route path="/cakeinputform" element={<CakeInputForm />} />
+        <Route path="/packageinputform" element={<PackageInputForm />} />
+        <Route path="/formdetail" element={<FormDetail />} />
+        <Route path="/adminpage" element={<AdminPage />} />
+      </Routes>
+      <Footer />
+    </BrowserRouter>
+  );
+}
+
+export default Router;
