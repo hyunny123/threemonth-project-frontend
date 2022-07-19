@@ -1,0 +1,92 @@
+export const INNER_GRID = [
+  {
+    id: 1,
+    className: "더블 초코 까눌레",
+    src: "./images/main/list/list-c-06.png",
+    price: 3500,
+  },
+  {
+    id: 2,
+    className: "까눌레",
+    src: "./images/main/list/list-c-07.png",
+    price: 4000,
+  },
+  {
+    id: 3,
+    className: "플레인 휘낭시에",
+    src: "./images/main/list/list-f-01.png",
+    price: 2200,
+  },
+  {
+    id: 4,
+    className: "헤이즐넛 휘낭시에",
+    src: "./images/main/list/list-f-02.png",
+    price: 2300,
+  },
+  {
+    id: 5,
+    className: "초콜릿 휘낭시에",
+    src: "./images/main/list/list-f-03.png",
+    price: 2400,
+  },
+  {
+    id: 6,
+    className: "레몬 마들렌",
+    src: "./images/main/list/list-m-01.png",
+    price: 2200,
+  },
+  {
+    id: 7,
+    className: "둘세 마들렌",
+    src: "./images/main/list/list-m-02.png",
+    price: 2300,
+  },
+  {
+    id: 8,
+    className: "단호박 파운드",
+    src: "./images/main/list/list-p-01.png",
+    price: 4300,
+  },
+  {
+    id: 9,
+    className: "얼그레이 파운드",
+    src: "./images/main/list/list-p-02.png",
+    price: 4300,
+  },
+  {
+    id: 10,
+    className: "잼버터 스콘",
+    src: "./images/main/list/list-s-03.png",
+    price: 4300,
+  },
+  {
+    id: 11,
+    className: "앙버터 스콘",
+    src: "./images/main/list/list-s-01.png",
+    price: 4300,
+  },
+  {
+    id: 12,
+    className: "커러맬 스콘",
+    src: "./images/main/list/list-s-02.png",
+    price: 4000,
+  },
+  {
+    id: 13,
+    className: "플레인 스콘",
+    src: "./images/main/list/list-s-05.png",
+    price: 3500,
+  },
+  {
+    id: 14,
+    className: "바스크 치즈케이크(piece)",
+    src: "./images/main/list/list-cake-01.png",
+    price: 6000,
+  },
+  {
+    id: 15,
+    className: "바스크 치즈케이크(whole)",
+    src: "./images/main/list/list-cake-04.png",
+    price: 36000,
+  },
+];
