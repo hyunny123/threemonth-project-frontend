@@ -1,15 +1,31 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 import PackageDetailMain from "./PackageDetailMain";
 
 const PackageDetail = () => {
+  const navigate = useNavigate();
+  const [packageData, setPackageData] = useState([]);
+  useEffect(() => {
+    axios
+      .get("/data/packagedata.json")
+      .then((res) => setPackageData(res.data.result.detailImg));
+  }, []);
+
+  const goReservGiftBox = () => {
+    // 토큰으로 로그인 여부 확인 후 navigate로 이동
+    navigate("/packageinputform");
+  };
   return (
     <PackageDetailWrapper>
       <PackageDetailWidth>
-        <PackageDetailMain />
-        <DetailIndividualReservBtn>
-          기프트박스 신청하기
-        </DetailIndividualReservBtn>
+        <PackageDetailMain packageData={packageData} />
+        <DetailIndividualReservBtnWrap>
+          <DetailIndividualReservBtn onClick={goReservGiftBox}>
+            기프트박스 신청하기
+          </DetailIndividualReservBtn>
+        </DetailIndividualReservBtnWrap>
       </PackageDetailWidth>
     </PackageDetailWrapper>
   );
@@ -34,11 +50,20 @@ const PackageDetailWidth = styled.div`
   width: 85%;
 `;
 
+const DetailIndividualReservBtnWrap = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+`;
+
 const DetailIndividualReservBtn = styled.button`
+  position: sticky;
+  top: 40px;
   margin-top: 50px;
   border-style: none;
   height: 60px;
-  width: 90%;
+  width: 70%;
   border-radius: 5px;
   font-size: 18px;
   font-family: "GangwonEdu_OTFBoldA";

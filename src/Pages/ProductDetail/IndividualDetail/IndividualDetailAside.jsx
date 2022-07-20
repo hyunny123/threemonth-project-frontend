@@ -50,8 +50,8 @@ const IndividualDetailAsideP = styled.p`
 const DetailIndividualReservBtn = styled.button`
   margin-top: 50px;
   border-style: none;
-  height: 40px;
-  width: 200px;
+  height: 60px;
+  width: 70%;
   border-radius: 5px;
   font-size: 18px;
   font-family: "GangwonEdu_OTFBoldA";
