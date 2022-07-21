@@ -12,11 +12,11 @@ const GridMain = () => {
         </GridImgBox1>
         <ImgItem2 src="./images/main/grid/logo.png" />
         <GridImgBox3>
-          <ImgItem3 src="./images/main/grid/gridmain06.png" />
+          <ImgItem3 src="./images/main/grid/gridmain-about01.png" />
           <TitleItem>All Handmade </TitleItem>
         </GridImgBox3>
         <GridImgBox4>
-          <ImgItem4 src="./images/main/grid/gridmain-cake04.png" />
+          <ImgItem4 src="./images/main/grid/gridmain-cake.png" />
           <TitleItem>Cake Form</TitleItem>
         </GridImgBox4>
       </GridBox>
@@ -28,9 +28,10 @@ export default GridMain;
 
 const GridContainer = styled.div`
   width: 85%;
+  /* height: 100%; */
   margin: 0 auto;
   /* background-color: RGB(241, 230, 209); */
-  padding: 150px 0px;
+  /* padding: 150px 0px; */
 `;
 
 const GridTitle = styled.h2`
@@ -46,15 +47,16 @@ const GridBox = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, 1fr);
+  background-color: ${(props) => props.theme.bgColor};
   /* grid-gap: 5px; */
   width: 100%;
-  /* height: 600px; */
+  height: 800px;
 `;
 const GridImgBox1 = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   overflow: hidden;
   grid-column: 1/3;
   grid-row: 1/3;
@@ -87,14 +89,14 @@ const ImgItem2 = styled.img`
 `;
 const ImgItem3 = styled.img`
   width: 100%;
-  height: 100%;
+  height: 70%;
   background: #fff;
 `;
 const GridImgBox3 = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   overflow: hidden;
   grid-column: 4/4;
   grid-row: 1/3;
@@ -105,7 +107,7 @@ const GridImgBox4 = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   overflow: hidden;
   grid-column: 3/4;
   grid-row: 2/3;
@@ -114,6 +116,6 @@ const GridImgBox4 = styled.div`
 `;
 const ImgItem4 = styled.img`
   width: 100%;
-  height: 100%;
+  height: 80%;
   background: #fff;
 `;

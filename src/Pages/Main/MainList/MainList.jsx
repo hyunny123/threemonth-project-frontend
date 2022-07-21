@@ -2,17 +2,19 @@ import React, { useState } from "react";
 import { INNER_GRID } from "./MainListData";
 import styled from "styled-components";
 const MainList = () => {
-  const [listData, setListData] = useState([{ id: 0, className: "", src: "" }]);
+  const [listData, setListData] = useState([
+    { id: 0, productname: "", img_src: "" },
+  ]);
   return (
     <ListContainer>
       <ListTitle>뜨리먼뜨 List</ListTitle>
       <ListBox>
         <ListItems>
-          {INNER_GRID.map(({ id, className, src, price }) => {
+          {INNER_GRID.map(({ id, productname, img_src, price }) => {
             return (
               <ListItem key={id}>
-                <Item src={src} />
-                <ItemTitle>{className}</ItemTitle>
+                <Item src={img_src} />
+                <ItemTitle>{productname}</ItemTitle>
                 <ItemPrice>{price && price.toLocaleString()}원</ItemPrice>
               </ListItem>
             );
