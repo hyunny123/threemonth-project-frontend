@@ -1,4 +1,4 @@
-const BASE_URL = "https://localhost:3000";
+const BASE_URL = "http://15.164.163.31:8000";
 
 export const API = {
   //main
@@ -9,7 +9,8 @@ export const API = {
   INDIVIDUALDETAIL: `${BASE_URL}/individualdetail`,
 
   // login
-  LOGINKAKAO: `${BASE_URL}/loginkakao`,
+  KAKAOLOGIN: `${BASE_URL}/users/kakaologin`,
+  KAKAOLOGOUT: `${BASE_URL}/users/kakaologout`,
 
   //form data
   FORMLIST: `${BASE_URL}/formlist`,

@@ -21,7 +21,7 @@ function Router() {
         <Route path="/" element={<Main />} />
         <Route path="/packagedetail" element={<PackageDetail />} />
         <Route path="/individualdetail" element={<IndividualDetail />} />
-        <Route path="/loginkakao" element={<LoginKakao />} />
+        <Route path="/kakaologin" element={<LoginKakao />} />
         <Route path="/formlist" element={<FormList />} />
         <Route path="/cafeinputform" element={<CafeInputForm />} />
         <Route path="/cakeinputform" element={<CakeInputForm />} />
