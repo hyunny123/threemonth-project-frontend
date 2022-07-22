@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 const PackageFormDetail = () => {
+  const { name, phonenumber, date, address, contents, ispackage, remark } =
+    packageDetailForm;
   const [packageDetailForm, setPackageDetailForm] = useState({});
+  // const params = useParams();
 
   const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   fetch(`/data/packageDetailFormData.json/formdetail/${params.id}`)
+  //     .then((res) => res.json())
+  //     .then((data) => setCakeDetailForm(data));
+  // }, [params.id]);
 
   useEffect(() => {
     fetch("/data/packageDetailFormData.json")
@@ -13,8 +23,6 @@ const PackageFormDetail = () => {
       .then((data) => setPackageDetailForm(data));
   }, []);
 
-  const { name, phonenumber, date, address, contents, ispackage, remark } =
-    packageDetailForm;
   return (
     <PackageFormWrapper>
       <PackageFormWidth>

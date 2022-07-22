@@ -1,17 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 const CafeFormDetail = () => {
-  const [cafeFormDetail, setCafeFormDetail] = useState([]);
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    fetch("/data/cafeDetailFormData.json")
-      .then((res) => res.json())
-      .then((data) => setCafeFormDetail(data));
-  }, []);
   const {
     cafeinputtitle,
     cafename,
@@ -22,6 +14,23 @@ const CafeFormDetail = () => {
     description,
     remark,
   } = cafeFormDetail;
+  const [cafeFormDetail, setCafeFormDetail] = useState([]);
+  // const params = useParams();
+
+  // useEffect(() => {
+  //   fetch(`/data/cafeDetailFormData.json/formdetail/${params.id}`)
+  //     .then((res) => res.json())
+  //     .then((data) => setCakeDetailForm(data));
+  // }, [params.id]);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch("/data/cafeDetailFormData.json")
+      .then((res) => res.json())
+      .then((data) => setCafeFormDetail(data));
+  }, []);
+
   return (
     <CafeFormWrapper>
       <CafeFormWidth>

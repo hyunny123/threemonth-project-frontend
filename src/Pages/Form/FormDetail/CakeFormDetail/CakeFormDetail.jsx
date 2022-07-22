@@ -1,17 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router";
+import { useParams } from "react-router-dom";
 
-const CakeFormDetail = () => {
-  const [cakeDetailForm, setCakeDetailForm] = useState({});
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    fetch("/data/cakeDetailFormData.json")
-      .then((res) => res.json())
-      .then((data) => setCakeDetailForm(data));
-  }, []);
+const CakeFormDetail = ({}) => {
   const {
     cakeinputtitle,
     name,
@@ -21,6 +13,23 @@ const CakeFormDetail = () => {
     ordercount,
     remark,
   } = cakeDetailForm;
+  const [cakeDetailForm, setCakeDetailForm] = useState({});
+  // const params = useParams();
+
+  const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   fetch(`/data/cakeDetailFormData.json/formdetail/${params.id}`)
+  //     .then((res) => res.json())
+  //     .then((data) => setCakeDetailForm(data));
+  // }, [params.id]);
+
+  useEffect(() => {
+    fetch("/data/cakeDetailFormData.json")
+      .then((res) => res.json())
+      .then((data) => setCakeDetailForm(data));
+  }, []);
+
   return (
     <CakeFormWrapper>
       <CakeFormWidth>
