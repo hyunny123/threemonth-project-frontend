@@ -50,7 +50,7 @@ export const LIST_DATA = [
   },
   {
     id: 9,
-    className: "단호박 파운드",
+    productname: "단호박 파운드",
     img_src: "./images/main/list/단호박파운드-main-list.png",
     price: 4300,
   },
@@ -69,7 +69,7 @@ export const LIST_DATA = [
   },
   {
     id: 12,
-    className: "커러맬 스콘",
+    productname: "커러맬 스콘",
     img_src: "./images/main/list/카라멜스콘-main-list.png",
     price: 4000,
   },
