@@ -1,22 +1,60 @@
+import { IsoTwoTone } from "@mui/icons-material";
 import React from "react";
+
 import styled from "styled-components";
 
+const GridItems = [
+  {
+    id: 1,
+    img_url: "./images/main/grid/package-main-grid-package.png",
+    grid_title: "GiftBox Form",
+  },
+  {
+    id: 2,
+    img_url: "./images/main/grid/package-main-grid-logo.png",
+    grid_title: "",
+  },
+  {
+    id: 3,
+    img_url: "./images/main/grid/package-main-grid-handmade.png",
+    grid_title: "Handmade",
+  },
+  {
+    id: 4,
+    img_url: "./images/main/grid/package-main-grid-cake.png",
+    grid_title: "Cake Form",
+  },
+];
+
 const GridMain = () => {
+  // const makeQueryString =()=>{
+  //   cosnt {id,img_url, grid_title} = checkedList;
+  //   let queryString =
+  // }
+  // const CakeDetailClickHandler = () => {
+  //   navigate("/");
+  // };
   return (
     <GridContainer>
       <GridTitle>뜨리먼뜨 Form</GridTitle>
       <GridBox>
+        {/* {GridItems.map((item, idx) => (
+          <GridImgBox key={idx}>
+            <ImgItem1 src={item.img_url} />
+            <GridTitle>{item.grid_title}</GridTitle>
+          </GridImgBox>
+        ))} */}
         <GridImgBox1>
-          <ImgItem1 src="./images/main/grid/gridmain-giftSet.png" />
+          <ImgItem1 src="./images/main/grid/package-main-grid-package.png" />
           <TitleItem>Package Form</TitleItem>
         </GridImgBox1>
-        <ImgItem2 src="./images/main/grid/logo.png" />
+        <ImgItem2 src="./images/main/grid/package-main-grid-logo.png" />
         <GridImgBox3>
-          <ImgItem3 src="./images/main/grid/gridmain-about01.png" />
+          <ImgItem3 src="./images/main/grid/package-main-grid-handmade.png" />
           <TitleItem>All Handmade </TitleItem>
         </GridImgBox3>
         <GridImgBox4>
-          <ImgItem4 src="./images/main/grid/gridmain-cake.png" />
+          <ImgItem4 src="./images/main/grid/package-main-grid-cake.png" />
           <TitleItem>Cake Form</TitleItem>
         </GridImgBox4>
       </GridBox>
@@ -51,6 +89,29 @@ const GridBox = styled.div`
   /* grid-gap: 5px; */
   width: 100%;
   height: 800px;
+
+  &:nth-child(3) {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: hidden;
+    grid-column: 4/4;
+    grid-row: 1/3;
+    cursor: pointer;
+    /* border: 3px solid #331211; */
+  }
+  &:nth-child(4) {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: hidden;
+    grid-column: 3/4;
+    grid-row: 2/3;
+    cursor: pointer;
+    border: 3px solid #331211;
+  }
 `;
 const GridImgBox1 = styled.div`
   position: relative;
@@ -62,6 +123,18 @@ const GridImgBox1 = styled.div`
   grid-row: 1/3;
   cursor: pointer;
   /* border: 3px solid #331211; */
+
+  &:nth-child(2) {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: hidden;
+    grid-column: 1/3;
+    grid-row: 1/3;
+    cursor: pointer;
+    /* border: 3px solid #331211; */
+  }
 `;
 const ImgItem1 = styled.img`
   width: 100%;

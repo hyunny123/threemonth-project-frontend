@@ -2,18 +2,18 @@ import React from "react";
 import Carousel from "react-material-ui-carousel";
 // import { Paper, Button } from "@mui/material";
 
-let items = [
+const CAROUSEL_DATA = [
   {
-    imgAddress: "./images/main/carousel/main_carousel01.png",
+    img_url: "./images/main/carousel/package_main_carousel01.png",
   },
   {
-    imgAddress: "./images/main/carousel/main_carousel02.png",
+    img_url: "./images/main/carousel/package_main_carousel02.png",
   },
   {
-    imgAddress: "./images/main/carousel/main_carousel03.png",
+    img_url: "./images/main/carousel/package_main_carousel03.png",
   },
   {
-    imgAddress: "./images/main/carousel/main_carousel04.png",
+    img_url: "./images/main/carousel/package_main_carousel04.png",
   },
 ];
 
@@ -42,8 +42,9 @@ const CarouselMain = () => {
         // componentDidMount={componentDidMount}
         // updateDimensions={updateDimensions}
       >
-        {items.map((item, i) => (
+        {CAROUSEL_DATA.map((item, i) => (
           <div
+            key={i}
             style={{
               width: "100%",
               height: "auto",
@@ -52,7 +53,7 @@ const CarouselMain = () => {
             }}
           >
             <img
-              src={item.imgAddress}
+              src={item.img_url}
               style={{ width: "100%", height: "900px", marginBottom: "20px" }}
             />
           </div>

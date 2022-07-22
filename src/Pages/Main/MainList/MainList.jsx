@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { INNER_GRID } from "./MainListData";
+import { LIST_DATA } from "./MainListData";
 import styled from "styled-components";
 const MainList = () => {
   const [listData, setListData] = useState([
@@ -10,7 +10,7 @@ const MainList = () => {
       <ListTitle>뜨리먼뜨 List</ListTitle>
       <ListBox>
         <ListItems>
-          {INNER_GRID.map(({ id, productname, img_src, price }) => {
+          {LIST_DATA.map(({ id, productname, img_src, price }) => {
             return (
               <ListItem key={id}>
                 <Item src={img_src} />
