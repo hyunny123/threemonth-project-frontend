@@ -4,14 +4,30 @@ import styled from "styled-components";
 
 const FormList = () => {
   return (
-    <FormListContainer>
-      <FormListBox />
-    </FormListContainer>
+    <FormListWrapper>
+      <FormListWidth>
+        <FormListTitle>뜨리먼뜨 Form</FormListTitle>
+        <FormListBox />
+      </FormListWidth>
+    </FormListWrapper>
   );
 };
 
 export default FormList;
 
-const FormListContainer = styled.div`
+const FormListWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
+  color: ${(props) => props.theme.fontColor};
+`;
+
+const FormListWidth = styled.div`
+  margin: 80px 0;
+  width: 85%;
+`;
+
+const FormListTitle = styled.p`
+  font-size: 1.6em;
 `;
