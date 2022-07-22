@@ -8,9 +8,9 @@ const FormListBox = () => {
       <ListBox>
         <ListBoxMenu>
           <MenuNum>게시물 넘버</MenuNum>
-          <MenuSub>게시물 제목</MenuSub>
+          {/* <MenuSub>게시물 제목</MenuSub>
           <MenuDate>날짜</MenuDate>
-          <MenuWriter>작성자</MenuWriter>
+          <MenuWriter>작성자</MenuWriter> */}
         </ListBoxMenu>
         <List>
           <ListBoxTitle>돌잔치 답례품 패키지 신청</ListBoxTitle>

@@ -163,7 +163,7 @@ const CafeFormCafeName = styled.p`
   border-bottom: 1px solid #f1e6d1;
   font-size: 17px;
 `;
-const CafeFormCafeNameInput = styled.input`
+const CafeFormCafeNameInput = styled.div`
   border-style: none;
   border-bottom: 1px solid #f1e6d1;
   font-size: 17px;
