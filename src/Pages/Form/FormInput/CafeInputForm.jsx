@@ -1,30 +1,35 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { API } from "../../../config";
+import { API, USER_TOKEN } from "../../../config";
 
 const CafeInputForm = () => {
   //카페 이름, 사업자 번호, 대표 이름, 담당자 이름, 주소, 원하는 납품 제품과 수량, 비고란
 
   const [cafeForm, setCafeForm] = useState({
-    cafeinputtitle: "",
+    title: "",
     cafename: "",
-    businessnumber: "",
-    ceoname: "",
-    managername: "",
-    cafeaddress: "",
-    description: "",
-    remark: "",
+    business_number: "",
+    cafe_owner_name: "",
+    customer_name: "",
+    cafe_location: "",
+    product_explanation: "",
+    additional_explanation: "",
+    type: "cafe",
+    contact: "",
   });
+
   const { CAFEINPUT } = API;
   const {
-    cafeinputtitle,
+    title,
     cafename,
-    businessnumber,
-    ceoname,
-    managername,
-    cafeaddress,
-    description,
-    remark,
+    business_number,
+    cafe_owner_name,
+    customer_name,
+    cafe_location,
+    product_explanation,
+    additional_explanation,
+    type,
+    contact,
   } = cafeForm;
 
   const cafeFormHandleInput = (e) => {
@@ -39,15 +44,18 @@ const CafeInputForm = () => {
     e.preventDefault();
     fetch(`${CAFEINPUT}`, {
       method: "post",
+      headers: { Authorization: USER_TOKEN },
       body: {
-        cafeinputtitle,
+        title,
         cafename,
-        businessnumber,
-        ceoname,
-        managername,
-        cafeaddress,
-        description,
-        remark,
+        business_number,
+        cafe_owner_name,
+        customer_name,
+        cafe_location,
+        product_explanation,
+        additional_explanation,
+        type,
+        contact,
       },
     }).then((res) => {
       return res;
@@ -63,7 +71,7 @@ const CafeInputForm = () => {
           <CafeFormInputTitleInput
             onChange={cafeFormHandleInput}
             placeholder="글 제목을 입력해 주세요"
-            name="cafeinputtitle"
+            name="title"
             required
           />
           <CafeFormCafeName>카페 이름</CafeFormCafeName>
@@ -77,28 +85,28 @@ const CafeInputForm = () => {
           <CafeFormBusinessNumberInput
             onChange={cafeFormHandleInput}
             placeholder="사업자 번호를 입력해 주세요"
-            name="businessnumber"
+            name="business_number"
             required
           />
           <CafeFormCEOName>대표 이름</CafeFormCEOName>
           <CafeFormCEONameInput
             onChange={cafeFormHandleInput}
             placeholder="대표 이름을 입력해 주세요"
-            name="ceoname"
+            name="cafe_owner_name"
             required
           />
           <CafeFormManagerName>담당자 이름</CafeFormManagerName>
           <CafeFormManagerNameInput
             onChange={cafeFormHandleInput}
             placeholder="담당자 이름을 입력해 주세요"
-            name="managername"
+            name="customer_name"
             required
           />
           <CafeFormCafeAddress>주소</CafeFormCafeAddress>
           <CafeFormCafeAddressInput
             onChange={cafeFormHandleInput}
             placeholder="주소를 입력해 주세요"
-            name="cafeaddress"
+            name="cafe_location"
             required
           />
           <CafeFormDescription>원하는 제품과 수량</CafeFormDescription>
@@ -106,7 +114,7 @@ const CafeInputForm = () => {
           <CafeFormDescriptionInput
             onChange={cafeFormHandleInput}
             placeholder="원하는 제품과 수량을 입력해 주세요"
-            name="description"
+            name="product_explanation"
             required
           />
 
@@ -114,7 +122,7 @@ const CafeInputForm = () => {
           <CafeFormRemarkInput
             onChange={cafeFormHandleInput}
             placeholder="비고를 입력해 주세요"
-            name="remark"
+            name="additional_explanation"
             required
           />
         </CafeFormInputWrapper>

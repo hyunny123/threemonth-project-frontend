@@ -1,23 +1,33 @@
-import axios from "axios";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { API } from "../../../config";
+import { API, USER_TOKEN } from "../../../config";
 
 const PackageInputForm = () => {
   // 이름, 폰번호, 날짜, 주소, 구성품 + 수량, 포장 유무
 
   const [packageForm, setPackageForm] = useState({
-    name: "",
-    phonenumber: "",
-    date: "",
-    address: "",
+    title: "",
+    customer_name: "",
+    contact: "",
+    delivery_date: "",
+    delivery_location: "",
     contents: "",
-    ispackage: "",
-    remark: "",
+    is_packaging: "",
+    additional_explanation: "",
+    type: "package",
   });
   const { PACKAGEINPUT } = API;
-  const { name, phonenumber, date, address, contents, ispackage, remark } =
-    packageForm;
+  const {
+    title,
+    customer_name,
+    contact,
+    delivery_date,
+    delivery_location,
+    contents,
+    is_packaging,
+    additional_explanation,
+    type,
+  } = packageForm;
 
   const packageFormHandleInput = (e) => {
     const { name, value } = e.target;
@@ -29,19 +39,23 @@ const PackageInputForm = () => {
 
   const packageFormRequest = (e) => {
     e.preventDefault();
-    axios
-      .post(PACKAGEINPUT, {
-        name,
-        phonenumber,
-        date,
-        address,
+    fetch(`${PACKAGEINPUT}`, {
+      method: "post",
+      headers: { Authorization: USER_TOKEN },
+      body: {
+        title,
+        customer_name,
+        contact,
+        delivery_date,
+        delivery_location,
         contents,
-        ispackage,
-        remark,
-      })
-      .then((res) => {
-        return res;
-      });
+        is_packaging,
+        additional_explanation,
+        type,
+      },
+    }).then((res) => {
+      return res;
+    });
   };
   const minDate =
     new Date().getFullYear() +
@@ -58,14 +72,14 @@ const PackageInputForm = () => {
           <PackageFormNameInput
             placeholder="이름을 입력해 주세요"
             required
-            name="name"
+            name="customer_name"
             onChange={packageFormHandleInput}
           />
           <PackageFormPhoneNumber>전화번호</PackageFormPhoneNumber>
           <PackageFormPhoneNumberInput
             placeholder="전화번호를 입력해 주세요"
             required
-            name="phonenumber"
+            name="contact"
             onChange={packageFormHandleInput}
           />
           <PackageFormDate>날짜</PackageFormDate>
@@ -74,7 +88,7 @@ const PackageInputForm = () => {
               placeholder="날짜를 입력해 주세요"
               required
               type="date"
-              name="date"
+              name="delivery_date"
               min={minDate.toString()}
               onChange={packageFormHandleInput}
             />
@@ -83,7 +97,7 @@ const PackageInputForm = () => {
           <PackageFormAddressInput
             placeholder="주소를 입력해 주세요"
             required
-            name="address"
+            name="delivery_location"
             onChange={packageFormHandleInput}
           />
           <PackageFormDescription>구성품</PackageFormDescription>
@@ -97,13 +111,13 @@ const PackageInputForm = () => {
           <PackageFormIsPackageInput
             placeholder="포장 유무를 입력해 주세요"
             required
-            name="ispackage"
+            name="is_packaging"
             onChange={packageFormHandleInput}
           />
           <PackageFormRemark>비고</PackageFormRemark>
           <PackageFormRemarkInput
             placeholder="비고란을 입력해 주세요"
-            name="remark"
+            name="additional_explanation"
             required
             onChange={packageFormHandleInput}
           />

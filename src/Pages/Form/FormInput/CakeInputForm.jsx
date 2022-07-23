@@ -1,31 +1,34 @@
+import { CloudDoneTwoTone } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { API } from "../../../config";
+import { API, USER_TOKEN } from "../../../config";
 
 const CakeInputForm = () => {
   // 이름, 폰번호, 픽업날짜, 케이크 이름 + 수량, 비고란
 
   const [cakeForm, setCakeForm] = useState({
-    cakeinputtitle: "",
-    name: "",
-    phonenumber: "",
-    cakepickupdate: "",
-    cakename: "",
-    ordercount: "",
-    remark: "",
+    title: "",
+    customer_name: "",
+    contact: "",
+    want_pick_up_date: "",
+    product_id: 0,
+    count: "",
+    additional_explanation: "",
+    type: "cake",
   });
   const [cakeList, setCakeList] = useState([
     { id: 0, productname: "", isSeason: true },
   ]);
   const { CAKEINPUT } = API;
   const {
-    cakeinputtitle,
-    name,
-    phonenumber,
-    cakepickupdate,
-    cakename,
-    ordercount,
-    remark,
+    title,
+    customer_name,
+    contact,
+    want_pick_up_date,
+    product_id,
+    count,
+    additional_explanation,
+    type,
   } = cakeForm;
 
   useEffect(() => {
@@ -46,19 +49,21 @@ const CakeInputForm = () => {
 
   const cakeFormRequest = (e) => {
     e.preventDefault();
-    if (ordercount > 4) {
+    if (CloudDoneTwoTone > 4) {
       alert("수량을 확인해 주세요 최대 개수는 4개입니다.");
     } else {
       fetch(`${CAKEINPUT}`, {
         method: "post",
+        headers: { Authorization: USER_TOKEN },
         body: {
-          cakeinputtitle,
-          name,
-          phonenumber,
-          cakepickupdate,
-          cakename,
-          ordercount,
-          remark,
+          title,
+          customer_name,
+          contact,
+          want_pick_up_date,
+          product_id,
+          count,
+          additional_explanation,
+          type,
         },
       }).then((res) => {
         return res;
@@ -84,21 +89,21 @@ const CakeInputForm = () => {
             placeholder="제목을 입력해 주세요"
             onChange={cakeFormHandleInput}
             required
-            name="cakeinputtitle"
+            name="title"
           />
           <CakeFormName>이름</CakeFormName>
           <CakeFormNameInput
             placeholder="이름을 입력해 주세요"
             onChange={cakeFormHandleInput}
             required
-            name="name"
+            name="customer_name"
           />
           <CakeFormPhoneNumber>폰번호</CakeFormPhoneNumber>
           <CakeFormPhoneNumberInput
             placeholder="핸드폰 번호를 입력해 주세요"
             onChange={cakeFormHandleInput}
             required
-            name="phonenumber"
+            name="contact"
           />
           <CakeFormPickUpDate>픽업날짜</CakeFormPickUpDate>
           <CakeFormPickUpDateInput
@@ -107,7 +112,7 @@ const CakeInputForm = () => {
             placeholder="픽업 날짜를 선택해 주세요"
             onChange={cakeFormHandleInput}
             required
-            name="cakepickupdate"
+            name="want_pick_up_date"
             min={minDate}
           />
           <CakeFormCakeName>케이크이름 및 수량</CakeFormCakeName>
@@ -117,9 +122,9 @@ const CakeInputForm = () => {
                 <CakeFormCakeNameInput
                   type="radio"
                   onChange={cakeFormHandleInput}
-                  value={list.productname}
+                  value={list.id}
                   required
-                  name="cakename"
+                  name="product_id"
                 />
                 <SelectLabel htmlFor={list.productname}>
                   {list.productname}
@@ -130,7 +135,7 @@ const CakeInputForm = () => {
                   type="number"
                   max="4"
                   min="0"
-                  name="ordercount"
+                  name="count"
                 />
               </CakeFormCakeNameWrap>
             ))}
@@ -140,7 +145,7 @@ const CakeInputForm = () => {
             placeholder="비고를 입력해 주세요"
             onChange={cakeFormHandleInput}
             required
-            name="remark"
+            name="additional_explanation"
           />
         </CakeFormInputWrapper>
         <CakeFormBtn onClick={cakeFormRequest}>신청하기</CakeFormBtn>
