@@ -10,6 +10,7 @@ const FormListBox = () => {
       title: "",
       createDate: "",
       writer: "",
+      isChecked: false,
     },
   ]);
 
@@ -33,9 +34,8 @@ const FormListBox = () => {
     .reverse();
 
   const userToken = localStorage.getItem("token");
-  const { id } = formList;
 
-  const goFormDetail = () => {
+  const goFormDetail = (id) => {
     fetch("url", {
       method: "post",
       headers: { Authorization: userToken },
@@ -58,14 +58,25 @@ const FormListBox = () => {
           <MenuSub>제목</MenuSub>
           <MenuDate>작성 시간</MenuDate>
           <MenuWriter>작성자</MenuWriter>
+          <MenuIsChecked>컨펌여부</MenuIsChecked>
         </ListBoxMenu>
         <List>
           {sortList.map((list, idx) => (
-            <ListBoxContents onClick={goFormDetail} key={idx}>
+            <ListBoxContents
+              onClick={() => {
+                goFormDetail(list.id);
+              }}
+              key={idx}
+            >
               <ListBoxContent>{list.id}</ListBoxContent>
               <ListBoxContent>{list.title}</ListBoxContent>
               <ListBoxContent>{list.createDate}</ListBoxContent>
               <ListBoxContent>{list.writer}님</ListBoxContent>
+              {list.isChecked ? (
+                <ListBoxContent>O</ListBoxContent>
+              ) : (
+                <ListBoxContent>X</ListBoxContent>
+              )}
             </ListBoxContents>
           ))}
         </List>
@@ -86,7 +97,7 @@ const FormListBoxWrapper = styled.div`
 const ListBoxMenu = styled.div`
   display: grid;
   align-items: end;
-  grid-template-columns: 0.4fr 2fr 0.5fr 0.5fr;
+  grid-template-columns: 0.4fr 2fr 0.5fr 0.5fr 0.5fr;
   grid-template-rows: 50px;
   box-sizing: border-box;
   padding-bottom: 20px;
@@ -101,6 +112,7 @@ const MenuNum = styled.div`
 const MenuSub = styled(MenuNum)``;
 const MenuDate = styled(MenuNum)``;
 const MenuWriter = styled(MenuNum)``;
+const MenuIsChecked = styled(MenuNum)``;
 
 const ListBox = styled.div`
   width: 100%;
@@ -117,7 +129,7 @@ const List = styled.ul`
 const ListBoxContents = styled.button`
   border-style: none;
   display: grid;
-  grid-template-columns: 0.4fr 2fr 0.5fr 0.5fr;
+  grid-template-columns: 0.4fr 2fr 0.5fr 0.5fr 0.5fr;
   width: 100%;
   background-color: white;
   font-family: "GangwonEdu_OTFBoldA";
