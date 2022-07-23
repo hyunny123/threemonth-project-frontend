@@ -1,8 +1,13 @@
 const BASE_URL = "http://15.164.163.31:8000";
 
+export const USER_TOKEN = localStorage.getItem("token");
+export const USER_NICKNAME = localStorage.getItem("nickname");
+
 export const API = {
   //main
-  MAIN: `${BASE_URL}/main`,
+  MAIN_DETAILLIST: `${BASE_URL}/products`,
+  MAIN_GRID: `${BASE_URL}/products/independentimages?page=main&place=grid`,
+  MAIN_CAROUSEL: `${BASE_URL}/products/independentimages?page=main&place=carousel`,
 
   // detailpage
   PACKAGEDETAIL: `${BASE_URL}/packagedetail`,
