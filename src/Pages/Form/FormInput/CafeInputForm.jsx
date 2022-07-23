@@ -40,26 +40,31 @@ const CafeInputForm = () => {
     });
   };
 
+  const inputConfirmCheck =
+    "한번 신청하신 내용은 컨펌 과정에서만 수정이 가능합니다. 신청하시겠습니까?";
+
   const cafeFormRequest = (e) => {
     e.preventDefault();
-    fetch(`${CAFEINPUT}`, {
-      method: "post",
-      headers: { Authorization: USER_TOKEN },
-      body: {
-        title,
-        cafename,
-        business_number,
-        cafe_owner_name,
-        customer_name,
-        cafe_location,
-        product_explanation,
-        additional_explanation,
-        type,
-        contact,
-      },
-    }).then((res) => {
-      return res;
-    });
+    if (window.confirm(`${inputConfirmCheck}`)) {
+      fetch(`${CAFEINPUT}`, {
+        method: "post",
+        headers: { Authorization: USER_TOKEN },
+        body: {
+          title,
+          cafename,
+          business_number,
+          cafe_owner_name,
+          customer_name,
+          cafe_location,
+          product_explanation,
+          additional_explanation,
+          type,
+          contact,
+        },
+      }).then((res) => {
+        return res;
+      });
+    }
   };
 
   return (
@@ -229,4 +234,5 @@ const CafeFormBtn = styled.button`
   background-color: #ecc987;
   color: #331211;
   font-weight: bold;
+  font-family: "GangwonEdu_OTFBoldA";
 `;

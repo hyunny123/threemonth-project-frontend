@@ -47,27 +47,32 @@ const CakeInputForm = () => {
     });
   };
 
+  const inputConfirmCheck =
+    "한번 신청하신 내용은 컨펌 과정에서만 수정이 가능합니다. 신청하시겠습니까?";
+
   const cakeFormRequest = (e) => {
     e.preventDefault();
-    if (CloudDoneTwoTone > 4) {
-      alert("수량을 확인해 주세요 최대 개수는 4개입니다.");
-    } else {
-      fetch(`${CAKEINPUT}`, {
-        method: "post",
-        headers: { Authorization: USER_TOKEN },
-        body: {
-          title,
-          customer_name,
-          contact,
-          want_pick_up_date,
-          product_id,
-          count,
-          additional_explanation,
-          type,
-        },
-      }).then((res) => {
-        return res;
-      });
+    if (window.confirm(`${inputConfirmCheck}`)) {
+      if (CloudDoneTwoTone > 4) {
+        alert("수량을 확인해 주세요 최대 개수는 4개입니다.");
+      } else {
+        fetch(`${CAKEINPUT}`, {
+          method: "post",
+          headers: { Authorization: USER_TOKEN },
+          body: {
+            title,
+            customer_name,
+            contact,
+            want_pick_up_date,
+            product_id,
+            count,
+            additional_explanation,
+            type,
+          },
+        }).then((res) => {
+          return res;
+        });
+      }
     }
   };
 

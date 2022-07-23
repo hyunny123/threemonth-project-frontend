@@ -36,26 +36,30 @@ const PackageInputForm = () => {
       [name]: value,
     });
   };
+  const inputConfirmCheck =
+    "한번 신청하신 내용은 컨펌 과정에서만 수정이 가능합니다. 신청하시겠습니까?";
 
   const packageFormRequest = (e) => {
     e.preventDefault();
-    fetch(`${PACKAGEINPUT}`, {
-      method: "post",
-      headers: { Authorization: USER_TOKEN },
-      body: {
-        title,
-        customer_name,
-        contact,
-        delivery_date,
-        delivery_location,
-        contents,
-        is_packaging,
-        additional_explanation,
-        type,
-      },
-    }).then((res) => {
-      return res;
-    });
+    if (window.confirm(`${inputConfirmCheck}`)) {
+      fetch(`${PACKAGEINPUT}`, {
+        method: "post",
+        headers: { Authorization: USER_TOKEN },
+        body: {
+          title,
+          customer_name,
+          contact,
+          delivery_date,
+          delivery_location,
+          contents,
+          is_packaging,
+          additional_explanation,
+          type,
+        },
+      }).then((res) => {
+        return res;
+      });
+    }
   };
   const minDate =
     new Date().getFullYear() +
@@ -173,6 +177,9 @@ const PackageFormNameInput = styled.input`
   &:focus {
     outline: none;
   }
+  &::placeholder {
+    font-family: "GangwonEdu_OTFBoldA";
+  }
 `;
 
 const PackageFormPhoneNumber = styled(PackageFormName)``;
@@ -207,6 +214,9 @@ const PackageFormRemarkInput = styled.textarea`
   &:focus {
     outline: none;
   }
+  &::placeholder {
+    font-family: "GangwonEdu_OTFBoldA";
+  }
 `;
 
 const PackageFormBtn = styled.button`
@@ -219,4 +229,5 @@ const PackageFormBtn = styled.button`
   background-color: #ecc987;
   color: #331211;
   font-weight: bold;
+  font-family: "GangwonEdu_OTFBoldA";
 `;
