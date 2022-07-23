@@ -4,30 +4,35 @@ import { API } from "../../../config";
 
 const CafeFormEdit = () => {
   const [cafeForm, setCafeForm] = useState({
-    cafeinputtitle: "",
+    title: "",
     cafename: "",
-    businessnumber: "",
-    ceoname: "",
-    managername: "",
-    cafeaddress: "",
-    description: "",
-    remark: "",
+    business_number: "",
+    cafe_owner_name: "",
+    customer_name: "",
+    cafe_location: "",
+    product_explanation: "",
+    additional_explanation: "",
+    type: "cafe",
+    contact: "",
   });
   useEffect(() => {
-    fetch("asdf")
+    fetch("/data/data.json")
       .then((res) => res.json())
-      .then((data) => setCafeForm(data.result));
+      .then((data) => setCafeForm(data.result.cafe));
   }, []);
+
   const { CAFEINPUT } = API;
   const {
-    cafeinputtitle,
+    title,
     cafename,
-    businessnumber,
-    ceoname,
-    managername,
-    cafeaddress,
-    description,
-    remark,
+    business_number,
+    cafe_owner_name,
+    customer_name,
+    cafe_location,
+    product_explanation,
+    additional_explanation,
+    type,
+    contact,
   } = cafeForm;
 
   const cafeFormHandleInput = (e) => {
@@ -42,14 +47,16 @@ const CafeFormEdit = () => {
     fetch(`${CAFEINPUT}`, {
       method: "post",
       body: {
-        cafeinputtitle,
+        title,
         cafename,
-        businessnumber,
-        ceoname,
-        managername,
-        cafeaddress,
-        description,
-        remark,
+        business_number,
+        cafe_owner_name,
+        customer_name,
+        cafe_location,
+        product_explanation,
+        additional_explanation,
+        type,
+        contact,
       },
     }).then((res) => {
       return res;
@@ -63,63 +70,63 @@ const CafeFormEdit = () => {
           <CafeFormInputTitle>글 제목</CafeFormInputTitle>
           <CafeFormInputTitleInput
             onChange={cafeFormHandleInput}
-            value=""
-            name="cafeinputtitle"
+            value={title}
+            name="title"
             required
           />
           <CafeFormCafeName>카페 이름</CafeFormCafeName>
           <CafeFormCafeNameInput
             onChange={cafeFormHandleInput}
-            value=""
+            value={cafename}
             name="cafename"
             required
           />
           <CafeFormBusinessNumber>사업자 번호</CafeFormBusinessNumber>
           <CafeFormBusinessNumberInput
             onChange={cafeFormHandleInput}
-            value=""
-            name="businessnumber"
+            value={business_number}
+            name="business_number"
             required
           />
           <CafeFormCEOName>대표 이름</CafeFormCEOName>
           <CafeFormCEONameInput
             onChange={cafeFormHandleInput}
-            value=""
-            name="ceoname"
+            value={cafe_owner_name}
+            name="cafe_owner_name"
             required
           />
           <CafeFormManagerName>담당자 이름</CafeFormManagerName>
           <CafeFormManagerNameInput
             onChange={cafeFormHandleInput}
-            value=""
-            name="managername"
+            value={customer_name}
+            name="customer_name"
             required
           />
           <CafeFormCafeAddress>주소</CafeFormCafeAddress>
           <CafeFormCafeAddressInput
             onChange={cafeFormHandleInput}
-            value=""
-            name="cafeaddress"
+            value={cafe_location}
+            name="cafe_location"
             required
           />
           <CafeFormDescription>원하는 제품과 수량</CafeFormDescription>
 
           <CafeFormDescriptionInput
             onChange={cafeFormHandleInput}
-            value=""
-            name="description"
+            value={product_explanation}
+            name="product_explanation"
             required
           />
 
           <CafeFormRemark>비고</CafeFormRemark>
           <CafeFormRemarkInput
             onChange={cafeFormHandleInput}
-            value=""
-            name="remark"
+            value={additional_explanation}
+            name="additional_explanation"
             required
           />
         </CafeFormInputWrapper>
-        <CafeFormBtn onClick={cafeFormRequest}>신청하기</CafeFormBtn>
+        <CafeFormBtn onClick={cafeFormRequest}>수정하기</CafeFormBtn>
       </CafeFormWidth>
     </CafeFormWrapper>
   );
