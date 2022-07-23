@@ -1,7 +1,8 @@
+import { ContentPasteSearchOutlined } from "@mui/icons-material";
 import React, { useState } from "react";
-import { LIST_DATA } from "./MainListData";
+// import { LIST_DATA } from "./MainListData";
 import styled from "styled-components";
-const MainList = () => {
+const MainList = ({ mainList }) => {
   const [listData, setListData] = useState([
     { id: 0, productname: "", img_src: "" },
   ]);
@@ -10,12 +11,14 @@ const MainList = () => {
       <ListTitle>뜨리먼뜨 List</ListTitle>
       <ListBox>
         <ListItems>
-          {LIST_DATA.map(({ id, productname, img_src, price }) => {
+          {mainList.map((item) => {
             return (
-              <ListItem key={id}>
-                <Item src={img_src} />
-                <ItemTitle>{productname}</ItemTitle>
-                <ItemPrice>{price && price.toLocaleString()}원</ItemPrice>
+              <ListItem key={item.id}>
+                <Item src={item.main_list_img_src} />
+                <ItemTitle>{item.product_name}</ItemTitle>
+                <ItemPrice>
+                  {item.price && item.price.toLocaleString()}원
+                </ItemPrice>
               </ListItem>
             );
           })}
@@ -78,7 +81,7 @@ const ItemPrice = styled.p`
 `;
 
 const Item = styled.img`
-  width: 100%;
-  height: 70%;
+  width: 200px;
+  height: 100px;
   border-radius: 5px;
 `;

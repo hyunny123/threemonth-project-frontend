@@ -1,32 +1,30 @@
-import { IsoTwoTone } from "@mui/icons-material";
 import React from "react";
-
 import styled from "styled-components";
 
-const GridItems = [
-  {
-    id: 1,
-    img_url: "./images/main/grid/package-main-grid-package.png",
-    grid_title: "GiftBox Form",
-  },
-  {
-    id: 2,
-    img_url: "./images/main/grid/package-main-grid-logo.png",
-    grid_title: "",
-  },
-  {
-    id: 3,
-    img_url: "./images/main/grid/package-main-grid-handmade.png",
-    grid_title: "Handmade",
-  },
-  {
-    id: 4,
-    img_url: "./images/main/grid/package-main-grid-cake.png",
-    grid_title: "Cake Form",
-  },
-];
+// const GridItems = [
+//   {
+//     id: 1,
+//     img_url: "./images/main/grid/package-main-grid-package.png",
+//     grid_title: "GiftBox Form",
+//   },
+//   {
+//     id: 2,
+//     img_url: "./images/main/grid/package-main-grid-logo.png",
+//     grid_title: "",
+//   },
+//   {
+//     id: 3,
+//     img_url: "./images/main/grid/package-main-grid-handmade.png",
+//     grid_title: "Handmade",
+//   },
+//   {
+//     id: 4,
+//     img_url: "./images/main/grid/package-main-grid-cake.png",
+//     grid_title: "Cake Form",
+//   },
+// ];
 
-const GridMain = () => {
+const GridMain = ({ gridData }) => {
   // const makeQueryString =()=>{
   //   cosnt {id,img_url, grid_title} = checkedList;
   //   let queryString =
@@ -34,29 +32,49 @@ const GridMain = () => {
   // const CakeDetailClickHandler = () => {
   //   navigate("/");
   // };
+
+  const packagedesfilter = [...gridData].find(
+    (v) => v.description === "package-main-grid-package"
+  );
+
+  const cakedesfilter = [...gridData].find(
+    (v) => v.description === "package-main-grid-cake"
+  );
+  const madedesfilter = [...gridData].find(
+    (v) => v.description === "package-main-grid-made"
+  );
+  const logodesfilter = [...gridData].find(
+    (v) => v.description === "package-main-grid-logo"
+  );
+  console.log(packagedesfilter);
   return (
     <GridContainer>
       <GridTitle>뜨리먼뜨 Form</GridTitle>
       <GridBox>
-        {/* {GridItems.map((item, idx) => (
-          <GridImgBox key={idx}>
-            <ImgItem1 src={item.img_url} />
-            <GridTitle>{item.grid_title}</GridTitle>
-          </GridImgBox>
-        ))} */}
-        <GridImgBox1>
-          <ImgItem1 src="./images/main/grid/package-main-grid-package.png" />
+        {gridData.map((item, idx) => (
+          <GridImgBox1 key={idx}>
+            <ImgItem1 src={item.img_src} />
+            <GridTitle>{item.description}</GridTitle>
+            <GridTitle>{packagedesfilter.description.substr(-7)}</GridTitle>
+          </GridImgBox1>
+        ))}
+        {/* <GridImgBox1>
+          <ImgItem1 src={packagedesfilter.img_src} />
+
           <TitleItem>Package Form</TitleItem>
         </GridImgBox1>
-        <ImgItem2 src="./images/main/grid/package-main-grid-logo.png" />
+        <ImgItem2 src={logodesfilter.img_src} />
+
         <GridImgBox3>
-          <ImgItem3 src="./images/main/grid/package-main-grid-handmade.png" />
+          <ImgItem3 src={madedesfilter.img_src} />
+
           <TitleItem>All Handmade </TitleItem>
         </GridImgBox3>
         <GridImgBox4>
-          <ImgItem4 src="./images/main/grid/package-main-grid-cake.png" />
+          <ImgItem4 src={cakedesfilter.img_src} />
+
           <TitleItem>Cake Form</TitleItem>
-        </GridImgBox4>
+        </GridImgBox4> */}
       </GridBox>
     </GridContainer>
   );
@@ -89,57 +107,31 @@ const GridBox = styled.div`
   /* grid-gap: 5px; */
   width: 100%;
   height: 800px;
-
-  &:nth-child(3) {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    overflow: hidden;
-    grid-column: 4/4;
-    grid-row: 1/3;
-    cursor: pointer;
-    /* border: 3px solid #331211; */
-  }
-  &:nth-child(4) {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    overflow: hidden;
-    grid-column: 3/4;
-    grid-row: 2/3;
-    cursor: pointer;
-    border: 3px solid #331211;
-  }
 `;
+
 const GridImgBox1 = styled.div`
+  /* 케이크 */
   position: relative;
   display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: flex-start;
   overflow: hidden;
-  grid-column: 1/3;
-  grid-row: 1/3;
+  grid-column: 3/4;
+  grid-row: 2/3;
   cursor: pointer;
   /* border: 3px solid #331211; */
-
-  &:nth-child(2) {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    overflow: hidden;
-    grid-column: 1/3;
-    grid-row: 1/3;
-    cursor: pointer;
-    /* border: 3px solid #331211; */
-  }
 `;
 const ImgItem1 = styled.img`
   width: 100%;
   height: 100%;
   background: #fff;
+
+  &:nth-child(4) {
+    width: 100%;
+    height: 80%;
+    background: #fff;
+  }
 `;
 const TitleItem = styled.h3`
   position: absolute;
