@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
+import { USER_TOKEN } from "../../../config";
+import { LOGIN_URI } from "../../Login/AuthData";
 import PackageDetailMain from "./PackageDetailMain";
 
 const PackageDetail = () => {
@@ -14,8 +16,15 @@ const PackageDetail = () => {
   }, []);
 
   const goReservGiftBox = () => {
-    // 토큰으로 로그인 여부 확인 후 navigate로 이동
-    navigate("/packageinputform");
+    if (USER_TOKEN) {
+      navigate("/packageinputform");
+    } else {
+      if (
+        window.confirm("로그인이 필요한 서비스입니다. 로그인 하시겠습니까?")
+      ) {
+        window.location = `${LOGIN_URI}`;
+      }
+    }
   };
   return (
     <PackageDetailWrapper>

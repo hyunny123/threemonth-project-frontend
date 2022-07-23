@@ -19,7 +19,7 @@ const IndividualDetail = () => {
 
   useEffect(() => {
     axios
-      .get("/data/data.json")
+      .get("/data/individualdata.json")
       .then((res) => setIndividualData(res.data.result));
   }, []);
 

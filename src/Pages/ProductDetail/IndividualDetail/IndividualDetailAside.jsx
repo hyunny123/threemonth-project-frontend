@@ -1,13 +1,23 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
+import { USER_TOKEN } from "../../../config";
+import { LOGIN_URI } from "../../Login/AuthData";
 
 const IndividualDetailAside = ({ data }) => {
   const navigate = useNavigate();
   const { productname, price, description } = data;
 
   const goInputForm = () => {
-    navigate("/cakeinputform");
+    if (USER_TOKEN) {
+      navigate("/cakeinputform");
+    } else {
+      if (
+        window.confirm("로그인이 필요한 서비스입니다. 로그인 하시겠습니까?")
+      ) {
+        window.location = `${LOGIN_URI}`;
+      }
+    }
   };
 
   return (
