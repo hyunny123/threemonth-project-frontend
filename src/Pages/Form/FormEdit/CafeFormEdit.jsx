@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { API } from "../../../config";
 
@@ -13,6 +13,11 @@ const CafeFormEdit = () => {
     description: "",
     remark: "",
   });
+  useEffect(() => {
+    fetch("asdf")
+      .then((res) => res.json())
+      .then((data) => setCafeForm(data.result));
+  }, []);
   const { CAFEINPUT } = API;
   const {
     cafeinputtitle,
@@ -53,47 +58,47 @@ const CafeFormEdit = () => {
   return (
     <CafeFormWrapper>
       <CafeFormWidth>
-        <CafeFormTitle>카페 납품 신청서</CafeFormTitle>
+        <CafeFormTitle>신청내역 수정</CafeFormTitle>
         <CafeFormInputWrapper>
           <CafeFormInputTitle>글 제목</CafeFormInputTitle>
           <CafeFormInputTitleInput
             onChange={cafeFormHandleInput}
-            placeholder="글 제목을 입력해 주세요"
+            value=""
             name="cafeinputtitle"
             required
           />
           <CafeFormCafeName>카페 이름</CafeFormCafeName>
           <CafeFormCafeNameInput
             onChange={cafeFormHandleInput}
-            placeholder="카페 이름을 입력해 주세요"
+            value=""
             name="cafename"
             required
           />
           <CafeFormBusinessNumber>사업자 번호</CafeFormBusinessNumber>
           <CafeFormBusinessNumberInput
             onChange={cafeFormHandleInput}
-            placeholder="사업자 번호를 입력해 주세요"
+            value=""
             name="businessnumber"
             required
           />
           <CafeFormCEOName>대표 이름</CafeFormCEOName>
           <CafeFormCEONameInput
             onChange={cafeFormHandleInput}
-            placeholder="대표 이름을 입력해 주세요"
+            value=""
             name="ceoname"
             required
           />
           <CafeFormManagerName>담당자 이름</CafeFormManagerName>
           <CafeFormManagerNameInput
             onChange={cafeFormHandleInput}
-            placeholder="담당자 이름을 입력해 주세요"
+            value=""
             name="managername"
             required
           />
           <CafeFormCafeAddress>주소</CafeFormCafeAddress>
           <CafeFormCafeAddressInput
             onChange={cafeFormHandleInput}
-            placeholder="주소를 입력해 주세요"
+            value=""
             name="cafeaddress"
             required
           />
@@ -101,7 +106,7 @@ const CafeFormEdit = () => {
 
           <CafeFormDescriptionInput
             onChange={cafeFormHandleInput}
-            placeholder="원하는 제품과 수량을 입력해 주세요"
+            value=""
             name="description"
             required
           />
@@ -109,7 +114,7 @@ const CafeFormEdit = () => {
           <CafeFormRemark>비고</CafeFormRemark>
           <CafeFormRemarkInput
             onChange={cafeFormHandleInput}
-            placeholder="비고를 입력해 주세요"
+            value=""
             name="remark"
             required
           />
