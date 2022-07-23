@@ -4,9 +4,9 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 const PackageFormDetail = () => {
+  const [packageDetailForm, setPackageDetailForm] = useState({});
   const { name, phonenumber, date, address, contents, ispackage, remark } =
     packageDetailForm;
-  const [packageDetailForm, setPackageDetailForm] = useState({});
   // const params = useParams();
 
   const navigate = useNavigate();
@@ -22,6 +22,7 @@ const PackageFormDetail = () => {
       .then((res) => res.json())
       .then((data) => setPackageDetailForm(data));
   }, []);
+  console.log(packageDetailForm);
 
   return (
     <PackageFormWrapper>

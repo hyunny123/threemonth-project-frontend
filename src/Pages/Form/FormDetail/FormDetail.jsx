@@ -5,6 +5,7 @@ import CakeFormDetail from "./CakeFormDetail/CakeFormDetail";
 import PackageFormDetail from "./PackageFormDetail/PackageFormDetail";
 
 const FormDetail = () => {
+  // const [detailFormData, setDetailFormData] = useState([]);
   return (
     <FormDetailContainer>
       <CafeFormDetail />

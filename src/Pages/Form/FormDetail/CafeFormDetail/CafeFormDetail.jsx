@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 const CafeFormDetail = () => {
+  const [cafeFormDetail, setCafeFormDetail] = useState([]);
   const {
     cafeinputtitle,
     cafename,
@@ -14,7 +15,6 @@ const CafeFormDetail = () => {
     description,
     remark,
   } = cafeFormDetail;
-  const [cafeFormDetail, setCafeFormDetail] = useState([]);
   // const params = useParams();
 
   // useEffect(() => {

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
 
 const CakeFormDetail = ({}) => {
+  const [cakeDetailForm, setCakeDetailForm] = useState({});
   const {
     cakeinputtitle,
     name,
@@ -13,7 +14,6 @@ const CakeFormDetail = ({}) => {
     ordercount,
     remark,
   } = cakeDetailForm;
-  const [cakeDetailForm, setCakeDetailForm] = useState({});
   // const params = useParams();
 
   const navigate = useNavigate();
