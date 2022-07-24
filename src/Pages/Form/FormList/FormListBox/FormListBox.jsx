@@ -15,7 +15,7 @@ const FormListBox = () => {
   ]);
 
   useEffect(() => {
-    fetch("/data/data.json", { method: "get" })
+    fetch("/data/formlistdata.json", { method: "get" })
       .then((res) => res.json())
       .then((data) => {
         setFormList(data.result);
