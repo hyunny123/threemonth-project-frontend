@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
+import Loading from "../../../../components/Loading";
 
 const FormListBox = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const FormListBox = () => {
   ]);
 
   useEffect(() => {
-    fetch("/data/data.json", { method: "get" })
+    fetch("/data/formlistdata.json?offset=10&limit=0")
       .then((res) => res.json())
       .then((data) => {
         setFormList(data.result);
@@ -50,6 +51,10 @@ const FormListBox = () => {
       }
     });
   };
+
+  if (formList[0].title === "") {
+    return <Loading />;
+  }
   return (
     <FormListBoxWrapper>
       <ListBox>
@@ -72,10 +77,12 @@ const FormListBox = () => {
               <ListBoxContent>{list.title}</ListBoxContent>
               <ListBoxContent>{list.createDate}</ListBoxContent>
               <ListBoxContent>{list.writer}님</ListBoxContent>
-              {list.isChecked ? (
-                <ListBoxContent>O</ListBoxContent>
+              {list.isChecked === "신청완료" ? (
+                <ListBoxContentCheck props={list.isChecked}>
+                  신청완료
+                </ListBoxContentCheck>
               ) : (
-                <ListBoxContent>X</ListBoxContent>
+                <ListBoxContentCheck>컨펌완료</ListBoxContentCheck>
               )}
             </ListBoxContents>
           ))}
@@ -143,4 +150,8 @@ const ListBoxContent = styled.div`
   &:nth-child(2) {
     justify-content: flex-start;
   }
+`;
+
+const ListBoxContentCheck = styled(ListBoxContent)`
+  color: ${(props) => (props.props === "신청완료" ? "black" : "green")};
 `;
