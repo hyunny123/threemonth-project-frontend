@@ -1,7 +1,7 @@
-import { CloudDoneTwoTone } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { API, USER_TOKEN } from "../../../config";
+import Loading from "../../../components/Loading";
 
 const CakeInputForm = () => {
   // 이름, 폰번호, 픽업날짜, 케이크 이름 + 수량, 비고란
@@ -17,8 +17,9 @@ const CakeInputForm = () => {
     type: "cake",
   });
   const [cakeList, setCakeList] = useState([
-    { id: 0, productname: "", isSeason: true },
+    { product_id: 0, product_name: "", isSeason: true },
   ]);
+
   const { CAKEINPUT } = API;
   const {
     title,
@@ -32,9 +33,9 @@ const CakeInputForm = () => {
   } = cakeForm;
 
   useEffect(() => {
-    fetch("/data/data.json", { method: "get" })
+    fetch("/data/inputformdata.json")
       .then((res) => res.json())
-      .then((res) => setCakeList(res.result));
+      .then((res) => setCakeList(res.result.cake));
   }, []);
 
   const cakeFilter = cakeList.filter((x) => x.isSeason === true);
@@ -47,42 +48,52 @@ const CakeInputForm = () => {
     });
   };
 
+  const minDate = new Date(
+    new Date().getTime() - new Date().getTimezoneOffset() * 60000
+  )
+    .toISOString()
+    .slice(0, 10);
+
+  const countDays =
+    (new Date(want_pick_up_date).getTime() - new Date(minDate).getTime()) /
+    (1000 * 3600 * 24);
+
   const inputConfirmCheck =
     "한번 신청하신 내용은 컨펌 과정에서만 수정이 가능합니다. 신청하시겠습니까?";
 
   const cakeFormRequest = (e) => {
     e.preventDefault();
     if (window.confirm(`${inputConfirmCheck}`)) {
-      if (CloudDoneTwoTone > 4) {
+      if (count > 4) {
         alert("수량을 확인해 주세요 최대 개수는 4개입니다.");
       } else {
-        fetch(`${CAKEINPUT}`, {
-          method: "post",
-          headers: { Authorization: USER_TOKEN },
-          body: {
-            title,
-            customer_name,
-            contact,
-            want_pick_up_date,
-            product_id,
-            count,
-            additional_explanation,
-            type,
-          },
-        }).then((res) => {
-          return res;
-        });
+        if (countDays !== 0) {
+          fetch(`${CAKEINPUT}`, {
+            method: "post",
+            headers: { Authorization: USER_TOKEN },
+            body: {
+              title,
+              customer_name,
+              contact,
+              want_pick_up_date,
+              product_id,
+              count,
+              additional_explanation,
+              type,
+            },
+          }).then((res) => {
+            return res;
+          });
+        } else {
+          alert("신청 일자가 너무 가깝습니다.");
+        }
       }
     }
   };
 
-  const minDate = (
-    new Date().getFullYear() +
-    "-" +
-    (new Date().getMonth() + 1) +
-    "-" +
-    new Date().getDate()
-  ).toString();
+  if (cakeList[0].product_name === "") {
+    return <Loading />;
+  }
 
   return (
     <CakeFormWrapper>
@@ -111,15 +122,17 @@ const CakeInputForm = () => {
             name="contact"
           />
           <CakeFormPickUpDate>픽업날짜</CakeFormPickUpDate>
-          <CakeFormPickUpDateInput
-            id="cakedate"
-            type="date"
-            placeholder="픽업 날짜를 선택해 주세요"
-            onChange={cakeFormHandleInput}
-            required
-            name="want_pick_up_date"
-            min={minDate}
-          />
+          <CakeFormPickUpDateDiv>
+            <CakeFormPickUpDateInput
+              id="cakedate"
+              type="date"
+              placeholder="픽업 날짜를 선택해 주세요"
+              onChange={cakeFormHandleInput}
+              required
+              name="want_pick_up_date"
+              min={minDate}
+            />
+          </CakeFormPickUpDateDiv>
           <CakeFormCakeName>케이크이름 및 수량</CakeFormCakeName>
           <SelectCake>
             {cakeFilter.map((list, idx) => (
@@ -127,12 +140,12 @@ const CakeInputForm = () => {
                 <CakeFormCakeNameInput
                   type="radio"
                   onChange={cakeFormHandleInput}
-                  value={list.id}
+                  value={list.product_id}
                   required
                   name="product_id"
                 />
-                <SelectLabel htmlFor={list.productname}>
-                  {list.productname}
+                <SelectLabel htmlFor={list.product_name}>
+                  {list.product_name}
                 </SelectLabel>
                 <CakeFormOrderCountInput
                   placeholder="수량을 입력하세요."
@@ -201,6 +214,7 @@ const CakeFormNameInput = styled.input`
   border-style: none;
   border-bottom: 1px solid #f1e6d1;
   font-size: 17px;
+  font-family: "GangwonEdu_OTFBoldA";
   &:focus {
     outline: none;
   }
@@ -211,8 +225,13 @@ const CakeFormInputTitleInput = styled(CakeFormNameInput)``;
 const CakeFormPhoneNumber = styled(CakeFormName)``;
 const CakeFormPhoneNumberInput = styled(CakeFormNameInput)``;
 const CakeFormPickUpDate = styled(CakeFormName)``;
+const CakeFormPickUpDateDiv = styled.div`
+  display: flex;
+  width: 100%;
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
+`;
 const CakeFormPickUpDateInput = styled(CakeFormNameInput)`
-  width: 200px;
+  border: none;
 `;
 const CakeFormCakeName = styled(CakeFormName)``;
 const CakeFormCakeNameInput = styled(CakeFormNameInput)`
@@ -241,6 +260,7 @@ const CakeFormRemarkInput = styled.textarea`
   rows: 1;
   font-size: 17px;
   border-bottom: 1px solid #f1e6d1;
+  font-family: "GangwonEdu_OTFBoldA";
   &:focus {
     outline: none;
   }
@@ -268,4 +288,5 @@ const CakeFormBtn = styled.button`
   background-color: #ecc987;
   color: #331211;
   font-weight: bold;
+  font-family: "GangwonEdu_OTFBoldA";
 `;

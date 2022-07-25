@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { API, USER_TOKEN } from "../../../config";
 
 const PackageInputForm = () => {
   // 이름, 폰번호, 날짜, 주소, 구성품 + 수량, 포장 유무
 
+  // const [selectList, setSelectList] = useState([]);
   const [packageForm, setPackageForm] = useState({
     title: "",
     customer_name: "",
@@ -12,6 +13,7 @@ const PackageInputForm = () => {
     delivery_date: "",
     delivery_location: "",
     contents: "",
+    count: "",
     is_packaging: "",
     additional_explanation: "",
     type: "package",
@@ -24,10 +26,17 @@ const PackageInputForm = () => {
     delivery_date,
     delivery_location,
     contents,
+    count,
     is_packaging,
     additional_explanation,
     type,
   } = packageForm;
+
+  // useEffect(() => {
+  //   fetch("asdf")
+  //     .then((res) => res.json())
+  //     .then((data) => setSelectList(data.result));
+  // }, []);
 
   const packageFormHandleInput = (e) => {
     const { name, value } = e.target;
@@ -38,35 +47,44 @@ const PackageInputForm = () => {
   };
   const inputConfirmCheck =
     "한번 신청하신 내용은 컨펌 과정에서만 수정이 가능합니다. 신청하시겠습니까?";
+  const minDate = new Date(
+    new Date().getTime() - new Date().getTimezoneOffset() * 60000
+  )
+    .toISOString()
+    .slice(0, 10);
+
+  const countDays =
+    (new Date(delivery_date).getTime() - new Date(minDate).getTime()) /
+    (1000 * 3600 * 24);
 
   const packageFormRequest = (e) => {
     e.preventDefault();
-    if (window.confirm(`${inputConfirmCheck}`)) {
-      fetch(`${PACKAGEINPUT}`, {
-        method: "post",
-        headers: { Authorization: USER_TOKEN },
-        body: {
-          title,
-          customer_name,
-          contact,
-          delivery_date,
-          delivery_location,
-          contents,
-          is_packaging,
-          additional_explanation,
-          type,
-        },
-      }).then((res) => {
-        return res;
-      });
+    if (countDays > 3) {
+      if (window.confirm(`${inputConfirmCheck}`)) {
+        fetch(`${PACKAGEINPUT}`, {
+          method: "post",
+          headers: { Authorization: USER_TOKEN },
+          body: {
+            title,
+            customer_name,
+            contact,
+            delivery_date,
+            delivery_location,
+            contents,
+            count,
+            is_packaging,
+            additional_explanation,
+            type,
+          },
+        }).then((res) => {
+          return res;
+        });
+      }
+    } else {
+      alert("날짜가 가깝습니다");
     }
   };
-  const minDate =
-    new Date().getFullYear() +
-    "-" +
-    (new Date().getMonth() + 1) +
-    "-" +
-    new Date().getDate();
+
   return (
     <PackageFormWrapper>
       <PackageFormWidth>
@@ -105,12 +123,14 @@ const PackageInputForm = () => {
             onChange={packageFormHandleInput}
           />
           <PackageFormDescription>구성품</PackageFormDescription>
-          <PackageFormDescriptionInput
-            placeholder="원하시는 구성을 입력해 주세요"
-            required
-            name="contents"
-            onChange={packageFormHandleInput}
-          />
+          <PackageFormDescriptionDiv>
+            <PackageFormDescriptionInput
+              placeholder="원하시는 구성을 입력해 주세요"
+              required
+              name="contents"
+              onChange={packageFormHandleInput}
+            />
+          </PackageFormDescriptionDiv>
           <PackageFormIsPackage>포장 유무</PackageFormIsPackage>
           <PackageFormIsPackageInput
             placeholder="포장 유무를 입력해 주세요"
@@ -200,6 +220,7 @@ const PackageFormAddress = styled(PackageFormName)``;
 const PackageFormAddressInput = styled(PackageFormNameInput)``;
 
 const PackageFormDescription = styled(PackageFormName)``;
+const PackageFormDescriptionDiv = styled.div``;
 const PackageFormDescriptionInput = styled(PackageFormNameInput)``;
 
 const PackageFormIsPackage = styled(PackageFormName)``;

@@ -1,0 +1,17 @@
+{
+  "result": {
+    "cake": [
+      {
+        "product_id": 1,
+        "product_name": "바스크 치즈 케이크",
+        "isSeason": true
+      },
+      {
+        "product_id": 2,
+        "product_name": "딸기케이크",
+        "isSeason": true
+      }
+    ],
+    "package": ["/images/packagebox.jpg"]
+  }
+}
