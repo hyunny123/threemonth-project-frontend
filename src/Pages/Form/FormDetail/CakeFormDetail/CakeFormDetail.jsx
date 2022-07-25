@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
+import styled from "styled-components";
 
 const CakeFormDetail = ({}) => {
-  const [cakeDetailForm, setCakeDetailForm] = useState({});
+  const [cakeDetailForm, setCakeDetailForm] = useState([]);
   const {
     cakeinputtitle,
     name,
@@ -14,19 +14,27 @@ const CakeFormDetail = ({}) => {
     ordercount,
     remark,
   } = cakeDetailForm;
-  // const params = useParams();
 
+  // const params = useParams();
   const navigate = useNavigate();
 
   // useEffect(() => {
   //   fetch(`/data/cakeDetailFormData.json/formdetail/${params.id}`)
-  //     .then((res) => res.json())
+  //     .then((response) => response.json())
+  //     .then((data) => setCakeDetailForm(data));
+  // }, [params.id]);
+
+  // useEffect(() => {
+  //   fetch(`/data/CakeDetailFormData.json/formdetail/${params.id}`, {
+  //     method: "DELETE",
+  //   })
+  //     .then((response) => response.json())
   //     .then((data) => setCakeDetailForm(data));
   // }, [params.id]);
 
   useEffect(() => {
     fetch("/data/cakeDetailFormData.json")
-      .then((res) => res.json())
+      .then((response) => response.json())
       .then((data) => setCakeDetailForm(data));
   }, []);
 

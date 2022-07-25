@@ -15,19 +15,31 @@ const CafeFormDetail = () => {
     description,
     remark,
   } = cafeFormDetail;
+
   // const params = useParams();
+  const navigate = useNavigate();
+
+  const goToCafeEditForm = () => {
+    navigate("/");
+  };
 
   // useEffect(() => {
-  //   fetch(`/data/cafeDetailFormData.json/formdetail/${params.id}`)
-  //     .then((res) => res.json())
-  //     .then((data) => setCakeDetailForm(data));
+  //   fetch(`/data/cafeDetailFormData.json/formDetail/${params.id}`)
+  //     .then((response) => response.json())
+  //     .then((data) => setCafeDetailForm(data));
   // }, [params.id]);
 
-  const navigate = useNavigate();
+  // useEffect(() => {
+  //   fetch(`/data/CafeDetailFormData.json/formdetail/${params.id}`, {
+  //     method: "DELETE",
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => setCafeDetailForm(data));
+  // }, [params.id]);
 
   useEffect(() => {
     fetch("/data/cafeDetailFormData.json")
-      .then((res) => res.json())
+      .then((response) => response.json())
       .then((data) => setCafeFormDetail(data));
   }, []);
 
@@ -81,7 +93,7 @@ const CafeFormDetail = () => {
           </CafeFormBtn>
 
           <CafeFormBtn>주문확인</CafeFormBtn>
-          <CafeFormUpdateBtn>수정</CafeFormUpdateBtn>
+          <CafeFormUpdateBtn onClick={goToCafeEditForm}>수정</CafeFormUpdateBtn>
           <CafeFormDeleteBtn>삭제</CafeFormDeleteBtn>
         </CafeFormBtnWrap>
       </CafeFormWidth>

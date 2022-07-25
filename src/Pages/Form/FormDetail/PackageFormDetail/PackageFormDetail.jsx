@@ -4,22 +4,30 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 const PackageFormDetail = () => {
-  const [packageDetailForm, setPackageDetailForm] = useState({});
+  const [packageDetailForm, setPackageDetailForm] = useState([]);
   const { name, phonenumber, date, address, contents, ispackage, remark } =
     packageDetailForm;
-  // const params = useParams();
 
+  // const params = useParams();
   const navigate = useNavigate();
 
   // useEffect(() => {
   //   fetch(`/data/packageDetailFormData.json/formdetail/${params.id}`)
-  //     .then((res) => res.json())
-  //     .then((data) => setCakeDetailForm(data));
+  //     .then((response) => response.json())
+  //     .then((data) => setPackageDetailForm(data));
+  // }, [params.id]);
+
+  // useEffect(() => {
+  //   fetch(`/data/packageDetailFormData.json/formdetail/${params.id}`, {
+  //     method: "DELETE",
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => setPackageDetailForm(data));
   // }, [params.id]);
 
   useEffect(() => {
     fetch("/data/packageDetailFormData.json")
-      .then((res) => res.json())
+      .then((response) => response.json())
       .then((data) => setPackageDetailForm(data));
   }, []);
   console.log(packageDetailForm);
