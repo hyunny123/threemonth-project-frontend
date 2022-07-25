@@ -101,16 +101,18 @@ const CakeFormEdit = () => {
             name="contact"
           />
           <CakeFormPickUpDate>픽업날짜</CakeFormPickUpDate>
-          <CakeFormPickUpDateInput
-            id="cakedate"
-            type="date"
-            placeholder="픽업 날짜를 선택해 주세요"
-            onChange={cakeFormHandleInput}
-            required
-            value={want_pick_up_date}
-            name="want_pick_up_date"
-            min={minDate}
-          />
+          <CakeFormPickUpDateDiv>
+            <CakeFormPickUpDateInput
+              id="cakedate"
+              type="date"
+              placeholder="픽업 날짜를 선택해 주세요"
+              onChange={cakeFormHandleInput}
+              required
+              value={want_pick_up_date}
+              name="want_pick_up_date"
+              min={minDate}
+            />
+          </CakeFormPickUpDateDiv>
           <CakeFormCakeName>케이크이름 및 수량</CakeFormCakeName>
           <SelectCake>
             <CakeFormCakeNameInput
@@ -153,7 +155,7 @@ const CakeFormWrapper = styled.div`
   align-items: center;
   min-height: 800px;
   margin: 100px 0;
-  color: #331211;
+  color: ${({ theme }) => theme.fontColor};
 `;
 const CakeFormWidth = styled.div`
   display: flex;
@@ -173,19 +175,19 @@ const CakeFormInputWrapper = styled.form`
   box-sizing: border-box;
   margin-top: 50px;
   width: 100%;
-  color: #331211;
-  border: 7px solid #f1e6d1;
+  color: ${({ theme }) => theme.fontColor};
+  border: 7px solid ${({ theme }) => theme.bgColor};
 `;
 const CakeFormName = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid #f1e6d1;
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
 `;
 const CakeFormNameInput = styled.input`
   border-style: none;
-  border-bottom: 1px solid #f1e6d1;
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
   font-family: "GangwonEdu_OTFBoldA";
   &:focus {
@@ -198,7 +200,14 @@ const CakeFormInputTitleInput = styled(CakeFormNameInput)``;
 const CakeFormPhoneNumber = styled(CakeFormName)``;
 const CakeFormPhoneNumberInput = styled(CakeFormNameInput)``;
 const CakeFormPickUpDate = styled(CakeFormName)``;
+const CakeFormPickUpDateDiv = styled.div`
+  display: flex;
+  align-itmes: center;
+  width: 100%;
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
+`;
 const CakeFormPickUpDateInput = styled(CakeFormNameInput)`
+  border: none;
   width: 200px;
 `;
 const CakeFormCakeName = styled(CakeFormName)``;
@@ -223,7 +232,7 @@ const CakeFormRemarkInput = styled.textarea`
   resize: none;
   rows: 1;
   font-size: 17px;
-  border-bottom: 1px solid #f1e6d1;
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-family: "GangwonEdu_OTFBoldA";
   &:focus {
     outline: none;
@@ -235,7 +244,7 @@ const SelectCake = styled.div`
   justify-content: flex- start;
   align-items: center;
   height: 100%;
-  border-bottom: 1px solid ${(props) => props.theme.bgColor};
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
 `;
 
 const CakeFormBtn = styled.button`
@@ -245,7 +254,8 @@ const CakeFormBtn = styled.button`
   height: 50px;
   border-radius: 10px;
   font-size: 20px;
-  background-color: #ecc987;
-  color: #331211;
+  font-family: "GangwonEdu_OTFBoldA";
+  background-color: ${({ theme }) => theme.bgColor};
+  color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
 `;

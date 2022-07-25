@@ -71,7 +71,7 @@ const CafeFormEdit = () => {
   return (
     <CafeFormWrapper>
       <CafeFormWidth>
-        <CafeFormTitle>신청내역 수정</CafeFormTitle>
+        <CafeFormTitle>납품 제휴 신청내역 수정</CafeFormTitle>
         <CafeFormInputWrapper>
           <CafeFormInputTitle>글 제목</CafeFormInputTitle>
           <CafeFormInputTitleInput
@@ -146,7 +146,7 @@ const CafeFormWrapper = styled.div`
   align-items: center;
   min-height: 800px;
   margin: 100px 0;
-  color: #331211;
+  color: ${({ theme }) => theme.fontColor};
   font-size: 17px;
 `;
 const CafeFormWidth = styled.div`
@@ -167,19 +167,19 @@ const CafeFormInputWrapper = styled.form`
   box-sizing: border-box;
   margin-top: 50px;
   width: 100%;
-  color: #331211;
-  border: 7px solid #f1e6d1;
+  color: ${({ theme }) => theme.fontColor};
+  border: 7px solid ${({ theme }) => theme.bgColor};
 `;
 const CafeFormCafeName = styled.p`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid #f1e6d1;
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
 `;
 const CafeFormCafeNameInput = styled.input`
   border-style: none;
-  border-bottom: 1px solid #f1e6d1;
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
   font-family: "GangwonEdu_OTFBoldA";
   &:focus {
@@ -208,7 +208,7 @@ const CafeFormDescription = styled(CafeFormCafeName)`
 `;
 const CafeFormDescriptionInput = styled.textarea`
   border-style: none;
-  border-bottom: 1px solid #f1e6d1;
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
   resize: none;
   grid-row: 7/9;
@@ -234,7 +234,8 @@ const CafeFormBtn = styled.button`
   height: 50px;
   border-radius: 10px;
   font-size: 20px;
-  background-color: #ecc987;
-  color: #331211;
+  background-color: ${({ theme }) => theme.bgColor};
+  color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
+  font-family: "GangwonEdu_OTFBoldA";
 `;

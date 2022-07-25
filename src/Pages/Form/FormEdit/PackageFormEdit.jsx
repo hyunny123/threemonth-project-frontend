@@ -46,7 +46,6 @@ const PackageFormEdit = () => {
   )
     .toISOString()
     .slice(0, 10);
-
   const packageEditFormRequest = (e) => {
     e.preventDefault();
     if (window.confirm("수정하시겠습니까?")) {
@@ -163,7 +162,7 @@ const PackageEditFormWrapper = styled.div`
   align-items: center;
   min-height: 800px;
   margin: 100px 0;
-  color: #331211;
+  color: ${({ theme }) => theme.fontColor};
 `;
 const PackageEditFormWidth = styled.div`
   display: flex;
@@ -183,19 +182,19 @@ const PackageEditFormInputWrapper = styled.form`
   box-sizing: border-box;
   margin-top: 50px;
   width: 100%;
-  color: #331211;
-  border: 7px solid #f1e6d1;
+  color: ${({ theme }) => theme.fontColor};
+  border: 7px solid ${({ theme }) => theme.bgColor};
 `;
 
 const PackageEditFormName = styled.p`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid #f1e6d1;
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
 `;
 const PackageEditFormNameInput = styled.input`
   border-style: none;
-  border-bottom: 1px solid #f1e6d1;
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
   font-family: "GangwonEdu_OTFBoldA";
   &:focus {
@@ -229,7 +228,7 @@ const PackageEditFormDescription = styled(PackageEditFormName)`
 const PackageEditFormDescriptionInput = styled.textarea`
   grid-row: 6/8;
   border-style: none;
-  border-bottom: 1px solid #f1e6d1;
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
   resize: none;
   font-family: "GangwonEdu_OTFBoldA";
@@ -258,8 +257,8 @@ const PackageEditFormBtn = styled.button`
   height: 50px;
   border-radius: 10px;
   font-size: 20px;
-  background-color: #ecc987;
-  color: #331211;
+  background-color: ${({ theme }) => theme.bgColor};
+  color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
   font-family: "GangwonEdu_OTFBoldA";
 `;
