@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Loading from "../../../components/Loading";
 
 // const GridItems = [
 //   {
@@ -41,24 +42,27 @@ const GridMain = ({ gridData }) => {
     (v) => v.description === "package-main-grid-cake"
   );
   const madedesfilter = [...gridData].find(
-    (v) => v.description === "package-main-grid-made"
+    (v) => v.description === "package-main-grid-handmade"
   );
   const logodesfilter = [...gridData].find(
     (v) => v.description === "package-main-grid-logo"
   );
+  if (!(packagedesfilter && cakedesfilter && madedesfilter && logodesfilter)) {
+    return <Loading />;
+  }
   console.log(packagedesfilter);
   return (
     <GridContainer>
       <GridTitle>뜨리먼뜨 Form</GridTitle>
       <GridBox>
-        {gridData.map((item, idx) => (
+        {/* {gridData.map((item, idx) => (
           <GridImgBox1 key={idx}>
             <ImgItem1 src={item.img_src} />
             <GridTitle>{item.description}</GridTitle>
             <GridTitle>{packagedesfilter.description.substr(-7)}</GridTitle>
           </GridImgBox1>
-        ))}
-        {/* <GridImgBox1>
+        ))} */}
+        <GridImgBox1>
           <ImgItem1 src={packagedesfilter.img_src} />
 
           <TitleItem>Package Form</TitleItem>
@@ -74,7 +78,7 @@ const GridMain = ({ gridData }) => {
           <ImgItem4 src={cakedesfilter.img_src} />
 
           <TitleItem>Cake Form</TitleItem>
-        </GridImgBox4> */}
+        </GridImgBox4>
       </GridBox>
     </GridContainer>
   );

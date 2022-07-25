@@ -1,49 +1,45 @@
-import React, { useState } from "react";
-// import { LIST_DATA } from "./MainListData";
+import React from "react";
 import styled from "styled-components";
 
-const MainList = ({ mainList }) => {
-  const [listData, setListData] = useState([
-    { id: 0, productname: "", img_src: "" },
-  ]);
+const MainCakeList = ({ mainCakeList }) => {
   return (
-    <ListContainer>
-      <ListTitle>뜨리먼뜨 List</ListTitle>
-      <ListBox>
-        <ListItems>
-          {mainList.map((item) => {
+    <MainCakeListContainer>
+      <CakeListTitle>뜨리먼뜨 CakeList</CakeListTitle>
+      <CakeListBox>
+        <CakeListItems>
+          {mainCakeList.map((item) => {
             return (
-              <ListItem key={item.id}>
-                <Item src={item.main_list_img_src} />
-                <ItemTitle>{item.product_name}</ItemTitle>
-                <ItemPrice>
+              <CakeListItem key={item.id}>
+                <CakeItem src={item.main_list_img_src} />
+                <CakeItemTitle>{item.product_name}</CakeItemTitle>
+                <CakeItemPrice>
                   {item.price && item.price.toLocaleString()}원
-                </ItemPrice>
-              </ListItem>
+                </CakeItemPrice>
+              </CakeListItem>
             );
           })}
-        </ListItems>
-      </ListBox>
-    </ListContainer>
+        </CakeListItems>
+      </CakeListBox>
+    </MainCakeListContainer>
   );
 };
 
-export default MainList;
+export default MainCakeList;
 
-const ListContainer = styled.div`
+const MainCakeListContainer = styled.div`
   width: 85%;
   margin: 0 auto;
   padding: 100px 0px;
 `;
-const ListTitle = styled.h2`
+
+const CakeListTitle = styled.h2`
   margin-bottom: 20px;
-  /* margin-left: 10px; */
   font-size: 3em;
   border-bottom: 3px solid #331211;
   color: #331211;
 `;
 
-const ListBox = styled.div`
+const CakeListBox = styled.div`
   width: 100%;
   display: flex;
   /* justify-content: space-around; */
@@ -53,7 +49,7 @@ const ListBox = styled.div`
   /* border-top: 3px solid #331211; */
 `;
 
-const ListItems = styled.ul`
+const CakeListItems = styled.ul`
   display: grid;
   justify-content: center;
   /* align-items: center; */
@@ -65,22 +61,22 @@ const ListItems = styled.ul`
   overflow: hidden;
   cursor: pointer;
 `;
-const ListItem = styled.li`
+const CakeListItem = styled.li`
   text-align: center;
 `;
 
-const ItemTitle = styled.h3`
+const CakeItemTitle = styled.h3`
   font-size: 20px;
   font-weight: 400;
   padding-top: 10px;
   padding-bottom: 10px;
 `;
-const ItemPrice = styled.p`
+const CakeItemPrice = styled.p`
   font-size: 20px;
   font-weight: 300;
 `;
 
-const Item = styled.img`
+const CakeItem = styled.img`
   width: 200px;
   height: 100px;
   border-radius: 5px;

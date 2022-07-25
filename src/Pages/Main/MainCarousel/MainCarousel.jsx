@@ -19,7 +19,7 @@ import Carousel from "react-material-ui-carousel";
 
 const CarouselMain = ({ carouselData }) => {
   const [heightList, setHeightList] = useState({ height: 0 });
-  console.log(heightList);
+  // console.log(heightList);
   const componentDidMount = () => {
     window.addEventListener("resize", this.updateDimensions);
     this.updateDimensions();
@@ -49,7 +49,6 @@ const CarouselMain = ({ carouselData }) => {
               width: "100%",
               height: "auto",
               margin: "0 auto",
-              paddingTop: "30px",
             }}
           >
             <img
