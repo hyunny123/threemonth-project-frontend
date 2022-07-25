@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import Loading from "../../../components/Loading";
 import { API } from "../../../config";
 
 const CafeFormEdit = () => {
-  const [cafeForm, setCafeForm] = useState({
+  const [cafeEditForm, setCafeEditForm] = useState({
     title: "",
     cafename: "",
     business_number: "",
@@ -16,9 +17,9 @@ const CafeFormEdit = () => {
     contact: "",
   });
   useEffect(() => {
-    fetch("/data/data.json")
+    fetch("/data/formeditdata.json")
       .then((res) => res.json())
-      .then((data) => setCafeForm(data.result.cafe));
+      .then((data) => setCafeEditForm(data.result.cafe));
   }, []);
 
   const { CAFEINPUT } = API;
@@ -33,35 +34,40 @@ const CafeFormEdit = () => {
     additional_explanation,
     type,
     contact,
-  } = cafeForm;
+  } = cafeEditForm;
 
   const cafeFormHandleInput = (e) => {
     const { name, value } = e.target;
-    setCafeForm({
-      ...cafeForm,
+    setCafeEditForm({
+      ...cafeEditForm,
       [name]: value,
     });
   };
   const cafeFormRequest = (e) => {
     e.preventDefault();
-    fetch(`${CAFEINPUT}`, {
-      method: "post",
-      body: {
-        title,
-        cafename,
-        business_number,
-        cafe_owner_name,
-        customer_name,
-        cafe_location,
-        product_explanation,
-        additional_explanation,
-        type,
-        contact,
-      },
-    }).then((res) => {
-      return res;
-    });
+    if (window.confirm("수정하시겠습니까?")) {
+      fetch(`${CAFEINPUT}`, {
+        method: "post",
+        body: {
+          title,
+          cafename,
+          business_number,
+          cafe_owner_name,
+          customer_name,
+          cafe_location,
+          product_explanation,
+          additional_explanation,
+          type,
+          contact,
+        },
+      }).then((res) => {
+        return res;
+      });
+    }
   };
+  if (cafeEditForm.title === "") {
+    return <Loading />;
+  }
   return (
     <CafeFormWrapper>
       <CafeFormWidth>
@@ -175,6 +181,7 @@ const CafeFormCafeNameInput = styled.input`
   border-style: none;
   border-bottom: 1px solid #f1e6d1;
   font-size: 17px;
+  font-family: "GangwonEdu_OTFBoldA";
   &:focus {
     outline: none;
   }
@@ -205,6 +212,7 @@ const CafeFormDescriptionInput = styled.textarea`
   font-size: 17px;
   resize: none;
   grid-row: 7/9;
+  font-family: "GangwonEdu_OTFBoldA";
   &:focus {
     outline: none;
   }

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import Loading from "../../../components/Loading";
 import { API, USER_TOKEN } from "../../../config";
 
 const CakeFormEdit = () => {
-  const [cakeForm, setCakeForm] = useState({
+  const [cakeEditForm, setCakeEditForm] = useState({
     title: "",
     customer_name: "",
     contact: "",
@@ -23,39 +24,41 @@ const CakeFormEdit = () => {
     count,
     additional_explanation,
     type,
-  } = cakeForm;
+  } = cakeEditForm;
 
   useEffect(() => {
-    fetch("/data/data.json", { method: "get" })
+    fetch("/data/formeditdata.json", { method: "get" })
       .then((res) => res.json())
-      .then((res) => setCakeForm(res.result.cake));
+      .then((res) => setCakeEditForm(res.result.cake));
   }, []);
   const cakeFormHandleInput = (e) => {
     const { name, value } = e.target;
-    setCakeForm({
-      ...cakeForm,
+    setCakeEditForm({
+      ...cakeEditForm,
       [name]: value,
     });
   };
 
   const cakeFormRequest = (e) => {
     e.preventDefault();
-    fetch(`${CAKEINPUT}`, {
-      method: "post",
-      headers: { Authorization: USER_TOKEN },
-      body: {
-        title,
-        customer_name,
-        contact,
-        want_pick_up_date,
-        product_id,
-        count,
-        additional_explanation,
-        type,
-      },
-    }).then((res) => {
-      return res;
-    });
+    if (window.confirm("수정하시겠습니까?")) {
+      fetch(`${CAKEINPUT}`, {
+        method: "post",
+        headers: { Authorization: USER_TOKEN },
+        body: {
+          title,
+          customer_name,
+          contact,
+          want_pick_up_date,
+          product_id,
+          count,
+          additional_explanation,
+          type,
+        },
+      }).then((res) => {
+        return res;
+      });
+    }
   };
 
   const minDate = new Date(
@@ -63,6 +66,10 @@ const CakeFormEdit = () => {
   )
     .toISOString()
     .slice(0, 10);
+
+  if (cakeEditForm.title === "") {
+    return <Loading />;
+  }
 
   return (
     <CakeFormWrapper>
@@ -109,7 +116,7 @@ const CakeFormEdit = () => {
             <CakeFormCakeNameInput
               type="radio"
               onChange={cakeFormHandleInput}
-              value={cakeForm.product_id}
+              value={cakeEditForm.product_id}
               required
               name="product_id"
             />
@@ -180,6 +187,7 @@ const CakeFormNameInput = styled.input`
   border-style: none;
   border-bottom: 1px solid #f1e6d1;
   font-size: 17px;
+  font-family: "GangwonEdu_OTFBoldA";
   &:focus {
     outline: none;
   }
@@ -196,10 +204,6 @@ const CakeFormPickUpDateInput = styled(CakeFormNameInput)`
 const CakeFormCakeName = styled(CakeFormName)``;
 const CakeFormCakeNameInput = styled(CakeFormNameInput)`
   margin-right: 20px;
-`;
-const CakeFormCakeNameWrap = styled.div`
-  display: flex;
-  width: 100%;
 `;
 const CakeFormOrderCountInput = styled(CakeFormNameInput)`
   font-size: 0.9em;
@@ -220,6 +224,7 @@ const CakeFormRemarkInput = styled.textarea`
   rows: 1;
   font-size: 17px;
   border-bottom: 1px solid #f1e6d1;
+  font-family: "GangwonEdu_OTFBoldA";
   &:focus {
     outline: none;
   }
@@ -231,10 +236,6 @@ const SelectCake = styled.div`
   align-items: center;
   height: 100%;
   border-bottom: 1px solid ${(props) => props.theme.bgColor};
-`;
-
-const SelectLabel = styled.label`
-  margin-right: 20px;
 `;
 
 const CakeFormBtn = styled.button`
