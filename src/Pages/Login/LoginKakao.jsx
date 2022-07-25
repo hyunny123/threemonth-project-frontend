@@ -44,7 +44,7 @@ const KakaoLogin = () => {
         // console.log(res);
         localStorage.setItem("token", res.jwt.access);
         localStorage.setItem("nickname", res.nickname);
-        navigate("/");
+        navigate(-1);
       });
   };
 
