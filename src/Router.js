@@ -19,14 +19,17 @@ function Router() {
       <Nav />
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/packagedetail" element={<PackageDetail />} />
-        <Route path="/individualdetail" element={<IndividualDetail />} />
+        <Route path="/packagedetail/:packageId" element={<PackageDetail />} />
+        <Route
+          path="/individualdetail/:productId"
+          element={<IndividualDetail />}
+        />
         <Route path="/kakaologin" element={<LoginKakao />} />
         <Route path="/formlist" element={<FormList />} />
         <Route path="/cafeinputform" element={<CafeInputForm />} />
         <Route path="/cakeinputform" element={<CakeInputForm />} />
         <Route path="/packageinputform" element={<PackageInputForm />} />
-        <Route path="/formdetail" element={<FormDetail />} />
+        <Route path="/formdetail/:formId" element={<FormDetail />} />
         <Route path="/adminpage" element={<AdminPage />} />
       </Routes>
       <Footer />
