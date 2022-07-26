@@ -1,45 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
-import Loading from "../../../../components/Loading";
+import { USER_TOKEN } from "../../../../config";
 
-const FormListBox = () => {
+const FormListBox = ({ sortList }) => {
   const navigate = useNavigate();
-  const [formList, setFormList] = useState([
-    {
-      id: 0,
-      title: "",
-      createDate: "",
-      writer: "",
-      isChecked: false,
-    },
-  ]);
-
-  useEffect(() => {
-    fetch("/data/formlistdata.json?offset=10&limit=0")
-      .then((res) => res.json())
-      .then((data) => {
-        setFormList(data.result);
-      });
-  }, []);
-  const sortList = [...formList]
-    .sort(function (a, b) {
-      if (a.createDate > b.createDate) {
-        return 1;
-      } else if (a.createDate < b.createDate) {
-        return -1;
-      } else {
-        return 0;
-      }
-    })
-    .reverse();
-
-  const userToken = localStorage.getItem("token");
 
   const goFormDetail = (id) => {
     fetch("url", {
       method: "post",
-      headers: { Authorization: userToken },
+      headers: { Authorization: USER_TOKEN },
       body: {
         id,
       },
@@ -52,9 +22,6 @@ const FormListBox = () => {
     });
   };
 
-  if (formList[0].title === "") {
-    return <Loading />;
-  }
   return (
     <FormListBoxWrapper>
       <ListBox>
@@ -104,7 +71,7 @@ const FormListBoxWrapper = styled.div`
 const ListBoxMenu = styled.div`
   display: grid;
   align-items: end;
-  grid-template-columns: 0.4fr 2fr 0.5fr 0.5fr 0.5fr;
+  grid-template-columns: 0.5fr 2fr 0.5fr 0.5fr 0.5fr;
   grid-template-rows: 50px;
   box-sizing: border-box;
   padding-bottom: 20px;
