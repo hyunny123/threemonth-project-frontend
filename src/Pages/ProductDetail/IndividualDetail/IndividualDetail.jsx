@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import styled from "styled-components";
+import { API } from "../../../config";
 import IndividualDetailAside from "./IndividualDetailAside";
 import IndividualDetailMain from "./IndividualDetailMain";
 
@@ -8,20 +10,20 @@ const IndividualDetail = () => {
   const [individualData, setIndividualData] = useState({
     productname: "",
     price: 0,
-    nutrition: {},
     description: "",
     productImages: {
       conventionTop: [],
       contents: [],
     },
-    origin: "",
   });
+  const { productId } = useParams();
+  const { INDIVIDUALDETAIL } = API;
 
   useEffect(() => {
-    axios
-      .get("/data/individualdata.json")
-      .then((res) => setIndividualData(res.data.result));
-  }, []);
+    fetch(`${INDIVIDUALDETAIL}/:productId`)
+      .then((res) => res.json())
+      .then((data) => setIndividualData(data));
+  }, [productId]);
 
   return (
     <IndividualDetailWrapper>
