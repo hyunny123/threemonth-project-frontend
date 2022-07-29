@@ -1,16 +1,23 @@
 import React from "react";
+import { useNavigate, useParams } from "react-router";
 import styled from "styled-components";
 
 const MainCakeList = ({ mainCakeList }) => {
+  const navigate = useNavigate();
+  const params = useParams();
+
+  const goToCakeDetail = () => {
+    navigate(`product/${params.formId}`);
+  };
   return (
-    <MainCakeListContainer>
+    <MainCakeListContainer id="cakeList">
       <CakeListTitle>뜨리먼뜨 CakeList</CakeListTitle>
       <CakeListBox>
         <CakeListItems>
           {mainCakeList.map((item) => {
             return (
-              <CakeListItem key={item.id}>
-                <CakeItem src={item.main_list_img_src} />
+              <CakeListItem onClick={goToCakeDetail} key={item.id}>
+                <CakeItem src={item.product_images[0].img_src} />
                 <CakeItemTitle>{item.product_name}</CakeItemTitle>
                 <CakeItemPrice>
                   {item.price && item.price.toLocaleString()}원
@@ -42,22 +49,17 @@ const CakeListTitle = styled.h2`
 const CakeListBox = styled.div`
   width: 100%;
   display: flex;
-  /* justify-content: space-around; */
-  /* align-items: center; */
   margin-top: 30px;
   border-bottom: 3px solid #331211;
-  /* border-top: 3px solid #331211; */
 `;
 
 const CakeListItems = styled.ul`
   display: grid;
   justify-content: center;
-  /* align-items: center; */
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(5, 1fr);
+  grid-template-rows: repeat(2, 1fr);
   grid-gap: 25px 50px;
-  /* width: 100%; */
-  /* margin: 0 auto; */
+  width: 100%;
   overflow: hidden;
   cursor: pointer;
 `;
@@ -66,10 +68,10 @@ const CakeListItem = styled.li`
 `;
 
 const CakeItemTitle = styled.h3`
-  font-size: 20px;
-  font-weight: 400;
   padding-top: 10px;
   padding-bottom: 10px;
+  font-size: 20px;
+  font-weight: 400;
 `;
 const CakeItemPrice = styled.p`
   font-size: 20px;
@@ -78,6 +80,6 @@ const CakeItemPrice = styled.p`
 
 const CakeItem = styled.img`
   width: 200px;
-  height: 100px;
+  height: 150px;
   border-radius: 5px;
 `;

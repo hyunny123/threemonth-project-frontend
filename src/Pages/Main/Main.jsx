@@ -28,7 +28,14 @@ const Main = () => {
       price: 0,
       description: null,
       optional_description: null,
-      main_list_image_src: "",
+      product_images: [
+        {
+          img_src: "",
+          id: 0,
+          description: null,
+          product: 0,
+        },
+      ],
     },
   ]);
   const [mainList, setMainList] = useState([
@@ -38,14 +45,21 @@ const Main = () => {
       price: 0,
       description: null,
       optional_description: null,
-      main_list_image_src: "",
+      product_images: [
+        {
+          img_src: "",
+          id: 0,
+          description: null,
+          product: 0,
+        },
+      ],
     },
   ]);
 
   const { MAIN_DETAILLIST, MAIN_GRID, MAIN_CAROUSEL } = API;
   // console.log(carouselData);
   // console.log(gridData);
-  // console.log(cakeList);
+  // console.log(mainCakeList);
   // console.log(mainList);
 
   useEffect(() => {
@@ -63,7 +77,7 @@ const Main = () => {
       .then((data) => setMainList(data));
   }, []);
 
-  if (!(carouselData && gridData && mainCakeList && mainList)) {
+  if (mainList.id === 0) {
     return <Loading />;
   }
 

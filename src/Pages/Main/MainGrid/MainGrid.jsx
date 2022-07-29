@@ -1,38 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 import Loading from "../../../components/Loading";
 
-// const GridItems = [
-//   {
-//     id: 1,
-//     img_url: "./images/main/grid/package-main-grid-package.png",
-//     grid_title: "GiftBox Form",
-//   },
-//   {
-//     id: 2,
-//     img_url: "./images/main/grid/package-main-grid-logo.png",
-//     grid_title: "",
-//   },
-//   {
-//     id: 3,
-//     img_url: "./images/main/grid/package-main-grid-handmade.png",
-//     grid_title: "Handmade",
-//   },
-//   {
-//     id: 4,
-//     img_url: "./images/main/grid/package-main-grid-cake.png",
-//     grid_title: "Cake Form",
-//   },
-// ];
-
 const GridMain = ({ gridData }) => {
-  // const makeQueryString =()=>{
-  //   cosnt {id,img_url, grid_title} = checkedList;
-  //   let queryString =
-  // }
-  // const CakeDetailClickHandler = () => {
-  //   navigate("/");
-  // };
+  const navigate = useNavigate();
 
   const packagedesfilter = [...gridData].find(
     (v) => v.description === "package-main-grid-package"
@@ -50,19 +22,20 @@ const GridMain = ({ gridData }) => {
   if (!(packagedesfilter && cakedesfilter && madedesfilter && logodesfilter)) {
     return <Loading />;
   }
-  console.log(packagedesfilter);
+  // console.log(packagedesfilter);
+  const goToCakeList = () => {
+    document.getElementById("cakeList").scrollIntoView(true);
+  };
+
+  const goToPackageForm = () => {
+    navigate("/packagedetail");
+  };
+
   return (
     <GridContainer>
       <GridTitle>뜨리먼뜨 Form</GridTitle>
       <GridBox>
-        {/* {gridData.map((item, idx) => (
-          <GridImgBox1 key={idx}>
-            <ImgItem1 src={item.img_src} />
-            <GridTitle>{item.description}</GridTitle>
-            <GridTitle>{packagedesfilter.description.substr(-7)}</GridTitle>
-          </GridImgBox1>
-        ))} */}
-        <GridImgBox1>
+        <GridImgBox1 onClick={goToPackageForm}>
           <ImgItem1 src={packagedesfilter.img_src} />
 
           <TitleItem>Package Form</TitleItem>
@@ -74,7 +47,7 @@ const GridMain = ({ gridData }) => {
 
           <TitleItem>All Handmade </TitleItem>
         </GridImgBox3>
-        <GridImgBox4>
+        <GridImgBox4 onClick={goToCakeList}>
           <ImgItem4 src={cakedesfilter.img_src} />
 
           <TitleItem>Cake Form</TitleItem>
@@ -88,43 +61,35 @@ export default GridMain;
 
 const GridContainer = styled.div`
   width: 85%;
-  /* height: 100%; */
   margin: 0 auto;
-  /* background-color: RGB(241, 230, 209); */
-  /* padding: 150px 0px; */
 `;
 
 const GridTitle = styled.h2`
   margin-bottom: 30px;
-  /* margin-left: 10px; */
   font-size: 3em;
   color: #331211;
   border-bottom: 3px solid #331211;
-  /* text-shadow: 3px 3px 7px; */
 `;
 
 const GridBox = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  background-color: ${(props) => props.theme.bgColor};
-  /* grid-gap: 5px; */
   width: 100%;
   height: 800px;
+  background-color: ${(props) => props.theme.bgColor};
 `;
 
 const GridImgBox1 = styled.div`
-  /* 케이크 */
   position: relative;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: flex-start;
   overflow: hidden;
-  grid-column: 3/4;
-  grid-row: 2/3;
+  grid-column: 1/3;
+  grid-row: 1/3;
   cursor: pointer;
-  /* border: 3px solid #331211; */
 `;
 const ImgItem1 = styled.img`
   width: 100%;
@@ -149,12 +114,11 @@ const ImgItem2 = styled.img`
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
   grid-column: 3/4;
+  overflow: hidden;
   width: 100%;
   height: 100%;
   background: #fff;
-  /* border: 3px solid #331211; */
 `;
 const ImgItem3 = styled.img`
   width: 100%;
@@ -169,8 +133,7 @@ const GridImgBox3 = styled.div`
   overflow: hidden;
   grid-column: 4/4;
   grid-row: 1/3;
-  cursor: pointer;
-  /* border: 3px solid #331211; */
+  /* cursor: pointer; */
 `;
 const GridImgBox4 = styled.div`
   position: relative;

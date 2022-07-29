@@ -1,11 +1,15 @@
-import React, { useState } from "react";
-// import { LIST_DATA } from "./MainListData";
+import React from "react";
+import { useNavigate, useParams } from "react-router";
 import styled from "styled-components";
 
 const MainList = ({ mainList }) => {
-  const [listData, setListData] = useState([
-    { id: 0, productname: "", img_src: "" },
-  ]);
+  const navigate = useNavigate();
+  const params = useParams();
+
+  const goToDetail = () => {
+    navigate(`/product/${params.formId}`);
+  };
+  // console.log(mainList);
   return (
     <ListContainer>
       <ListTitle>뜨리먼뜨 List</ListTitle>
@@ -13,8 +17,8 @@ const MainList = ({ mainList }) => {
         <ListItems>
           {mainList.map((item) => {
             return (
-              <ListItem key={item.id}>
-                <Item src={item.main_list_img_src} />
+              <ListItem key={item.id} onClick={goToDetail}>
+                <Item src={item.product_images[0].img_src} />
                 <ItemTitle>{item.product_name}</ItemTitle>
                 <ItemPrice>
                   {item.price && item.price.toLocaleString()}원
@@ -37,7 +41,6 @@ const ListContainer = styled.div`
 `;
 const ListTitle = styled.h2`
   margin-bottom: 20px;
-  /* margin-left: 10px; */
   font-size: 3em;
   border-bottom: 3px solid #331211;
   color: #331211;
@@ -46,22 +49,17 @@ const ListTitle = styled.h2`
 const ListBox = styled.div`
   width: 100%;
   display: flex;
-  /* justify-content: space-around; */
-  /* align-items: center; */
   margin-top: 30px;
   border-bottom: 3px solid #331211;
-  /* border-top: 3px solid #331211; */
 `;
 
 const ListItems = styled.ul`
   display: grid;
   justify-content: center;
-  /* align-items: center; */
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(5, 1fr);
   grid-gap: 25px 50px;
-  /* width: 100%; */
-  /* margin: 0 auto; */
+  width: 100%;
   overflow: hidden;
   cursor: pointer;
 `;
@@ -70,10 +68,10 @@ const ListItem = styled.li`
 `;
 
 const ItemTitle = styled.h3`
-  font-size: 20px;
-  font-weight: 400;
   padding-top: 10px;
   padding-bottom: 10px;
+  font-size: 20px;
+  font-weight: 400;
 `;
 const ItemPrice = styled.p`
   font-size: 20px;
@@ -82,6 +80,6 @@ const ItemPrice = styled.p`
 
 const Item = styled.img`
   width: 200px;
-  height: 100px;
+  height: 150px;
   border-radius: 5px;
 `;
