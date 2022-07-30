@@ -32,11 +32,11 @@ const CakeFormDetail = ({}) => {
   //     .then((data) => setCakeDetailForm(data));
   // }, [params.id]);
 
-  useEffect(() => {
-    fetch("/data/cakeDetailFormData.json")
-      .then((response) => response.json())
-      .then((data) => setCakeDetailForm(data));
-  }, []);
+  // useEffect(() => {
+  //   fetch("/data/cakeDetailFormData.json")
+  //     .then((response) => response.json())
+  //     .then((data) => setCakeDetailForm(data));
+  // }, []);
 
   return (
     <CakeFormWrapper>
@@ -216,6 +216,7 @@ const CakeFormBtn = styled.button`
   color: #331211;
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
+  cursor: pointer;
 `;
 
 const CakeFormUpdateBtn = styled.button`
@@ -230,6 +231,9 @@ const CakeFormUpdateBtn = styled.button`
   color: #331211;
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
+  cursor: pointer;
 `;
 
-const CakeFormDeleteBtn = styled(CakeFormUpdateBtn)``;
+const CakeFormDeleteBtn = styled(CakeFormUpdateBtn)`
+  cursor: pointer;
+`;

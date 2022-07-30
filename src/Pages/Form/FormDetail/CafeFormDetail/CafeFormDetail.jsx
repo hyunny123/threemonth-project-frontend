@@ -3,18 +3,36 @@ import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
-const CafeFormDetail = () => {
-  const [cafeFormDetail, setCafeFormDetail] = useState([]);
+const CafeFormDetail = ({ detailFormData }) => {
+  // const [cafeFormDetail, setCafeFormDetail] = useState([]);
+  // const {
+  //   cafeinputtitle,
+  //   cafename,
+  //   businessnumber,
+  //   ceoname,
+  //   managername,
+  //   cafeaddress,
+  //   description,
+  //   remark,
+  // } = cafeFormDetail;
+
   const {
-    cafeinputtitle,
+    addtional_explaination,
+    cafeorders,
+    contact,
+    created_at,
+    customer_name,
+    id,
+    status,
+    title,
+  } = detailFormData;
+
+  const {
+    cafe_location,
+    cafe_owner_name,
     cafename,
-    businessnumber,
-    ceoname,
-    managername,
-    cafeaddress,
-    description,
-    remark,
-  } = cafeFormDetail;
+    corporate_registration_num,
+  } = cafeorders;
 
   // const params = useParams();
   const navigate = useNavigate();
@@ -37,11 +55,11 @@ const CafeFormDetail = () => {
   //     .then((data) => setCafeDetailForm(data));
   // }, [params.id]);
 
-  useEffect(() => {
-    fetch("/data/cafeDetailFormData.json")
-      .then((response) => response.json())
-      .then((data) => setCafeFormDetail(data));
-  }, []);
+  // useEffect(() => {
+  //   fetch("/data/cafeDetailFormData.json")
+  //     .then((response) => response.json())
+  //     .then((data) => setCafeFormDetail(data));
+  // }, []);
 
   return (
     <CafeFormWrapper>
@@ -50,7 +68,7 @@ const CafeFormDetail = () => {
         <CafeFormDetailFormWrapper>
           <CafeFormInputTitle>글 제목</CafeFormInputTitle>
           <CafeFormInputTitleDetailForm name="cafeinputtitle" required>
-            {cafeinputtitle}
+            {title}
           </CafeFormInputTitleDetailForm>
           <CafeFormCafeName>카페 이름</CafeFormCafeName>
           <CafeFormCafeNameDetailForm name="cafename" required>
@@ -58,29 +76,29 @@ const CafeFormDetail = () => {
           </CafeFormCafeNameDetailForm>
           <CafeFormBusinessNumber>사업자 번호</CafeFormBusinessNumber>
           <CafeFormBusinessNumberDetailForm name="businessnumber" required>
-            {businessnumber}
+            {corporate_registration_num}
           </CafeFormBusinessNumberDetailForm>
           <CafeFormCEOName>대표 이름</CafeFormCEOName>
           <CafeFormCEONameDetailForm name="ceoname" required>
-            {ceoname}
+            {cafe_owner_name}
           </CafeFormCEONameDetailForm>
           <CafeFormManagerName>담당자 이름</CafeFormManagerName>
           <CafeFormManagerNameDetailForm name="managername" required>
-            {managername}
+            {customer_name}
           </CafeFormManagerNameDetailForm>
           <CafeFormCafeAddress>주소</CafeFormCafeAddress>
           <CafeFormCafeAddressDetailForm name="cafeaddress" required>
-            {cafeaddress}
+            {cafe_location}
           </CafeFormCafeAddressDetailForm>
           <CafeFormDescription>원하는 제품과 수량</CafeFormDescription>
 
           <CafeFormDescriptionDetailForm name="description" required>
-            {description}
+            {/* {description} */}
           </CafeFormDescriptionDetailForm>
 
           <CafeFormRemark>비고</CafeFormRemark>
           <CafeFormRemarkDetailForm name="remark" required>
-            {remark}
+            {addtional_explaination}
           </CafeFormRemarkDetailForm>
         </CafeFormDetailFormWrapper>
         <CafeFormBtnWrap>
@@ -213,6 +231,7 @@ const CafeFormBtn = styled.button`
   color: #331211;
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
+  cursor: pointer;
 `;
 const CafeFormUpdateBtn = styled.button`
   border-style: none;
@@ -226,6 +245,9 @@ const CafeFormUpdateBtn = styled.button`
   color: #331211;
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
+  cursor: pointer;
 `;
 
-const CafeFormDeleteBtn = styled(CafeFormUpdateBtn)``;
+const CafeFormDeleteBtn = styled(CafeFormUpdateBtn)`
+  cursor: pointer;
+`;

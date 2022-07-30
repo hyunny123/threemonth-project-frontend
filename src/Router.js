@@ -26,7 +26,7 @@ function Router() {
         <Route path="/cafeinputform" element={<CafeInputForm />} />
         <Route path="/cakeinputform" element={<CakeInputForm />} />
         <Route path="/packageinputform" element={<PackageInputForm />} />
-        <Route path="/formdetail" element={<FormDetail />} />
+        <Route path="/formdetail/:formId" element={<FormDetail />} />
         <Route path="/adminpage" element={<AdminPage />} />
       </Routes>
       <Footer />

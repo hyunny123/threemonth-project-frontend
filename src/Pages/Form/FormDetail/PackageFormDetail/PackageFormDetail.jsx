@@ -3,10 +3,21 @@ import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
-const PackageFormDetail = () => {
-  const [packageDetailForm, setPackageDetailForm] = useState([]);
-  const { name, phonenumber, date, address, contents, ispackage, remark } =
-    packageDetailForm;
+const PackageFormDetail = ({ detailFormData }) => {
+  // const [packageDetailForm, setPackageDetailForm] = useState([]);
+  // const { name, phonenumber, date, address, contents, ispackage, remark } =
+  //   packageDetailForm;
+
+  const {
+    addtional_explaination,
+    contact,
+    created_at,
+    customer_name,
+    id,
+    packageorders,
+    status,
+    title,
+  } = detailFormData;
 
   // const params = useParams();
   const navigate = useNavigate();
@@ -19,18 +30,26 @@ const PackageFormDetail = () => {
 
   // useEffect(() => {
   //   fetch(`/data/packageDetailFormData.json/formdetail/${params.id}`, {
+  //     method: "POST",
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => setPackageDetailForm(data));
+  // }, [params.id]);
+
+  // useEffect(() => {
+  //   fetch(`/data/packageDetailFormData.json/formdetail/${params.id}`, {
   //     method: "DELETE",
   //   })
   //     .then((response) => response.json())
   //     .then((data) => setPackageDetailForm(data));
   // }, [params.id]);
 
-  useEffect(() => {
-    fetch("/data/packageDetailFormData.json")
-      .then((response) => response.json())
-      .then((data) => setPackageDetailForm(data));
-  }, []);
-  console.log(packageDetailForm);
+  // useEffect(() => {
+  //   fetch("/data/packageDetailFormData.json")
+  //     .then((response) => response.json())
+  //     .then((data) => setPackageDetailForm(data));
+  // }, []);
+  // console.log(packageDetailForm);
 
   return (
     <PackageFormWrapper>
@@ -39,33 +58,33 @@ const PackageFormDetail = () => {
         <PackageFormInputWrapper>
           <PackageFormName>이름</PackageFormName>
           <PackageFormNameDetailForm required name="name">
-            {name}
+            {customer_name}
           </PackageFormNameDetailForm>
           <PackageFormPhoneNumber>전화번호</PackageFormPhoneNumber>
           <PackageFormPhoneNumberDetailForm required name="phonenumber">
-            {phonenumber}
+            {contact}
           </PackageFormPhoneNumberDetailForm>
           <PackageFormDate>날짜</PackageFormDate>
           <PackageFormDateDiv>
             <PackageFormDateDetailForm required name="date">
-              {date}
+              {/* {date} */}
             </PackageFormDateDetailForm>
           </PackageFormDateDiv>
           <PackageFormAddress>주소</PackageFormAddress>
           <PackageFormAddressDetailForm required name="address">
-            {address}
+            {/* {address} */}
           </PackageFormAddressDetailForm>
           <PackageFormDescription>구성품</PackageFormDescription>
           <PackageFormDescriptionDetailForm required name="contents">
-            {contents}
+            {/* {contents} */}
           </PackageFormDescriptionDetailForm>
           <PackageFormIsPackage>포장 유무</PackageFormIsPackage>
           <PackageFormIsPackageDetailForm name="ispackage" required>
-            {ispackage}
+            {/* {ispackage} */}
           </PackageFormIsPackageDetailForm>
           <PackageFormRemark>비고</PackageFormRemark>
           <PackageFormRemarkDetailForm name="remark" required>
-            {remark}
+            {addtional_explaination}
           </PackageFormRemarkDetailForm>
         </PackageFormInputWrapper>
 
@@ -191,6 +210,7 @@ const PackageFormBtn = styled.button`
   color: #331211;
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
+  cursor: pointer;
 `;
 const PackageFormUpdateBtn = styled.button`
   border-style: none;
@@ -204,6 +224,9 @@ const PackageFormUpdateBtn = styled.button`
   color: #331211;
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
+  cursor: pointer;
 `;
 
-const PackageFormDeleteBtn = styled(PackageFormUpdateBtn)``;
+const PackageFormDeleteBtn = styled(PackageFormUpdateBtn)`
+  cursor: pointer;
+`;
