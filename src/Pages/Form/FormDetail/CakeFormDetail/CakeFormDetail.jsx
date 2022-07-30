@@ -3,17 +3,29 @@ import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
-const CakeFormDetail = ({}) => {
-  const [cakeDetailForm, setCakeDetailForm] = useState([]);
+const CakeFormDetail = ({ detailFormData }) => {
+  // const [cakeDetailForm, setCakeDetailForm] = useState([]);
+  // const {
+  //   cakeinputtitle,
+  //   name,
+  //   phonenumber,
+  //   cakepickupdate,
+  //   cakename,
+  //   ordercount,
+  //   remark,
+  // } = cakeDetailForm;
+
   const {
-    cakeinputtitle,
-    name,
-    phonenumber,
-    cakepickupdate,
-    cakename,
-    ordercount,
-    remark,
-  } = cakeDetailForm;
+    addtional_explaination,
+    cakeorders: { count, product_id, product_name, want_pick_up_date },
+    contact,
+    created_at,
+    customer_name,
+    id,
+    status,
+    title,
+    type,
+  } = detailFormData;
 
   // const params = useParams();
   const navigate = useNavigate();
@@ -45,15 +57,15 @@ const CakeFormDetail = ({}) => {
         <CakeFormInputWrapper>
           <CakeFormInputTitle>글 제목</CakeFormInputTitle>
           <CakeFormInputTitleDetailForm required name="cakeinputtitle">
-            {cakeinputtitle}
+            {title}
           </CakeFormInputTitleDetailForm>
           <CakeFormName>이름</CakeFormName>
           <CakeFormNameDetailForm required name="name">
-            {name}
+            {customer_name}
           </CakeFormNameDetailForm>
           <CakeFormPhoneNumber>폰번호</CakeFormPhoneNumber>
           <CakeFormPhoneNumberDetailForm required name="phonenumber">
-            {phonenumber}
+            {contact}
           </CakeFormPhoneNumberDetailForm>
           <CakeFormPickUpDate>픽업날짜</CakeFormPickUpDate>
           <CakeFormPickUpDateDetailForm
@@ -61,23 +73,23 @@ const CakeFormDetail = ({}) => {
             required
             name="cakepickupdate"
           >
-            {cakepickupdate}
+            {want_pick_up_date}
           </CakeFormPickUpDateDetailForm>
           <CakeFormCakeName>케이크이름 및 수량</CakeFormCakeName>
 
           <CakeFormCakeNameWrap>
             <CakeFormCakeNameDetailForm required name="cakename">
-              {cakename}
+              {product_name}
             </CakeFormCakeNameDetailForm>
 
             <CakeFormOrderCountDetailForm name="ordercount">
-              {ordercount}개
+              {count}개
             </CakeFormOrderCountDetailForm>
           </CakeFormCakeNameWrap>
 
           <CakeFormRemark>비고란</CakeFormRemark>
           <CakeFormRemarkDetailForm required name="remark">
-            {remark}
+            {addtional_explaination}
           </CakeFormRemarkDetailForm>
         </CakeFormInputWrapper>
         <CakeFormBtnWrap>

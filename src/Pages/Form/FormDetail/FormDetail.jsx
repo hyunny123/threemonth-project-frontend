@@ -27,7 +27,7 @@ const FormDetail = () => {
   // }, [params.formId]);
 
   useEffect(() => {
-    fetch(`http://15.164.163.31:8001/orders/106`)
+    fetch(`http://15.164.163.31:8001/orders/${params.formId}`)
       .then((res) => res.json())
       .then((data) => setDetailFormData(data));
   }, [params.formId]);
