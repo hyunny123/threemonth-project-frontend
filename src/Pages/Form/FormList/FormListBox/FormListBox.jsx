@@ -3,11 +3,11 @@ import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { USER_TOKEN } from "../../../../config";
 
-const FormListBox = ({ sortList }) => {
+const FormListBox = ({ formList }) => {
   const navigate = useNavigate();
 
   const goFormDetail = (id) => {
-    fetch("url", {
+    fetch("", {
       method: "post",
       headers: { Authorization: USER_TOKEN },
       body: {
@@ -21,19 +21,18 @@ const FormListBox = ({ sortList }) => {
       }
     });
   };
-
   return (
     <FormListBoxWrapper>
       <ListBox>
         <ListBoxMenu>
           <MenuNum>글 번호</MenuNum>
           <MenuSub>제목</MenuSub>
-          <MenuDate>작성 시간</MenuDate>
+          <MenuDate>작성일</MenuDate>
           <MenuWriter>작성자</MenuWriter>
           <MenuIsChecked>컨펌여부</MenuIsChecked>
         </ListBoxMenu>
         <List>
-          {sortList.map((list, idx) => (
+          {formList.reverse().map((list, idx) => (
             <ListBoxContents
               onClick={() => {
                 goFormDetail(list.id);
@@ -42,14 +41,15 @@ const FormListBox = ({ sortList }) => {
             >
               <ListBoxContent>{list.id}</ListBoxContent>
               <ListBoxContent>{list.title}</ListBoxContent>
-              <ListBoxContent>{list.createDate}</ListBoxContent>
-              <ListBoxContent>{list.writer}님</ListBoxContent>
-              {list.isChecked === "신청완료" ? (
-                <ListBoxContentCheck props={list.isChecked}>
-                  신청완료
-                </ListBoxContentCheck>
+              <ListBoxContent>{list.created_at.slice(0, 10)}</ListBoxContent>
+              <ListBoxContent>{list.customer_name}님</ListBoxContent>
+              {list.status === "not_confirmed" ? (
+                <ListBoxContent>신청완료</ListBoxContent>
+              ) : list.status === "confirmed" &&
+                list.status === "can't_cancel" ? (
+                <ListBoxContent>컨펌완료</ListBoxContent>
               ) : (
-                <ListBoxContentCheck>컨펌완료</ListBoxContentCheck>
+                <ListBoxContent>완료</ListBoxContent>
               )}
             </ListBoxContents>
           ))}
@@ -71,7 +71,7 @@ const FormListBoxWrapper = styled.div`
 const ListBoxMenu = styled.div`
   display: grid;
   align-items: end;
-  grid-template-columns: 0.5fr 2fr 0.5fr 0.5fr 0.5fr;
+  grid-template-columns: 0.4fr 2fr 0.5fr 0.5fr 0.5fr;
   grid-template-rows: 50px;
   box-sizing: border-box;
   padding-bottom: 20px;
@@ -117,8 +117,4 @@ const ListBoxContent = styled.div`
   &:nth-child(2) {
     justify-content: flex-start;
   }
-`;
-
-const ListBoxContentCheck = styled(ListBoxContent)`
-  color: ${(props) => (props.props === "신청완료" ? "black" : "green")};
 `;
