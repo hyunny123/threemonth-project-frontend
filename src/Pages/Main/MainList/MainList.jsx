@@ -7,7 +7,7 @@ const MainList = ({ mainList }) => {
   const params = useParams();
 
   const goToDetail = () => {
-    navigate(`/product/${params.formId}`);
+    navigate(`/product/${params.productId}`);
   };
   // console.log(mainList);
   return (

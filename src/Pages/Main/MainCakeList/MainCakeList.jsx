@@ -7,7 +7,7 @@ const MainCakeList = ({ mainCakeList }) => {
   const params = useParams();
 
   const goToCakeDetail = () => {
-    navigate(`product/${params.formId}`);
+    navigate(`product/${params.productId}`);
   };
   return (
     <MainCakeListContainer id="cakeList">
