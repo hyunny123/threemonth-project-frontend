@@ -1,44 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
+import { USER_TOKEN } from "../../../../config";
 
-const FormListBox = () => {
+const FormListBox = ({ formList }) => {
   const navigate = useNavigate();
-  const [formList, setFormList] = useState([
-    {
-      id: 0,
-      title: "",
-      createDate: "",
-      writer: "",
-      isChecked: false,
-    },
-  ]);
-
-  useEffect(() => {
-    fetch("/data/data.json", { method: "get" })
-      .then((res) => res.json())
-      .then((data) => {
-        setFormList(data.result);
-      });
-  }, []);
-  const sortList = [...formList]
-    .sort(function (a, b) {
-      if (a.createDate > b.createDate) {
-        return 1;
-      } else if (a.createDate < b.createDate) {
-        return -1;
-      } else {
-        return 0;
-      }
-    })
-    .reverse();
-
-  const userToken = localStorage.getItem("token");
 
   const goFormDetail = (id) => {
-    fetch("url", {
+    fetch("", {
       method: "post",
-      headers: { Authorization: userToken },
+      headers: { Authorization: USER_TOKEN },
       body: {
         id,
       },
@@ -56,12 +27,12 @@ const FormListBox = () => {
         <ListBoxMenu>
           <MenuNum>글 번호</MenuNum>
           <MenuSub>제목</MenuSub>
-          <MenuDate>작성 시간</MenuDate>
+          <MenuDate>작성일</MenuDate>
           <MenuWriter>작성자</MenuWriter>
           <MenuIsChecked>컨펌여부</MenuIsChecked>
         </ListBoxMenu>
         <List>
-          {sortList.map((list, idx) => (
+          {formList.reverse().map((list, idx) => (
             <ListBoxContents
               onClick={() => {
                 goFormDetail(list.id);
@@ -70,12 +41,15 @@ const FormListBox = () => {
             >
               <ListBoxContent>{list.id}</ListBoxContent>
               <ListBoxContent>{list.title}</ListBoxContent>
-              <ListBoxContent>{list.createDate}</ListBoxContent>
-              <ListBoxContent>{list.writer}님</ListBoxContent>
-              {list.isChecked ? (
-                <ListBoxContent>O</ListBoxContent>
+              <ListBoxContent>{list.created_at.slice(0, 10)}</ListBoxContent>
+              <ListBoxContent>{list.customer_name}님</ListBoxContent>
+              {list.status === "not_confirmed" ? (
+                <ListBoxContent>신청완료</ListBoxContent>
+              ) : list.status === "confirmed" &&
+                list.status === "can't_cancel" ? (
+                <ListBoxContent>컨펌완료</ListBoxContent>
               ) : (
-                <ListBoxContent>X</ListBoxContent>
+                <ListBoxContent>완료</ListBoxContent>
               )}
             </ListBoxContents>
           ))}

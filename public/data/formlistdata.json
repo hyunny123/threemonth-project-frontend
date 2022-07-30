@@ -1,0 +1,165 @@
+{
+  "result": [
+    {
+      "id": 1,
+      "title": "첫번째 게시물",
+      "createDate": "2020-05-12",
+      "writer": "장형원",
+      "isChecked": "컨펌완료"
+    },
+    {
+      "id": 2,
+      "title": "두번째 게시물",
+      "createDate": "2020-05-13",
+      "writer": "김영빈",
+      "isChecked": "컨펌완료"
+    },
+    {
+      "id": 3,
+      "title": "세번째 게시물",
+      "createDate": "2020-06-22",
+      "writer": "이현정",
+      "isChecked": "컨펌완료"
+    },
+    {
+      "id": 4,
+      "title": "네번째 게시물",
+      "createDate": "2020-06-29",
+      "writer": "송재관",
+      "isChecked": "컨펌완료"
+    },
+    {
+      "id": 5,
+      "title": "다섯번째 게시물",
+      "createDate": "2020-07-10",
+      "writer": "최지수",
+      "isChecked": "컨펌완료"
+    },
+    {
+      "id": 6,
+      "title": "여섯번째 게시물",
+      "createDate": "2020-07-15",
+      "writer": "임수연",
+      "isChecked": "컨펌완료"
+    },
+    {
+      "id": 7,
+      "title": "일곱번째 게시물",
+      "createDate": "2021-06-15",
+      "writer": "최민석",
+      "isChecked": "컨펌완료"
+    },
+    {
+      "id": 8,
+      "title": "여덟번째 게시물",
+      "createDate": "2021-06-24",
+      "writer": "최지수",
+      "isChecked": "컨펌완료"
+    },
+    {
+      "id": 9,
+      "title": "아홉번째 게시물",
+      "createDate": "2021-10-12",
+      "writer": "임수연",
+      "isChecked": "컨펌완료"
+    },
+    {
+      "id": 10,
+      "title": "열번째 게시물",
+      "createDate": "2021-10-15",
+      "writer": "최민석",
+      "isChecked": "컨펌완료"
+    },
+    {
+      "id": 11,
+      "title": "열한번째 게시물",
+      "createDate": "2021-11-24",
+      "writer": "최지수",
+      "isChecked": "컨펌완료"
+    },
+    {
+      "id": 12,
+      "title": "열두번째 게시물",
+      "createDate": "2021-12-12",
+      "writer": "임수연",
+      "isChecked": "컨펌완료"
+    },
+    {
+      "id": 13,
+      "title": "열세번째 게시물",
+      "createDate": "2021-12-24",
+      "writer": "최민석",
+      "isChecked": "컨펌완료"
+    },
+    {
+      "id": 14,
+      "title": "열네번째 게시물",
+      "createDate": "2021-12-29",
+      "writer": "최지수",
+      "isChecked": "컨펌완료"
+    },
+    {
+      "id": 15,
+      "title": "열다섯번째 게시물",
+      "createDate": "2022-01-12",
+      "writer": "임수연",
+      "isChecked": "컨펌완료"
+    },
+    {
+      "id": 16,
+      "title": "열여섯번째 게시물",
+      "createDate": "2022-02-15",
+      "writer": "최민석",
+      "isChecked": "컨펌완료"
+    },
+    {
+      "id": 17,
+      "title": "열일곱번째 게시물",
+      "createDate": "2022-03-24",
+      "writer": "최지수",
+      "isChecked": "컨펌완료"
+    },
+    {
+      "id": 18,
+      "title": "열여덟번째 게시물",
+      "createDate": "2022-04-12",
+      "writer": "임수연",
+      "isChecked": "취소불가"
+    },
+    {
+      "id": 19,
+      "title": "열아홉번째 게시물",
+      "createDate": "2022-05-15",
+      "writer": "최민석",
+      "isChecked": "취소불가"
+    },
+    {
+      "id": 20,
+      "title": "스무번째 게시물",
+      "createDate": "2022-06-24",
+      "writer": "최지수",
+      "isChecked": "취소불가"
+    },
+    {
+      "id": 21,
+      "title": "스물한번째 게시물",
+      "createDate": "2022-07-12",
+      "writer": "임수연",
+      "isChecked": "신청완료"
+    },
+    {
+      "id": 22,
+      "title": "스물두번째 게시물",
+      "createDate": "2022-07-15",
+      "writer": "최민석",
+      "isChecked": "신청완료"
+    },
+    {
+      "id": 23,
+      "title": "스물세번째 게시물",
+      "createDate": "2022-07-16",
+      "writer": "이수광",
+      "isChecked": "신청완료"
+    }
+  ]
+}

@@ -19,7 +19,7 @@ function Router() {
       <Nav />
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/packagedetail/:packageId" element={<PackageDetail />} />
+        <Route path="/packagedetail" element={<PackageDetail />} />
         <Route
           path="/individualdetail/:productId"
           element={<IndividualDetail />}
