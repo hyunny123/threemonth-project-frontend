@@ -1,13 +1,12 @@
 import React from "react";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 
 const MainList = ({ mainList }) => {
   const navigate = useNavigate();
-  const params = useParams();
 
-  const goToDetail = () => {
-    navigate(`/product/${params.productId}`);
+  const goToDetail = (id) => {
+    navigate(`/individualdetail/${id}`);
   };
   // console.log(mainList);
   return (
@@ -15,9 +14,14 @@ const MainList = ({ mainList }) => {
       <ListTitle>뜨리먼뜨 List</ListTitle>
       <ListBox>
         <ListItems>
-          {mainList.map((item) => {
+          {mainList.map((item, idx) => {
             return (
-              <ListItem key={item.id} onClick={goToDetail}>
+              <ListItem
+                key={idx}
+                onClick={() => {
+                  goToDetail(item.id);
+                }}
+              >
                 <Item src={item.product_images[0].img_src} />
                 <ItemTitle>{item.product_name}</ItemTitle>
                 <ItemPrice>

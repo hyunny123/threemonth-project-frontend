@@ -4,19 +4,23 @@ import styled from "styled-components";
 
 const MainCakeList = ({ mainCakeList }) => {
   const navigate = useNavigate();
-  const params = useParams();
 
-  const goToCakeDetail = () => {
-    navigate(`product/${params.productId}`);
+  const goToCakeDetail = (id) => {
+    navigate(`/individualdetail/${id}`);
   };
   return (
     <MainCakeListContainer id="cakeList">
       <CakeListTitle>뜨리먼뜨 CakeList</CakeListTitle>
       <CakeListBox>
         <CakeListItems>
-          {mainCakeList.map((item) => {
+          {mainCakeList.map((item, idx) => {
             return (
-              <CakeListItem onClick={goToCakeDetail} key={item.id}>
+              <CakeListItem
+                onClick={() => {
+                  goToCakeDetail(item.id);
+                }}
+                key={idx}
+              >
                 <CakeItem src={item.product_images[0].img_src} />
                 <CakeItemTitle>{item.product_name}</CakeItemTitle>
                 <CakeItemPrice>
