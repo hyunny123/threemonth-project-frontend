@@ -20,10 +20,7 @@ function Router() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/packagedetail" element={<PackageDetail />} />
-        <Route
-          path="/individualdetail/:productId"
-          element={<IndividualDetail />}
-        />
+        <Route path="/individualdetail/" element={<IndividualDetail />} />
         <Route path="/kakaologin" element={<LoginKakao />} />
         <Route path="/formlist" element={<FormList />} />
         <Route path="/cafeinputform" element={<CafeInputForm />} />

@@ -1,15 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
-const IndividualDetailMain = ({ data }) => {
-  const { productImages } = data;
-  const { contents } = productImages;
+const IndividualDetailMain = ({ individualData }) => {
+  const { product_images } = individualData;
 
   return (
     <IndividualDetailMainWrapper>
-      {contents.map((x, idx) => (
+      {product_images.map((x, idx) => (
         <div key={idx}>
-          <ProductImg src={x} alt="image" />
+          <ProductImg src={x.img_src} alt="image" />
         </div>
       ))}
       <Origin>

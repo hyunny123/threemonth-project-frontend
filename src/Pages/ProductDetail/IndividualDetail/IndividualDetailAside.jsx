@@ -4,12 +4,14 @@ import styled from "styled-components";
 import { USER_TOKEN } from "../../../config";
 import { LOGIN_URI } from "../../Login/AuthData";
 
-const IndividualDetailAside = ({ data }) => {
+const IndividualDetailAside = ({ individualData }) => {
   const navigate = useNavigate();
-  const { productname, price, description } = data;
-
+  const { price, description, is_active, product_name } = individualData;
   const goInputForm = () => {
     if (USER_TOKEN) {
+      if (is_active === false) {
+        alert("현재 판매중인 케이크가 아닙니다.");
+      }
       navigate("/cakeinputform");
     } else {
       if (
@@ -23,11 +25,12 @@ const IndividualDetailAside = ({ data }) => {
   return (
     <IndividualDetailAsideWrapper>
       <IndividualDetailAsideTop>
-        <IndividualDetailAsideP>{productname}</IndividualDetailAsideP>
+        <IndividualDetailAsideP>{product_name}</IndividualDetailAsideP>
         <IndividualDetailAsideP>{description}</IndividualDetailAsideP>
         <IndividualDetailAsideP>
           {price.toLocaleString()}원
         </IndividualDetailAsideP>
+
         <DetailIndividualReservBtn onClick={goInputForm}>
           예약하러 가기
         </DetailIndividualReservBtn>

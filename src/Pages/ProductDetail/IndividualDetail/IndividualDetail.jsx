@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
@@ -8,28 +7,31 @@ import IndividualDetailMain from "./IndividualDetailMain";
 
 const IndividualDetail = () => {
   const [individualData, setIndividualData] = useState({
-    productname: "",
+    buying: false,
+    description: null,
+    id: 0,
+    is_active: false,
+    optional_description: null,
     price: 0,
-    description: "",
-    productImages: {
-      conventionTop: [],
-      contents: [],
-    },
+    product_images: [],
+    product_name: "",
   });
-  const { productId } = useParams();
+  const params = useParams();
+  const { productId } = params;
   const { INDIVIDUALDETAIL } = API;
 
   useEffect(() => {
-    fetch(`${INDIVIDUALDETAIL}/:productId`)
+    fetch(`http://15.164.163.31:8001/products/${productId}`)
       .then((res) => res.json())
       .then((data) => setIndividualData(data));
   }, [productId]);
+  console.log(individualData);
 
   return (
     <IndividualDetailWrapper>
       <IndividualDetailWidth>
-        <IndividualDetailMain data={individualData} />
-        <IndividualDetailAside data={individualData} />
+        <IndividualDetailMain individualData={individualData} />
+        <IndividualDetailAside individualData={individualData} />
       </IndividualDetailWidth>
     </IndividualDetailWrapper>
   );
