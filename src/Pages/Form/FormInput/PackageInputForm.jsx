@@ -1,22 +1,32 @@
 import React, { useEffect, useState } from "react";
+import { Navigate, useNavigate, useParams } from "react-router";
 import styled from "styled-components";
+import Loading from "../../../components/Loading";
 import { API, USER_TOKEN } from "../../../config";
 
 const PackageInputForm = () => {
   // 이름, 폰번호, 날짜, 주소, 구성품 + 수량, 포장 유무
 
-  // const [selectList, setSelectList] = useState([]);
+  const params = useParams();
+  const { formId } = params;
+  const navigate = useNavigate();
+  const [selectList, setSelectList] = useState([
+    {
+      id: 0,
+      product_name: "",
+      buying: false,
+    },
+  ]);
   const [packageForm, setPackageForm] = useState({
     title: "",
     customer_name: "",
     contact: "",
+    purpose: "",
     delivery_date: "",
     delivery_location: "",
-    contents: "",
-    count: "",
+    orderedproducts: [],
     is_packaging: "",
     additional_explanation: "",
-    type: "package",
   });
   const { PACKAGEINPUT } = API;
   const {
@@ -25,18 +35,17 @@ const PackageInputForm = () => {
     contact,
     delivery_date,
     delivery_location,
-    contents,
-    count,
     is_packaging,
     additional_explanation,
-    type,
   } = packageForm;
+  let { orderedproducts } = packageForm;
 
-  // useEffect(() => {
-  //   fetch("asdf")
-  //     .then((res) => res.json())
-  //     .then((data) => setSelectList(data.result));
-  // }, []);
+  useEffect(() => {
+    fetch("http://15.164.163.31:8001/products?category=bread")
+      .then((res) => res.json())
+      .then((data) => [...data].filter((data) => data.id !== 14))
+      .then((data) => setSelectList(data));
+  }, []);
 
   const packageFormHandleInput = (e) => {
     const { name, value } = e.target;
@@ -57,39 +66,77 @@ const PackageInputForm = () => {
     (new Date(delivery_date).getTime() - new Date(minDate).getTime()) /
     (1000 * 3600 * 24);
 
-  const packageFormRequest = (e) => {
-    e.preventDefault();
-    if (countDays > 3) {
-      if (window.confirm(`${inputConfirmCheck}`)) {
-        fetch(`${PACKAGEINPUT}`, {
-          method: "post",
-          headers: { Authorization: USER_TOKEN },
-          body: {
-            title,
-            customer_name,
-            contact,
-            delivery_date,
-            delivery_location,
-            contents,
-            count,
-            is_packaging,
-            additional_explanation,
-            type,
-          },
-        }).then((res) => {
-          return res;
-        });
-      }
-    } else {
-      alert("날짜가 가깝습니다");
-    }
+  const handleCheckbox = (value, id) => {
+    const productIdx = selectList.findIndex((list) => list.id === id);
+    const newArr = [...selectList];
+    newArr[productIdx].buying = value;
+    setSelectList(newArr);
   };
+  orderedproducts = [...selectList]
+    .filter((list) => list.buying === true)
+    .map((product) => {
+      return { product_id: product.id, buying: product.buying };
+    });
+
+  const packageFormRequest = (e) => {
+    console.log(orderedproducts);
+    e.preventDefault();
+    // if (countDays > 3) {
+    // if (window.confirm(`${inputConfirmCheck}`)) {
+    fetch("http://15.164.163.31:8001/orders/", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${USER_TOKEN}`,
+        "Content-Type": "application/json",
+        Accept: "*/*",
+        "Accept-Encoding": "gzip,deflate,br",
+        Connection: "keep-alive",
+      },
+      body: {
+        title,
+        customer_name,
+        contact,
+        delivery_date,
+        delivery_location,
+        orderedproducts,
+        // is_packaging,
+        // additional_explanation,
+        type: "package",
+      },
+    }).then((res) => {
+      if (res.status === 200) {
+        navigate(`/formdetail${formId}`);
+      }
+    });
+    // }
+    // } else {
+    //   alert("날짜가 가깝습니다");
+    // }
+  };
+
+  if (selectList[0].id === 0) {
+    return <Loading />;
+  }
 
   return (
     <PackageFormWrapper>
       <PackageFormWidth>
-        <PackageFormTitle>패키지 신청서</PackageFormTitle>
+        <PackageFormTitle>기프트박스 신청서</PackageFormTitle>
         <PackageFormInputWrapper>
+          <PackageFormInputTitle>글 제목</PackageFormInputTitle>
+          <PackageFormTitleInput
+            placeholder="글 제목을 입력하세요"
+            required
+            name="title"
+            onChange={packageFormHandleInput}
+          />
+          <PackageFormPurpose>목적</PackageFormPurpose>
+          <PackageFormPurposeInput
+            placeholder="목적을 입력해 주세요"
+            required
+            name="purpose"
+            onChange={packageFormHandleInput}
+          />
           <PackageFormName>이름</PackageFormName>
           <PackageFormNameInput
             placeholder="이름을 입력해 주세요"
@@ -124,12 +171,21 @@ const PackageInputForm = () => {
           />
           <PackageFormDescription>구성품</PackageFormDescription>
           <PackageFormDescriptionDiv>
-            <PackageFormDescriptionInput
-              placeholder="원하시는 구성을 입력해 주세요"
-              required
-              name="contents"
-              onChange={packageFormHandleInput}
-            />
+            {selectList.map((x, idx) => (
+              <PackageFormDescriptionWrap key={idx}>
+                <PackageFormDescriptionInput
+                  type="checkbox"
+                  name="orderedproducts"
+                  onClick={(e) => handleCheckbox(e.target.checked, x.id)}
+                />
+                <p>{x.product_name}</p>
+              </PackageFormDescriptionWrap>
+            ))}
+            <PackageFormDescriptionP>
+              * 선택하신 상품은 한 개의 수량이 입력됩니다. 2개 이상을 원하실
+              경우 비고란에 작성해 주세요. 상품 종류는 3개까지 선택이
+              가능합니다.
+            </PackageFormDescriptionP>
           </PackageFormDescriptionDiv>
           <PackageFormIsPackage>포장 유무</PackageFormIsPackage>
           <PackageFormIsPackageInput
@@ -160,7 +216,7 @@ const PackageFormWrapper = styled.div`
   align-items: center;
   min-height: 800px;
   margin: 100px 0;
-  color: #331211;
+  color: ${({ theme }) => theme.fontColor};
 `;
 const PackageFormWidth = styled.div`
   display: flex;
@@ -175,33 +231,36 @@ const PackageFormTitle = styled.p`
 const PackageFormInputWrapper = styled.form`
   display: grid;
   justify-content: center;
-  grid-template-rows: repeat(7, 100px);
+  grid-template-rows: repeat(9, 100px);
   grid-template-columns: 1fr 6fr;
   box-sizing: border-box;
   margin-top: 50px;
   width: 100%;
-  color: #331211;
-  border: 7px solid #f1e6d1;
+  color: ${({ theme }) => theme.fontColor};
+  border: 7px solid ${({ theme }) => theme.bgColor};
 `;
 
 const PackageFormName = styled.p`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid #f1e6d1;
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
 `;
 const PackageFormNameInput = styled.input`
   border-style: none;
-  border-bottom: 1px solid #f1e6d1;
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
+  font-family: ${({ theme }) => theme.fontFamily};
   &:focus {
     outline: none;
   }
-  &::placeholder {
-    font-family: "GangwonEdu_OTFBoldA";
-  }
 `;
 
+const PackageFormInputTitle = styled(PackageFormName)``;
+const PackageFormTitleInput = styled(PackageFormNameInput)``;
+
+const PackageFormPurpose = styled(PackageFormName)``;
+const PackageFormPurposeInput = styled(PackageFormNameInput)``;
 const PackageFormPhoneNumber = styled(PackageFormName)``;
 const PackageFormPhoneNumberInput = styled(PackageFormNameInput)``;
 
@@ -220,8 +279,26 @@ const PackageFormAddress = styled(PackageFormName)``;
 const PackageFormAddressInput = styled(PackageFormNameInput)``;
 
 const PackageFormDescription = styled(PackageFormName)``;
-const PackageFormDescriptionDiv = styled.div``;
-const PackageFormDescriptionInput = styled(PackageFormNameInput)``;
+const PackageFormDescriptionDiv = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
+`;
+
+const PackageFormDescriptionWrap = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 180px;
+`;
+const PackageFormDescriptionInput = styled.input`
+  margin-right: 10px;
+`;
+
+const PackageFormDescriptionP = styled.p`
+  font-size: 13px;
+  color: red;
+`;
 
 const PackageFormIsPackage = styled(PackageFormName)``;
 const PackageFormIsPackageInput = styled(PackageFormNameInput)``;
@@ -229,14 +306,12 @@ const PackageFormIsPackageInput = styled(PackageFormNameInput)``;
 const PackageFormRemark = styled(PackageFormName)``;
 const PackageFormRemarkInput = styled.textarea`
   border-style: none;
-  border-bottom: 1px solid #f1e6d1;
+  border-bottom: ${({ theme }) => theme.bgColor};
   font-size: 17px;
   resize: none;
+  font-family: ${({ theme }) => theme.fontFamily};
   &:focus {
     outline: none;
-  }
-  &::placeholder {
-    font-family: "GangwonEdu_OTFBoldA";
   }
 `;
 
@@ -247,8 +322,8 @@ const PackageFormBtn = styled.button`
   height: 50px;
   border-radius: 10px;
   font-size: 20px;
-  background-color: #ecc987;
-  color: #331211;
+  background-color: ${({ theme }) => theme.bgColor};
+  color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
-  font-family: "GangwonEdu_OTFBoldA";
+  font-family: ${({ theme }) => theme.fontFamily};
 `;

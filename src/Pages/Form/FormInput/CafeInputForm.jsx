@@ -8,7 +8,7 @@ const CafeInputForm = () => {
   const [cafeForm, setCafeForm] = useState({
     title: "",
     cafename: "",
-    business_number: "",
+    corporate_registration_num: "",
     cafe_owner_name: "",
     customer_name: "",
     cafe_location: "",
@@ -22,7 +22,7 @@ const CafeInputForm = () => {
   const {
     title,
     cafename,
-    business_number,
+    corporate_registration_num,
     cafe_owner_name,
     customer_name,
     cafe_location,
@@ -52,7 +52,7 @@ const CafeInputForm = () => {
         body: {
           title,
           cafename,
-          business_number,
+          corporate_registration_num,
           cafe_owner_name,
           customer_name,
           cafe_location,
@@ -90,7 +90,7 @@ const CafeInputForm = () => {
           <CafeFormBusinessNumberInput
             onChange={cafeFormHandleInput}
             placeholder="사업자 번호를 입력해 주세요"
-            name="business_number"
+            name="corporate_registration_num"
             required
           />
           <CafeFormCEOName>대표 이름</CafeFormCEOName>
@@ -176,7 +176,7 @@ const CafeFormCafeName = styled.p`
   border-bottom: 1px solid #f1e6d1;
   font-size: 17px;
 `;
-const CafeFormCafeNameInput = styled.div`
+const CafeFormCafeNameInput = styled.input`
   border-style: none;
   border-bottom: 1px solid #f1e6d1;
   font-size: 17px;
