@@ -18,7 +18,7 @@ const PackageDetailMain = ({ packageData }) => {
         </PackageImgWrapper>
       ))}
       <PackageDetailMainDes>
-        기프트 박스는 상기 이미지와 같이 포장되어 전달됩니다.
+        기프트 박스는 상기 이미지와 다소 다를 수 있습니다.
       </PackageDetailMainDes>
       <PackageDetailMainDes>
         주문 수량, 종류에 따라 단가가 소폭 달라질 수 있기 때문에 <br />
