@@ -3,19 +3,17 @@ import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { USER_TOKEN } from "../../../../config";
 
-const FormListBox = ({ formList }) => {
+const FormListBox = ({ sortedList }) => {
   const navigate = useNavigate();
 
   const goFormDetail = (id) => {
     fetch("", {
       method: "post",
       headers: { Authorization: USER_TOKEN },
-      body: {
-        id,
-      },
+      body: { id },
     }).then((res) => {
       if (res.status === 200) {
-        navigate("url");
+        navigate(`/formdetail/${id}`);
       } else {
         alert("자신이 신청한 선청서만 확인할 수 있습니다.");
       }
@@ -32,7 +30,7 @@ const FormListBox = ({ formList }) => {
           <MenuIsChecked>컨펌여부</MenuIsChecked>
         </ListBoxMenu>
         <List>
-          {formList.reverse().map((list, idx) => (
+          {sortedList.map((list, idx) => (
             <ListBoxContents
               onClick={() => {
                 goFormDetail(list.id);
