@@ -19,6 +19,18 @@ const FormList = () => {
       .then((data) => setFormList(data));
   }, []);
 
+  const sortedList = [...formList]
+    .sort(function (a, b) {
+      if (a.id > b.id) {
+        return 1;
+      }
+      if (a.id < b.id) {
+        return -1;
+      }
+      return 0;
+    })
+    .reverse();
+
   if (formList[0].id === 0) {
     return <Loading />;
   }
@@ -26,7 +38,7 @@ const FormList = () => {
     <FormListWrapper>
       <FormListWidth>
         <FormListTitle>뜨리먼뜨 Form</FormListTitle>
-        <FormListBox formList={formList} />
+        <FormListBox sortedList={sortedList} />
       </FormListWidth>
     </FormListWrapper>
   );
