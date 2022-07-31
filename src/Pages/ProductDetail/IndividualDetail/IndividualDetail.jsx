@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
 import { API } from "../../../config";
+import Loading from "../../../components/Loading";
 import IndividualDetailAside from "./IndividualDetailAside";
 import IndividualDetailMain from "./IndividualDetailMain";
 
@@ -15,6 +16,7 @@ const IndividualDetail = () => {
     price: 0,
     product_images: [],
     product_name: "",
+    category: "bread",
   });
   const params = useParams();
   const { productId } = params;
@@ -25,7 +27,10 @@ const IndividualDetail = () => {
       .then((res) => res.json())
       .then((data) => setIndividualData(data));
   }, [productId]);
-  console.log(individualData);
+
+  if (individualData.id === 0) {
+    return <Loading />;
+  }
 
   return (
     <IndividualDetailWrapper>

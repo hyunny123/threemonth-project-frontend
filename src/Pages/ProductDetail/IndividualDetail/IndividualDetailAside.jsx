@@ -6,7 +6,8 @@ import { LOGIN_URI } from "../../Login/AuthData";
 
 const IndividualDetailAside = ({ individualData }) => {
   const navigate = useNavigate();
-  const { price, description, is_active, product_name } = individualData;
+  const { price, description, is_active, product_name, category } =
+    individualData;
   const goInputForm = () => {
     if (USER_TOKEN) {
       if (is_active === false) {
@@ -30,10 +31,15 @@ const IndividualDetailAside = ({ individualData }) => {
         <IndividualDetailAsideP>
           {price.toLocaleString()}원
         </IndividualDetailAsideP>
-
-        <DetailIndividualReservBtn onClick={goInputForm}>
-          예약하러 가기
-        </DetailIndividualReservBtn>
+        {category === "cake" ? (
+          <DetailIndividualReservBtn onClick={goInputForm}>
+            예약하러 가기
+          </DetailIndividualReservBtn>
+        ) : (
+          <DetailIndividualReservBtn>
+            주문은 배달의 민족에서!
+          </DetailIndividualReservBtn>
+        )}
       </IndividualDetailAsideTop>
     </IndividualDetailAsideWrapper>
   );
