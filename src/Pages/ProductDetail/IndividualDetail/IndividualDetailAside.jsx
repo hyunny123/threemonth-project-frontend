@@ -36,9 +36,11 @@ const IndividualDetailAside = ({ individualData }) => {
             예약하러 가기
           </DetailIndividualReservBtn>
         ) : (
-          <DetailIndividualReservBtn>
-            주문은 배달의 민족에서!
-          </DetailIndividualReservBtn>
+          <GoToBamin href="https://baemin.me/vrmWr_I9d">
+            <DetailIndividualReservBtn>
+              주문은 배달의 민족에서!
+            </DetailIndividualReservBtn>
+          </GoToBamin>
         )}
       </IndividualDetailAsideTop>
     </IndividualDetailAsideWrapper>
@@ -64,6 +66,13 @@ const IndividualDetailAsideTop = styled.div`
 
 const IndividualDetailAsideP = styled.p`
   margin-top: 50px;
+`;
+
+const GoToBamin = styled.a`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 `;
 
 const DetailIndividualReservBtn = styled.button`
