@@ -1,5 +1,5 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { LOGIN_URI } from "../Pages/Login/AuthData";
 // import { API } from "../config.js";
@@ -10,6 +10,12 @@ const Nav = () => {
   const userToken = localStorage.getItem("token");
   const userName = localStorage.getItem("nickname");
   const isManage = false;
+
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   const goLogout = () => {
     // fetch(`${KAKAOLOGOUT}`, {
