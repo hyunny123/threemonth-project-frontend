@@ -19,6 +19,11 @@ const PackageFormDetail = ({ detailFormData }) => {
     title,
   } = detailFormData;
 
+  const { delivery_date, delivery_location, is_packaging, orderedproducts } =
+    packageorders;
+
+  const { buying, product_id, product_name } = orderedproducts;
+
   // const params = useParams();
   const navigate = useNavigate();
 
@@ -67,20 +72,20 @@ const PackageFormDetail = ({ detailFormData }) => {
           <PackageFormDate>날짜</PackageFormDate>
           <PackageFormDateDiv>
             <PackageFormDateDetailForm required name="date">
-              {/* {date} */}
+              {delivery_date}
             </PackageFormDateDetailForm>
           </PackageFormDateDiv>
           <PackageFormAddress>주소</PackageFormAddress>
           <PackageFormAddressDetailForm required name="address">
-            {/* {address} */}
+            {delivery_location}
           </PackageFormAddressDetailForm>
           <PackageFormDescription>구성품</PackageFormDescription>
           <PackageFormDescriptionDetailForm required name="contents">
-            {/* {contents} */}
+            {orderedproducts}
           </PackageFormDescriptionDetailForm>
           <PackageFormIsPackage>포장 유무</PackageFormIsPackage>
           <PackageFormIsPackageDetailForm name="ispackage" required>
-            {/* {ispackage} */}
+            {is_packaging}
           </PackageFormIsPackageDetailForm>
           <PackageFormRemark>비고</PackageFormRemark>
           <PackageFormRemarkDetailForm name="remark" required>

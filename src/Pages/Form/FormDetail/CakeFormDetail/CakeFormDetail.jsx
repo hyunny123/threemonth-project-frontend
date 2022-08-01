@@ -17,7 +17,7 @@ const CakeFormDetail = ({ detailFormData }) => {
 
   const {
     addtional_explaination,
-    cakeorders: { count, product_id, product_name, want_pick_up_date },
+    cakeorders,
     contact,
     created_at,
     customer_name,
@@ -26,6 +26,8 @@ const CakeFormDetail = ({ detailFormData }) => {
     title,
     type,
   } = detailFormData;
+
+  const { count, product_id, product_name, want_pick_up_date } = cakeorders;
 
   // const params = useParams();
   const navigate = useNavigate();
