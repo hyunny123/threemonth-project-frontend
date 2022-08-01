@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { API, USER_TOKEN } from "../../../config";
+import { USER_TOKEN } from "../../../config";
 import Loading from "../../../components/Loading";
 
 const CakeInputForm = () => {
@@ -17,10 +17,8 @@ const CakeInputForm = () => {
     type: "cake",
   });
   const [cakeList, setCakeList] = useState([
-    { product_id: 0, product_name: "", isSeason: true },
+    { id: 0, product_name: "", is_active: true },
   ]);
-
-  const { CAKEINPUT } = API;
   const {
     title,
     customer_name,
@@ -33,12 +31,11 @@ const CakeInputForm = () => {
   } = cakeForm;
 
   useEffect(() => {
-    fetch("/data/inputformdata.json")
+    fetch("http://15.164.163.31:8001/products?category=cake")
       .then((res) => res.json())
-      .then((res) => setCakeList(res.result.cake));
+      .then((data) => [...data].filter((x) => x.is_active === true))
+      .then((data) => setCakeList(data));
   }, []);
-
-  const cakeFilter = cakeList.filter((x) => x.isSeason === true);
 
   const cakeFormHandleInput = (e) => {
     const { name, value } = e.target;
@@ -59,35 +56,35 @@ const CakeInputForm = () => {
     (1000 * 3600 * 24);
 
   const inputConfirmCheck =
-    "한번 신청하신 내용은 컨펌 과정에서만 수정이 가능합니다. 신청하시겠습니까?";
+    "컨펌 시작 전까지만 수정이 가능합니다. 신청 하시겠습니까?";
 
   const cakeFormRequest = (e) => {
     e.preventDefault();
-    if (window.confirm(`${inputConfirmCheck}`)) {
-      if (count > 4) {
-        alert("수량을 확인해 주세요 최대 개수는 4개입니다.");
-      } else {
-        if (countDays !== 0) {
-          fetch(`${CAKEINPUT}`, {
-            method: "post",
-            headers: { Authorization: USER_TOKEN },
-            body: {
-              title,
-              customer_name,
-              contact,
-              want_pick_up_date,
-              product_id,
-              count,
-              additional_explanation,
-              type,
-            },
-          }).then((res) => {
-            return res;
-          });
-        } else {
-          alert("신청 일자가 너무 가깝습니다.");
-        }
+
+    if (countDays > 3) {
+      if (window.confirm(`${inputConfirmCheck}`)) {
+        fetch("http://15.164.163.31:8001/orders/", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${USER_TOKEN}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title,
+            customer_name,
+            contact,
+            want_pick_up_date,
+            product_id,
+            count,
+            additional_explanation,
+            type,
+          }),
+        }).then((res) => {
+          return res;
+        });
       }
+    } else {
+      alert("신청일로부터 최소 2일 후 날짜부터 신청이 가능합니다.");
     }
   };
 
@@ -135,12 +132,12 @@ const CakeInputForm = () => {
           </CakeFormPickUpDateDiv>
           <CakeFormCakeName>케이크이름 및 수량</CakeFormCakeName>
           <SelectCake>
-            {cakeFilter.map((list, idx) => (
+            {cakeList.map((list, idx) => (
               <CakeFormCakeNameWrap key={idx}>
                 <CakeFormCakeNameInput
                   type="radio"
                   onChange={cakeFormHandleInput}
-                  value={list.product_id}
+                  value={list.id}
                   required
                   name="product_id"
                 />
@@ -158,9 +155,9 @@ const CakeInputForm = () => {
               </CakeFormCakeNameWrap>
             ))}
           </SelectCake>
-          <CakeFormRemark>비고란</CakeFormRemark>
+          <CakeFormRemark>기타사항</CakeFormRemark>
           <CakeFormRemarkInput
-            placeholder="비고를 입력해 주세요"
+            placeholder="남겨주실 말을 적어주세요"
             onChange={cakeFormHandleInput}
             required
             name="additional_explanation"
@@ -180,7 +177,7 @@ const CakeFormWrapper = styled.div`
   align-items: center;
   min-height: 800px;
   margin: 100px 0;
-  color: #331211;
+  color: ${({ theme }) => theme.fontColor};
 `;
 const CakeFormWidth = styled.div`
   display: flex;
@@ -200,21 +197,21 @@ const CakeFormInputWrapper = styled.form`
   box-sizing: border-box;
   margin-top: 50px;
   width: 100%;
-  color: #331211;
-  border: 7px solid #f1e6d1;
+  color: ${({ theme }) => theme.fontColor};
+  border: 7px solid ${({ theme }) => theme.bgColor};
 `;
 const CakeFormName = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid #f1e6d1;
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
 `;
 const CakeFormNameInput = styled.input`
   border-style: none;
-  border-bottom: 1px solid #f1e6d1;
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
-  font-family: "GangwonEdu_OTFBoldA";
+  font-family: ${({ theme }) => theme.fontFamily};
   &:focus {
     outline: none;
   }
@@ -259,8 +256,8 @@ const CakeFormRemarkInput = styled.textarea`
   resize: none;
   rows: 1;
   font-size: 17px;
-  border-bottom: 1px solid #f1e6d1;
-  font-family: "GangwonEdu_OTFBoldA";
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
+  font-family: ${({ theme }) => theme.fontFamily};
   &:focus {
     outline: none;
   }
@@ -271,7 +268,7 @@ const SelectCake = styled.div`
   justify-content: flex- start;
   align-items: center;
   height: 100%;
-  border-bottom: 1px solid ${(props) => props.theme.bgColor};
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
 `;
 
 const SelectLabel = styled.label`
@@ -285,8 +282,8 @@ const CakeFormBtn = styled.button`
   height: 50px;
   border-radius: 10px;
   font-size: 20px;
-  background-color: #ecc987;
-  color: #331211;
+  background-color: ${({ theme }) => theme.bgColor};
+  color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
-  font-family: "GangwonEdu_OTFBoldA";
+  font-family: ${({ theme }) => theme.fontFamily};
 `;

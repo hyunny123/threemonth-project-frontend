@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Navigate, useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 import Loading from "../../../components/Loading";
-import { API, USER_TOKEN } from "../../../config";
+import { USER_TOKEN } from "../../../config";
 
 const PackageInputForm = () => {
   // 이름, 폰번호, 날짜, 주소, 구성품 + 수량, 포장 유무
-
-  const params = useParams();
-  const { formId } = params;
   const navigate = useNavigate();
   const [selectList, setSelectList] = useState([
     {
@@ -28,7 +25,7 @@ const PackageInputForm = () => {
     is_packaging: "",
     additional_explanation: "",
   });
-  const { PACKAGEINPUT } = API;
+
   const {
     title,
     customer_name,
@@ -55,7 +52,7 @@ const PackageInputForm = () => {
     });
   };
   const inputConfirmCheck =
-    "한번 신청하신 내용은 컨펌 과정에서만 수정이 가능합니다. 신청하시겠습니까?";
+    "컨펌 시작 전까지만 수정이 가능합니다. 신청 하시겠습니까?";
   const minDate = new Date(
     new Date().getTime() - new Date().getTimezoneOffset() * 60000
   )
@@ -79,39 +76,39 @@ const PackageInputForm = () => {
     });
 
   const packageFormRequest = (e) => {
-    console.log(orderedproducts);
     e.preventDefault();
-    // if (countDays > 3) {
-    // if (window.confirm(`${inputConfirmCheck}`)) {
-    fetch("http://15.164.163.31:8001/orders/", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${USER_TOKEN}`,
-        "Content-Type": "application/json",
-        Accept: "*/*",
-        "Accept-Encoding": "gzip,deflate,br",
-        Connection: "keep-alive",
-      },
-      body: {
-        title,
-        customer_name,
-        contact,
-        delivery_date,
-        delivery_location,
-        orderedproducts,
-        // is_packaging,
-        // additional_explanation,
-        type: "package",
-      },
-    }).then((res) => {
-      if (res.status === 200) {
-        navigate(`/formdetail${formId}`);
+    if (countDays > 3) {
+      if (orderedproducts.length > 1) {
+        if (window.confirm(`${inputConfirmCheck}`)) {
+          fetch("http://15.164.163.31:8001/orders/", {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${USER_TOKEN}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              title,
+              customer_name,
+              contact,
+              delivery_date,
+              delivery_location,
+              orderedproducts,
+              is_packaging,
+              additional_explanation,
+              type: "package",
+            }),
+          }).then((res) => {
+            if (res.status === 201) {
+              navigate("/formlist");
+            }
+          });
+        }
+      } else {
+        alert("최소 2개 이상 선택해 주세요.");
       }
-    });
-    // }
-    // } else {
-    //   alert("날짜가 가깝습니다");
-    // }
+    } else {
+      alert("신청일로부터 최소 2일 후 날짜부터 신청이 가능합니다.");
+    }
   };
 
   if (selectList[0].id === 0) {
@@ -125,14 +122,14 @@ const PackageInputForm = () => {
         <PackageFormInputWrapper>
           <PackageFormInputTitle>글 제목</PackageFormInputTitle>
           <PackageFormTitleInput
-            placeholder="글 제목을 입력하세요"
+            placeholder="글 제목을 입력해 주세요"
             required
             name="title"
             onChange={packageFormHandleInput}
           />
-          <PackageFormPurpose>목적</PackageFormPurpose>
+          <PackageFormPurpose>프로모션 목적</PackageFormPurpose>
           <PackageFormPurposeInput
-            placeholder="목적을 입력해 주세요"
+            placeholder="ex) 기업 행사, 결혼 답례품 등"
             required
             name="purpose"
             onChange={packageFormHandleInput}
@@ -144,14 +141,14 @@ const PackageInputForm = () => {
             name="customer_name"
             onChange={packageFormHandleInput}
           />
-          <PackageFormPhoneNumber>전화번호</PackageFormPhoneNumber>
+          <PackageFormPhoneNumber>폰번호</PackageFormPhoneNumber>
           <PackageFormPhoneNumberInput
             placeholder="전화번호를 입력해 주세요"
             required
             name="contact"
             onChange={packageFormHandleInput}
           />
-          <PackageFormDate>날짜</PackageFormDate>
+          <PackageFormDate>프로모션 날짜</PackageFormDate>
           <PackageFormDateDiv>
             <PackageFormDateInput
               placeholder="날짜를 입력해 주세요"
@@ -183,20 +180,20 @@ const PackageInputForm = () => {
             ))}
             <PackageFormDescriptionP>
               * 선택하신 상품은 한 개의 수량이 입력됩니다. 2개 이상을 원하실
-              경우 비고란에 작성해 주세요. 상품 종류는 3개까지 선택이
-              가능합니다.
+              경우 비고란에 작성해 주세요. 상품 종류는 최소 2개 이상 선택해
+              주세요.
             </PackageFormDescriptionP>
           </PackageFormDescriptionDiv>
-          <PackageFormIsPackage>포장 유무</PackageFormIsPackage>
+          <PackageFormIsPackage>패키지 유무</PackageFormIsPackage>
           <PackageFormIsPackageInput
-            placeholder="포장 유무를 입력해 주세요"
+            placeholder="패키지 유무를 입력해 주세요. 종이 포장으로 선택할 시 별도의 포장 요금이 추가되지 않습니다."
             required
             name="is_packaging"
             onChange={packageFormHandleInput}
           />
-          <PackageFormRemark>비고</PackageFormRemark>
+          <PackageFormRemark>기타사항</PackageFormRemark>
           <PackageFormRemarkInput
-            placeholder="비고란을 입력해 주세요"
+            placeholder="남겨주실 말을 입력해 주세요"
             name="additional_explanation"
             required
             onChange={packageFormHandleInput}

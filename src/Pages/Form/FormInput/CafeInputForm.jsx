@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { API, USER_TOKEN } from "../../../config";
+import { USER_TOKEN } from "../../../config";
 
 const CafeInputForm = () => {
   //카페 이름, 사업자 번호, 대표 이름, 담당자 이름, 주소, 원하는 납품 제품과 수량, 비고란
@@ -18,7 +18,6 @@ const CafeInputForm = () => {
     contact: "",
   });
 
-  const { CAFEINPUT } = API;
   const {
     title,
     cafename,
@@ -46,12 +45,16 @@ const CafeInputForm = () => {
   const cafeFormRequest = (e) => {
     e.preventDefault();
     if (window.confirm(`${inputConfirmCheck}`)) {
-      fetch(`${CAFEINPUT}`, {
+      fetch("http://15.164.163.31:8001/orders/", {
         method: "post",
-        headers: { Authorization: USER_TOKEN },
-        body: {
+        headers: {
+          Authorization: `Bearer ${USER_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
           title,
           cafename,
+          contact,
           corporate_registration_num,
           cafe_owner_name,
           customer_name,
@@ -59,8 +62,7 @@ const CafeInputForm = () => {
           product_explanation,
           additional_explanation,
           type,
-          contact,
-        },
+        }),
       }).then((res) => {
         return res;
       });
@@ -107,6 +109,13 @@ const CafeInputForm = () => {
             name="customer_name"
             required
           />
+          <CafeFormContact>카페 전화번호</CafeFormContact>
+          <CafeFormContactInput
+            onChange={cafeFormHandleInput}
+            placeholder="카페 연락처를 입력해 주세요"
+            name="contact"
+            required
+          />
           <CafeFormCafeAddress>주소</CafeFormCafeAddress>
           <CafeFormCafeAddressInput
             onChange={cafeFormHandleInput}
@@ -145,7 +154,7 @@ const CafeFormWrapper = styled.div`
   align-items: center;
   min-height: 800px;
   margin: 100px 0;
-  color: #331211;
+  color: ${({ theme }) => theme.fontColor};
   font-size: 17px;
 `;
 const CafeFormWidth = styled.div`
@@ -161,31 +170,29 @@ const CafeFormTitle = styled.p`
 const CafeFormInputWrapper = styled.form`
   display: grid;
   justify-content: center;
-  grid-template-rows: repeat(10, 100px);
+  grid-template-rows: repeat(11, 100px);
   grid-template-columns: 1fr 5fr;
   box-sizing: border-box;
   margin-top: 50px;
   width: 100%;
-  color: #331211;
-  border: 7px solid #f1e6d1;
+  color: ${({ theme }) => theme.fontColor};
+  border: 7px solid ${({ theme }) => theme.bgColor};
 `;
 const CafeFormCafeName = styled.p`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid #f1e6d1;
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
+  font-family: ${({ theme }) => theme.fontFamily};
 `;
 const CafeFormCafeNameInput = styled.input`
   border-style: none;
-  border-bottom: 1px solid #f1e6d1;
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
+  font-family: ${({ theme }) => theme.fontFamily};
   &:focus {
     outline: none;
-  }
-
-  &::placeholder {
-    font-family: "GangwonEdu_OTFBoldA";
   }
 `;
 
@@ -198,30 +205,30 @@ const CafeFormCEOName = styled(CafeFormCafeName)``;
 const CafeFormCEONameInput = styled(CafeFormCafeNameInput)``;
 const CafeFormManagerName = styled(CafeFormCafeName)``;
 const CafeFormManagerNameInput = styled(CafeFormCafeNameInput)``;
+const CafeFormContact = styled(CafeFormCafeName)``;
+const CafeFormContactInput = styled(CafeFormCafeNameInput)``;
 const CafeFormCafeAddress = styled(CafeFormCafeName)``;
 const CafeFormCafeAddressInput = styled(CafeFormCafeNameInput)``;
 const CafeFormDescription = styled(CafeFormCafeName)`
   text-align: center;
-  grid-row: 7/9;
+  grid-row: 8/10;
 `;
 const CafeFormDescriptionInput = styled.textarea`
   border-style: none;
-  border-bottom: 1px solid #f1e6d1;
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
   resize: none;
-  grid-row: 7/9;
+  grid-row: 8/10;
+  font-family: ${({ theme }) => theme.fontFamily};
   &:focus {
     outline: none;
   }
-  &::placeholder {
-    font-family: "GangwonEdu_OTFBoldA";
-  }
 `;
 const CafeFormRemark = styled(CafeFormCafeName)`
-  grid-row: 9/11;
+  grid-row: 10/12;
 `;
 const CafeFormRemarkInput = styled(CafeFormDescriptionInput)`
-  grid-row: 9/11;
+  grid-row: 10/12;
 `;
 
 const CafeFormBtn = styled.button`
@@ -231,8 +238,8 @@ const CafeFormBtn = styled.button`
   height: 50px;
   border-radius: 10px;
   font-size: 20px;
-  background-color: #ecc987;
-  color: #331211;
+  background-color: ${({ theme }) => theme.bgColor};
+  color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
-  font-family: "GangwonEdu_OTFBoldA";
+  font-family: ${({ theme }) => theme.fontFamily};
 `;
