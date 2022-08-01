@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { USER_TOKEN } from "../../../../config";
 
 const PackageFormDetail = ({ detailFormData }) => {
   // const [packageDetailForm, setPackageDetailForm] = useState([]);
@@ -102,8 +103,31 @@ const PackageFormDetail = ({ detailFormData }) => {
             목록으로
           </PackageFormBtn>
           <PackageFormBtn>주문확인</PackageFormBtn>
-          <PackageFormUpdateBtn>수정</PackageFormUpdateBtn>
-          <PackageFormDeleteBtn>삭제</PackageFormDeleteBtn>
+          <PackageFormUpdateBtn
+            onClick={() => {
+              if (status === "not_confirmed") {
+                navigate(`/formdetail/${id}/edit`);
+              } else {
+                alert("수정이 불가합니다.");
+              }
+            }}
+          >
+            수정
+          </PackageFormUpdateBtn>
+          <PackageFormDeleteBtn
+            onClick={() => {
+              if (status === "not_confirmed") {
+                fetch(`http://15.164.163.31:8001/orders/${id}`, {
+                  method: "DELETE",
+                  headers: { Authorization: `Bearer ${USER_TOKEN}` },
+                });
+              } else {
+                alert("삭제가 불가합니다.");
+              }
+            }}
+          >
+            삭제
+          </PackageFormDeleteBtn>
         </PackageFormBtnWrap>
       </PackageFormWidth>
     </PackageFormWrapper>

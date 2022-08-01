@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
+import { USER_TOKEN } from "../../../../config";
 import styled from "styled-components";
 
 const CafeFormDetail = ({ detailFormData }) => {
@@ -36,10 +37,6 @@ const CafeFormDetail = ({ detailFormData }) => {
 
   // const params = useParams();
   const navigate = useNavigate();
-
-  const goToCafeEditForm = () => {
-    navigate("/");
-  };
 
   // useEffect(() => {
   //   fetch(`/data/cafeDetailFormData.json/formDetail/${params.id}`)
@@ -111,8 +108,31 @@ const CafeFormDetail = ({ detailFormData }) => {
           </CafeFormBtn>
 
           <CafeFormBtn>주문확인</CafeFormBtn>
-          <CafeFormUpdateBtn onClick={goToCafeEditForm}>수정</CafeFormUpdateBtn>
-          <CafeFormDeleteBtn>삭제</CafeFormDeleteBtn>
+          <CafeFormUpdateBtn
+            onClick={() => {
+              if (status === "not_confirmed") {
+                navigate(`/formdetail/${id}/edit`);
+              } else {
+                alert("수정이 불가합니다.");
+              }
+            }}
+          >
+            수정
+          </CafeFormUpdateBtn>
+          <CafeFormDeleteBtn
+            onClick={() => {
+              if (status === "not_confirmed") {
+                fetch(`http://15.164.163.31:8001/orders/${id}`, {
+                  method: "DELETE",
+                  headers: { Authorization: `Bearer ${USER_TOKEN}` },
+                });
+              } else {
+                alert("삭제가 불가합니다.");
+              }
+            }}
+          >
+            삭제
+          </CafeFormDeleteBtn>
         </CafeFormBtnWrap>
       </CafeFormWidth>
     </CafeFormWrapper>

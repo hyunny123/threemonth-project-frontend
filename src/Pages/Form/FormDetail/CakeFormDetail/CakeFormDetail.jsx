@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
+import { USER_TOKEN } from "../../../../config";
 import styled from "styled-components";
 
 const CakeFormDetail = ({ detailFormData }) => {
@@ -103,8 +104,31 @@ const CakeFormDetail = ({ detailFormData }) => {
             목록으로
           </CakeFormBtn>
           <CakeFormBtn>주문확인</CakeFormBtn>
-          <CakeFormUpdateBtn>수정</CakeFormUpdateBtn>
-          <CakeFormDeleteBtn>삭제</CakeFormDeleteBtn>
+          <CakeFormUpdateBtn
+            onClick={() => {
+              if (status === "not_confirmed") {
+                navigate(`/formdetail/${id}/edit`);
+              } else {
+                alert("수정이 불가합니다.");
+              }
+            }}
+          >
+            수정
+          </CakeFormUpdateBtn>
+          <CakeFormDeleteBtn
+            onClick={() => {
+              if (status === "not_confirmed") {
+                fetch(`http://15.164.163.31:8001/orders/${id}`, {
+                  method: "DELETE",
+                  headers: { Authorization: `Bearer ${USER_TOKEN}` },
+                });
+              } else {
+                alert("삭제가 불가합니다.");
+              }
+            }}
+          >
+            삭제
+          </CakeFormDeleteBtn>
         </CakeFormBtnWrap>
       </CakeFormWidth>
     </CakeFormWrapper>
