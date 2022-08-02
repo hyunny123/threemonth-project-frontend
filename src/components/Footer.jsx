@@ -5,8 +5,11 @@ import { useNavigate } from "react-router";
 const Footer = () => {
   const navigate = useNavigate();
 
-  const cafeFromClickHandler = () => {
+  const cafeFormClickHandler = () => {
     navigate("/cafeinputform");
+  };
+  const adminClickHandler = () => {
+    navigate("/adminpage");
   };
   return (
     <Container>
@@ -15,19 +18,20 @@ const Footer = () => {
           <Title>Follow us</Title>
           <Sns>
             <IconWrapper href="https://www.instagram.com/th_reemonths/">
-              <Icon src="./images/footer/instagram-logo.png" />
+              <Icon src="/images/instagram-logo.png" />
             </IconWrapper>
             <SnsTitle>INSTAGRAM</SnsTitle>
           </Sns>
           <Sns>
             <IconWrapper href="https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=%EB%9C%A8%EB%A6%AC%EB%A8%BC%EB%9C%A8">
-              <Icon src="./images/footer/naver-logo.png" />
+              <Icon src="/images/naver-logo.png" />
             </IconWrapper>
             <SnsTitle>NAVER</SnsTitle>
           </Sns>
-          <CafeFormButton onClick={cafeFromClickHandler}>
+          <CafeFormButton onClick={cafeFormClickHandler}>
             카페납품 제휴
           </CafeFormButton>
+          <AdminButton onClick={adminClickHandler}>Admin</AdminButton>
         </FooterSns>
 
         <Company>
@@ -45,8 +49,7 @@ const Footer = () => {
           <Info>Owner : 최주희</Info>
           <Info>BusinessNumber : 3661201580</Info>
           <Info>
-            Address : 서울 강서구 등촌로5가길 40 지층 러빙크리스마스 (우 :
-            07740)
+            Address : 서울 강서구 등촌로5가길 40 뜨리먼뜨 (우 : 07740)
           </Info>
           <Info>Email : rse_0507@naver.com</Info>
           <Info>통신판매정보 : 2021-서울강서-0412</Info>
@@ -89,7 +92,7 @@ const Sns = styled.div`
 
 const SnsTitle = styled.div`
   padding: 5px 0px;
-  font-size: 1.2em;
+  font-size: 1.1em;
   color: #331211;
 `;
 
@@ -103,14 +106,26 @@ const Icon = styled.img`
 
 const CafeFormButton = styled.button`
   border-style: none;
-  height: 40px;
-  width: 100%;
-  font-size: 1.2em;
+  height: 35px;
+  width: 85%;
+  font-size: 1em;
   font-family: "GangwonEdu_OTFBoldA";
   background-color: #332211;
   color: #f1e6d1;
   border-radius: 5px;
-  margin-top: 10px;
+  margin-top: 5px;
+  cursor: pointer;
+`;
+const AdminButton = styled.button`
+  border-style: none;
+  height: 35px;
+  width: 85%;
+  font-size: 1em;
+  font-family: "GangwonEdu_OTFBoldA";
+  background-color: #332211;
+  color: #f1e6d1;
+  border-radius: 5px;
+  margin-top: 5px;
   cursor: pointer;
 `;
 
