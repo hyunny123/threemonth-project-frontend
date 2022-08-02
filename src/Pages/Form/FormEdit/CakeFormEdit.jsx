@@ -1,36 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router";
+import { useParams } from "react-router";
 import styled from "styled-components";
 import Loading from "../../../components/Loading";
-import { API, USER_TOKEN } from "../../../config";
+import { USER_TOKEN } from "../../../config";
 
-const CakeFormEdit = () => {
-  const [cakeEditForm, setCakeEditForm] = useState({
-    title: "",
-    customer_name: "",
-    contact: "",
-    want_pick_up_date: "",
-    product_id: 0,
-    count: "",
-    additional_explanation: "",
-    type: "cake",
-  });
-  const { CAKEINPUT } = API;
-  const {
-    title,
-    customer_name,
-    contact,
-    want_pick_up_date,
-    product_id,
-    count,
-    additional_explanation,
-    type,
-  } = cakeEditForm;
+const CakeFormEdit = ({ editData }) => {
+  const navigate = useNavigate();
+  const { formId } = useParams();
+  const [cakeEditForm, setCakeEditForm] = useState(editData);
 
-  useEffect(() => {
-    fetch("/data/formeditdata.json", { method: "get" })
-      .then((res) => res.json())
-      .then((res) => setCakeEditForm(res.result.cake));
-  }, []);
+  const { title, customer_name, cakeorders, contact, additional_explanation } =
+    cakeEditForm;
+  const [orderDetail, setOrderDetail] = useState(cakeorders);
+
   const cakeFormHandleInput = (e) => {
     const { name, value } = e.target;
     setCakeEditForm({
@@ -38,25 +21,43 @@ const CakeFormEdit = () => {
       [name]: value,
     });
   };
+  const cakeFormDetailHandleInput = (e) => {
+    const { name, value } = e.target;
+    setOrderDetail({
+      ...orderDetail,
+      [name]: value,
+    });
+  };
 
   const cakeFormRequest = (e) => {
+    const { title, customer_name, type, additional_explanation, contact } =
+      cakeEditForm;
+    const { count, want_pick_up_date, product_id } = orderDetail;
     e.preventDefault();
     if (window.confirm("수정하시겠습니까?")) {
-      fetch(`${CAKEINPUT}`, {
-        method: "post",
-        headers: { Authorization: USER_TOKEN },
-        body: {
+      fetch(`http://15.164.163.31:8001/orders/${formId}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${USER_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
           title,
           customer_name,
+          type,
+          additional_explanation,
           contact,
+          count,
           want_pick_up_date,
           product_id,
-          count,
-          additional_explanation,
-          type,
-        },
+        }),
       }).then((res) => {
-        return res;
+        if (res.status === 200) {
+          navigate(`/formdetail/${formId}`);
+        } else {
+          alert("다시 시도해 주세요");
+          navigate(`/orders/${formId}`);
+        }
       });
     }
   };
@@ -103,38 +104,44 @@ const CakeFormEdit = () => {
           <CakeFormPickUpDate>픽업날짜</CakeFormPickUpDate>
           <CakeFormPickUpDateDiv>
             <CakeFormPickUpDateInput
-              id="cakedate"
               type="date"
-              placeholder="픽업 날짜를 선택해 주세요"
-              onChange={cakeFormHandleInput}
+              onChange={cakeFormDetailHandleInput}
               required
-              value={want_pick_up_date}
               name="want_pick_up_date"
               min={minDate}
             />
+            <CakeFormPickUpDateInputNotion>
+              날짜를 다시 한번 선택해 주세요. 선택하지 않을 시 처음 신청했던
+              날짜로 입력됩니다.
+            </CakeFormPickUpDateInputNotion>
           </CakeFormPickUpDateDiv>
           <CakeFormCakeName>케이크이름 및 수량</CakeFormCakeName>
           <SelectCake>
             <CakeFormCakeNameInput
               type="radio"
-              onChange={cakeFormHandleInput}
+              onChange={cakeFormDetailHandleInput}
               value={cakeEditForm.product_id}
               required
+              checked
               name="product_id"
             />
+            <div>{cakeorders.product_name}</div>
             <CakeFormOrderCountInput
               placeholder="수량을 입력하세요."
-              onChange={cakeFormHandleInput}
-              value={count}
+              onChange={cakeFormDetailHandleInput}
               type="number"
               max="4"
               min="0"
               name="count"
             />
+            <CakeFormPickUpDateInputNotion>
+              수량을 다시 한번 입력해 주세요. 입력하지 않을 시 최초 수량이
+              입력됩니다.
+            </CakeFormPickUpDateInputNotion>
           </SelectCake>
-          <CakeFormRemark>비고란</CakeFormRemark>
+          <CakeFormRemark>기타사항</CakeFormRemark>
           <CakeFormRemarkInput
-            placeholder="비고를 입력해 주세요"
+            placeholder="남겨주실 말을 적어주세요"
             onChange={cakeFormHandleInput}
             required
             value={additional_explanation}
@@ -189,7 +196,7 @@ const CakeFormNameInput = styled.input`
   border-style: none;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
-  font-family: "GangwonEdu_OTFBoldA";
+  font-family: ${({ theme }) => theme.fontFamily};
   &:focus {
     outline: none;
   }
@@ -210,13 +217,20 @@ const CakeFormPickUpDateInput = styled(CakeFormNameInput)`
   border: none;
   width: 200px;
 `;
+const CakeFormPickUpDateInputNotion = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: 30px;
+  font-size: 14px;
+  color: red;
+`;
 const CakeFormCakeName = styled(CakeFormName)``;
 const CakeFormCakeNameInput = styled(CakeFormNameInput)`
   margin-right: 20px;
 `;
 const CakeFormOrderCountInput = styled(CakeFormNameInput)`
   font-size: 0.9em;
-  margin-right: 20px;
+  margin-left: 20px;
   width: 150px;
 `;
 const CakeFormRemark = styled(CakeFormName)`
@@ -233,7 +247,7 @@ const CakeFormRemarkInput = styled.textarea`
   rows: 1;
   font-size: 17px;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
-  font-family: "GangwonEdu_OTFBoldA";
+  font-family: ${({ theme }) => theme.fontFamily};
   &:focus {
     outline: none;
   }
@@ -254,7 +268,7 @@ const CakeFormBtn = styled.button`
   height: 50px;
   border-radius: 10px;
   font-size: 20px;
-  font-family: "GangwonEdu_OTFBoldA";
+  font-family: ${({ theme }) => theme.fontFamily};
   background-color: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
   font-weight: bold;

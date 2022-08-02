@@ -12,9 +12,7 @@ import PackageInputForm from "./Pages/Form/FormInput/PackageInputForm";
 import FormDetail from "./Pages/Form/FormDetail/FormDetail";
 import AdminPage from "./Pages/AdminPage/AdminPage";
 import Footer from "./components/Footer";
-import CafeFormEdit from "./Pages/Form/FormEdit/CafeFormEdit";
-import CakeFormEdit from "./Pages/Form/FormEdit/CakeFormEdit";
-import PackageFormEdit from "./Pages/Form/FormEdit/PackageFormEdit";
+import FormEdit from "./Pages/Form/FormEdit/FormEdit";
 
 function Router() {
   return (
@@ -34,6 +32,7 @@ function Router() {
         <Route path="/packageinputform" element={<PackageInputForm />} />
         <Route path="/formdetail/:formId" element={<FormDetail />} />
         <Route path="/adminpage" element={<AdminPage />} />
+        <Route path="/formdetail/:formId/edit" element={<FormEdit />} />
       </Routes>
       <Footer />
     </BrowserRouter>

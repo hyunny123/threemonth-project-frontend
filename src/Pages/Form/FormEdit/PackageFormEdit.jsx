@@ -1,38 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
-import { API, USER_TOKEN } from "../../../config";
-import Loading from "../../../components/Loading";
+import { USER_TOKEN } from "../../../config";
+import { useParams } from "react-router";
 
-const PackageFormEdit = () => {
-  const [packageEditForm, setPackageEditForm] = useState({
-    title: "",
-    customer_name: "",
-    contact: "",
-    delivery_date: "",
-    delivery_location: "",
-    contents: "",
-    is_packaging: "",
-    additional_explanation: "",
-    type: "package",
-  });
-  const { PACKAGEINPUT } = API;
+const PackageFormEdit = ({ editData }) => {
+  const navigate = useNavigate();
+  const { formId } = useParams();
+  const [packageEditForm, setPackageEditForm] = useState(editData);
   const {
     title,
     customer_name,
     contact,
     delivery_date,
-    delivery_location,
-    contents,
-    is_packaging,
+    packageorders,
     additional_explanation,
-    type,
   } = packageEditForm;
+  const [packageEditDetailForm, setPackageEditDetailForm] =
+    useState(packageorders);
+  let { orderedproducts } = packageEditDetailForm;
+  const [updateList, setUpdateList] = useState(orderedproducts);
 
-  useEffect(() => {
-    fetch("/data/formeditdata.json")
-      .then((res) => res.json())
-      .then((data) => setPackageEditForm(data.result.package));
-  }, []);
   const packageEditFormHandleInput = (e) => {
     const { name, value } = e.target;
     setPackageEditForm({
@@ -40,38 +28,61 @@ const PackageFormEdit = () => {
       [name]: value,
     });
   };
+  const packageEditFormDetailHandleInput = (e) => {
+    const { name, value } = e.target;
+    setPackageEditDetailForm({
+      ...packageEditDetailForm,
+      [name]: value,
+    });
+  };
+  const handlePackageCheckbox = (value, id) => {
+    const productIdx = updateList.findIndex((list) => list.product_id === id);
+    const newArr = [...updateList];
+    newArr[productIdx].buying = value;
+    setUpdateList(newArr);
+  };
 
   const minDate = new Date(
     new Date().getTime() - new Date().getTimezoneOffset() * 60000
   )
     .toISOString()
     .slice(0, 10);
+
   const packageEditFormRequest = (e) => {
+    const { additional_explanation, contact, customer_name, title, type } =
+      packageEditForm;
+    const { delivery_date, delivery_location, is_packaging } =
+      packageEditDetailForm;
+    orderedproducts = [...updateList].filter((x) => x.buying === true);
     e.preventDefault();
     if (window.confirm("수정하시겠습니까?")) {
-      fetch(`${PACKAGEINPUT}`, {
-        method: "post",
-        headers: { Authorization: USER_TOKEN },
-        body: {
-          title,
-          customer_name,
+      fetch(`http://15.164.163.31:8001/orders/${formId}`, {
+        method: "put",
+        headers: {
+          Authorization: `Bearer ${USER_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          additional_explanation,
           contact,
+          customer_name,
+          title,
+          type,
           delivery_date,
           delivery_location,
-          contents,
           is_packaging,
-          additional_explanation,
-          type,
-        },
+          orderedproducts,
+        }),
       }).then((res) => {
-        return res;
+        if (res.status === 200) {
+          navigate(`/formdetail/${formId}`);
+        } else {
+          alert("다시 시도해 주세요");
+          navigate(`/orders/${formId}`);
+        }
       });
     }
   };
-
-  if (packageEditForm.title === "") {
-    return <Loading />;
-  }
 
   return (
     <PackageEditFormWrapper>
@@ -110,7 +121,7 @@ const PackageFormEdit = () => {
               type="date"
               name="delivery_date"
               min={minDate.toString()}
-              onChange={packageEditFormHandleInput}
+              onChange={packageEditFormDetailHandleInput}
               value={delivery_date}
             />
           </PackageEditFormDateDiv>
@@ -119,28 +130,42 @@ const PackageFormEdit = () => {
             placeholder="주소를 입력해 주세요"
             required
             name="delivery_location"
-            onChange={packageEditFormHandleInput}
-            value={delivery_location}
+            onChange={packageEditFormDetailHandleInput}
+            value={packageorders.delivery_location}
           />
           <PackageEditFormDescription>구성품</PackageEditFormDescription>
-          <PackageEditFormDescriptionInput
-            placeholder="원하시는 구성을 입력해 주세요"
-            required
-            name="contents"
-            onChange={packageEditFormHandleInput}
-            value={contents}
-          />
-          <PackageEditFormIsPackage>포장 유무</PackageEditFormIsPackage>
+          <PackageEditFormDescriptionDiv>
+            {packageorders.orderedproducts
+              .filter((product) => product.product_id !== 14)
+              .map((product, idx) => (
+                <InputWrap key={idx}>
+                  <PackageEditFormDescriptionInput
+                    type="checkbox"
+                    checked={product.buying}
+                    onChange={(e) =>
+                      handlePackageCheckbox(
+                        e.target.checked,
+                        product.product_id
+                      )
+                    }
+                  />
+                  <PackageEditFormDescriptionList>
+                    {product.product_name}
+                  </PackageEditFormDescriptionList>
+                </InputWrap>
+              ))}
+          </PackageEditFormDescriptionDiv>
+          <PackageEditFormIsPackage>패키지 유무</PackageEditFormIsPackage>
           <PackageEditFormIsPackageInput
-            placeholder="포장 유무를 입력해 주세요"
+            placeholder="패키지 유무를 입력해 주세요. 종이 포장으로 선택할 시 별도의 포장 요금이 추가되지 않습니다."
             required
             name="is_packaging"
-            onChange={packageEditFormHandleInput}
-            value={is_packaging}
+            onChange={packageEditFormDetailHandleInput}
+            value={packageorders.is_packaging}
           />
-          <PackageEditFormRemark>비고</PackageEditFormRemark>
+          <PackageEditFormRemark>기타사항</PackageEditFormRemark>
           <PackageEditFormRemarkInput
-            placeholder="비고란을 입력해 주세요"
+            placeholder="남겨주실 말을 입력해 주세요"
             name="additional_explanation"
             required
             onChange={packageEditFormHandleInput}
@@ -225,20 +250,26 @@ const PackageEditFormAddressInput = styled(PackageEditFormNameInput)``;
 const PackageEditFormDescription = styled(PackageEditFormName)`
   grid-row: 6/8;
 `;
-const PackageEditFormDescriptionInput = styled.textarea`
+const PackageEditFormDescriptionDiv = styled.div`
+  display: flex;
+  flex-wrap: wrap;
   grid-row: 6/8;
   border-style: none;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
   resize: none;
-  font-family: "GangwonEdu_OTFBoldA";
-  &:focus {
-    outline: none;
-  }
-  &::placeholder {
-    font-family: "GangwonEdu_OTFBoldA";
-  }
+  font-family: ${({ theme }) => theme.fontFamily};
 `;
+
+const InputWrap = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 180px;
+`;
+const PackageEditFormDescriptionInput = styled.input``;
+const PackageEditFormDescriptionList = styled.p``;
 
 const PackageEditFormIsPackage = styled(PackageEditFormName)``;
 const PackageEditFormIsPackageInput = styled(PackageEditFormNameInput)``;
@@ -246,7 +277,7 @@ const PackageEditFormIsPackageInput = styled(PackageEditFormNameInput)``;
 const PackageEditFormRemark = styled(PackageEditFormName)`
   grid-row: 9/10;
 `;
-const PackageEditFormRemarkInput = styled(PackageEditFormDescriptionInput)`
+const PackageEditFormRemarkInput = styled(PackageEditFormNameInput)`
   grid-row: 9/10;
 `;
 

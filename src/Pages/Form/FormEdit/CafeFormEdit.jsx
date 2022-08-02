@@ -1,57 +1,83 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { useParams } from "react-router";
 import styled from "styled-components";
 import Loading from "../../../components/Loading";
-import { API } from "../../../config";
+import { USER_TOKEN } from "../../../config";
 
-const CafeFormEdit = () => {
-  const [cafeEditForm, setCafeEditForm] = useState({
-    title: "",
-    cafename: "",
-    business_number: "",
-    cafe_owner_name: "",
-    customer_name: "",
-    cafe_location: "",
-    product_explanation: "",
-    additional_explanation: "",
-    type: "cafe",
-    contact: "",
-  });
+const CafeFormEdit = ({ editData }) => {
+  const navigate = useNavigate();
+  const { formId } = useParams();
+  const [cafeEditList, setCafeEditList] = useState(editData);
+
+  const [editPruductList, setEditProductList] = useState([
+    {
+      id: 0,
+      product_name: "",
+    },
+  ]);
+
   useEffect(() => {
-    fetch("/data/formeditdata.json")
+    fetch(
+      "http://15.164.163.31:8001/products?fields=product_name,id&category=bread"
+    )
       .then((res) => res.json())
-      .then((data) => setCafeEditForm(data.result.cafe));
+      .then((data) => [...data].filter((x) => x.id !== 14))
+      .then((data) => setEditProductList(data));
   }, []);
 
-  const { CAFEINPUT } = API;
   const {
     title,
-    cafename,
-    business_number,
-    cafe_owner_name,
-    customer_name,
-    cafe_location,
-    product_explanation,
+    cafeorders,
     additional_explanation,
-    type,
-    contact,
-  } = cafeEditForm;
+    product_explanation,
+    customer_name,
+  } = cafeEditList;
+
+  const [cafeOrders, setCafeOrders] = useState(cafeorders);
 
   const cafeFormHandleInput = (e) => {
     const { name, value } = e.target;
-    setCafeEditForm({
-      ...cafeEditForm,
+    setCafeEditList({
+      ...cafeEditList,
+      [name]: value,
+    });
+  };
+  const cafeFormOrdersHandleInput = (e) => {
+    const { name, value } = e.target;
+    setCafeOrders({
+      ...cafeOrders,
       [name]: value,
     });
   };
   const cafeFormRequest = (e) => {
+    const {
+      title,
+      additional_explanation,
+      type,
+      contact,
+      product_explanation,
+      customer_name,
+    } = cafeEditList;
+    const {
+      cafename,
+      cafe_owner_name,
+      corporate_registration_num,
+      cafe_location,
+    } = cafeOrders;
+
     e.preventDefault();
     if (window.confirm("수정하시겠습니까?")) {
-      fetch(`${CAFEINPUT}`, {
-        method: "post",
-        body: {
+      fetch(`http://15.164.163.31:8001/orders/${formId}`, {
+        method: "put",
+        headers: {
+          Authorization: `Bearer ${USER_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
           title,
           cafename,
-          business_number,
+          corporate_registration_num,
           cafe_owner_name,
           customer_name,
           cafe_location,
@@ -59,13 +85,18 @@ const CafeFormEdit = () => {
           additional_explanation,
           type,
           contact,
-        },
+        }),
       }).then((res) => {
-        return res;
+        if (res.status === 200) {
+          navigate(`/formdetail/${formId}`);
+        } else {
+          alert("다시 시도해 주세요");
+          navigate(`/orders/${formId}`);
+        }
       });
     }
   };
-  if (cafeEditForm.title === "") {
+  if (cafeEditList.title === "") {
     return <Loading />;
   }
   return (
@@ -82,22 +113,22 @@ const CafeFormEdit = () => {
           />
           <CafeFormCafeName>카페 이름</CafeFormCafeName>
           <CafeFormCafeNameInput
-            onChange={cafeFormHandleInput}
-            value={cafename}
+            onChange={cafeFormOrdersHandleInput}
+            value={cafeOrders.cafename}
             name="cafename"
             required
           />
           <CafeFormBusinessNumber>사업자 번호</CafeFormBusinessNumber>
           <CafeFormBusinessNumberInput
             onChange={cafeFormHandleInput}
-            value={business_number}
-            name="business_number"
+            value={cafeOrders.corporate_registration_num}
+            name="corporate_registration_num"
             required
           />
           <CafeFormCEOName>대표 이름</CafeFormCEOName>
           <CafeFormCEONameInput
-            onChange={cafeFormHandleInput}
-            value={cafe_owner_name}
+            onChange={cafeFormOrdersHandleInput}
+            value={cafeOrders.cafe_owner_name}
             name="cafe_owner_name"
             required
           />
@@ -110,11 +141,22 @@ const CafeFormEdit = () => {
           />
           <CafeFormCafeAddress>주소</CafeFormCafeAddress>
           <CafeFormCafeAddressInput
-            onChange={cafeFormHandleInput}
-            value={cafe_location}
+            onChange={cafeFormOrdersHandleInput}
+            value={cafeOrders.cafe_location}
             name="cafe_location"
             required
           />
+          <CafeFormProductListName>상품 종류</CafeFormProductListName>
+          <CafeFormProductListDiv>
+            {editPruductList.map((x, idx) => (
+              <CafeFormProductList key={idx}>
+                {x.product_name}
+              </CafeFormProductList>
+            ))}
+            <CafeFormProductListNotion>
+              원하시는 상품을 하단에 적어주세요
+            </CafeFormProductListNotion>
+          </CafeFormProductListDiv>
           <CafeFormDescription>원하는 제품과 수량</CafeFormDescription>
 
           <CafeFormDescriptionInput
@@ -162,7 +204,7 @@ const CafeFormTitle = styled.p`
 const CafeFormInputWrapper = styled.form`
   display: grid;
   justify-content: center;
-  grid-template-rows: repeat(10, 100px);
+  grid-template-rows: repeat(11, 100px);
   grid-template-columns: 1fr 5fr;
   box-sizing: border-box;
   margin-top: 50px;
@@ -202,16 +244,35 @@ const CafeFormManagerName = styled(CafeFormCafeName)``;
 const CafeFormManagerNameInput = styled(CafeFormCafeNameInput)``;
 const CafeFormCafeAddress = styled(CafeFormCafeName)``;
 const CafeFormCafeAddressInput = styled(CafeFormCafeNameInput)``;
+
+const CafeFormProductListName = styled(CafeFormCafeName)``;
+const CafeFormProductListDiv = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
+`;
+const CafeFormProductList = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 150px;
+`;
+const CafeFormProductListNotion = styled.p`
+  font-size: 14px;
+  color: red;
+`;
+
 const CafeFormDescription = styled(CafeFormCafeName)`
   text-align: center;
-  grid-row: 7/9;
+  grid-row: 8/10;
 `;
 const CafeFormDescriptionInput = styled.textarea`
   border-style: none;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
   resize: none;
-  grid-row: 7/9;
+  grid-row: 8/10;
   font-family: "GangwonEdu_OTFBoldA";
   &:focus {
     outline: none;
@@ -221,10 +282,10 @@ const CafeFormDescriptionInput = styled.textarea`
   }
 `;
 const CafeFormRemark = styled(CafeFormCafeName)`
-  grid-row: 9/11;
+  grid-row: 10/12;
 `;
 const CafeFormRemarkInput = styled(CafeFormDescriptionInput)`
-  grid-row: 9/11;
+  grid-row: 10/12;
 `;
 
 const CafeFormBtn = styled.button`
