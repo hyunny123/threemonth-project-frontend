@@ -1,47 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router";
-import { useParams } from "react-router-dom";
+import { USER_TOKEN } from "../../../../config";
 import styled from "styled-components";
 
-const CafeFormDetail = () => {
-  const [cafeFormDetail, setCafeFormDetail] = useState([]);
+const CafeFormDetail = ({ detailFormData }) => {
   const {
-    cafeinputtitle,
+    additional_explanation,
+    cafeorders,
+    contact,
+    created_at,
+    customer_name,
+    id,
+    status,
+    title,
+  } = detailFormData;
+
+  const {
+    cafe_location,
+    cafe_owner_name,
     cafename,
-    businessnumber,
-    ceoname,
-    managername,
-    cafeaddress,
-    description,
-    remark,
-  } = cafeFormDetail;
+    corporate_registration_num,
+    product_explanation,
+  } = cafeorders;
 
-  // const params = useParams();
   const navigate = useNavigate();
-
-  const goToCafeEditForm = () => {
-    navigate("/");
-  };
-
-  // useEffect(() => {
-  //   fetch(`/data/cafeDetailFormData.json/formDetail/${params.id}`)
-  //     .then((response) => response.json())
-  //     .then((data) => setCafeDetailForm(data));
-  // }, [params.id]);
-
-  // useEffect(() => {
-  //   fetch(`/data/CafeDetailFormData.json/formdetail/${params.id}`, {
-  //     method: "DELETE",
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => setCafeDetailForm(data));
-  // }, [params.id]);
-
-  useEffect(() => {
-    fetch("/data/cafeDetailFormData.json")
-      .then((response) => response.json())
-      .then((data) => setCafeFormDetail(data));
-  }, []);
 
   return (
     <CafeFormWrapper>
@@ -50,7 +32,7 @@ const CafeFormDetail = () => {
         <CafeFormDetailFormWrapper>
           <CafeFormInputTitle>글 제목</CafeFormInputTitle>
           <CafeFormInputTitleDetailForm name="cafeinputtitle" required>
-            {cafeinputtitle}
+            {title}
           </CafeFormInputTitleDetailForm>
           <CafeFormCafeName>카페 이름</CafeFormCafeName>
           <CafeFormCafeNameDetailForm name="cafename" required>
@@ -58,29 +40,29 @@ const CafeFormDetail = () => {
           </CafeFormCafeNameDetailForm>
           <CafeFormBusinessNumber>사업자 번호</CafeFormBusinessNumber>
           <CafeFormBusinessNumberDetailForm name="businessnumber" required>
-            {businessnumber}
+            {corporate_registration_num}
           </CafeFormBusinessNumberDetailForm>
           <CafeFormCEOName>대표 이름</CafeFormCEOName>
           <CafeFormCEONameDetailForm name="ceoname" required>
-            {ceoname}
+            {cafe_owner_name}
           </CafeFormCEONameDetailForm>
           <CafeFormManagerName>담당자 이름</CafeFormManagerName>
           <CafeFormManagerNameDetailForm name="managername" required>
-            {managername}
+            {customer_name}
           </CafeFormManagerNameDetailForm>
           <CafeFormCafeAddress>주소</CafeFormCafeAddress>
           <CafeFormCafeAddressDetailForm name="cafeaddress" required>
-            {cafeaddress}
+            {cafe_location}
           </CafeFormCafeAddressDetailForm>
           <CafeFormDescription>원하는 제품과 수량</CafeFormDescription>
 
           <CafeFormDescriptionDetailForm name="description" required>
-            {description}
+            {product_explanation}
           </CafeFormDescriptionDetailForm>
 
-          <CafeFormRemark>비고</CafeFormRemark>
+          <CafeFormRemark>기타사항</CafeFormRemark>
           <CafeFormRemarkDetailForm name="remark" required>
-            {remark}
+            {additional_explanation}
           </CafeFormRemarkDetailForm>
         </CafeFormDetailFormWrapper>
         <CafeFormBtnWrap>
@@ -92,9 +74,42 @@ const CafeFormDetail = () => {
             목록으로
           </CafeFormBtn>
 
-          <CafeFormBtn>주문확인</CafeFormBtn>
-          <CafeFormUpdateBtn onClick={goToCafeEditForm}>수정</CafeFormUpdateBtn>
-          <CafeFormDeleteBtn>삭제</CafeFormDeleteBtn>
+          <CafeFormUpdateBtn
+            onClick={() => {
+              if (status === "not_confirmed") {
+                navigate(`/formdetail/${id}/edit`);
+              } else {
+                alert("수정이 불가합니다.");
+              }
+            }}
+          >
+            수정
+          </CafeFormUpdateBtn>
+          <CafeFormDeleteBtn
+            onClick={() => {
+              if (window.confirm("삭제 하시겠습니까?") === true) {
+                if (status === "not_confirmed") {
+                  fetch(`http://15.164.163.31:8001/orders/${id}`, {
+                    method: "delete",
+                    headers: {
+                      Authorization: `Bearer ${USER_TOKEN}`,
+                      "Content-Type": "application/json;charset=UTF-8",
+                    },
+                  }).then((res) => {
+                    if (res.status === 204) {
+                      navigate("/formlist");
+                    }
+                  });
+                } else {
+                  alert("삭제가 불가합니다.");
+                }
+              } else {
+                alert("삭제를 취소하셨습니다.");
+              }
+            }}
+          >
+            삭제
+          </CafeFormDeleteBtn>
         </CafeFormBtnWrap>
       </CafeFormWidth>
     </CafeFormWrapper>
@@ -213,6 +228,7 @@ const CafeFormBtn = styled.button`
   color: #331211;
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
+  cursor: pointer;
 `;
 const CafeFormUpdateBtn = styled.button`
   border-style: none;
@@ -226,6 +242,9 @@ const CafeFormUpdateBtn = styled.button`
   color: #331211;
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
+  cursor: pointer;
 `;
 
-const CafeFormDeleteBtn = styled(CafeFormUpdateBtn)``;
+const CafeFormDeleteBtn = styled(CafeFormUpdateBtn)`
+  cursor: pointer;
+`;
