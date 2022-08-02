@@ -17,7 +17,7 @@ const CakeFormDetail = ({ detailFormData }) => {
   // } = cakeDetailForm;
 
   const {
-    addtional_explaination,
+    additional_explanation,
     cakeorders,
     contact,
     created_at,
@@ -28,8 +28,8 @@ const CakeFormDetail = ({ detailFormData }) => {
     type,
   } = detailFormData;
 
-  const { count, product_id, product_name, want_pick_up_date } = cakeorders;
-
+  const { count, product_name, want_pick_up_date } = cakeorders;
+  console.log(additional_explanation);
   // const params = useParams();
   const navigate = useNavigate();
 
@@ -92,7 +92,7 @@ const CakeFormDetail = ({ detailFormData }) => {
 
           <CakeFormRemark>비고란</CakeFormRemark>
           <CakeFormRemarkDetailForm required name="remark">
-            {addtional_explaination}
+            {additional_explanation}
           </CakeFormRemarkDetailForm>
         </CakeFormInputWrapper>
         <CakeFormBtnWrap>

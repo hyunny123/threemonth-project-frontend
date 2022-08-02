@@ -10,7 +10,7 @@ const PackageFormDetail = ({ detailFormData }) => {
   //   packageDetailForm;
 
   const {
-    addtional_explaination,
+    additional_explanation,
     contact,
     created_at,
     customer_name,
@@ -82,7 +82,21 @@ const PackageFormDetail = ({ detailFormData }) => {
           </PackageFormAddressDetailForm>
           <PackageFormDescription>구성품</PackageFormDescription>
           <PackageFormDescriptionDetailForm required name="contents">
-            {orderedproducts}
+            <PackageFormDescriptionDiv>
+              {packageorders.orderedproducts
+                .filter((x) => x.product_id !== 14)
+                .map((x, idx) => (
+                  <PackageFormDescriptionWrap key={idx}>
+                    <PackageFormDescriptionInput
+                      type="checkbox"
+                      name="orderedproducts"
+                      checked={x.buying}
+                      readOnly
+                    />
+                    <p>{x.product_name}</p>
+                  </PackageFormDescriptionWrap>
+                ))}
+            </PackageFormDescriptionDiv>
           </PackageFormDescriptionDetailForm>
           <PackageFormIsPackage>포장 유무</PackageFormIsPackage>
           <PackageFormIsPackageDetailForm name="ispackage" required>
@@ -90,7 +104,7 @@ const PackageFormDetail = ({ detailFormData }) => {
           </PackageFormIsPackageDetailForm>
           <PackageFormRemark>비고</PackageFormRemark>
           <PackageFormRemarkDetailForm name="remark" required>
-            {addtional_explaination}
+            {additional_explanation}
           </PackageFormRemarkDetailForm>
         </PackageFormInputWrapper>
 
@@ -193,6 +207,20 @@ const PackageFormDateDiv = styled.div`
   align-items: center;
   width: 100%;
   border-bottom: 1px solid ${(props) => props.theme.bgColor};
+`;
+const PackageFormDescriptionDiv = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+const PackageFormDescriptionWrap = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 180px;
+`;
+const PackageFormDescriptionInput = styled.input`
+  margin-right: 10px;
 `;
 const PackageFormDateDetailForm = styled(PackageFormNameDetailForm)`
   border: none;

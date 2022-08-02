@@ -18,7 +18,7 @@ const CafeFormDetail = ({ detailFormData }) => {
   // } = cafeFormDetail;
 
   const {
-    addtional_explaination,
+    additional_explanation,
     cafeorders,
     contact,
     created_at,
@@ -33,6 +33,7 @@ const CafeFormDetail = ({ detailFormData }) => {
     cafe_owner_name,
     cafename,
     corporate_registration_num,
+    product_explanation,
   } = cafeorders;
 
   // const params = useParams();
@@ -90,12 +91,12 @@ const CafeFormDetail = ({ detailFormData }) => {
           <CafeFormDescription>원하는 제품과 수량</CafeFormDescription>
 
           <CafeFormDescriptionDetailForm name="description" required>
-            {/* {description} */}
+            {product_explanation}
           </CafeFormDescriptionDetailForm>
 
           <CafeFormRemark>비고</CafeFormRemark>
           <CafeFormRemarkDetailForm name="remark" required>
-            {addtional_explaination}
+            {additional_explanation}
           </CafeFormRemarkDetailForm>
         </CafeFormDetailFormWrapper>
         <CafeFormBtnWrap>
