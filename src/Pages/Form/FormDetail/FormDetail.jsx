@@ -2,14 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
 import Loading from "../../../components/Loading";
-import { USER_TOKEN } from "../../../config";
+
+import PackageFormDetail from "./PackageFormDetail/PackageFormDetail";
 import CafeFormDetail from "./CafeFormDetail/CafeFormDetail";
 import CakeFormDetail from "./CakeFormDetail/CakeFormDetail";
-import PackageFormDetail from "./PackageFormDetail/PackageFormDetail";
 
 const FormDetail = () => {
   const [detailFormData, setDetailFormData] = useState({ id: 0 });
-  console.log(detailFormData);
 
   const params = useParams();
 

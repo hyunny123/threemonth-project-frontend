@@ -1,22 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router";
-import { useParams } from "react-router-dom";
 import { USER_TOKEN } from "../../../../config";
 import styled from "styled-components";
 
 const CafeFormDetail = ({ detailFormData }) => {
-  // const [cafeFormDetail, setCafeFormDetail] = useState([]);
-  // const {
-  //   cafeinputtitle,
-  //   cafename,
-  //   businessnumber,
-  //   ceoname,
-  //   managername,
-  //   cafeaddress,
-  //   description,
-  //   remark,
-  // } = cafeFormDetail;
-
   const {
     additional_explanation,
     cafeorders,
@@ -36,28 +23,7 @@ const CafeFormDetail = ({ detailFormData }) => {
     product_explanation,
   } = cafeorders;
 
-  // const params = useParams();
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   fetch(`/data/cafeDetailFormData.json/formDetail/${params.id}`)
-  //     .then((response) => response.json())
-  //     .then((data) => setCafeDetailForm(data));
-  // }, [params.id]);
-
-  // useEffect(() => {
-  //   fetch(`/data/CafeDetailFormData.json/formdetail/${params.id}`, {
-  //     method: "DELETE",
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => setCafeDetailForm(data));
-  // }, [params.id]);
-
-  // useEffect(() => {
-  //   fetch("/data/cafeDetailFormData.json")
-  //     .then((response) => response.json())
-  //     .then((data) => setCafeFormDetail(data));
-  // }, []);
 
   return (
     <CafeFormWrapper>
@@ -94,7 +60,7 @@ const CafeFormDetail = ({ detailFormData }) => {
             {product_explanation}
           </CafeFormDescriptionDetailForm>
 
-          <CafeFormRemark>비고</CafeFormRemark>
+          <CafeFormRemark>기타사항</CafeFormRemark>
           <CafeFormRemarkDetailForm name="remark" required>
             {additional_explanation}
           </CafeFormRemarkDetailForm>
@@ -108,7 +74,6 @@ const CafeFormDetail = ({ detailFormData }) => {
             목록으로
           </CafeFormBtn>
 
-          <CafeFormBtn>주문확인</CafeFormBtn>
           <CafeFormUpdateBtn
             onClick={() => {
               if (status === "not_confirmed") {
@@ -122,13 +87,24 @@ const CafeFormDetail = ({ detailFormData }) => {
           </CafeFormUpdateBtn>
           <CafeFormDeleteBtn
             onClick={() => {
-              if (status === "not_confirmed") {
-                fetch(`http://15.164.163.31:8001/orders/${id}`, {
-                  method: "DELETE",
-                  headers: { Authorization: `Bearer ${USER_TOKEN}` },
-                });
+              if (window.confirm("삭제 하시겠습니까?") === true) {
+                if (status === "not_confirmed") {
+                  fetch(`http://15.164.163.31:8001/orders/${id}`, {
+                    method: "delete",
+                    headers: {
+                      Authorization: `Bearer ${USER_TOKEN}`,
+                      "Content-Type": "application/json;charset=UTF-8",
+                    },
+                  }).then((res) => {
+                    if (res.status === 204) {
+                      navigate("/formlist");
+                    }
+                  });
+                } else {
+                  alert("삭제가 불가합니다.");
+                }
               } else {
-                alert("삭제가 불가합니다.");
+                alert("삭제를 취소하셨습니다.");
               }
             }}
           >

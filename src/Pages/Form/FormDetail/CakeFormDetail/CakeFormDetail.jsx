@@ -1,21 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router";
-import { useParams } from "react-router-dom";
 import { USER_TOKEN } from "../../../../config";
 import styled from "styled-components";
 
 const CakeFormDetail = ({ detailFormData }) => {
-  // const [cakeDetailForm, setCakeDetailForm] = useState([]);
-  // const {
-  //   cakeinputtitle,
-  //   name,
-  //   phonenumber,
-  //   cakepickupdate,
-  //   cakename,
-  //   ordercount,
-  //   remark,
-  // } = cakeDetailForm;
-
   const {
     additional_explanation,
     cakeorders,
@@ -29,29 +17,8 @@ const CakeFormDetail = ({ detailFormData }) => {
   } = detailFormData;
 
   const { count, product_name, want_pick_up_date } = cakeorders;
-  console.log(additional_explanation);
-  // const params = useParams();
+
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   fetch(`/data/cakeDetailFormData.json/formdetail/${params.id}`)
-  //     .then((response) => response.json())
-  //     .then((data) => setCakeDetailForm(data));
-  // }, [params.id]);
-
-  // useEffect(() => {
-  //   fetch(`/data/CakeDetailFormData.json/formdetail/${params.id}`, {
-  //     method: "DELETE",
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => setCakeDetailForm(data));
-  // }, [params.id]);
-
-  // useEffect(() => {
-  //   fetch("/data/cakeDetailFormData.json")
-  //     .then((response) => response.json())
-  //     .then((data) => setCakeDetailForm(data));
-  // }, []);
 
   return (
     <CakeFormWrapper>
@@ -90,7 +57,7 @@ const CakeFormDetail = ({ detailFormData }) => {
             </CakeFormOrderCountDetailForm>
           </CakeFormCakeNameWrap>
 
-          <CakeFormRemark>비고란</CakeFormRemark>
+          <CakeFormRemark>기타사항</CakeFormRemark>
           <CakeFormRemarkDetailForm required name="remark">
             {additional_explanation}
           </CakeFormRemarkDetailForm>
@@ -103,7 +70,6 @@ const CakeFormDetail = ({ detailFormData }) => {
           >
             목록으로
           </CakeFormBtn>
-          <CakeFormBtn>주문확인</CakeFormBtn>
           <CakeFormUpdateBtn
             onClick={() => {
               if (status === "not_confirmed") {
@@ -117,13 +83,24 @@ const CakeFormDetail = ({ detailFormData }) => {
           </CakeFormUpdateBtn>
           <CakeFormDeleteBtn
             onClick={() => {
-              if (status === "not_confirmed") {
-                fetch(`http://15.164.163.31:8001/orders/${id}`, {
-                  method: "DELETE",
-                  headers: { Authorization: `Bearer ${USER_TOKEN}` },
-                });
+              if (window.confirm("삭제 하시겠습니까?") === true) {
+                if (status === "not_confirmed") {
+                  fetch(`http://15.164.163.31:8001/orders/${id}`, {
+                    method: "delete",
+                    headers: {
+                      Authorization: `Bearer ${USER_TOKEN}`,
+                      "Content-Type": "application/json;charset=UTF-8",
+                    },
+                  }).then((res) => {
+                    if (res.status === 204) {
+                      navigate("/formlist");
+                    }
+                  });
+                } else {
+                  alert("삭제가 불가합니다.");
+                }
               } else {
-                alert("삭제가 불가합니다.");
+                alert("삭제를 취소하셨습니다.");
               }
             }}
           >
@@ -205,15 +182,11 @@ const CakeFormCakeNameDetailForm = styled.div`
 const CakeFormCakeNameWrap = styled.div`
   display: flex;
   width: 100%;
-  /* justify-content: ; */
   border-bottom: 1px solid #f1e6d1;
 `;
 const CakeFormOrderCountDetailForm = styled(CakeFormNameDetailForm)`
   margin-left: 20px;
   border-style: none;
-  /* font-size: 0.9em; */
-  /* margin-left: 30px; */
-  /* widths: 100%; */
 `;
 const CakeFormRemark = styled(CakeFormName)`
   grid-row: 6/8;

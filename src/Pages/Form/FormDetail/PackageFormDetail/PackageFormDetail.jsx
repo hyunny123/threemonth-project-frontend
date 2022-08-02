@@ -1,14 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router";
-import { useParams } from "react-router-dom";
-import styled from "styled-components";
 import { USER_TOKEN } from "../../../../config";
+import styled from "styled-components";
 
 const PackageFormDetail = ({ detailFormData }) => {
-  // const [packageDetailForm, setPackageDetailForm] = useState([]);
-  // const { name, phonenumber, date, address, contents, ispackage, remark } =
-  //   packageDetailForm;
-
+  console.log(detailFormData);
   const {
     additional_explanation,
     contact,
@@ -25,52 +21,22 @@ const PackageFormDetail = ({ detailFormData }) => {
 
   const { buying, product_id, product_name } = orderedproducts;
 
-  // const params = useParams();
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   fetch(`/data/packageDetailFormData.json/formdetail/${params.id}`)
-  //     .then((response) => response.json())
-  //     .then((data) => setPackageDetailForm(data));
-  // }, [params.id]);
-
-  // useEffect(() => {
-  //   fetch(`/data/packageDetailFormData.json/formdetail/${params.id}`, {
-  //     method: "POST",
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => setPackageDetailForm(data));
-  // }, [params.id]);
-
-  // useEffect(() => {
-  //   fetch(`/data/packageDetailFormData.json/formdetail/${params.id}`, {
-  //     method: "DELETE",
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => setPackageDetailForm(data));
-  // }, [params.id]);
-
-  // useEffect(() => {
-  //   fetch("/data/packageDetailFormData.json")
-  //     .then((response) => response.json())
-  //     .then((data) => setPackageDetailForm(data));
-  // }, []);
-  // console.log(packageDetailForm);
 
   return (
     <PackageFormWrapper>
       <PackageFormWidth>
-        <PackageFormTitle>패키지 신청서</PackageFormTitle>
+        <PackageFormTitle>기프트박스 신청서</PackageFormTitle>
         <PackageFormInputWrapper>
           <PackageFormName>이름</PackageFormName>
           <PackageFormNameDetailForm required name="name">
             {customer_name}
           </PackageFormNameDetailForm>
-          <PackageFormPhoneNumber>전화번호</PackageFormPhoneNumber>
+          <PackageFormPhoneNumber>폰번호</PackageFormPhoneNumber>
           <PackageFormPhoneNumberDetailForm required name="phonenumber">
             {contact}
           </PackageFormPhoneNumberDetailForm>
-          <PackageFormDate>날짜</PackageFormDate>
+          <PackageFormDate>프로모션 날짜</PackageFormDate>
           <PackageFormDateDiv>
             <PackageFormDateDetailForm required name="date">
               {delivery_date}
@@ -98,11 +64,11 @@ const PackageFormDetail = ({ detailFormData }) => {
                 ))}
             </PackageFormDescriptionDiv>
           </PackageFormDescriptionDetailForm>
-          <PackageFormIsPackage>포장 유무</PackageFormIsPackage>
+          <PackageFormIsPackage>패키지 유무</PackageFormIsPackage>
           <PackageFormIsPackageDetailForm name="ispackage" required>
             {is_packaging}
           </PackageFormIsPackageDetailForm>
-          <PackageFormRemark>비고</PackageFormRemark>
+          <PackageFormRemark>기타사항</PackageFormRemark>
           <PackageFormRemarkDetailForm name="remark" required>
             {additional_explanation}
           </PackageFormRemarkDetailForm>
@@ -116,7 +82,6 @@ const PackageFormDetail = ({ detailFormData }) => {
           >
             목록으로
           </PackageFormBtn>
-          <PackageFormBtn>주문확인</PackageFormBtn>
           <PackageFormUpdateBtn
             onClick={() => {
               if (status === "not_confirmed") {
@@ -130,13 +95,24 @@ const PackageFormDetail = ({ detailFormData }) => {
           </PackageFormUpdateBtn>
           <PackageFormDeleteBtn
             onClick={() => {
-              if (status === "not_confirmed") {
-                fetch(`http://15.164.163.31:8001/orders/${id}`, {
-                  method: "DELETE",
-                  headers: { Authorization: `Bearer ${USER_TOKEN}` },
-                });
+              if (window.confirm("삭제 하시겠습니까?") === true) {
+                if (status === "not_confirmed") {
+                  fetch(`http://15.164.163.31:8001/orders/${id}`, {
+                    method: "delete",
+                    headers: {
+                      Authorization: `Bearer ${USER_TOKEN}`,
+                      "Content-Type": "application/json;charset=UTF-8",
+                    },
+                  }).then((res) => {
+                    if (res.status === 204) {
+                      navigate("/formlist");
+                    }
+                  });
+                } else {
+                  alert("삭제가 불가합니다.");
+                }
               } else {
-                alert("삭제가 불가합니다.");
+                alert("삭제를 취소하셨습니다.");
               }
             }}
           >
