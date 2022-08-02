@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { USER_TOKEN } from "../../../config";
 import Loading from "../../../components/Loading";
 
 const CakeInputForm = () => {
-  // 이름, 폰번호, 픽업날짜, 케이크 이름 + 수량, 비고란
-
+  const navigate = useNavigate();
   const [cakeForm, setCakeForm] = useState({
     title: "",
     customer_name: "",
@@ -56,35 +56,52 @@ const CakeInputForm = () => {
     (1000 * 3600 * 24);
 
   const inputConfirmCheck =
-    "컨펌 시작 전까지만 수정이 가능합니다. 신청 하시겠습니까?";
+    "컨펌 시작 전까지만 수정이 가능합니다. 케이크 종류는 변경이 불가능하며, 변경 시 신청서를 삭제 후 다시 신청해 주세요. 신청하시겠습니까?";
+
+  const checkValueData =
+    title &&
+    customer_name &&
+    contact &&
+    want_pick_up_date &&
+    product_id &&
+    count &&
+    additional_explanation;
 
   const cakeFormRequest = (e) => {
     e.preventDefault();
-
-    if (countDays > 3) {
-      if (window.confirm(`${inputConfirmCheck}`)) {
-        fetch("http://15.164.163.31:8001/orders/", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${USER_TOKEN}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            title,
-            customer_name,
-            contact,
-            want_pick_up_date,
-            product_id,
-            count,
-            additional_explanation,
-            type,
-          }),
-        }).then((res) => {
-          return res;
-        });
+    if (checkValueData) {
+      if (countDays > 3) {
+        if (window.confirm(`${inputConfirmCheck}`)) {
+          fetch("http://15.164.163.31:8001/orders/", {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${USER_TOKEN}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              title,
+              customer_name,
+              contact,
+              want_pick_up_date,
+              product_id,
+              count,
+              additional_explanation,
+              type,
+            }),
+          }).then((res) => {
+            if (res.status === 201) {
+              alert("신청이 완료되었습니다.");
+              navigate("/formlist");
+            } else {
+              alert("다시 시도해 주세요. 문제가 지속될 경우 연락바랍니다.");
+            }
+          });
+        }
+      } else {
+        alert("신청일로부터 최소 2일 후 날짜부터 신청이 가능합니다.");
       }
     } else {
-      alert("신청일로부터 최소 2일 후 날짜부터 신청이 가능합니다.");
+      alert("빈칸을 확인해 주세요");
     }
   };
 
