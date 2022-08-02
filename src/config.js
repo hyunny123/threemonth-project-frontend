@@ -21,6 +21,11 @@ export const API = {
   FORMLIST: `${BASE_URL}/formlist`,
   FORMDETAIL: `${BASE_URL}/formdetail`,
 
+  // editform
+  CAFEFORMEDIT: `${BASE_URL}/cafeformedit`,
+  CAKEFORMEDIT: `${BASE_URL}/cakeformedit`,
+  PACKAGEFORMEDIT: `${BASE_URL}/packageformedit`,
+
   // inputpage
   CAFEINPUT: `${BASE_URL}/cafeinputform`,
   PACKAGEINPUT: `${BASE_URL}/packageinputform`,
