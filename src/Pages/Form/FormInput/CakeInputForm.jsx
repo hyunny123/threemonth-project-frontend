@@ -67,12 +67,14 @@ const CakeInputForm = () => {
     count &&
     additional_explanation;
 
+  const lengthCheck = additional_explanation.length < 300 && title.length < 50;
+
   const cakeFormRequest = (e) => {
     e.preventDefault();
     if (checkValueData) {
       if (countDays > 1) {
         if (count > 0) {
-          if (count < 5) {
+          if (lengthCheck) {
             if (window.confirm(`${inputConfirmCheck}`)) {
               fetch("http://15.164.163.31:8001/orders/", {
                 method: "POST",
@@ -100,7 +102,7 @@ const CakeInputForm = () => {
               });
             }
           } else {
-            alert("최대 신청 개수는 4개입니다.");
+            alert("글자 수를 확인해 주세요");
           }
         } else {
           alert("최소 1개 이상 수량을 입력해 주세요");
@@ -182,7 +184,7 @@ const CakeInputForm = () => {
           </SelectCake>
           <CakeFormRemark>기타사항</CakeFormRemark>
           <CakeFormRemarkInput
-            placeholder="남겨주실 말을 적어주세요"
+            placeholder="남겨주실 말을 적어주세요 최대 300자입니다."
             onChange={cakeFormHandleInput}
             required
             name="additional_explanation"
