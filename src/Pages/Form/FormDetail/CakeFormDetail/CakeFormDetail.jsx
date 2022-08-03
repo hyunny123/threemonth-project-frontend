@@ -1,42 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router";
-import { useParams } from "react-router-dom";
+import { USER_TOKEN } from "../../../../config";
 import styled from "styled-components";
 
-const CakeFormDetail = ({}) => {
-  const [cakeDetailForm, setCakeDetailForm] = useState([]);
+const CakeFormDetail = ({ detailFormData }) => {
   const {
-    cakeinputtitle,
-    name,
-    phonenumber,
-    cakepickupdate,
-    cakename,
-    ordercount,
-    remark,
-  } = cakeDetailForm;
+    additional_explanation,
+    cakeorders,
+    contact,
+    created_at,
+    customer_name,
+    id,
+    status,
+    title,
+    type,
+  } = detailFormData;
 
-  // const params = useParams();
+  const { count, product_name, want_pick_up_date } = cakeorders;
+
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   fetch(`/data/cakeDetailFormData.json/formdetail/${params.id}`)
-  //     .then((response) => response.json())
-  //     .then((data) => setCakeDetailForm(data));
-  // }, [params.id]);
-
-  // useEffect(() => {
-  //   fetch(`/data/CakeDetailFormData.json/formdetail/${params.id}`, {
-  //     method: "DELETE",
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => setCakeDetailForm(data));
-  // }, [params.id]);
-
-  useEffect(() => {
-    fetch("/data/cakeDetailFormData.json")
-      .then((response) => response.json())
-      .then((data) => setCakeDetailForm(data));
-  }, []);
 
   return (
     <CakeFormWrapper>
@@ -45,15 +27,15 @@ const CakeFormDetail = ({}) => {
         <CakeFormInputWrapper>
           <CakeFormInputTitle>글 제목</CakeFormInputTitle>
           <CakeFormInputTitleDetailForm required name="cakeinputtitle">
-            {cakeinputtitle}
+            {title}
           </CakeFormInputTitleDetailForm>
           <CakeFormName>이름</CakeFormName>
           <CakeFormNameDetailForm required name="name">
-            {name}
+            {customer_name}
           </CakeFormNameDetailForm>
           <CakeFormPhoneNumber>폰번호</CakeFormPhoneNumber>
           <CakeFormPhoneNumberDetailForm required name="phonenumber">
-            {phonenumber}
+            {contact}
           </CakeFormPhoneNumberDetailForm>
           <CakeFormPickUpDate>픽업날짜</CakeFormPickUpDate>
           <CakeFormPickUpDateDetailForm
@@ -61,23 +43,23 @@ const CakeFormDetail = ({}) => {
             required
             name="cakepickupdate"
           >
-            {cakepickupdate}
+            {want_pick_up_date}
           </CakeFormPickUpDateDetailForm>
           <CakeFormCakeName>케이크이름 및 수량</CakeFormCakeName>
 
           <CakeFormCakeNameWrap>
             <CakeFormCakeNameDetailForm required name="cakename">
-              {cakename}
+              {product_name}
             </CakeFormCakeNameDetailForm>
 
             <CakeFormOrderCountDetailForm name="ordercount">
-              {ordercount}개
+              {count}개
             </CakeFormOrderCountDetailForm>
           </CakeFormCakeNameWrap>
 
-          <CakeFormRemark>비고란</CakeFormRemark>
+          <CakeFormRemark>기타사항</CakeFormRemark>
           <CakeFormRemarkDetailForm required name="remark">
-            {remark}
+            {additional_explanation}
           </CakeFormRemarkDetailForm>
         </CakeFormInputWrapper>
         <CakeFormBtnWrap>
@@ -88,9 +70,42 @@ const CakeFormDetail = ({}) => {
           >
             목록으로
           </CakeFormBtn>
-          <CakeFormBtn>주문확인</CakeFormBtn>
-          <CakeFormUpdateBtn>수정</CakeFormUpdateBtn>
-          <CakeFormDeleteBtn>삭제</CakeFormDeleteBtn>
+          <CakeFormUpdateBtn
+            onClick={() => {
+              if (status === "not_confirmed") {
+                navigate(`/formdetail/${id}/edit`);
+              } else {
+                alert("수정이 불가합니다.");
+              }
+            }}
+          >
+            수정
+          </CakeFormUpdateBtn>
+          <CakeFormDeleteBtn
+            onClick={() => {
+              if (window.confirm("삭제 하시겠습니까?")) {
+                if (status === "not_confirmed") {
+                  fetch(`http://15.164.163.31:8001/orders/${id}`, {
+                    method: "delete",
+                    headers: {
+                      Authorization: `Bearer ${USER_TOKEN}`,
+                      "Content-Type": "application/json;charset=UTF-8",
+                    },
+                  }).then((res) => {
+                    if (res.status === 204) {
+                      navigate("/formlist");
+                    }
+                  });
+                } else {
+                  alert("삭제가 불가합니다.");
+                }
+              } else {
+                alert("삭제를 취소하셨습니다.");
+              }
+            }}
+          >
+            삭제
+          </CakeFormDeleteBtn>
         </CakeFormBtnWrap>
       </CakeFormWidth>
     </CakeFormWrapper>
@@ -167,15 +182,11 @@ const CakeFormCakeNameDetailForm = styled.div`
 const CakeFormCakeNameWrap = styled.div`
   display: flex;
   width: 100%;
-  /* justify-content: ; */
   border-bottom: 1px solid #f1e6d1;
 `;
 const CakeFormOrderCountDetailForm = styled(CakeFormNameDetailForm)`
   margin-left: 20px;
   border-style: none;
-  /* font-size: 0.9em; */
-  /* margin-left: 30px; */
-  /* widths: 100%; */
 `;
 const CakeFormRemark = styled(CakeFormName)`
   grid-row: 6/8;
@@ -216,6 +227,7 @@ const CakeFormBtn = styled.button`
   color: #331211;
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
+  cursor: pointer;
 `;
 
 const CakeFormUpdateBtn = styled.button`
@@ -230,6 +242,9 @@ const CakeFormUpdateBtn = styled.button`
   color: #331211;
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
+  cursor: pointer;
 `;
 
-const CakeFormDeleteBtn = styled(CakeFormUpdateBtn)``;
+const CakeFormDeleteBtn = styled(CakeFormUpdateBtn)`
+  cursor: pointer;
+`;

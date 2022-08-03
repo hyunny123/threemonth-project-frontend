@@ -1,47 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router";
-import { useParams } from "react-router-dom";
+import { USER_TOKEN } from "../../../../config";
 import styled from "styled-components";
 
-const CafeFormDetail = () => {
-  const [cafeFormDetail, setCafeFormDetail] = useState([]);
+const CafeFormDetail = ({ detailFormData }) => {
   const {
-    cafeinputtitle,
+    additional_explanation,
+    cafeorders,
+    contact,
+    created_at,
+    customer_name,
+    id,
+    status,
+    title,
+  } = detailFormData;
+
+  const {
+    cafe_location,
+    cafe_owner_name,
     cafename,
-    businessnumber,
-    ceoname,
-    managername,
-    cafeaddress,
-    description,
-    remark,
-  } = cafeFormDetail;
+    corporate_registration_num,
+    product_explanation,
+  } = cafeorders;
 
-  // const params = useParams();
   const navigate = useNavigate();
-
-  const goToCafeEditForm = () => {
-    navigate("/");
-  };
-
-  // useEffect(() => {
-  //   fetch(`/data/cafeDetailFormData.json/formDetail/${params.id}`)
-  //     .then((response) => response.json())
-  //     .then((data) => setCafeDetailForm(data));
-  // }, [params.id]);
-
-  // useEffect(() => {
-  //   fetch(`/data/CafeDetailFormData.json/formdetail/${params.id}`, {
-  //     method: "DELETE",
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => setCafeDetailForm(data));
-  // }, [params.id]);
-
-  useEffect(() => {
-    fetch("/data/cafeDetailFormData.json")
-      .then((response) => response.json())
-      .then((data) => setCafeFormDetail(data));
-  }, []);
 
   return (
     <CafeFormWrapper>
@@ -50,7 +32,7 @@ const CafeFormDetail = () => {
         <CafeFormDetailFormWrapper>
           <CafeFormInputTitle>글 제목</CafeFormInputTitle>
           <CafeFormInputTitleDetailForm name="cafeinputtitle" required>
-            {cafeinputtitle}
+            {title}
           </CafeFormInputTitleDetailForm>
           <CafeFormCafeName>카페 이름</CafeFormCafeName>
           <CafeFormCafeNameDetailForm name="cafename" required>
@@ -58,29 +40,33 @@ const CafeFormDetail = () => {
           </CafeFormCafeNameDetailForm>
           <CafeFormBusinessNumber>사업자 번호</CafeFormBusinessNumber>
           <CafeFormBusinessNumberDetailForm name="businessnumber" required>
-            {businessnumber}
+            {corporate_registration_num}
           </CafeFormBusinessNumberDetailForm>
           <CafeFormCEOName>대표 이름</CafeFormCEOName>
           <CafeFormCEONameDetailForm name="ceoname" required>
-            {ceoname}
+            {cafe_owner_name}
           </CafeFormCEONameDetailForm>
           <CafeFormManagerName>담당자 이름</CafeFormManagerName>
           <CafeFormManagerNameDetailForm name="managername" required>
-            {managername}
+            {customer_name}
           </CafeFormManagerNameDetailForm>
+          <CafeFormContact>카페 전화번호</CafeFormContact>
+          <CafeFormContactDetailForm name="contact" required>
+            {contact}
+          </CafeFormContactDetailForm>
           <CafeFormCafeAddress>주소</CafeFormCafeAddress>
           <CafeFormCafeAddressDetailForm name="cafeaddress" required>
-            {cafeaddress}
+            {cafe_location}
           </CafeFormCafeAddressDetailForm>
           <CafeFormDescription>원하는 제품과 수량</CafeFormDescription>
 
           <CafeFormDescriptionDetailForm name="description" required>
-            {description}
+            {product_explanation}
           </CafeFormDescriptionDetailForm>
 
-          <CafeFormRemark>비고</CafeFormRemark>
+          <CafeFormRemark>기타사항</CafeFormRemark>
           <CafeFormRemarkDetailForm name="remark" required>
-            {remark}
+            {additional_explanation}
           </CafeFormRemarkDetailForm>
         </CafeFormDetailFormWrapper>
         <CafeFormBtnWrap>
@@ -92,9 +78,42 @@ const CafeFormDetail = () => {
             목록으로
           </CafeFormBtn>
 
-          <CafeFormBtn>주문확인</CafeFormBtn>
-          <CafeFormUpdateBtn onClick={goToCafeEditForm}>수정</CafeFormUpdateBtn>
-          <CafeFormDeleteBtn>삭제</CafeFormDeleteBtn>
+          <CafeFormUpdateBtn
+            onClick={() => {
+              if (status === "not_confirmed") {
+                navigate(`/formdetail/${id}/edit`);
+              } else {
+                alert("수정이 불가합니다.");
+              }
+            }}
+          >
+            수정
+          </CafeFormUpdateBtn>
+          <CafeFormDeleteBtn
+            onClick={() => {
+              if (window.confirm("삭제 하시겠습니까?")) {
+                if (status === "not_confirmed") {
+                  fetch(`http://15.164.163.31:8001/orders/${id}`, {
+                    method: "delete",
+                    headers: {
+                      Authorization: `Bearer ${USER_TOKEN}`,
+                      "Content-Type": "application/json;charset=UTF-8",
+                    },
+                  }).then((res) => {
+                    if (res.status === 204) {
+                      navigate("/formlist");
+                    }
+                  });
+                } else {
+                  alert("삭제가 불가합니다.");
+                }
+              } else {
+                alert("삭제를 취소하셨습니다.");
+              }
+            }}
+          >
+            삭제
+          </CafeFormDeleteBtn>
         </CafeFormBtnWrap>
       </CafeFormWidth>
     </CafeFormWrapper>
@@ -109,7 +128,7 @@ const CafeFormWrapper = styled.div`
   align-items: center;
   min-height: 800px;
   margin: 100px 0;
-  color: #331211;
+  color: ${({ theme }) => theme.fontColor};
   font-size: 17px;
 `;
 const CafeFormWidth = styled.div`
@@ -125,19 +144,19 @@ const CafeFormTitle = styled.p`
 const CafeFormDetailFormWrapper = styled.form`
   display: grid;
   justify-content: center;
-  grid-template-rows: repeat(10, 100px);
+  grid-template-rows: repeat(11, 100px);
   grid-template-columns: 1fr 5fr;
   box-sizing: border-box;
   margin-top: 50px;
   width: 100%;
-  color: #331211;
-  border: 7px solid #f1e6d1;
+  color: ${({ theme }) => theme.fontColor};
+  border: 7px solid ${({ theme }) => theme.bgColor};
 `;
 const CafeFormCafeName = styled.p`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid #f1e6d1;
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
 `;
 const CafeFormCafeNameDetailForm = styled.div`
@@ -145,14 +164,10 @@ const CafeFormCafeNameDetailForm = styled.div`
   justify-content: flex-start;
   align-items: center;
   border-style: none;
-  border-bottom: 1px solid #f1e6d1;
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
   &:focus {
     outline: none;
-  }
-
-  &::placeholder {
-    font-family: "GangwonEdu_OTFBoldA";
   }
 `;
 
@@ -165,11 +180,13 @@ const CafeFormCEOName = styled(CafeFormCafeName)``;
 const CafeFormCEONameDetailForm = styled(CafeFormCafeNameDetailForm)``;
 const CafeFormManagerName = styled(CafeFormCafeName)``;
 const CafeFormManagerNameDetailForm = styled(CafeFormCafeNameDetailForm)``;
+const CafeFormContact = styled(CafeFormCafeName)``;
+const CafeFormContactDetailForm = styled(CafeFormCafeNameDetailForm)``;
 const CafeFormCafeAddress = styled(CafeFormCafeName)``;
 const CafeFormCafeAddressDetailForm = styled(CafeFormCafeNameDetailForm)``;
 const CafeFormDescription = styled(CafeFormCafeName)`
   text-align: center;
-  grid-row: 7/9;
+  grid-row: 8/10;
 `;
 const CafeFormDescriptionDetailForm = styled.div`
   display: flex;
@@ -180,7 +197,7 @@ const CafeFormDescriptionDetailForm = styled.div`
   border-bottom: 1px solid #f1e6d1;
   font-size: 17px;
   resize: none;
-  grid-row: 7/9;
+  grid-row: 8/10;
   &:focus {
     outline: none;
   }
@@ -189,10 +206,10 @@ const CafeFormDescriptionDetailForm = styled.div`
   }
 `;
 const CafeFormRemark = styled(CafeFormCafeName)`
-  grid-row: 9/11;
+  grid-row: 10/12;
 `;
 const CafeFormRemarkDetailForm = styled(CafeFormDescriptionDetailForm)`
-  grid-row: 9/11;
+  grid-row: 10/12;
   line-height: 1.5;
 `;
 
@@ -213,6 +230,7 @@ const CafeFormBtn = styled.button`
   color: #331211;
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
+  cursor: pointer;
 `;
 const CafeFormUpdateBtn = styled.button`
   border-style: none;
@@ -226,6 +244,9 @@ const CafeFormUpdateBtn = styled.button`
   color: #331211;
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
+  cursor: pointer;
 `;
 
-const CafeFormDeleteBtn = styled(CafeFormUpdateBtn)``;
+const CafeFormDeleteBtn = styled(CafeFormUpdateBtn)`
+  cursor: pointer;
+`;

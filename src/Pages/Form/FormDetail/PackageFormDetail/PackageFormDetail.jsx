@@ -1,71 +1,89 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router";
-import { useParams } from "react-router-dom";
+import { USER_TOKEN } from "../../../../config";
 import styled from "styled-components";
 
-const PackageFormDetail = () => {
-  const [packageDetailForm, setPackageDetailForm] = useState([]);
-  const { name, phonenumber, date, address, contents, ispackage, remark } =
-    packageDetailForm;
+const PackageFormDetail = ({ detailFormData }) => {
+  console.log(detailFormData);
+  const {
+    additional_explanation,
+    contact,
+    created_at,
+    customer_name,
+    id,
+    packageorders,
+    status,
+    title,
+  } = detailFormData;
 
-  // const params = useParams();
+  const {
+    delivery_date,
+    delivery_location,
+    is_packaging,
+    orderedproducts,
+    purpose,
+  } = packageorders;
+
+  const { buying, product_id, product_name } = orderedproducts;
+
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   fetch(`/data/packageDetailFormData.json/formdetail/${params.id}`)
-  //     .then((response) => response.json())
-  //     .then((data) => setPackageDetailForm(data));
-  // }, [params.id]);
-
-  // useEffect(() => {
-  //   fetch(`/data/packageDetailFormData.json/formdetail/${params.id}`, {
-  //     method: "DELETE",
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => setPackageDetailForm(data));
-  // }, [params.id]);
-
-  useEffect(() => {
-    fetch("/data/packageDetailFormData.json")
-      .then((response) => response.json())
-      .then((data) => setPackageDetailForm(data));
-  }, []);
-  console.log(packageDetailForm);
 
   return (
     <PackageFormWrapper>
       <PackageFormWidth>
-        <PackageFormTitle>패키지 신청서</PackageFormTitle>
+        <PackageFormTitle>기프트박스 신청서</PackageFormTitle>
         <PackageFormInputWrapper>
+          <PackageFormInputTitle>글 제목</PackageFormInputTitle>
+          <PackageFormTitleDetailForm required name="title">
+            {title}
+          </PackageFormTitleDetailForm>
+          <PackageFormPurpose>프로모션 목적</PackageFormPurpose>
+          <PackageFormPurposeDetailForm required name="purpose">
+            {purpose}
+          </PackageFormPurposeDetailForm>
           <PackageFormName>이름</PackageFormName>
           <PackageFormNameDetailForm required name="name">
-            {name}
+            {customer_name}
           </PackageFormNameDetailForm>
-          <PackageFormPhoneNumber>전화번호</PackageFormPhoneNumber>
+          <PackageFormPhoneNumber>폰번호</PackageFormPhoneNumber>
           <PackageFormPhoneNumberDetailForm required name="phonenumber">
-            {phonenumber}
+            {contact}
           </PackageFormPhoneNumberDetailForm>
-          <PackageFormDate>날짜</PackageFormDate>
+          <PackageFormDate>프로모션 날짜</PackageFormDate>
           <PackageFormDateDiv>
             <PackageFormDateDetailForm required name="date">
-              {date}
+              {delivery_date}
             </PackageFormDateDetailForm>
           </PackageFormDateDiv>
           <PackageFormAddress>주소</PackageFormAddress>
           <PackageFormAddressDetailForm required name="address">
-            {address}
+            {delivery_location}
           </PackageFormAddressDetailForm>
           <PackageFormDescription>구성품</PackageFormDescription>
           <PackageFormDescriptionDetailForm required name="contents">
-            {contents}
+            <PackageFormDescriptionDiv>
+              {packageorders.orderedproducts
+                .filter((x) => x.product_id !== 14)
+                .map((x, idx) => (
+                  <PackageFormDescriptionWrap key={idx}>
+                    <PackageFormDescriptionInput
+                      type="checkbox"
+                      name="orderedproducts"
+                      checked={x.buying}
+                      readOnly
+                    />
+                    <p>{x.product_name}</p>
+                  </PackageFormDescriptionWrap>
+                ))}
+            </PackageFormDescriptionDiv>
           </PackageFormDescriptionDetailForm>
-          <PackageFormIsPackage>포장 유무</PackageFormIsPackage>
+          <PackageFormIsPackage>패키지 유무</PackageFormIsPackage>
           <PackageFormIsPackageDetailForm name="ispackage" required>
-            {ispackage}
+            {is_packaging}
           </PackageFormIsPackageDetailForm>
-          <PackageFormRemark>비고</PackageFormRemark>
+          <PackageFormRemark>기타사항</PackageFormRemark>
           <PackageFormRemarkDetailForm name="remark" required>
-            {remark}
+            {additional_explanation}
           </PackageFormRemarkDetailForm>
         </PackageFormInputWrapper>
 
@@ -77,9 +95,42 @@ const PackageFormDetail = () => {
           >
             목록으로
           </PackageFormBtn>
-          <PackageFormBtn>주문확인</PackageFormBtn>
-          <PackageFormUpdateBtn>수정</PackageFormUpdateBtn>
-          <PackageFormDeleteBtn>삭제</PackageFormDeleteBtn>
+          <PackageFormUpdateBtn
+            onClick={() => {
+              if (status === "not_confirmed") {
+                navigate(`/formdetail/${id}/edit`);
+              } else {
+                alert("수정이 불가합니다.");
+              }
+            }}
+          >
+            수정
+          </PackageFormUpdateBtn>
+          <PackageFormDeleteBtn
+            onClick={() => {
+              if (window.confirm("삭제 하시겠습니까?")) {
+                if (status === "not_confirmed") {
+                  fetch(`http://15.164.163.31:8001/orders/${id}`, {
+                    method: "delete",
+                    headers: {
+                      Authorization: `Bearer ${USER_TOKEN}`,
+                      "Content-Type": "application/json;charset=UTF-8",
+                    },
+                  }).then((res) => {
+                    if (res.status === 204) {
+                      navigate("/formlist");
+                    }
+                  });
+                } else {
+                  alert("삭제가 불가합니다.");
+                }
+              } else {
+                alert("삭제를 취소하셨습니다.");
+              }
+            }}
+          >
+            삭제
+          </PackageFormDeleteBtn>
         </PackageFormBtnWrap>
       </PackageFormWidth>
     </PackageFormWrapper>
@@ -94,7 +145,7 @@ const PackageFormWrapper = styled.div`
   align-items: center;
   min-height: 800px;
   margin: 100px 0;
-  color: #331211;
+  color: ${({ theme }) => theme.fontColor};
 `;
 const PackageFormWidth = styled.div`
   display: flex;
@@ -109,32 +160,39 @@ const PackageFormTitle = styled.p`
 const PackageFormInputWrapper = styled.form`
   display: grid;
   justify-content: center;
-  grid-template-rows: repeat(7, 100px);
+  grid-template-rows: repeat(9, 100px);
   grid-template-columns: 1fr 6fr;
   box-sizing: border-box;
   margin-top: 50px;
   width: 100%;
-  color: #331211;
-  border: 7px solid #f1e6d1;
+  color: ${({ theme }) => theme.fontColor};
+  border: 7px solid ${({ theme }) => theme.bgColor};
 `;
 
 const PackageFormName = styled.p`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid #f1e6d1;
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
 `;
 const PackageFormNameDetailForm = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
   border-style: none;
-  border-bottom: 1px solid #f1e6d1;
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
+  font-family: ${({ theme }) => theme.fontFamily};
   &:focus {
     outline: none;
   }
 `;
+
+const PackageFormInputTitle = styled(PackageFormName)``;
+const PackageFormTitleDetailForm = styled(PackageFormNameDetailForm)``;
+
+const PackageFormPurpose = styled(PackageFormName)``;
+const PackageFormPurposeDetailForm = styled(PackageFormNameDetailForm)``;
 
 const PackageFormPhoneNumber = styled(PackageFormName)``;
 const PackageFormPhoneNumberDetailForm = styled(PackageFormNameDetailForm)``;
@@ -144,8 +202,13 @@ const PackageFormDateDiv = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  border-bottom: 1px solid ${(props) => props.theme.bgColor};
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
 `;
+const PackageFormDescriptionDiv = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
 const PackageFormDateDetailForm = styled(PackageFormNameDetailForm)`
   border: none;
 `;
@@ -155,6 +218,16 @@ const PackageFormAddressDetailForm = styled(PackageFormNameDetailForm)``;
 
 const PackageFormDescription = styled(PackageFormName)``;
 const PackageFormDescriptionDetailForm = styled(PackageFormNameDetailForm)``;
+
+const PackageFormDescriptionWrap = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 180px;
+`;
+const PackageFormDescriptionInput = styled.input`
+  margin-right: 10px;
+`;
 
 const PackageFormIsPackage = styled(PackageFormName)``;
 const PackageFormIsPackageDetailForm = styled(PackageFormNameDetailForm)``;
@@ -187,10 +260,11 @@ const PackageFormBtn = styled.button`
   height: 50px;
   border-radius: 10px;
   font-size: 20px;
-  background-color: #ecc987;
-  color: #331211;
+  background-color: ${({ theme }) => theme.bgColor};
+  color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
+  cursor: pointer;
 `;
 const PackageFormUpdateBtn = styled.button`
   border-style: none;
@@ -200,10 +274,13 @@ const PackageFormUpdateBtn = styled.button`
   height: 50px;
   border-radius: 10px;
   font-size: 20px;
-  background-color: #ecc987;
-  color: #331211;
+  background-color: ${({ theme }) => theme.bgColor};
+  color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
+  cursor: pointer;
 `;
 
-const PackageFormDeleteBtn = styled(PackageFormUpdateBtn)``;
+const PackageFormDeleteBtn = styled(PackageFormUpdateBtn)`
+  cursor: pointer;
+`;

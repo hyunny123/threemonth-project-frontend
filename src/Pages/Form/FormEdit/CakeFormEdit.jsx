@@ -1,48 +1,78 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import { useParams } from "react-router";
 import styled from "styled-components";
-import { USER_TOKEN } from "../../../config";
 import Loading from "../../../components/Loading";
+import { USER_TOKEN } from "../../../config";
 
-const CakeInputForm = () => {
+const CakeFormEdit = ({ editData }) => {
   const navigate = useNavigate();
-  const [cakeForm, setCakeForm] = useState({
-    title: "",
-    customer_name: "",
-    contact: "",
-    want_pick_up_date: "",
-    product_id: 0,
-    count: "",
-    additional_explanation: "",
-    type: "cake",
-  });
-  const [cakeList, setCakeList] = useState([
-    { id: 0, product_name: "", is_active: true },
-  ]);
-  const {
-    title,
-    customer_name,
-    contact,
-    want_pick_up_date,
-    product_id,
-    count,
-    additional_explanation,
-    type,
-  } = cakeForm;
+  const { formId } = useParams();
+  const [cakeEditForm, setCakeEditForm] = useState(editData);
 
-  useEffect(() => {
-    fetch("http://15.164.163.31:8001/products?category=cake")
-      .then((res) => res.json())
-      .then((data) => [...data].filter((x) => x.is_active === true))
-      .then((data) => setCakeList(data));
-  }, []);
+  const { title, customer_name, cakeorders, contact, additional_explanation } =
+    cakeEditForm;
+  const [orderDetail, setOrderDetail] = useState(cakeorders);
 
   const cakeFormHandleInput = (e) => {
     const { name, value } = e.target;
-    setCakeForm({
-      ...cakeForm,
+    setCakeEditForm({
+      ...cakeEditForm,
       [name]: value,
     });
+  };
+  const cakeFormDetailHandleInput = (e) => {
+    const { name, value } = e.target;
+    setOrderDetail({
+      ...orderDetail,
+      [name]: value,
+    });
+  };
+
+  const cakeFormRequest = (e) => {
+    const { title, customer_name, type, additional_explanation, contact } =
+      cakeEditForm;
+    const { count, want_pick_up_date, product_id } = orderDetail;
+    const checkValue =
+      title &&
+      customer_name &&
+      type &&
+      additional_explanation &&
+      contact &&
+      count &&
+      want_pick_up_date &&
+      product_id;
+    e.preventDefault();
+    if (checkValue) {
+      if (window.confirm("수정하시겠습니까?")) {
+        fetch(`http://15.164.163.31:8001/orders/${formId}`, {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${USER_TOKEN}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title,
+            customer_name,
+            type,
+            additional_explanation,
+            contact,
+            count,
+            want_pick_up_date,
+            product_id,
+          }),
+        }).then((res) => {
+          if (res.status === 200) {
+            navigate(`/formdetail/${formId}`);
+          } else {
+            alert("다시 시도해 주세요");
+            navigate(`/orders/${formId}`);
+          }
+        });
+      }
+    } else {
+      alert("빈칸을 확인해 주세요");
+    }
   };
 
   const minDate = new Date(
@@ -51,74 +81,21 @@ const CakeInputForm = () => {
     .toISOString()
     .slice(0, 10);
 
-  const countDays =
-    (new Date(want_pick_up_date).getTime() - new Date(minDate).getTime()) /
-    (1000 * 3600 * 24);
-
-  const inputConfirmCheck =
-    "컨펌 시작 전까지만 수정이 가능합니다. 케이크 종류는 변경이 불가능하며, 변경 시 신청서를 삭제 후 다시 신청해 주세요. 신청하시겠습니까?";
-
-  const checkValueData =
-    title &&
-    customer_name &&
-    contact &&
-    want_pick_up_date &&
-    product_id &&
-    count &&
-    additional_explanation;
-
-  const cakeFormRequest = (e) => {
-    e.preventDefault();
-    if (checkValueData) {
-      if (countDays > 3) {
-        if (window.confirm(`${inputConfirmCheck}`)) {
-          fetch("http://15.164.163.31:8001/orders/", {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${USER_TOKEN}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              title,
-              customer_name,
-              contact,
-              want_pick_up_date,
-              product_id,
-              count,
-              additional_explanation,
-              type,
-            }),
-          }).then((res) => {
-            if (res.status === 201) {
-              alert("신청이 완료되었습니다.");
-              navigate("/formlist");
-            } else {
-              alert("다시 시도해 주세요. 문제가 지속될 경우 연락바랍니다.");
-            }
-          });
-        }
-      } else {
-        alert("신청일로부터 최소 2일 후 날짜부터 신청이 가능합니다.");
-      }
-    } else {
-      alert("빈칸을 확인해 주세요");
-    }
-  };
-
-  if (cakeList[0].product_name === "") {
+  if (cakeEditForm.title === "") {
     return <Loading />;
   }
 
   return (
     <CakeFormWrapper>
       <CakeFormWidth>
-        <CakeFormTitle>케이크 픽업 신청서</CakeFormTitle>
+        <CakeFormTitle>케이크 신청 내역 수정</CakeFormTitle>
         <CakeFormInputWrapper>
           <CakeFormInputTitle>글 제목</CakeFormInputTitle>
           <CakeFormInputTitleInput
             placeholder="제목을 입력해 주세요"
             onChange={cakeFormHandleInput}
             required
+            value={title}
             name="title"
           />
           <CakeFormName>이름</CakeFormName>
@@ -126,6 +103,7 @@ const CakeInputForm = () => {
             placeholder="이름을 입력해 주세요"
             onChange={cakeFormHandleInput}
             required
+            value={customer_name}
             name="customer_name"
           />
           <CakeFormPhoneNumber>폰번호</CakeFormPhoneNumber>
@@ -133,15 +111,15 @@ const CakeInputForm = () => {
             placeholder="핸드폰 번호를 입력해 주세요"
             onChange={cakeFormHandleInput}
             required
+            value={contact}
             name="contact"
           />
           <CakeFormPickUpDate>픽업날짜</CakeFormPickUpDate>
           <CakeFormPickUpDateDiv>
             <CakeFormPickUpDateInput
-              id="cakedate"
               type="date"
-              placeholder="픽업 날짜를 선택해 주세요"
-              onChange={cakeFormHandleInput}
+              onChange={cakeFormDetailHandleInput}
+              value={orderDetail.want_pick_up_date}
               required
               name="want_pick_up_date"
               min={minDate}
@@ -149,44 +127,41 @@ const CakeInputForm = () => {
           </CakeFormPickUpDateDiv>
           <CakeFormCakeName>케이크이름 및 수량</CakeFormCakeName>
           <SelectCake>
-            {cakeList.map((list, idx) => (
-              <CakeFormCakeNameWrap key={idx}>
-                <CakeFormCakeNameInput
-                  type="radio"
-                  onChange={cakeFormHandleInput}
-                  value={list.id}
-                  required
-                  name="product_id"
-                />
-                <SelectLabel htmlFor={list.product_name}>
-                  {list.product_name}
-                </SelectLabel>
-                <CakeFormOrderCountInput
-                  placeholder="수량을 입력하세요."
-                  onChange={cakeFormHandleInput}
-                  type="number"
-                  max="4"
-                  min="0"
-                  name="count"
-                />
-              </CakeFormCakeNameWrap>
-            ))}
+            <CakeFormCakeNameInput
+              type="radio"
+              onChange={cakeFormDetailHandleInput}
+              value={orderDetail.product_id}
+              required
+              checked
+              name="product_id"
+            />
+            <div>{cakeorders.product_name}</div>
+            <CakeFormOrderCountInput
+              placeholder="수량을 입력하세요."
+              onChange={cakeFormDetailHandleInput}
+              value={orderDetail.count}
+              type="number"
+              max="4"
+              min="0"
+              name="count"
+            />
           </SelectCake>
           <CakeFormRemark>기타사항</CakeFormRemark>
           <CakeFormRemarkInput
             placeholder="남겨주실 말을 적어주세요"
             onChange={cakeFormHandleInput}
             required
+            value={additional_explanation}
             name="additional_explanation"
           />
         </CakeFormInputWrapper>
-        <CakeFormBtn onClick={cakeFormRequest}>신청하기</CakeFormBtn>
+        <CakeFormBtn onClick={cakeFormRequest}>수정하기</CakeFormBtn>
       </CakeFormWidth>
     </CakeFormWrapper>
   );
 };
 
-export default CakeInputForm;
+export default CakeFormEdit;
 
 const CakeFormWrapper = styled.div`
   display: flex;
@@ -241,23 +216,21 @@ const CakeFormPhoneNumberInput = styled(CakeFormNameInput)``;
 const CakeFormPickUpDate = styled(CakeFormName)``;
 const CakeFormPickUpDateDiv = styled.div`
   display: flex;
+  align-itmes: center;
   width: 100%;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
 `;
 const CakeFormPickUpDateInput = styled(CakeFormNameInput)`
   border: none;
+  width: 200px;
 `;
 const CakeFormCakeName = styled(CakeFormName)``;
 const CakeFormCakeNameInput = styled(CakeFormNameInput)`
   margin-right: 20px;
 `;
-const CakeFormCakeNameWrap = styled.div`
-  display: flex;
-  width: 100%;
-`;
 const CakeFormOrderCountInput = styled(CakeFormNameInput)`
   font-size: 0.9em;
-  margin-right: 20px;
+  margin-left: 20px;
   width: 150px;
 `;
 const CakeFormRemark = styled(CakeFormName)`
@@ -288,10 +261,6 @@ const SelectCake = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
 `;
 
-const SelectLabel = styled.label`
-  margin-right: 20px;
-`;
-
 const CakeFormBtn = styled.button`
   border-style: none;
   margin-top: 100px;
@@ -299,8 +268,8 @@ const CakeFormBtn = styled.button`
   height: 50px;
   border-radius: 10px;
   font-size: 20px;
+  font-family: ${({ theme }) => theme.fontFamily};
   background-color: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
-  font-family: ${({ theme }) => theme.fontFamily};
 `;

@@ -5,7 +5,6 @@ import Loading from "../../../components/Loading";
 import { USER_TOKEN } from "../../../config";
 
 const PackageInputForm = () => {
-  // 이름, 폰번호, 날짜, 주소, 구성품 + 수량, 포장 유무
   const navigate = useNavigate();
   const [selectList, setSelectList] = useState([
     {
@@ -32,6 +31,7 @@ const PackageInputForm = () => {
     contact,
     delivery_date,
     delivery_location,
+    purpose,
     is_packaging,
     additional_explanation,
   } = packageForm;
@@ -74,40 +74,57 @@ const PackageInputForm = () => {
     .map((product) => {
       return { product_id: product.id, buying: product.buying };
     });
+  const checkValueData =
+    title &&
+    customer_name &&
+    contact &&
+    purpose &&
+    delivery_date &&
+    delivery_location &&
+    orderedproducts &&
+    is_packaging &&
+    additional_explanation;
 
   const packageFormRequest = (e) => {
     e.preventDefault();
-    if (countDays > 3) {
-      if (orderedproducts.length > 1) {
-        if (window.confirm(`${inputConfirmCheck}`)) {
-          fetch("http://15.164.163.31:8001/orders/", {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${USER_TOKEN}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              title,
-              customer_name,
-              contact,
-              delivery_date,
-              delivery_location,
-              orderedproducts,
-              is_packaging,
-              additional_explanation,
-              type: "package",
-            }),
-          }).then((res) => {
-            if (res.status === 201) {
-              navigate("/formlist");
-            }
-          });
+    if (checkValueData) {
+      if (countDays > 4) {
+        if (orderedproducts.length > 1) {
+          if (window.confirm(`${inputConfirmCheck}`)) {
+            fetch("http://15.164.163.31:8001/orders/", {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${USER_TOKEN}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                title,
+                customer_name,
+                contact,
+                delivery_date,
+                purpose,
+                delivery_location,
+                orderedproducts,
+                is_packaging,
+                additional_explanation,
+                type: "package",
+              }),
+            }).then((res) => {
+              if (res.status === 201) {
+                navigate("/formlist");
+              } else {
+                alert("다시 시도해 주세요. 문제가 지속될 경우 연락바랍니다.");
+              }
+            });
+          }
+        } else {
+          alert("최소 2개 이상 선택해 주세요.");
         }
       } else {
-        alert("최소 2개 이상 선택해 주세요.");
+        alert("신청일로부터 최소 2일 후 날짜부터 신청이 가능합니다.");
       }
     } else {
-      alert("신청일로부터 최소 2일 후 날짜부터 신청이 가능합니다.");
+      alert("빈칸을 확인해 주세요");
     }
   };
 
@@ -180,7 +197,7 @@ const PackageInputForm = () => {
             ))}
             <PackageFormDescriptionP>
               * 선택하신 상품은 한 개의 수량이 입력됩니다. 2개 이상을 원하실
-              경우 비고란에 작성해 주세요. 상품 종류는 최소 2개 이상 선택해
+              경우 기타사항에 작성해 주세요. 상품 종류는 최소 2개 이상 선택해
               주세요.
             </PackageFormDescriptionP>
           </PackageFormDescriptionDiv>
