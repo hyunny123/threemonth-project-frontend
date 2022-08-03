@@ -67,35 +67,44 @@ const PackageFormEdit = ({ editData }) => {
       delivery_location &&
       is_packaging &&
       purpose;
+    const lengthCheck =
+      additional_explanation.length < 300 &&
+      delivery_location.length < 100 &&
+      is_packaging.length < 100 &&
+      purpose.length < 200;
     e.preventDefault();
     if (checkValue) {
-      if (window.confirm("수정하시겠습니까?")) {
-        fetch(`http://15.164.163.31:8001/orders/${formId}`, {
-          method: "put",
-          headers: {
-            Authorization: `Bearer ${USER_TOKEN}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            additional_explanation,
-            contact,
-            customer_name,
-            title,
-            purpose,
-            type,
-            delivery_date,
-            delivery_location,
-            is_packaging,
-            orderedproducts,
-          }),
-        }).then((res) => {
-          if (res.status === 200) {
-            navigate(`/formdetail/${formId}`);
-          } else {
-            alert("다시 시도해 주세요");
-            navigate(`/orders/${formId}`);
-          }
-        });
+      if (lengthCheck) {
+        if (window.confirm("수정하시겠습니까?")) {
+          fetch(`http://15.164.163.31:8001/orders/${formId}`, {
+            method: "put",
+            headers: {
+              Authorization: `Bearer ${USER_TOKEN}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              additional_explanation,
+              contact,
+              customer_name,
+              title,
+              purpose,
+              type,
+              delivery_date,
+              delivery_location,
+              is_packaging,
+              orderedproducts,
+            }),
+          }).then((res) => {
+            if (res.status === 200) {
+              navigate(`/formdetail/${formId}`);
+            } else {
+              alert("다시 시도해 주세요");
+              navigate(`/orders/${formId}`);
+            }
+          });
+        }
+      } else {
+        alert("글자 수를 확인해 주세요.");
       }
     } else {
       alert("빈칸을 확인해 주세요");
@@ -117,7 +126,7 @@ const PackageFormEdit = ({ editData }) => {
           />
           <PackageEditFormPurpose>프로모션 목적</PackageEditFormPurpose>
           <PackageEditFormPurposeInput
-            placeholder="ex) 기업 행사, 결혼 답례품 등"
+            placeholder="ex) 기업 행사, 결혼 답례품 등 / 최대 200자입니다."
             required
             name="purpose"
             onChange={packageEditFormDetailHandleInput}
@@ -154,7 +163,7 @@ const PackageFormEdit = ({ editData }) => {
           </PackageEditFormDateDiv>
           <PackageEditFormAddress>주소</PackageEditFormAddress>
           <PackageEditFormAddressInput
-            placeholder="주소를 입력해 주세요"
+            placeholder="주소를 입력해 주세요 최대 100자입니다."
             required
             name="delivery_location"
             onChange={packageEditFormDetailHandleInput}
@@ -192,7 +201,7 @@ const PackageFormEdit = ({ editData }) => {
           />
           <PackageEditFormRemark>기타사항</PackageEditFormRemark>
           <PackageEditFormRemarkInput
-            placeholder="남겨주실 말을 입력해 주세요"
+            placeholder="남겨주실 말을 입력해 주세요 최대 300자 입니다."
             name="additional_explanation"
             required
             onChange={packageEditFormHandleInput}

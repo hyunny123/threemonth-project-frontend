@@ -42,33 +42,39 @@ const CakeFormEdit = ({ editData }) => {
       count &&
       want_pick_up_date &&
       product_id;
+    const lengthCheck =
+      additional_explanation.length < 300 && title.length < 50;
     e.preventDefault();
     if (checkValue) {
-      if (window.confirm("수정하시겠습니까?")) {
-        fetch(`http://15.164.163.31:8001/orders/${formId}`, {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${USER_TOKEN}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            title,
-            customer_name,
-            type,
-            additional_explanation,
-            contact,
-            count,
-            want_pick_up_date,
-            product_id,
-          }),
-        }).then((res) => {
-          if (res.status === 200) {
-            navigate(`/formdetail/${formId}`);
-          } else {
-            alert("다시 시도해 주세요");
-            navigate(`/orders/${formId}`);
-          }
-        });
+      if (lengthCheck) {
+        if (window.confirm("수정하시겠습니까?")) {
+          fetch(`http://15.164.163.31:8001/orders/${formId}`, {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${USER_TOKEN}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              title,
+              customer_name,
+              type,
+              additional_explanation,
+              contact,
+              count,
+              want_pick_up_date,
+              product_id,
+            }),
+          }).then((res) => {
+            if (res.status === 200) {
+              navigate(`/formdetail/${formId}`);
+            } else {
+              alert("다시 시도해 주세요");
+              navigate(`/orders/${formId}`);
+            }
+          });
+        }
+      } else {
+        alert("글자 수를 확인해 주세요");
       }
     } else {
       alert("빈칸을 확인해 주세요");
@@ -148,7 +154,7 @@ const CakeFormEdit = ({ editData }) => {
           </SelectCake>
           <CakeFormRemark>기타사항</CakeFormRemark>
           <CakeFormRemarkInput
-            placeholder="남겨주실 말을 적어주세요"
+            placeholder="남겨주실 말을 적어주세요 최대 300자입니다."
             onChange={cakeFormHandleInput}
             required
             value={additional_explanation}
