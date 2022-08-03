@@ -27,7 +27,6 @@ const KakaoLogin = () => {
         }
       })
       .then((data) => {
-        // console.log(data.access_token);
         sendToken(data.access_token);
       });
   });
@@ -41,9 +40,8 @@ const KakaoLogin = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        // console.log(res);
-        localStorage.setItem("token", res.jwt.access);
-        localStorage.setItem("nickname", res.nickname);
+        sessionStorage.setItem("token", res.jwt.access);
+        sessionStorage.setItem("nickname", res.nickname);
         navigate(-1);
       });
   };
