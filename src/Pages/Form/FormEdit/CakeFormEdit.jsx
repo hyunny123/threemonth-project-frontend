@@ -33,32 +33,45 @@ const CakeFormEdit = ({ editData }) => {
     const { title, customer_name, type, additional_explanation, contact } =
       cakeEditForm;
     const { count, want_pick_up_date, product_id } = orderDetail;
+    const checkValue =
+      title &&
+      customer_name &&
+      type &&
+      additional_explanation &&
+      contact &&
+      count &&
+      want_pick_up_date &&
+      product_id;
     e.preventDefault();
-    if (window.confirm("수정하시겠습니까?")) {
-      fetch(`http://15.164.163.31:8001/orders/${formId}`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${USER_TOKEN}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title,
-          customer_name,
-          type,
-          additional_explanation,
-          contact,
-          count,
-          want_pick_up_date,
-          product_id,
-        }),
-      }).then((res) => {
-        if (res.status === 200) {
-          navigate(`/formdetail/${formId}`);
-        } else {
-          alert("다시 시도해 주세요");
-          navigate(`/orders/${formId}`);
-        }
-      });
+    if (checkValue) {
+      if (window.confirm("수정하시겠습니까?")) {
+        fetch(`http://15.164.163.31:8001/orders/${formId}`, {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${USER_TOKEN}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title,
+            customer_name,
+            type,
+            additional_explanation,
+            contact,
+            count,
+            want_pick_up_date,
+            product_id,
+          }),
+        }).then((res) => {
+          if (res.status === 200) {
+            navigate(`/formdetail/${formId}`);
+          } else {
+            alert("다시 시도해 주세요");
+            navigate(`/orders/${formId}`);
+          }
+        });
+      }
+    } else {
+      alert("빈칸을 확인해 주세요");
     }
   };
 
@@ -106,21 +119,18 @@ const CakeFormEdit = ({ editData }) => {
             <CakeFormPickUpDateInput
               type="date"
               onChange={cakeFormDetailHandleInput}
+              value={orderDetail.want_pick_up_date}
               required
               name="want_pick_up_date"
               min={minDate}
             />
-            <CakeFormPickUpDateInputNotion>
-              날짜를 다시 한번 선택해 주세요. 선택하지 않을 시 처음 신청했던
-              날짜로 입력됩니다.
-            </CakeFormPickUpDateInputNotion>
           </CakeFormPickUpDateDiv>
           <CakeFormCakeName>케이크이름 및 수량</CakeFormCakeName>
           <SelectCake>
             <CakeFormCakeNameInput
               type="radio"
               onChange={cakeFormDetailHandleInput}
-              value={cakeEditForm.product_id}
+              value={orderDetail.product_id}
               required
               checked
               name="product_id"
@@ -129,15 +139,12 @@ const CakeFormEdit = ({ editData }) => {
             <CakeFormOrderCountInput
               placeholder="수량을 입력하세요."
               onChange={cakeFormDetailHandleInput}
+              value={orderDetail.count}
               type="number"
               max="4"
               min="0"
               name="count"
             />
-            <CakeFormPickUpDateInputNotion>
-              수량을 다시 한번 입력해 주세요. 입력하지 않을 시 최초 수량이
-              입력됩니다.
-            </CakeFormPickUpDateInputNotion>
           </SelectCake>
           <CakeFormRemark>기타사항</CakeFormRemark>
           <CakeFormRemarkInput
@@ -216,13 +223,6 @@ const CakeFormPickUpDateDiv = styled.div`
 const CakeFormPickUpDateInput = styled(CakeFormNameInput)`
   border: none;
   width: 200px;
-`;
-const CakeFormPickUpDateInputNotion = styled.div`
-  display: flex;
-  align-items: center;
-  margin-left: 30px;
-  font-size: 14px;
-  color: red;
 `;
 const CakeFormCakeName = styled(CakeFormName)``;
 const CakeFormCakeNameInput = styled(CakeFormNameInput)`
