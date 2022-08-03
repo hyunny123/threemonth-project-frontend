@@ -1,7 +1,7 @@
 const BASE_URL = "http://15.164.163.31:8001";
 
-export const USER_TOKEN = localStorage.getItem("token");
-export const USER_NICKNAME = localStorage.getItem("nickname");
+export const USER_TOKEN = sessionStorage.getItem("token");
+export const USER_NICKNAME = sessionStorage.getItem("nickname");
 
 export const API = {
   //main
