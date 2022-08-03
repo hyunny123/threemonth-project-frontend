@@ -6,13 +6,15 @@ import { LOGIN_URI } from "../../Login/AuthData";
 
 const IndividualDetailAside = ({ individualData }) => {
   const navigate = useNavigate();
-  const { price, description, is_active, product_name } = individualData;
+  const { price, description, is_active, product_name, category } =
+    individualData;
   const goInputForm = () => {
     if (USER_TOKEN) {
       if (is_active === false) {
         alert("현재 판매중인 케이크가 아닙니다.");
+      } else {
+        navigate("/cakeinputform");
       }
-      navigate("/cakeinputform");
     } else {
       if (
         window.confirm("로그인이 필요한 서비스입니다. 로그인 하시겠습니까?")
@@ -30,10 +32,17 @@ const IndividualDetailAside = ({ individualData }) => {
         <IndividualDetailAsideP>
           {price.toLocaleString()}원
         </IndividualDetailAsideP>
-
-        <DetailIndividualReservBtn onClick={goInputForm}>
-          예약하러 가기
-        </DetailIndividualReservBtn>
+        {category === "cake" ? (
+          <DetailIndividualReservBtn onClick={goInputForm}>
+            예약하러 가기
+          </DetailIndividualReservBtn>
+        ) : (
+          <GoToBamin href="https://baemin.me/vrmWr_I9d">
+            <DetailIndividualReservBtn>
+              주문은 배달의 민족에서!
+            </DetailIndividualReservBtn>
+          </GoToBamin>
+        )}
       </IndividualDetailAsideTop>
     </IndividualDetailAsideWrapper>
   );
@@ -58,6 +67,13 @@ const IndividualDetailAsideTop = styled.div`
 
 const IndividualDetailAsideP = styled.p`
   margin-top: 50px;
+`;
+
+const GoToBamin = styled.a`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 `;
 
 const DetailIndividualReservBtn = styled.button`
