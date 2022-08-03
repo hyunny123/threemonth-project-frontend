@@ -26,13 +26,8 @@ const CafeFormEdit = ({ editData }) => {
       .then((data) => setEditProductList(data));
   }, []);
 
-  const {
-    title,
-    cafeorders,
-    additional_explanation,
-    product_explanation,
-    customer_name,
-  } = cafeEditList;
+  const { title, cafeorders, additional_explanation, customer_name } =
+    cafeEditList;
 
   const [cafeOrders, setCafeOrders] = useState(cafeorders);
 
@@ -51,49 +46,60 @@ const CafeFormEdit = ({ editData }) => {
     });
   };
   const cafeFormRequest = (e) => {
-    const {
-      title,
-      additional_explanation,
-      type,
-      contact,
-      product_explanation,
-      customer_name,
-    } = cafeEditList;
+    const { title, additional_explanation, type, contact, customer_name } =
+      cafeEditList;
     const {
       cafename,
       cafe_owner_name,
       corporate_registration_num,
+      product_explanation,
       cafe_location,
     } = cafeOrders;
 
+    const checkValue =
+      title &&
+      additional_explanation &&
+      type &&
+      contact &&
+      customer_name &&
+      cafename &&
+      cafe_owner_name &&
+      corporate_registration_num &&
+      product_explanation &&
+      cafe_location;
+
     e.preventDefault();
-    if (window.confirm("수정하시겠습니까?")) {
-      fetch(`http://15.164.163.31:8001/orders/${formId}`, {
-        method: "put",
-        headers: {
-          Authorization: `Bearer ${USER_TOKEN}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title,
-          cafename,
-          corporate_registration_num,
-          cafe_owner_name,
-          customer_name,
-          cafe_location,
-          product_explanation,
-          additional_explanation,
-          type,
-          contact,
-        }),
-      }).then((res) => {
-        if (res.status === 200) {
-          navigate(`/formdetail/${formId}`);
-        } else {
-          alert("다시 시도해 주세요");
-          navigate(`/orders/${formId}`);
-        }
-      });
+    if (checkValue) {
+      if (window.confirm("수정하시겠습니까?")) {
+        fetch(`http://15.164.163.31:8001/orders/${formId}`, {
+          method: "put",
+          headers: {
+            Authorization: `Bearer ${USER_TOKEN}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title,
+            cafename,
+            corporate_registration_num,
+            cafe_owner_name,
+            customer_name,
+            cafe_location,
+            product_explanation,
+            additional_explanation,
+            type,
+            contact,
+          }),
+        }).then((res) => {
+          if (res.status === 200) {
+            navigate(`/formdetail/${formId}`);
+          } else {
+            alert("다시 시도해 주세요");
+            navigate(`/orders/${formId}`);
+          }
+        });
+      }
+    } else {
+      alert("빈칸을 확인해 주세요");
     }
   };
   if (cafeEditList.title === "") {
@@ -120,7 +126,7 @@ const CafeFormEdit = ({ editData }) => {
           />
           <CafeFormBusinessNumber>사업자 번호</CafeFormBusinessNumber>
           <CafeFormBusinessNumberInput
-            onChange={cafeFormHandleInput}
+            onChange={cafeFormOrdersHandleInput}
             value={cafeOrders.corporate_registration_num}
             name="corporate_registration_num"
             required
@@ -160,8 +166,8 @@ const CafeFormEdit = ({ editData }) => {
           <CafeFormDescription>원하는 제품과 수량</CafeFormDescription>
 
           <CafeFormDescriptionInput
-            onChange={cafeFormHandleInput}
-            value={product_explanation}
+            onChange={cafeFormOrdersHandleInput}
+            value={cafeOrders.product_explanation}
             name="product_explanation"
             required
           />
