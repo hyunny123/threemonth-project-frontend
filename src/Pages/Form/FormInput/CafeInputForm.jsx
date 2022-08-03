@@ -190,10 +190,10 @@ const CafeInputForm = () => {
             required
           />
 
-          <CafeFormRemark>비고</CafeFormRemark>
+          <CafeFormRemark>기타사항</CafeFormRemark>
           <CafeFormRemarkInput
             onChange={cafeFormHandleInput}
-            placeholder="비고를 입력해 주세요"
+            placeholder="남겨주실 말을 입력해 주세요"
             name="additional_explanation"
             required
           />
