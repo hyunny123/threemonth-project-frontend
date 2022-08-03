@@ -56,49 +56,56 @@ const CafeInputForm = () => {
 
   const inputConfirmCheck =
     "컨펌 과정을 거치게 될 경우 수정이 불가합니다. 신청하시겠습니까?";
-
-  const checkValueData =
-    title &&
-    cafename &&
-    corporate_registration_num &&
-    cafe_owner_name &&
-    customer_name &&
-    cafe_location &&
-    product_explanation &&
-    additional_explanation &&
-    type &&
-    contact;
-
   const cafeFormRequest = (e) => {
     e.preventDefault();
+    const checkValueData =
+      title &&
+      cafename &&
+      corporate_registration_num &&
+      cafe_owner_name &&
+      customer_name &&
+      cafe_location &&
+      product_explanation &&
+      additional_explanation &&
+      type &&
+      contact;
+    const lengthCheck =
+      additional_explanation.length < 300 &&
+      title.length < 50 &&
+      cafe_location.length < 50;
+
     if (checkValueData) {
-      if (window.confirm(`${inputConfirmCheck}`)) {
-        fetch("http://15.164.163.31:8001/orders/", {
-          method: "post",
-          headers: {
-            Authorization: `Bearer ${USER_TOKEN}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            title,
-            cafename,
-            contact,
-            corporate_registration_num,
-            cafe_owner_name,
-            customer_name,
-            cafe_location,
-            product_explanation,
-            additional_explanation,
-            type,
-          }),
-        }).then((res) => {
-          if (res.status === 201) {
-            alert("신청이 완료되었습니다.");
-            navigate("/formlist");
-          } else {
-            alert("다시 시도해 주세요. 문제가 지속될 경우 연락바랍니다.");
-          }
-        });
+      if (lengthCheck) {
+        if (window.confirm(`${inputConfirmCheck}`)) {
+          fetch("http://15.164.163.31:8001/orders/", {
+            method: "post",
+            headers: {
+              Authorization: `Bearer ${USER_TOKEN}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              title,
+              cafename,
+              contact,
+              corporate_registration_num,
+              cafe_owner_name,
+              customer_name,
+              cafe_location,
+              product_explanation,
+              additional_explanation,
+              type,
+            }),
+          }).then((res) => {
+            if (res.status === 201) {
+              alert("신청이 완료되었습니다.");
+              navigate("/formlist");
+            } else {
+              alert("다시 시도해 주세요. 문제가 지속될 경우 연락바랍니다.");
+            }
+          });
+        }
+      } else {
+        alert("글자 수를 확인해 주세요.");
       }
     } else {
       alert("빈칸을 확인해 주세요");
@@ -190,10 +197,10 @@ const CafeInputForm = () => {
             required
           />
 
-          <CafeFormRemark>비고</CafeFormRemark>
+          <CafeFormRemark>기타사항</CafeFormRemark>
           <CafeFormRemarkInput
             onChange={cafeFormHandleInput}
-            placeholder="비고를 입력해 주세요"
+            placeholder="남겨주실 말을 입력해 주세요 최대 300자입니다."
             name="additional_explanation"
             required
           />

@@ -67,35 +67,45 @@ const CakeInputForm = () => {
     count &&
     additional_explanation;
 
+  const lengthCheck = additional_explanation.length < 300 && title.length < 50;
+
   const cakeFormRequest = (e) => {
     e.preventDefault();
     if (checkValueData) {
-      if (countDays > 3) {
-        if (window.confirm(`${inputConfirmCheck}`)) {
-          fetch("http://15.164.163.31:8001/orders/", {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${USER_TOKEN}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              title,
-              customer_name,
-              contact,
-              want_pick_up_date,
-              product_id,
-              count,
-              additional_explanation,
-              type,
-            }),
-          }).then((res) => {
-            if (res.status === 201) {
-              alert("신청이 완료되었습니다.");
-              navigate("/formlist");
-            } else {
-              alert("다시 시도해 주세요. 문제가 지속될 경우 연락바랍니다.");
+      if (countDays > 1) {
+        if (count > 0) {
+          if (lengthCheck) {
+            if (window.confirm(`${inputConfirmCheck}`)) {
+              fetch("http://15.164.163.31:8001/orders/", {
+                method: "POST",
+                headers: {
+                  Authorization: `Bearer ${USER_TOKEN}`,
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  title,
+                  customer_name,
+                  contact,
+                  want_pick_up_date,
+                  product_id,
+                  count,
+                  additional_explanation,
+                  type,
+                }),
+              }).then((res) => {
+                if (res.status === 201) {
+                  alert("신청이 완료되었습니다.");
+                  navigate("/formlist");
+                } else {
+                  alert("다시 시도해 주세요. 문제가 지속될 경우 연락바랍니다.");
+                }
+              });
             }
-          });
+          } else {
+            alert("글자 수를 확인해 주세요");
+          }
+        } else {
+          alert("최소 1개 이상 수량을 입력해 주세요");
         }
       } else {
         alert("신청일로부터 최소 2일 후 날짜부터 신청이 가능합니다.");
@@ -174,7 +184,7 @@ const CakeInputForm = () => {
           </SelectCake>
           <CakeFormRemark>기타사항</CakeFormRemark>
           <CakeFormRemarkInput
-            placeholder="남겨주실 말을 적어주세요"
+            placeholder="남겨주실 말을 적어주세요 최대 300자입니다."
             onChange={cakeFormHandleInput}
             required
             name="additional_explanation"
