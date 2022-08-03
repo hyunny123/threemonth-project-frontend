@@ -12,8 +12,9 @@ const IndividualDetailAside = ({ individualData }) => {
     if (USER_TOKEN) {
       if (is_active === false) {
         alert("현재 판매중인 케이크가 아닙니다.");
+      } else {
+        navigate("/cakeinputform");
       }
-      navigate("/cakeinputform");
     } else {
       if (
         window.confirm("로그인이 필요한 서비스입니다. 로그인 하시겠습니까?")
