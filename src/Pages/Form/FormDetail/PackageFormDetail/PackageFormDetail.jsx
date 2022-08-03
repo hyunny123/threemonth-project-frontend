@@ -16,8 +16,13 @@ const PackageFormDetail = ({ detailFormData }) => {
     title,
   } = detailFormData;
 
-  const { delivery_date, delivery_location, is_packaging, orderedproducts } =
-    packageorders;
+  const {
+    delivery_date,
+    delivery_location,
+    is_packaging,
+    orderedproducts,
+    purpose,
+  } = packageorders;
 
   const { buying, product_id, product_name } = orderedproducts;
 
@@ -28,6 +33,14 @@ const PackageFormDetail = ({ detailFormData }) => {
       <PackageFormWidth>
         <PackageFormTitle>기프트박스 신청서</PackageFormTitle>
         <PackageFormInputWrapper>
+          <PackageFormInputTitle>글 제목</PackageFormInputTitle>
+          <PackageFormTitleDetailForm required name="title">
+            {title}
+          </PackageFormTitleDetailForm>
+          <PackageFormPurpose>프로모션 목적</PackageFormPurpose>
+          <PackageFormPurposeDetailForm required name="purpose">
+            {purpose}
+          </PackageFormPurposeDetailForm>
           <PackageFormName>이름</PackageFormName>
           <PackageFormNameDetailForm required name="name">
             {customer_name}
@@ -95,7 +108,7 @@ const PackageFormDetail = ({ detailFormData }) => {
           </PackageFormUpdateBtn>
           <PackageFormDeleteBtn
             onClick={() => {
-              if (window.confirm("삭제 하시겠습니까?") === true) {
+              if (window.confirm("삭제 하시겠습니까?")) {
                 if (status === "not_confirmed") {
                   fetch(`http://15.164.163.31:8001/orders/${id}`, {
                     method: "delete",
@@ -132,7 +145,7 @@ const PackageFormWrapper = styled.div`
   align-items: center;
   min-height: 800px;
   margin: 100px 0;
-  color: #331211;
+  color: ${({ theme }) => theme.fontColor};
 `;
 const PackageFormWidth = styled.div`
   display: flex;
@@ -147,32 +160,39 @@ const PackageFormTitle = styled.p`
 const PackageFormInputWrapper = styled.form`
   display: grid;
   justify-content: center;
-  grid-template-rows: repeat(7, 100px);
+  grid-template-rows: repeat(9, 100px);
   grid-template-columns: 1fr 6fr;
   box-sizing: border-box;
   margin-top: 50px;
   width: 100%;
-  color: #331211;
-  border: 7px solid #f1e6d1;
+  color: ${({ theme }) => theme.fontColor};
+  border: 7px solid ${({ theme }) => theme.bgColor};
 `;
 
 const PackageFormName = styled.p`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid #f1e6d1;
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
 `;
 const PackageFormNameDetailForm = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
   border-style: none;
-  border-bottom: 1px solid #f1e6d1;
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
+  font-family: ${({ theme }) => theme.fontFamily};
   &:focus {
     outline: none;
   }
 `;
+
+const PackageFormInputTitle = styled(PackageFormName)``;
+const PackageFormTitleDetailForm = styled(PackageFormNameDetailForm)``;
+
+const PackageFormPurpose = styled(PackageFormName)``;
+const PackageFormPurposeDetailForm = styled(PackageFormNameDetailForm)``;
 
 const PackageFormPhoneNumber = styled(PackageFormName)``;
 const PackageFormPhoneNumberDetailForm = styled(PackageFormNameDetailForm)``;
@@ -182,12 +202,22 @@ const PackageFormDateDiv = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  border-bottom: 1px solid ${(props) => props.theme.bgColor};
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
 `;
 const PackageFormDescriptionDiv = styled.div`
   display: flex;
   flex-wrap: wrap;
 `;
+
+const PackageFormDateDetailForm = styled(PackageFormNameDetailForm)`
+  border: none;
+`;
+
+const PackageFormAddress = styled(PackageFormName)``;
+const PackageFormAddressDetailForm = styled(PackageFormNameDetailForm)``;
+
+const PackageFormDescription = styled(PackageFormName)``;
+const PackageFormDescriptionDetailForm = styled(PackageFormNameDetailForm)``;
 
 const PackageFormDescriptionWrap = styled.div`
   display: flex;
@@ -198,15 +228,6 @@ const PackageFormDescriptionWrap = styled.div`
 const PackageFormDescriptionInput = styled.input`
   margin-right: 10px;
 `;
-const PackageFormDateDetailForm = styled(PackageFormNameDetailForm)`
-  border: none;
-`;
-
-const PackageFormAddress = styled(PackageFormName)``;
-const PackageFormAddressDetailForm = styled(PackageFormNameDetailForm)``;
-
-const PackageFormDescription = styled(PackageFormName)``;
-const PackageFormDescriptionDetailForm = styled(PackageFormNameDetailForm)``;
 
 const PackageFormIsPackage = styled(PackageFormName)``;
 const PackageFormIsPackageDetailForm = styled(PackageFormNameDetailForm)``;
@@ -239,8 +260,8 @@ const PackageFormBtn = styled.button`
   height: 50px;
   border-radius: 10px;
   font-size: 20px;
-  background-color: #ecc987;
-  color: #331211;
+  background-color: ${({ theme }) => theme.bgColor};
+  color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;
@@ -253,8 +274,8 @@ const PackageFormUpdateBtn = styled.button`
   height: 50px;
   border-radius: 10px;
   font-size: 20px;
-  background-color: #ecc987;
-  color: #331211;
+  background-color: ${({ theme }) => theme.bgColor};
+  color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;

@@ -1,23 +1,24 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
-import { USER_TOKEN } from "../../../../config";
+// import { USER_TOKEN } from "../../../../config";
 
 const FormListBox = ({ sortedList }) => {
   const navigate = useNavigate();
 
   const goFormDetail = (id) => {
-    fetch("", {
-      method: "post",
-      headers: { Authorization: USER_TOKEN },
-      body: { id },
-    }).then((res) => {
-      if (res.status === 200) {
-        navigate(`/formdetail/${id}`);
-      } else {
-        alert("자신이 신청한 선청서만 확인할 수 있습니다.");
-      }
-    });
+    // fetch("", {
+    //   method: "post",
+    //   headers: { Authorization: USER_TOKEN },
+    //   body: { id },
+    // }).then((res) => {
+    //   if (res.status === 200) {
+    //     navigate(`/formdetail/${id}`);
+    //   } else {
+    //     alert("자신이 신청한 선청서만 확인할 수 있습니다.");
+    //   }
+    // });
+    navigate(`/formdetail/${id}`);
   };
   return (
     <FormListBoxWrapper>
@@ -31,19 +32,20 @@ const FormListBox = ({ sortedList }) => {
         </ListBoxMenu>
         <List>
           {sortedList.map((list, idx) => (
-            <ListBoxContents
-              onClick={() => {
-                goFormDetail(list.id);
-              }}
-              key={idx}
-            >
+            <ListBoxContents key={idx}>
               <ListBoxContent>{list.id}</ListBoxContent>
-              <ListBoxContent>{list.title}</ListBoxContent>
+              <ListBoxContent
+                onClick={() => {
+                  goFormDetail(list.id);
+                }}
+              >
+                {list.title}
+              </ListBoxContent>
               <ListBoxContent>{list.created_at.slice(0, 10)}</ListBoxContent>
               <ListBoxContent>{list.customer_name}님</ListBoxContent>
               {list.status === "not_confirmed" ? (
                 <ListBoxContent>신청완료</ListBoxContent>
-              ) : list.status === "confirmed" &&
+              ) : list.status === "confirmed" ||
                 list.status === "can't_cancel" ? (
                 <ListBoxContent>컨펌완료</ListBoxContent>
               ) : (
@@ -114,5 +116,6 @@ const ListBoxContent = styled.div`
   justify-content: center;
   &:nth-child(2) {
     justify-content: flex-start;
+    text-align: start;
   }
 `;

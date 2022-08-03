@@ -83,7 +83,7 @@ const CakeFormDetail = ({ detailFormData }) => {
           </CakeFormUpdateBtn>
           <CakeFormDeleteBtn
             onClick={() => {
-              if (window.confirm("삭제 하시겠습니까?") === true) {
+              if (window.confirm("삭제 하시겠습니까?")) {
                 if (status === "not_confirmed") {
                   fetch(`http://15.164.163.31:8001/orders/${id}`, {
                     method: "delete",
