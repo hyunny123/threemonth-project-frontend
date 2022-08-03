@@ -88,7 +88,7 @@ const PackageInputForm = () => {
   const packageFormRequest = (e) => {
     e.preventDefault();
     if (checkValueData) {
-      if (countDays > 4) {
+      if (countDays > 2) {
         if (orderedproducts.length > 1) {
           if (window.confirm(`${inputConfirmCheck}`)) {
             fetch("http://15.164.163.31:8001/orders/", {
@@ -121,7 +121,7 @@ const PackageInputForm = () => {
           alert("최소 2개 이상 선택해 주세요.");
         }
       } else {
-        alert("신청일로부터 최소 2일 후 날짜부터 신청이 가능합니다.");
+        alert("신청일로부터 최소 3일 후 날짜부터 신청이 가능합니다.");
       }
     } else {
       alert("빈칸을 확인해 주세요");
