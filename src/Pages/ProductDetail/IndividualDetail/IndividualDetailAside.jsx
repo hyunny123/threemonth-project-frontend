@@ -53,7 +53,7 @@ export default IndividualDetailAside;
 const IndividualDetailAsideWrapper = styled.div`
   display: grid;
   grid-template-rows: repeat(2, 1fr);
-  color: #331211;
+  color: ${(props) => props.theme.fontColor};
 `;
 
 const IndividualDetailAsideTop = styled.div`
@@ -83,8 +83,8 @@ const DetailIndividualReservBtn = styled.button`
   width: 70%;
   border-radius: 5px;
   font-size: 18px;
-  font-family: "GangwonEdu_OTFBoldA";
+  font-family: ${(props) => props.theme.fontFamily};
   color: ${(props) => props.theme.fontColor};
-  border: 1px solid #331211;
-  background-color: #f1e6d1;
+  border: 1px solid ${(props) => props.theme.fontColor};
+  background-color: ${(props) => props.theme.bgColor};
 `;

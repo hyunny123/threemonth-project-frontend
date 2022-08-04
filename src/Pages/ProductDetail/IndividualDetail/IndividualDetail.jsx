@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
-// import { API } from "../../../config";
 import Loading from "../../../components/Loading";
 import IndividualDetailAside from "./IndividualDetailAside";
 import IndividualDetailMain from "./IndividualDetailMain";
@@ -20,7 +19,6 @@ const IndividualDetail = () => {
   });
   const params = useParams();
   const { productId } = params;
-  // const { INDIVIDUALDETAIL } = API;
 
   useEffect(() => {
     fetch(`http://15.164.163.31:8001/products/${productId}`)
