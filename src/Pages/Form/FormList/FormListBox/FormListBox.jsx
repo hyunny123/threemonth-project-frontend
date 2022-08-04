@@ -33,12 +33,12 @@ const FormListBox = ({ sortedList }) => {
               <ListBoxContent>{list.created_at.slice(0, 10)}</ListBoxContent>
               <ListBoxContent>{list.customer_name}님</ListBoxContent>
               {list.status === "not_confirmed" ? (
-                <ListBoxContent>신청완료</ListBoxContent>
+                <ListFormStatus status={list.status}>신청완료</ListFormStatus>
               ) : list.status === "confirmed" ||
                 list.status === "can't_cancel" ? (
-                <ListBoxContent>컨펌완료</ListBoxContent>
+                <ListFormStatus status={list.status}>컨펌완료</ListFormStatus>
               ) : (
-                <ListBoxContent>완료</ListBoxContent>
+                <ListFormStatus status={list.status}>완료</ListFormStatus>
               )}
             </ListBoxContents>
           ))}
@@ -95,7 +95,7 @@ const ListBoxContents = styled.button`
   grid-template-columns: 0.4fr 2fr 0.5fr 0.5fr 0.5fr;
   width: 100%;
   background-color: white;
-  font-family: "GangwonEdu_OTFBoldA";
+  font-family: ${({ theme }) => theme.fontFamily};
   border-bottom: 1px solid ${(props) => props.theme.bgColor};
   margin-top: 20px;
   font-size: 1em;
@@ -103,6 +103,23 @@ const ListBoxContents = styled.button`
 const ListBoxContent = styled.div`
   display: flex;
   justify-content: center;
+  &:nth-child(2) {
+    justify-content: flex-start;
+    text-align: start;
+  }
+`;
+
+const ListFormStatus = styled.div`
+  display: flex;
+  justify-content: center;
+  color: ${({ status }) =>
+    status === "not_confirmed"
+      ? "blue"
+      : status === "confirmed"
+      ? "green"
+      : status === "completed"
+      ? "gray"
+      : "green"};
   &:nth-child(2) {
     justify-content: flex-start;
     text-align: start;
