@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import Loading from "../../../components/Loading";
+import NotValidBtn from "../../../components/NotValidBtn";
 import { USER_TOKEN } from "../../../config";
 import CafeFormEdit from "./CafeFormEdit.jsx";
 import CakeFormEdit from "./CakeFormEdit.jsx";
 import PackageFormEdit from "./PackageFormEdit.jsx";
 
 const FormEdit = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const { formId } = useParams();
   const [editData, setEditData] = useState({ id: 0, type: "cake" });
@@ -28,6 +30,10 @@ const FormEdit = () => {
         }
       });
   }, [formId, navigate]);
+
+  if (location.state === null) {
+    return <NotValidBtn />;
+  }
 
   if (editData.id === 0) {
     return <Loading />;
