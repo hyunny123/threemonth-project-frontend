@@ -9,7 +9,7 @@ const Footer = () => {
 
   const cafeFormClickHandler = () => {
     if (USER_TOKEN) {
-      navigate("/cafeinputform");
+      navigate("/reserveform", { state: { formType: "cafe" } });
     } else {
       if (
         window.confirm("로그인이 필요한 서비스입니다. 로그인을 하시겠습니까?")
