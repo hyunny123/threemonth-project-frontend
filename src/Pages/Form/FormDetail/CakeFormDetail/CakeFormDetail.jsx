@@ -8,12 +8,10 @@ const CakeFormDetail = ({ detailFormData }) => {
     additional_explanation,
     cakeorders,
     contact,
-    created_at,
     customer_name,
     id,
     status,
     title,
-    type,
   } = detailFormData;
 
   const { count, product_name, want_pick_up_date } = cakeorders;
@@ -73,7 +71,9 @@ const CakeFormDetail = ({ detailFormData }) => {
           <CakeFormUpdateBtn
             onClick={() => {
               if (status === "not_confirmed") {
-                navigate(`/formdetail/${id}/edit`);
+                navigate(`/formdetail/${id}/edit`, {
+                  state: { editCheck: true },
+                });
               } else {
                 alert("수정이 불가합니다.");
               }
@@ -202,7 +202,6 @@ const CakeFormRemarkDetailForm = styled.div`
   text-align: center;
   text-align: justify;
   resize: none;
-  rows: 1;
   font-size: 17px;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   &:focus {

@@ -7,7 +7,6 @@ const PackageFormDetail = ({ detailFormData }) => {
   const {
     additional_explanation,
     contact,
-    created_at,
     customer_name,
     id,
     packageorders,
@@ -15,15 +14,8 @@ const PackageFormDetail = ({ detailFormData }) => {
     title,
   } = detailFormData;
 
-  const {
-    delivery_date,
-    delivery_location,
-    is_packaging,
-    orderedproducts,
-    purpose,
-  } = packageorders;
-
-  const { buying, product_id, product_name } = orderedproducts;
+  const { delivery_date, delivery_location, is_packaging, purpose } =
+    packageorders;
 
   const navigate = useNavigate();
 
@@ -97,7 +89,9 @@ const PackageFormDetail = ({ detailFormData }) => {
           <PackageFormUpdateBtn
             onClick={() => {
               if (status === "not_confirmed") {
-                navigate(`/formdetail/${id}/edit`);
+                navigate(`/formdetail/${id}/edit`, {
+                  state: { editCheck: true },
+                });
               } else {
                 alert("수정이 불가합니다.");
               }
