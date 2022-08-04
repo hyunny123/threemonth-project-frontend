@@ -1,15 +1,13 @@
 import React, { useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
+import { USER_TOKEN, USER_NICKNAME } from "../config";
 import { LOGIN_URI } from "../Pages/Login/AuthData";
 // import { API } from "../config.js";
 
 const Nav = () => {
   const navigate = useNavigate();
   // const { KAKAOLOGOUT } = API;
-  const userToken = localStorage.getItem("token");
-  const userName = localStorage.getItem("nickname");
-  const isManage = false;
 
   const { pathname } = useLocation();
 
@@ -21,7 +19,7 @@ const Nav = () => {
     // fetch(`${KAKAOLOGOUT}`, {
     //   method: "POST",
     //   headers: {
-    //     Authorization: userToken,
+    //     Authorization: USER_TOKEN,
     //   },
     // }).then((res) => {
     //   if (res.status === 200) {
@@ -53,21 +51,16 @@ const Nav = () => {
             Form
           </Menu>
           <Menu onClick={() => alert("준비중인 페이지입니다")}>QnA</Menu>
-          {userToken ? (
-            <Menu onClick={() => alert(`${myPageNotice}`)}>{userName}님</Menu>
+          {USER_TOKEN ? (
+            <Menu onClick={() => alert(`${myPageNotice}`)}>
+              {USER_NICKNAME}님
+            </Menu>
           ) : (
             <a href={LOGIN_URI}>
               <MenuLogin src="./images/kakao_login_medium.png" />
             </a>
           )}
-          {userToken && <Menu onClick={goLogout}>Logout</Menu>}
-          {isManage && (
-            <Link to="/adminpage">
-              <Menu>
-                <u>Admin</u>
-              </Menu>
-            </Link>
-          )}
+          {USER_TOKEN && <Menu onClick={goLogout}>Logout</Menu>}
         </NavMenu>
       </Wrapper>
     </NavContainer>
@@ -82,8 +75,9 @@ const NavContainer = styled.nav`
   width: 100%;
   height: 110px;
   margin: 0 auto;
-  background-color: #f1e6d1;
+  background-color: ${({ theme }) => theme.bgColor};
 `;
+
 const Wrapper = styled.div`
   width: 85%;
   margin: 0 auto;
@@ -115,7 +109,7 @@ const Menu = styled.div`
   width: 100px;
   cursor: pointer;
   font-size: 1.2em;
-  color: #331211;
+  color: ${({ theme }) => theme.fontColor};
 `;
 
 const MenuLogin = styled.img`

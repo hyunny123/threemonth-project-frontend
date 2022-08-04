@@ -85,43 +85,52 @@ const PackageInputForm = () => {
     is_packaging &&
     additional_explanation;
 
+  const lengthCheck =
+    delivery_location.length < 100 &&
+    is_packaging.length < 100 &&
+    purpose.length < 200;
+
   const packageFormRequest = (e) => {
     e.preventDefault();
     if (checkValueData) {
-      if (countDays > 4) {
+      if (countDays > 2) {
         if (orderedproducts.length > 1) {
-          if (window.confirm(`${inputConfirmCheck}`)) {
-            fetch("http://15.164.163.31:8001/orders/", {
-              method: "POST",
-              headers: {
-                Authorization: `Bearer ${USER_TOKEN}`,
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                title,
-                customer_name,
-                contact,
-                delivery_date,
-                purpose,
-                delivery_location,
-                orderedproducts,
-                is_packaging,
-                additional_explanation,
-                type: "package",
-              }),
-            }).then((res) => {
-              if (res.status === 201) {
-                navigate("/formlist");
-              } else {
-                alert("다시 시도해 주세요. 문제가 지속될 경우 연락바랍니다.");
-              }
-            });
+          if (lengthCheck) {
+            if (window.confirm(`${inputConfirmCheck}`)) {
+              fetch("http://15.164.163.31:8001/orders/", {
+                method: "POST",
+                headers: {
+                  Authorization: `Bearer ${USER_TOKEN}`,
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  title,
+                  customer_name,
+                  contact,
+                  delivery_date,
+                  purpose,
+                  delivery_location,
+                  orderedproducts,
+                  is_packaging,
+                  additional_explanation,
+                  type: "package",
+                }),
+              }).then((res) => {
+                if (res.status === 201) {
+                  navigate("/formlist");
+                } else {
+                  alert("다시 시도해 주세요. 문제가 지속될 경우 연락바랍니다.");
+                }
+              });
+            }
+          } else {
+            alert("글자 수를 확인해 주세요");
           }
         } else {
           alert("최소 2개 이상 선택해 주세요.");
         }
       } else {
-        alert("신청일로부터 최소 2일 후 날짜부터 신청이 가능합니다.");
+        alert("신청일로부터 최소 3일 후 날짜부터 신청이 가능합니다.");
       }
     } else {
       alert("빈칸을 확인해 주세요");
@@ -146,7 +155,7 @@ const PackageInputForm = () => {
           />
           <PackageFormPurpose>프로모션 목적</PackageFormPurpose>
           <PackageFormPurposeInput
-            placeholder="ex) 기업 행사, 결혼 답례품 등"
+            placeholder="ex) 기업 행사, 결혼 답례품 등 / 최대 200자입니다."
             required
             name="purpose"
             onChange={packageFormHandleInput}
@@ -210,7 +219,7 @@ const PackageInputForm = () => {
           />
           <PackageFormRemark>기타사항</PackageFormRemark>
           <PackageFormRemarkInput
-            placeholder="남겨주실 말을 입력해 주세요"
+            placeholder="남겨주실 말을 입력해 주세요 최대 300자입니다."
             name="additional_explanation"
             required
             onChange={packageFormHandleInput}

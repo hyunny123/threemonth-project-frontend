@@ -1,53 +1,27 @@
-import React, { useEffect, useState } from "react";
-import FormListBox from "./FormListBox/FormListBox";
-import styled from "styled-components";
-import Loading from "../../../components/Loading";
-import ListNoContents from "./ListNoContents";
+import React from "react";
 import { useNavigate } from "react-router";
+import styled from "styled-components";
 import { USER_TOKEN } from "../../../config";
 import { LOGIN_URI } from "../../Login/AuthData";
 
-const FormList = () => {
+const ListNoContents = () => {
   const navigate = useNavigate();
-  const [formList, setFormList] = useState([
-    {
-      id: 0,
-      customer_name: "",
-      status: "",
-      title: "",
-      create_at: "",
-    },
-  ]);
-  useEffect(() => {
-    fetch("http://15.164.163.31:8001/orders")
-      .then((res) => res.json())
-      .then((data) => setFormList(data));
-  }, []);
-
-  if ([...formList].length === 0) {
-    return <ListNoContents />;
-  }
-
-  const sortedList = [...formList]
-    .sort(function (a, b) {
-      if (a.id > b.id) {
-        return 1;
-      }
-      if (a.id < b.id) {
-        return -1;
-      }
-      return 0;
-    })
-    .reverse();
-  if (formList[0].id === 0) {
-    return <Loading />;
-  }
-
   return (
     <FormListWrapper>
       <FormListWidth>
         <FormListTitle>뜨리먼뜨 Form</FormListTitle>
-        <FormListBox sortedList={sortedList} />
+        <ListBox>
+          <ListBoxMenu>
+            <MenuNum>글 번호</MenuNum>
+            <MenuSub>제목</MenuSub>
+            <MenuDate>작성일</MenuDate>
+            <MenuWriter>작성자</MenuWriter>
+            <MenuIsChecked>컨펌여부</MenuIsChecked>
+          </ListBoxMenu>
+          <NoContentWrap>
+            <NoContent>신청 내역이 없습니다.</NoContent>
+          </NoContentWrap>
+        </ListBox>
         <ReserveBtnWrap>
           <ReserveBtn
             onClick={() => {
@@ -81,7 +55,7 @@ const FormList = () => {
   );
 };
 
-export default FormList;
+export default ListNoContents;
 
 const FormListWrapper = styled.div`
   display: flex;
@@ -98,6 +72,42 @@ const FormListWidth = styled.div`
 
 const FormListTitle = styled.p`
   font-size: 1.6em;
+`;
+const ListBox = styled.div`
+  width: 100%;
+  min-height: 400px;
+  border-radius: 20px;
+`;
+const ListBoxMenu = styled.div`
+  display: grid;
+  align-items: end;
+  grid-template-columns: 0.4fr 2fr 0.5fr 0.5fr 0.5fr;
+  grid-template-rows: 50px;
+  box-sizing: border-box;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 4px solid ${(props) => props.theme.bgColor};
+`;
+const MenuNum = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 400px;
+`;
+const MenuSub = styled(MenuNum)``;
+const MenuDate = styled(MenuNum)``;
+const MenuWriter = styled(MenuNum)``;
+const MenuIsChecked = styled(MenuNum)``;
+
+const NoContentWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100px;
+  font-size: 20px;
+`;
+const NoContent = styled.p`
+  color: ${({ theme }) => theme.fontColor};
 `;
 
 const ReserveBtnWrap = styled.div`

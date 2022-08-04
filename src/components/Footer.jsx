@@ -1,16 +1,38 @@
 import React from "react";
-import styled from "styled-components";
 import { useNavigate } from "react-router";
+import { USER_TOKEN } from "../config";
+import { LOGIN_URI } from "../Pages/Login/AuthData";
+import styled from "styled-components";
 
 const Footer = () => {
   const navigate = useNavigate();
 
   const cafeFormClickHandler = () => {
-    navigate("/cafeinputform");
+    if (USER_TOKEN) {
+      navigate("/reserveform", { state: { formType: "cafe" } });
+    } else {
+      if (
+        window.confirm("로그인이 필요한 서비스입니다. 로그인을 하시겠습니까?")
+      ) {
+        window.location = `${LOGIN_URI}`;
+      }
+    }
   };
-  const adminClickHandler = () => {
-    navigate("/adminpage");
-  };
+  // const adminClickHandler = () => {
+  //   fetch("", {
+  //     method: "POST",
+  //     headers: {
+  //       Authorization: `Bearer ${USER_TOKEN}`,
+  //       "Content-Type": "application/json",
+  //     },
+  //   }).then((res) => {
+  //     if (res.status === 200) {
+  //       navigate("/adminpage");
+  //     } else {
+  //       alert("관리자가 아니");
+  //     }
+  //   });
+  // };
   return (
     <Container>
       <Wrapper>
@@ -31,7 +53,7 @@ const Footer = () => {
           <CafeFormButton onClick={cafeFormClickHandler}>
             카페납품 제휴
           </CafeFormButton>
-          <AdminButton onClick={adminClickHandler}>Admin</AdminButton>
+          <AdminButton>Admin</AdminButton>
         </FooterSns>
 
         <Company>

@@ -26,7 +26,7 @@ const CafeFormEdit = ({ editData }) => {
       .then((data) => setEditProductList(data));
   }, []);
 
-  const { title, cafeorders, additional_explanation, customer_name } =
+  const { title, cafeorders, contact, additional_explanation, customer_name } =
     cafeEditList;
 
   const [cafeOrders, setCafeOrders] = useState(cafeorders);
@@ -69,34 +69,42 @@ const CafeFormEdit = ({ editData }) => {
       cafe_location;
 
     e.preventDefault();
+    const lengthCheck =
+      additional_explanation.length < 300 &&
+      title.length < 50 &&
+      cafe_location.length < 50;
     if (checkValue) {
-      if (window.confirm("수정하시겠습니까?")) {
-        fetch(`http://15.164.163.31:8001/orders/${formId}`, {
-          method: "put",
-          headers: {
-            Authorization: `Bearer ${USER_TOKEN}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            title,
-            cafename,
-            corporate_registration_num,
-            cafe_owner_name,
-            customer_name,
-            cafe_location,
-            product_explanation,
-            additional_explanation,
-            type,
-            contact,
-          }),
-        }).then((res) => {
-          if (res.status === 200) {
-            navigate(`/formdetail/${formId}`);
-          } else {
-            alert("다시 시도해 주세요");
-            navigate(`/orders/${formId}`);
-          }
-        });
+      if (lengthCheck) {
+        if (window.confirm("수정하시겠습니까?")) {
+          fetch(`http://15.164.163.31:8001/orders/${formId}`, {
+            method: "put",
+            headers: {
+              Authorization: `Bearer ${USER_TOKEN}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              title,
+              cafename,
+              corporate_registration_num,
+              cafe_owner_name,
+              customer_name,
+              cafe_location,
+              product_explanation,
+              additional_explanation,
+              type,
+              contact,
+            }),
+          }).then((res) => {
+            if (res.status === 200) {
+              navigate(`/formdetail/${formId}`);
+            } else {
+              alert("다시 시도해 주세요");
+              navigate(`/orders/${formId}`);
+            }
+          });
+        }
+      } else {
+        alert("글자 수를 확인해 주세요.");
       }
     } else {
       alert("빈칸을 확인해 주세요");
@@ -113,6 +121,7 @@ const CafeFormEdit = ({ editData }) => {
           <CafeFormInputTitle>글 제목</CafeFormInputTitle>
           <CafeFormInputTitleInput
             onChange={cafeFormHandleInput}
+            placeholder="글 제목을 입력해 주세요"
             value={title}
             name="title"
             required
@@ -121,12 +130,14 @@ const CafeFormEdit = ({ editData }) => {
           <CafeFormCafeNameInput
             onChange={cafeFormOrdersHandleInput}
             value={cafeOrders.cafename}
+            placeholder="카페 이름을 입력해 주세요"
             name="cafename"
             required
           />
           <CafeFormBusinessNumber>사업자 번호</CafeFormBusinessNumber>
           <CafeFormBusinessNumberInput
             onChange={cafeFormOrdersHandleInput}
+            placeholder="사업자 번호를 입력해 주세요"
             value={cafeOrders.corporate_registration_num}
             name="corporate_registration_num"
             required
@@ -135,6 +146,7 @@ const CafeFormEdit = ({ editData }) => {
           <CafeFormCEONameInput
             onChange={cafeFormOrdersHandleInput}
             value={cafeOrders.cafe_owner_name}
+            placeholder="대표 이름을 입력해 주세요"
             name="cafe_owner_name"
             required
           />
@@ -142,14 +154,26 @@ const CafeFormEdit = ({ editData }) => {
           <CafeFormManagerNameInput
             onChange={cafeFormHandleInput}
             value={customer_name}
+            placeholder="담당자 이름을 입력해 주세요"
             name="customer_name"
             required
           />
+
+          <CafeFormInputContact>카페 전화번호</CafeFormInputContact>
+          <CafeFormInputContactInput
+            onChange={cafeFormHandleInput}
+            value={contact}
+            placeholder="카페 연락처를 입력해 주세요"
+            name="contact"
+            required
+          />
+
           <CafeFormCafeAddress>주소</CafeFormCafeAddress>
           <CafeFormCafeAddressInput
             onChange={cafeFormOrdersHandleInput}
             value={cafeOrders.cafe_location}
             name="cafe_location"
+            placeholder="주소를 입력해 주세요"
             required
           />
           <CafeFormProductListName>상품 종류</CafeFormProductListName>
@@ -166,14 +190,16 @@ const CafeFormEdit = ({ editData }) => {
           <CafeFormDescription>원하는 제품과 수량</CafeFormDescription>
 
           <CafeFormDescriptionInput
+            placeholder="원하는 제품과 수량을 입력해 주세요"
             onChange={cafeFormOrdersHandleInput}
             value={cafeOrders.product_explanation}
             name="product_explanation"
             required
           />
 
-          <CafeFormRemark>비고</CafeFormRemark>
+          <CafeFormRemark>기타사항</CafeFormRemark>
           <CafeFormRemarkInput
+            placeholder="남겨주실 말을 입력해 주세요 최대 300자입니다."
             onChange={cafeFormHandleInput}
             value={additional_explanation}
             name="additional_explanation"
@@ -210,7 +236,7 @@ const CafeFormTitle = styled.p`
 const CafeFormInputWrapper = styled.form`
   display: grid;
   justify-content: center;
-  grid-template-rows: repeat(11, 100px);
+  grid-template-rows: repeat(12, 100px);
   grid-template-columns: 1fr 5fr;
   box-sizing: border-box;
   margin-top: 50px;
@@ -242,6 +268,9 @@ const CafeFormCafeNameInput = styled.input`
 const CafeFormInputTitle = styled(CafeFormCafeName)``;
 const CafeFormInputTitleInput = styled(CafeFormCafeNameInput)``;
 
+const CafeFormInputContact = styled(CafeFormCafeName)``;
+const CafeFormInputContactInput = styled(CafeFormCafeNameInput)``;
+
 const CafeFormBusinessNumber = styled(CafeFormCafeName)``;
 const CafeFormBusinessNumberInput = styled(CafeFormCafeNameInput)``;
 const CafeFormCEOName = styled(CafeFormCafeName)``;
@@ -271,14 +300,14 @@ const CafeFormProductListNotion = styled.p`
 
 const CafeFormDescription = styled(CafeFormCafeName)`
   text-align: center;
-  grid-row: 8/10;
+  grid-row: 9/11;
 `;
 const CafeFormDescriptionInput = styled.textarea`
   border-style: none;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
   resize: none;
-  grid-row: 8/10;
+  grid-row: 9/11;
   font-family: "GangwonEdu_OTFBoldA";
   &:focus {
     outline: none;
@@ -288,10 +317,10 @@ const CafeFormDescriptionInput = styled.textarea`
   }
 `;
 const CafeFormRemark = styled(CafeFormCafeName)`
-  grid-row: 10/12;
+  grid-row: 11/13;
 `;
 const CafeFormRemarkInput = styled(CafeFormDescriptionInput)`
-  grid-row: 10/12;
+  grid-row: 11/13;
 `;
 
 const CafeFormBtn = styled.button`

@@ -17,7 +17,7 @@ const PackageDetail = () => {
 
   const goReservGiftBox = () => {
     if (USER_TOKEN) {
-      navigate("/packageinputform");
+      navigate("/reserveform", { state: { formType: "package" } });
     } else {
       if (
         window.confirm("로그인이 필요한 서비스입니다. 로그인 하시겠습니까?")
@@ -47,8 +47,7 @@ const PackageDetailWrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  color: ${(props) => props.theme.fontColor};
-  /* background-color: ${(props) => props.theme.bgColor}; */
+  color: ${({ theme }) => theme.fontColor};
 `;
 
 const PackageDetailWidth = styled.div`
@@ -75,8 +74,8 @@ const DetailIndividualReservBtn = styled.button`
   width: 70%;
   border-radius: 5px;
   font-size: 18px;
-  font-family: "GangwonEdu_OTFBoldA";
-  color: ${(props) => props.theme.fontColor};
-  border: 1px solid #331211;
-  background-color: #f1e6d1;
+  font-family: ${({ theme }) => theme.fontFamily};
+  color: ${({ theme }) => theme.fontColor};
+  border: 1px solid ${({ theme }) => theme.fontColor};
+  background-color: ${({ theme }) => theme.bgColor};
 `;
