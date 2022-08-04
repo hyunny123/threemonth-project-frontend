@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import styled from "styled-components";
 import Loading from "../../../components/Loading";
 
@@ -14,6 +14,7 @@ const FormDetail = () => {
   const navigate = useNavigate();
 
   const params = useParams();
+  const location = useLocation();
 
   useEffect(() => {
     fetch(`http://15.164.163.31:8001/orders/${params.formId}`, {
@@ -33,6 +34,9 @@ const FormDetail = () => {
         }
       });
   }, [params.formId]);
+  // if(location.state ===  null){
+  //   return
+  // }
 
   if (detailFormData.id === 0) {
     return <Loading />;

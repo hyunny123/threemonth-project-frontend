@@ -204,7 +204,7 @@ const CakeFormRemarkDetailForm = styled.div`
   resize: none;
   rows: 1;
   font-size: 17px;
-  border-bottom: 1px solid #f1e6d1;
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   &:focus {
     outline: none;
   }
@@ -221,10 +221,10 @@ const CakeFormBtn = styled.button`
   margin-left: 10px;
   width: 200px;
   height: 50px;
-  border-radius: 10px;
+  border-radius: 5px;
   font-size: 20px;
-  background-color: #ecc987;
-  color: #331211;
+  background-color: ${({ theme }) => theme.bgColor};
+  color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;
@@ -236,10 +236,10 @@ const CakeFormUpdateBtn = styled.button`
   margin-left: 10px;
   width: 100px;
   height: 50px;
-  border-radius: 10px;
+  border-radius: 5px;
   font-size: 20px;
-  background-color: #ecc987;
-  color: #331211;
+  background-color: ${({ theme }) => theme.bgColor};
+  color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;
