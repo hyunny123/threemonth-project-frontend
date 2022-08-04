@@ -5,6 +5,7 @@ import { USER_TOKEN } from "../../../config";
 import { useParams } from "react-router";
 
 const PackageFormEdit = ({ editData }) => {
+  const { is_staff } = editData;
   const navigate = useNavigate();
   const { formId } = useParams();
   const [packageEditForm, setPackageEditForm] = useState(editData);
@@ -96,10 +97,74 @@ const PackageFormEdit = ({ editData }) => {
             }),
           }).then((res) => {
             if (res.status === 200) {
-              navigate(`/formdetail/${formId}`);
+              navigate(`/formdetail/${formId}`, {
+                state: { checkValid: true },
+              });
             } else {
               alert("다시 시도해 주세요");
-              navigate(`/orders/${formId}`);
+              navigate(`/orders/${formId}`, { state: { checkValid: true } });
+            }
+          });
+        }
+      } else {
+        alert("글자 수를 확인해 주세요.");
+      }
+    } else {
+      alert("빈칸을 확인해 주세요");
+    }
+  };
+  const packageEditFormStaffRequest = (e) => {
+    const { additional_explanation, contact, customer_name, title, type } =
+      packageEditForm;
+    const { delivery_date, delivery_location, is_packaging, purpose } =
+      packageEditDetailForm;
+    orderedproducts = [...updateList].filter((x) => x.buying === true);
+    const checkValue =
+      additional_explanation &&
+      contact &&
+      customer_name &&
+      title &&
+      type &&
+      delivery_date &&
+      delivery_location &&
+      is_packaging &&
+      purpose;
+    const lengthCheck =
+      additional_explanation.length < 300 &&
+      delivery_location.length < 100 &&
+      is_packaging.length < 100 &&
+      purpose.length < 200;
+    e.preventDefault();
+    if (checkValue) {
+      if (lengthCheck) {
+        if (window.confirm("수정하시겠습니까?")) {
+          fetch(`http://15.164.163.31:8001/orders/${formId}`, {
+            method: "PATCH",
+            headers: {
+              Authorization: `Bearer ${USER_TOKEN}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              additional_explanation,
+              contact,
+              customer_name,
+              title,
+              purpose,
+              type,
+              delivery_date,
+              delivery_location,
+              is_packaging,
+              orderedproducts,
+              status: "confirmed",
+            }),
+          }).then((res) => {
+            if (res.status === 200) {
+              navigate(`/formdetail/${formId}`, {
+                state: { checkValid: true },
+              });
+            } else {
+              alert("다시 시도해 주세요");
+              navigate(`/orders/${formId}`, { state: { checkValid: true } });
             }
           });
         }
@@ -208,9 +273,21 @@ const PackageFormEdit = ({ editData }) => {
             value={additional_explanation}
           />
         </PackageEditFormInputWrapper>
-        <PackageEditFormBtn onClick={packageEditFormRequest}>
-          수정하기
-        </PackageEditFormBtn>
+        <PackageFormBtnWrap>
+          <PackageEditFormBtn onClick={packageEditFormRequest}>
+            수정하기
+          </PackageEditFormBtn>
+          {is_staff && (
+            <PackageFormBtnStaffOnly>
+              <PackageFormBtn onClick={packageEditFormStaffRequest}>
+                컨펌 완료!
+              </PackageFormBtn>
+              <PackageFormBtnNotion>
+                컨펌 완료 버튼은 더 이상 수정 사항이 없을 경우에만 눌러 주세요!
+              </PackageFormBtnNotion>
+            </PackageFormBtnStaffOnly>
+          )}
+        </PackageFormBtnWrap>
       </PackageEditFormWidth>
     </PackageEditFormWrapper>
   );
@@ -257,12 +334,12 @@ const PackageEditFormNameInput = styled.input`
   border-style: none;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
-  font-family: "GangwonEdu_OTFBoldA";
+  font-family: ${({ theme }) => theme.fontFamily};
   &:focus {
     outline: none;
   }
   &::placeholder {
-    font-family: "GangwonEdu_OTFBoldA";
+    font-family: ${({ theme }) => theme.fontFamily};
   }
 `;
 
@@ -330,5 +407,36 @@ const PackageEditFormBtn = styled.button`
   background-color: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
-  font-family: "GangwonEdu_OTFBoldA";
+  font-family: ${({ theme }) => theme.fontFamily};
+`;
+
+const PackageFormBtnWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const PackageFormBtn = styled.button`
+  border-style: none;
+  margin-top: 100px;
+  width: 200px;
+  height: 50px;
+  border-radius: 10px;
+  font-size: 20px;
+  margin-right: 20px;
+  background-color: ${({ theme }) => theme.bgColor};
+  color: ${({ theme }) => theme.fontColor};
+  font-weight: bold;
+  font-family: ${({ theme }) => theme.fontFamily};
+`;
+const PackageFormBtnStaffOnly = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+const PackageFormBtnNotion = styled.p`
+  margin-top: 10px;
+  font-size: 17px;
+  color: red;
 `;
