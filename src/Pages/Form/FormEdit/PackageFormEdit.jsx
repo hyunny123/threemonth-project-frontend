@@ -77,7 +77,7 @@ const PackageFormEdit = ({ editData }) => {
       if (lengthCheck) {
         if (window.confirm("수정하시겠습니까?")) {
           fetch(`http://15.164.163.31:8001/orders/${formId}`, {
-            method: "put",
+            method: "PATCH",
             headers: {
               Authorization: `Bearer ${USER_TOKEN}`,
               "Content-Type": "application/json",
