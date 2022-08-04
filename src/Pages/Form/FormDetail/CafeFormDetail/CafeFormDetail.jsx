@@ -8,7 +8,6 @@ const CafeFormDetail = ({ detailFormData }) => {
     additional_explanation,
     cafeorders,
     contact,
-    created_at,
     customer_name,
     id,
     status,
@@ -81,7 +80,9 @@ const CafeFormDetail = ({ detailFormData }) => {
           <CafeFormUpdateBtn
             onClick={() => {
               if (status === "not_confirmed") {
-                navigate(`/formdetail/${id}/edit`);
+                navigate(`/formdetail/${id}/edit`, {
+                  state: { editCheck: true },
+                });
               } else {
                 alert("수정이 불가합니다.");
               }
@@ -194,7 +195,7 @@ const CafeFormDescriptionDetailForm = styled.div`
   align-items: center;
   border-style: none;
   line-height: 1.5;
-  border-bottom: 1px solid #f1e6d1;
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
   resize: none;
   grid-row: 8/10;
@@ -226,8 +227,8 @@ const CafeFormBtn = styled.button`
   height: 50px;
   border-radius: 5px;
   font-size: 20px;
-  background-color: #ecc987;
-  color: #331211;
+  background-color: ${({ theme }) => theme.bgColor};
+  color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;
@@ -240,8 +241,8 @@ const CafeFormUpdateBtn = styled.button`
   height: 50px;
   border-radius: 5px;
   font-size: 20px;
-  background-color: #ecc987;
-  color: #331211;
+  background-color: ${({ theme }) => theme.bgColor};
+  color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;
