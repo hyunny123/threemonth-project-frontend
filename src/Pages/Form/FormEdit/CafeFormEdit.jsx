@@ -73,7 +73,10 @@ const CafeFormEdit = ({ editData }) => {
     const lengthCheck =
       additional_explanation.length < 300 &&
       title.length < 50 &&
-      cafe_location.length < 50;
+      cafename.length < 30 &&
+      cafe_owner_name.length < 30 &&
+      corporate_registration_num.length < 50 &&
+      cafe_location.length < 100;
     if (checkValue) {
       if (lengthCheck) {
         if (window.confirm("수정하시겠습니까?")) {
@@ -140,7 +143,10 @@ const CafeFormEdit = ({ editData }) => {
     const lengthCheck =
       additional_explanation.length < 300 &&
       title.length < 50 &&
-      cafe_location.length < 50;
+      cafename.length < 30 &&
+      cafe_owner_name.length < 30 &&
+      corporate_registration_num.length < 50 &&
+      cafe_location.length < 100;
     if (checkValue) {
       if (lengthCheck) {
         if (window.confirm("수정하시겠습니까?")) {
@@ -181,7 +187,7 @@ const CafeFormEdit = ({ editData }) => {
       alert("빈칸을 확인해 주세요");
     }
   };
-  if (cafeEditList.title === "") {
+  if (cafeEditList.id === 0) {
     return <Loading />;
   }
   return (
@@ -191,6 +197,7 @@ const CafeFormEdit = ({ editData }) => {
         <CafeFormInputWrapper>
           <CafeFormInputTitle>글 제목</CafeFormInputTitle>
           <CafeFormInputTitleInput
+            type="text"
             onChange={cafeFormHandleInput}
             placeholder="글 제목을 입력해 주세요"
             value={title}
@@ -424,6 +431,7 @@ const CafeFormBtn = styled.button`
   color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
+  cursor: pointer;
 `;
 const CafeFormBtnStaffOnly = styled.div`
   display: flex;

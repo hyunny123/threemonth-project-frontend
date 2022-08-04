@@ -117,4 +117,5 @@ const ReserveBtn = styled.button`
   font-family: ${({ theme }) => theme.fontFamily};
   border: 1px solid ${({ theme }) => theme.fontColor};
   color: ${({ theme }) => theme.fontColor};
+  cursor: pointer;
 `;

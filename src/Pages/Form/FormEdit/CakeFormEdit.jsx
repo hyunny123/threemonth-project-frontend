@@ -29,6 +29,15 @@ const CakeFormEdit = ({ editData }) => {
       [name]: value,
     });
   };
+  const { want_pick_up_date } = orderDetail;
+  const minDate = new Date(
+    new Date().getTime() - new Date().getTimezoneOffset() * 60000
+  )
+    .toISOString()
+    .slice(0, 10);
+  const countDays =
+    (new Date(want_pick_up_date).getTime() - new Date(minDate).getTime()) /
+    (1000 * 3600 * 24);
 
   const cakeFormRequest = (e) => {
     const { title, customer_name, type, additional_explanation, contact } =
@@ -48,33 +57,37 @@ const CakeFormEdit = ({ editData }) => {
     e.preventDefault();
     if (checkValue) {
       if (lengthCheck) {
-        if (window.confirm("수정하시겠습니까?")) {
-          fetch(`http://15.164.163.31:8001/orders/${formId}`, {
-            method: "PATCH",
-            headers: {
-              Authorization: `Bearer ${USER_TOKEN}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              title,
-              customer_name,
-              type,
-              additional_explanation,
-              contact,
-              count,
-              want_pick_up_date,
-              product_id,
-            }),
-          }).then((res) => {
-            if (res.status === 200) {
-              navigate(`/formdetail/${formId}`, {
-                state: { checkValid: true },
-              });
-            } else {
-              alert("다시 시도해 주세요");
-              navigate(`/orders/${formId}`, { state: { checkValid: true } });
-            }
-          });
+        if (countDays > 1) {
+          if (window.confirm("수정하시겠습니까?")) {
+            fetch(`http://15.164.163.31:8001/orders/${formId}`, {
+              method: "PATCH",
+              headers: {
+                Authorization: `Bearer ${USER_TOKEN}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                title,
+                customer_name,
+                type,
+                additional_explanation,
+                contact,
+                count,
+                want_pick_up_date,
+                product_id,
+              }),
+            }).then((res) => {
+              if (res.status === 200) {
+                navigate(`/formdetail/${formId}`, {
+                  state: { checkValid: true },
+                });
+              } else {
+                alert("다시 시도해 주세요");
+                navigate(`/orders/${formId}`, { state: { checkValid: true } });
+              }
+            });
+          }
+        } else {
+          alert("신청일로부터 최소 2일 후 날짜부터 신청이 가능합니다.");
         }
       } else {
         alert("글자 수를 확인해 주세요");
@@ -137,13 +150,6 @@ const CakeFormEdit = ({ editData }) => {
       alert("빈칸을 확인해 주세요");
     }
   };
-
-  const minDate = new Date(
-    new Date().getTime() - new Date().getTimezoneOffset() * 60000
-  )
-    .toISOString()
-    .slice(0, 10);
-
   if (cakeEditForm.title === "") {
     return <Loading />;
   }
@@ -347,6 +353,7 @@ const CakeFormBtn = styled.button`
   background-color: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
+  cursor: pointer;
 `;
 
 const CakeEditFormBtnWrap = styled.div`

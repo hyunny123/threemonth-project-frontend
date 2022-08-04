@@ -86,6 +86,7 @@ const PackageInputForm = () => {
     additional_explanation;
 
   const lengthCheck =
+    title.length < 50 &&
     delivery_location.length < 100 &&
     is_packaging.length < 100 &&
     purpose.length < 200;
@@ -349,4 +350,5 @@ const PackageFormBtn = styled.button`
   color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
+  cursor: pointer;
 `;
