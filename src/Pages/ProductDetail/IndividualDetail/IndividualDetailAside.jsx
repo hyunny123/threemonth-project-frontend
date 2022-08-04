@@ -67,6 +67,10 @@ const IndividualDetailAsideTop = styled.div`
 
 const IndividualDetailAsideP = styled.p`
   margin-top: 50px;
+  font-size: 18px;
+  &:nth-child(odd) {
+    font-size: 23px;
+  }
 `;
 
 const GoToBamin = styled.a`

@@ -14,9 +14,9 @@ const IndividualDetailMain = ({ individualData }) => {
       <Origin>
         <OriginTitle>원산지</OriginTitle>
         <OriginContent>
-          "국내산 딸기 당근 밀가루 꿀 계란 설탕 버터 프랑스산 / 뉴질랜드산 /
+          국내산 딸기 당근 밀가루 꿀 계란 설탕 버터 프랑스산 / 뉴질랜드산 /
           다크초콜릿 프랑스산 / 화이트 초콜릿 벨기에산 / 둘세초콜릿 프랑스산 /
-          얼그레이티 영국산"
+          얼그레이티 영국산
         </OriginContent>
       </Origin>
     </IndividualDetailMainWrapper>
@@ -66,7 +66,7 @@ const OriginContent = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 12px;
+  font-size: 15px;
   box-sizing: border-box;
   padding: 10px;
 `;
