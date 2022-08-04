@@ -72,7 +72,10 @@ const CafeInputForm = () => {
     const lengthCheck =
       additional_explanation.length < 300 &&
       title.length < 50 &&
-      cafe_location.length < 50;
+      cafename.length < 30 &&
+      cafe_owner_name.length < 30 &&
+      corporate_registration_num.length < 50 &&
+      cafe_location.length < 100;
 
     if (checkValueData) {
       if (lengthCheck) {
@@ -322,4 +325,5 @@ const CafeFormBtn = styled.button`
   color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
+  cursor: pointer;
 `;

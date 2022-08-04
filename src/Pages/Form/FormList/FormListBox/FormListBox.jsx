@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
-// import { USER_TOKEN } from "../../../../config";
 
 const FormListBox = ({ sortedList }) => {
   const navigate = useNavigate();
@@ -99,6 +98,7 @@ const ListBoxContents = styled.button`
   border-bottom: 1px solid ${(props) => props.theme.bgColor};
   margin-top: 20px;
   font-size: 1em;
+  cursor: pointer;
 `;
 const ListBoxContent = styled.div`
   display: flex;
@@ -106,6 +106,7 @@ const ListBoxContent = styled.div`
   &:nth-child(2) {
     justify-content: flex-start;
     text-align: start;
+    cursor: pointer;
   }
 `;
 

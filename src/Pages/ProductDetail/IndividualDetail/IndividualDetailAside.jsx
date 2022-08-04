@@ -91,4 +91,5 @@ const DetailIndividualReservBtn = styled.button`
   color: ${({ theme }) => theme.fontColor};
   border: 1px solid ${({ theme }) => theme.fontColor};
   background-color: ${({ theme }) => theme.bgColor};
+  cursor: pointer;
 `;

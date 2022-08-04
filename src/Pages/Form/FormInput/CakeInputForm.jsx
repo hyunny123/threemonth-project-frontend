@@ -313,4 +313,5 @@ const CakeFormBtn = styled.button`
   color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
+  cursor: pointer;
 `;
