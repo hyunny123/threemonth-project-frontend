@@ -7,6 +7,7 @@ import PackageFormDetail from "./PackageFormDetail/PackageFormDetail";
 import CafeFormDetail from "./CafeFormDetail/CafeFormDetail";
 import CakeFormDetail from "./CakeFormDetail/CakeFormDetail";
 import { USER_TOKEN } from "../../../config";
+import NotValidBtn from "../../../components/NotValidBtn";
 
 const FormDetail = () => {
   const [detailFormData, setDetailFormData] = useState({ id: 0 });
@@ -34,9 +35,10 @@ const FormDetail = () => {
         }
       });
   }, [params.formId]);
-  // if(location.state ===  null){
-  //   return
-  // }
+
+  if (location.state === null) {
+    return <NotValidBtn />;
+  }
 
   if (detailFormData.id === 0) {
     return <Loading />;
