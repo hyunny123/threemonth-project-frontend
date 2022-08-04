@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router";
-import styled from "styled-components";
 import Loading from "../../../components/Loading";
+import styled from "styled-components";
 
 const GridMain = ({ gridData }) => {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ const GridMain = ({ gridData }) => {
   if (!(packagedesfilter && cakedesfilter && madedesfilter && logodesfilter)) {
     return <Loading />;
   }
-  // console.log(packagedesfilter);
+
   const goToCakeList = () => {
     document.getElementById("cakeList").scrollIntoView(true);
   };
@@ -67,8 +67,8 @@ const GridContainer = styled.div`
 const GridTitle = styled.h2`
   margin-bottom: 30px;
   font-size: 3em;
-  color: #331211;
-  border-bottom: 3px solid #331211;
+  color: ${({ theme }) => theme.fontColor};
+  border-bottom: 3px solid ${({ theme }) => theme.fontColor};
 `;
 
 const GridBox = styled.div`
@@ -77,7 +77,7 @@ const GridBox = styled.div`
   grid-template-rows: repeat(2, 1fr);
   width: 100%;
   height: 800px;
-  background-color: ${(props) => props.theme.bgColor};
+  background-color: ${({ theme }) => theme.bgColor};
 `;
 
 const GridImgBox1 = styled.div`
@@ -133,7 +133,6 @@ const GridImgBox3 = styled.div`
   overflow: hidden;
   grid-column: 4/4;
   grid-row: 1/3;
-  /* cursor: pointer; */
 `;
 const GridImgBox4 = styled.div`
   position: relative;
@@ -144,7 +143,6 @@ const GridImgBox4 = styled.div`
   grid-column: 3/4;
   grid-row: 2/3;
   cursor: pointer;
-  /* border: 3px solid #331211; */
 `;
 const ImgItem4 = styled.img`
   width: 100%;
