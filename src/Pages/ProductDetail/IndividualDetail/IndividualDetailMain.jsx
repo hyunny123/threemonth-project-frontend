@@ -6,9 +6,9 @@ const IndividualDetailMain = ({ individualData }) => {
 
   return (
     <IndividualDetailMainWrapper>
-      {product_images.map((x, idx) => (
+      {product_images.map((img, idx) => (
         <div key={idx}>
-          <ProductImg src={x.img_src} alt="image" />
+          <ProductImg src={img.img_src} alt="image" />
         </div>
       ))}
       <Origin>
@@ -29,7 +29,7 @@ const IndividualDetailMainWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-right: 0.5px solid #331211;
+  border-right: 0.5px solid ${({ theme }) => theme.fontColor};
   box-sizing: border-box;
   padding: 20px;
 
@@ -39,7 +39,7 @@ const IndividualDetailMainWrapper = styled.div`
 `;
 
 const ProductImg = styled.img`
-  margin-top: 20px;
+  margin-top: 30px;
   width: 100%;
   min-width: 300px;
   height: 300px;
@@ -51,16 +51,16 @@ const Origin = styled.div`
   width: 70%;
   grid-template-rows: repeat(2, 50px);
   grid-template-columns: 1fr;
-  border: 1px solid #331211;
+  border: 1px solid ${({ theme }) => theme.fontColor};
   border-radius: 10px;
-  background-color: #f1e6d1;
+  background-color: ${({ theme }) => theme.bgColor};
 `;
 const OriginTitle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   grid-column: 1/5;
-  border-bottom: 0.5px solid #331211;
+  border-bottom: 0.5px solid ${({ theme }) => theme.fontColor};
 `;
 const OriginContent = styled.div`
   display: flex;
