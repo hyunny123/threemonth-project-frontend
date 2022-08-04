@@ -6,6 +6,7 @@ import Loading from "../../../components/Loading";
 import { USER_TOKEN } from "../../../config";
 
 const CafeFormEdit = ({ editData }) => {
+  const { is_staff } = editData;
   const navigate = useNavigate();
   const { formId } = useParams();
   const [cafeEditList, setCafeEditList] = useState(editData);
@@ -96,10 +97,80 @@ const CafeFormEdit = ({ editData }) => {
             }),
           }).then((res) => {
             if (res.status === 200) {
-              navigate(`/formdetail/${formId}`);
+              navigate(`/formdetail/${formId}`, {
+                state: { checkValid: true },
+              });
             } else {
               alert("다시 시도해 주세요");
-              navigate(`/orders/${formId}`);
+              navigate(`/orders/${formId}`, { state: { checkValid: true } });
+            }
+          });
+        }
+      } else {
+        alert("글자 수를 확인해 주세요.");
+      }
+    } else {
+      alert("빈칸을 확인해 주세요");
+    }
+  };
+  const cafeFormStaffRequest = (e) => {
+    const { title, additional_explanation, type, contact, customer_name } =
+      cafeEditList;
+    const {
+      cafename,
+      cafe_owner_name,
+      corporate_registration_num,
+      product_explanation,
+      cafe_location,
+    } = cafeOrders;
+
+    const checkValue =
+      title &&
+      additional_explanation &&
+      type &&
+      contact &&
+      customer_name &&
+      cafename &&
+      cafe_owner_name &&
+      corporate_registration_num &&
+      product_explanation &&
+      cafe_location;
+
+    e.preventDefault();
+    const lengthCheck =
+      additional_explanation.length < 300 &&
+      title.length < 50 &&
+      cafe_location.length < 50;
+    if (checkValue) {
+      if (lengthCheck) {
+        if (window.confirm("수정하시겠습니까?")) {
+          fetch(`http://15.164.163.31:8001/orders/${formId}`, {
+            method: "PATCH",
+            headers: {
+              Authorization: `Bearer ${USER_TOKEN}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              title,
+              cafename,
+              corporate_registration_num,
+              cafe_owner_name,
+              customer_name,
+              cafe_location,
+              product_explanation,
+              additional_explanation,
+              type,
+              contact,
+              status: "confirmed",
+            }),
+          }).then((res) => {
+            if (res.status === 200) {
+              navigate(`/formdetail/${formId}`, {
+                state: { checkValid: true },
+              });
+            } else {
+              alert("다시 시도해 주세요");
+              navigate(`/orders/${formId}`, { state: { checkValid: true } });
             }
           });
         }
@@ -206,7 +277,19 @@ const CafeFormEdit = ({ editData }) => {
             required
           />
         </CafeFormInputWrapper>
-        <CafeFormBtn onClick={cafeFormRequest}>수정하기</CafeFormBtn>
+        <CafeFormBtnWrap>
+          <CafeFormBtn onClick={cafeFormRequest}>수정하기</CafeFormBtn>
+          {is_staff && (
+            <CafeFormBtnStaffOnly>
+              <CafeFormBtn onClick={cafeFormStaffRequest}>
+                컨펌 완료!
+              </CafeFormBtn>
+              <CafeFormBtnNotion>
+                컨펌 완료 버튼은 더 이상 수정 사항이 없을 경우에만 눌러 주세요!
+              </CafeFormBtnNotion>
+            </CafeFormBtnStaffOnly>
+          )}
+        </CafeFormBtnWrap>
       </CafeFormWidth>
     </CafeFormWrapper>
   );
@@ -255,13 +338,13 @@ const CafeFormCafeNameInput = styled.input`
   border-style: none;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
-  font-family: "GangwonEdu_OTFBoldA";
+  font-family: ${({ theme }) => theme.fontFamily};
   &:focus {
     outline: none;
   }
 
   &::placeholder {
-    font-family: "GangwonEdu_OTFBoldA";
+    font-family: ${({ theme }) => theme.fontFamily};
   }
 `;
 
@@ -308,12 +391,12 @@ const CafeFormDescriptionInput = styled.textarea`
   font-size: 17px;
   resize: none;
   grid-row: 9/11;
-  font-family: "GangwonEdu_OTFBoldA";
+  font-family: ${({ theme }) => theme.fontFamily};
   &:focus {
     outline: none;
   }
   &::placeholder {
-    font-family: "GangwonEdu_OTFBoldA";
+    font-family: ${({ theme }) => theme.fontFamily};
   }
 `;
 const CafeFormRemark = styled(CafeFormCafeName)`
@@ -323,6 +406,12 @@ const CafeFormRemarkInput = styled(CafeFormDescriptionInput)`
   grid-row: 11/13;
 `;
 
+const CafeFormBtnWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const CafeFormBtn = styled.button`
   border-style: none;
   margin-top: 100px;
@@ -330,8 +419,20 @@ const CafeFormBtn = styled.button`
   height: 50px;
   border-radius: 10px;
   font-size: 20px;
+  margin-right: 20px;
   background-color: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
-  font-family: "GangwonEdu_OTFBoldA";
+  font-family: ${({ theme }) => theme.fontFamily};
+`;
+const CafeFormBtnStaffOnly = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+const CafeFormBtnNotion = styled.p`
+  margin-top: 10px;
+  font-size: 17px;
+  color: red;
 `;

@@ -6,6 +6,7 @@ import Loading from "../../../components/Loading";
 import { USER_TOKEN } from "../../../config";
 
 const CakeFormEdit = ({ editData }) => {
+  const { is_staff } = editData;
   const navigate = useNavigate();
   const { formId } = useParams();
   const [cakeEditForm, setCakeEditForm] = useState(editData);
@@ -66,7 +67,63 @@ const CakeFormEdit = ({ editData }) => {
             }),
           }).then((res) => {
             if (res.status === 200) {
-              navigate(`/formdetail/${formId}`);
+              navigate(`/formdetail/${formId}`, {
+                state: { checkValid: true },
+              });
+            } else {
+              alert("다시 시도해 주세요");
+              navigate(`/orders/${formId}`, { state: { checkValid: true } });
+            }
+          });
+        }
+      } else {
+        alert("글자 수를 확인해 주세요");
+      }
+    } else {
+      alert("빈칸을 확인해 주세요");
+    }
+  };
+  const cakeFormStaffRequest = (e) => {
+    const { title, customer_name, type, additional_explanation, contact } =
+      cakeEditForm;
+    const { count, want_pick_up_date, product_id } = orderDetail;
+    const checkValue =
+      title &&
+      customer_name &&
+      type &&
+      additional_explanation &&
+      contact &&
+      count &&
+      want_pick_up_date &&
+      product_id;
+    const lengthCheck =
+      additional_explanation.length < 300 && title.length < 50;
+    e.preventDefault();
+    if (checkValue) {
+      if (lengthCheck) {
+        if (window.confirm("수정하시겠습니까?")) {
+          fetch(`http://15.164.163.31:8001/orders/${formId}`, {
+            method: "PATCH",
+            headers: {
+              Authorization: `Bearer ${USER_TOKEN}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              title,
+              customer_name,
+              type,
+              additional_explanation,
+              contact,
+              count,
+              want_pick_up_date,
+              product_id,
+              status: "confirmed",
+            }),
+          }).then((res) => {
+            if (res.status === 200) {
+              navigate(`/formdetail/${formId}`, {
+                state: { checkValid: true },
+              });
             } else {
               alert("다시 시도해 주세요");
               navigate(`/orders/${formId}`);
@@ -161,7 +218,19 @@ const CakeFormEdit = ({ editData }) => {
             name="additional_explanation"
           />
         </CakeFormInputWrapper>
-        <CakeFormBtn onClick={cakeFormRequest}>수정하기</CakeFormBtn>
+        <CakeEditFormBtnWrap>
+          <CakeFormBtn onClick={cakeFormRequest}>수정하기</CakeFormBtn>
+          {is_staff && (
+            <CakeEditFormBtnStaffOnly>
+              <CakeFormBtn onClick={cakeFormStaffRequest}>
+                컨펌 완료!
+              </CakeFormBtn>
+              <CakeEditFormBtnNotion>
+                컨펌 완료 버튼은 더 이상 수정 사항이 없을 경우에만 눌러 주세요!
+              </CakeEditFormBtnNotion>
+            </CakeEditFormBtnStaffOnly>
+          )}
+        </CakeEditFormBtnWrap>
       </CakeFormWidth>
     </CakeFormWrapper>
   );
@@ -278,4 +347,22 @@ const CakeFormBtn = styled.button`
   background-color: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
+`;
+
+const CakeEditFormBtnWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const CakeEditFormBtnStaffOnly = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+const CakeEditFormBtnNotion = styled.p`
+  margin-top: 10px;
+  font-size: 17px;
+  color: red;
 `;
