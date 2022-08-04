@@ -27,7 +27,10 @@ const FormDetail = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        if (res.code === "token_not_valid") {
+        if (
+          res.code === "token_not_valid" ||
+          res.detail === "You do not have permission to perform this action."
+        ) {
           alert("권한이 없습니다.");
           navigate(-1);
         } else {
