@@ -57,10 +57,6 @@ const Main = () => {
   ]);
 
   const { MAIN_DETAILLIST, MAIN_GRID, MAIN_CAROUSEL } = API;
-  // console.log(carouselData);
-  // console.log(gridData);
-  // console.log(mainCakeList);
-  // console.log(mainList);
 
   useEffect(() => {
     fetch(`${MAIN_CAROUSEL}`)
