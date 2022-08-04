@@ -7,18 +7,7 @@ const FormListBox = ({ sortedList }) => {
   const navigate = useNavigate();
 
   const goFormDetail = (id) => {
-    // fetch("", {
-    //   method: "post",
-    //   headers: { Authorization: USER_TOKEN },
-    //   body: { id },
-    // }).then((res) => {
-    //   if (res.status === 200) {
-    //     navigate(`/formdetail/${id}`);
-    //   } else {
-    //     alert("자신이 신청한 선청서만 확인할 수 있습니다.");
-    //   }
-    // });
-    navigate(`/formdetail/${id}`);
+    navigate(`/formdetail/${id}`, { state: { checkValid: true } });
   };
   return (
     <FormListBoxWrapper>
