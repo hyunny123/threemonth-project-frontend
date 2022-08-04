@@ -8,7 +8,7 @@ const MainList = ({ mainList }) => {
   const goToDetail = (id) => {
     navigate(`/individualdetail/${id}`);
   };
-  // console.log(mainList);
+
   return (
     <ListContainer>
       <ListTitle>뜨리먼뜨 List</ListTitle>
@@ -46,15 +46,15 @@ const ListContainer = styled.div`
 const ListTitle = styled.h2`
   margin-bottom: 20px;
   font-size: 3em;
-  border-bottom: 3px solid #331211;
-  color: #331211;
+  border-bottom: 3px solid ${({ theme }) => theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
 `;
 
 const ListBox = styled.div`
   width: 100%;
   display: flex;
   margin-top: 30px;
-  border-bottom: 3px solid #331211;
+  border-bottom: 3px solid ${({ theme }) => theme.fontColor};
 `;
 
 const ListItems = styled.ul`
