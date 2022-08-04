@@ -12,6 +12,7 @@ const CakeFormDetail = ({ detailFormData }) => {
     id,
     status,
     title,
+    is_staff,
   } = detailFormData;
 
   const { count, product_name, want_pick_up_date } = cakeorders;
@@ -70,7 +71,11 @@ const CakeFormDetail = ({ detailFormData }) => {
           </CakeFormBtn>
           <CakeFormUpdateBtn
             onClick={() => {
-              if (status === "not_confirmed") {
+              if (is_staff) {
+                navigate(`/formdetail/${id}/edit`, {
+                  state: { editCheck: true },
+                });
+              } else if (status === "not_confirmed") {
                 navigate(`/formdetail/${id}/edit`, {
                   state: { editCheck: true },
                 });
