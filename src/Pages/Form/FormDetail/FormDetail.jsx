@@ -38,7 +38,7 @@ const FormDetail = () => {
         }
       });
   }, [params.formId, navigate]);
-
+  console.log(detailFormData);
   if (location.state === null) {
     return <NotValidBtn />;
   }

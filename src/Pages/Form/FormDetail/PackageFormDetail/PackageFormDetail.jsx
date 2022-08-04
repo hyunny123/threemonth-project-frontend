@@ -12,6 +12,7 @@ const PackageFormDetail = ({ detailFormData }) => {
     packageorders,
     status,
     title,
+    is_staff,
   } = detailFormData;
 
   const { delivery_date, delivery_location, is_packaging, purpose } =
@@ -88,7 +89,11 @@ const PackageFormDetail = ({ detailFormData }) => {
           </PackageFormBtn>
           <PackageFormUpdateBtn
             onClick={() => {
-              if (status === "not_confirmed") {
+              if (is_staff) {
+                navigate(`/formdetail/${id}/edit`, {
+                  state: { editCheck: true },
+                });
+              } else if (status === "not_confirmed") {
                 navigate(`/formdetail/${id}/edit`, {
                   state: { editCheck: true },
                 });

@@ -12,6 +12,7 @@ const CafeFormDetail = ({ detailFormData }) => {
     id,
     status,
     title,
+    is_staff,
   } = detailFormData;
 
   const {
@@ -79,7 +80,11 @@ const CafeFormDetail = ({ detailFormData }) => {
 
           <CafeFormUpdateBtn
             onClick={() => {
-              if (status === "not_confirmed") {
+              if (is_staff) {
+                navigate(`/formdetail/${id}/edit`, {
+                  state: { editCheck: true },
+                });
+              } else if (status === "not_confirmed") {
                 navigate(`/formdetail/${id}/edit`, {
                   state: { editCheck: true },
                 });
