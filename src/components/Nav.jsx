@@ -3,11 +3,9 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { USER_TOKEN, USER_NICKNAME } from "../config";
 import { LOGIN_URI } from "../Pages/Login/AuthData";
-// import { API } from "../config.js";
 
 const Nav = () => {
   const navigate = useNavigate();
-  // const { KAKAOLOGOUT } = API;
 
   const { pathname } = useLocation();
 
@@ -16,18 +14,9 @@ const Nav = () => {
   }, [pathname]);
 
   const goLogout = () => {
-    // fetch(`${KAKAOLOGOUT}`, {
-    //   method: "POST",
-    //   headers: {
-    //     Authorization: USER_TOKEN,
-    //   },
-    // }).then((res) => {
-    //   if (res.status === 200) {
-    //     navigate("/");
-    //   } else {
-    //     console.log(res);
-    //   }
-    // });
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("nickname");
+    window.location.reload();
   };
 
   const myPageNotice =

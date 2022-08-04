@@ -44,6 +44,7 @@ const PackageDetailMainDes = styled.p`
   font-size: 20px;
   margin-bottom: 100px;
   text-align: center;
+  line-height: 2;
   &:nth-child(1) {
     margin-top: 100px;
   }
