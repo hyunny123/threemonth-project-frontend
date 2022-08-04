@@ -29,7 +29,7 @@ const IndividualDetailMainWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-right: 0.5px solid ${(props) => props.theme.fontColor};
+  border-right: 0.5px solid ${({ theme }) => theme.fontColor};
   box-sizing: border-box;
   padding: 20px;
 
@@ -51,16 +51,16 @@ const Origin = styled.div`
   width: 70%;
   grid-template-rows: repeat(2, 50px);
   grid-template-columns: 1fr;
-  border: 1px solid ${(props) => props.theme.fontColor};
+  border: 1px solid ${({ theme }) => theme.fontColor};
   border-radius: 10px;
-  background-color: ${(props) => props.theme.bgColor};
+  background-color: ${({ theme }) => theme.bgColor};
 `;
 const OriginTitle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   grid-column: 1/5;
-  border-bottom: 0.5px solid ${(props) => props.theme.fontColor};
+  border-bottom: 0.5px solid ${({ theme }) => theme.fontColor};
 `;
 const OriginContent = styled.div`
   display: flex;

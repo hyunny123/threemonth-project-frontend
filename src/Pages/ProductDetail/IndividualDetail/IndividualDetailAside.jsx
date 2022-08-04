@@ -8,12 +8,12 @@ const IndividualDetailAside = ({ individualData }) => {
   const navigate = useNavigate();
   const { price, description, is_active, product_name, category } =
     individualData;
-  const goInputForm = () => {
+  const goReserveForm = () => {
     if (USER_TOKEN) {
       if (is_active === false) {
         alert("현재 판매중인 케이크가 아닙니다.");
       } else {
-        navigate("/cakeinputform");
+        navigate("/reserveform", { state: { formType: "cake" } });
       }
     } else {
       if (
@@ -33,7 +33,7 @@ const IndividualDetailAside = ({ individualData }) => {
           {price.toLocaleString()}원
         </IndividualDetailAsideP>
         {category === "cake" ? (
-          <DetailIndividualReservBtn onClick={goInputForm}>
+          <DetailIndividualReservBtn onClick={goReserveForm}>
             예약하러 가기
           </DetailIndividualReservBtn>
         ) : (
@@ -53,7 +53,7 @@ export default IndividualDetailAside;
 const IndividualDetailAsideWrapper = styled.div`
   display: grid;
   grid-template-rows: repeat(2, 1fr);
-  color: ${(props) => props.theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
 `;
 
 const IndividualDetailAsideTop = styled.div`
@@ -83,8 +83,8 @@ const DetailIndividualReservBtn = styled.button`
   width: 70%;
   border-radius: 5px;
   font-size: 18px;
-  font-family: ${(props) => props.theme.fontFamily};
-  color: ${(props) => props.theme.fontColor};
-  border: 1px solid ${(props) => props.theme.fontColor};
-  background-color: ${(props) => props.theme.bgColor};
+  font-family: ${({ theme }) => theme.fontFamily};
+  color: ${({ theme }) => theme.fontColor};
+  border: 1px solid ${({ theme }) => theme.fontColor};
+  background-color: ${({ theme }) => theme.bgColor};
 `;

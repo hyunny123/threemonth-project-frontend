@@ -47,7 +47,7 @@ const IndividualDetailWrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  color: ${(props) => props.theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
 `;
 
 const IndividualDetailWidth = styled.div`
