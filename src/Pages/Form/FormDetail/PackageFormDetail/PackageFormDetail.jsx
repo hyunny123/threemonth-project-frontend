@@ -4,7 +4,6 @@ import { USER_TOKEN } from "../../../../config";
 import styled from "styled-components";
 
 const PackageFormDetail = ({ detailFormData }) => {
-  console.log(detailFormData);
   const {
     additional_explanation,
     contact,
@@ -258,7 +257,7 @@ const PackageFormBtn = styled.button`
   margin-left: 10px;
   width: 200px;
   height: 50px;
-  border-radius: 10px;
+  border-radius: 5px;
   font-size: 20px;
   background-color: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
@@ -272,7 +271,7 @@ const PackageFormUpdateBtn = styled.button`
   margin-left: 10px;
   width: 100px;
   height: 50px;
-  border-radius: 10px;
+  border-radius: 5px;
   font-size: 20px;
   background-color: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};

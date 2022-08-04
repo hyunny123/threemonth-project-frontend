@@ -224,7 +224,7 @@ const CafeFormBtn = styled.button`
   margin-left: 10px;
   width: 200px;
   height: 50px;
-  border-radius: 10px;
+  border-radius: 5px;
   font-size: 20px;
   background-color: #ecc987;
   color: #331211;
@@ -238,7 +238,7 @@ const CafeFormUpdateBtn = styled.button`
   margin-left: 10px;
   width: 100px;
   height: 50px;
-  border-radius: 10px;
+  border-radius: 5px;
   font-size: 20px;
   background-color: #ecc987;
   color: #331211;
