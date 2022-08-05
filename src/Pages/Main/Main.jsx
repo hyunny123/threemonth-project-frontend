@@ -71,7 +71,7 @@ const Main = () => {
     fetch(`${MAIN_DETAILLIST}?category=bread`)
       .then((response) => response.json())
       .then((data) => setMainList(data));
-  }, []);
+  }, [MAIN_CAROUSEL, MAIN_GRID, MAIN_DETAILLIST]);
 
   if (mainList.id === 0) {
     return <Loading />;
