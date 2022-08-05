@@ -60,8 +60,11 @@ const GridMain = ({ gridData }) => {
 export default GridMain;
 
 const GridContainer = styled.div`
-  width: 85%;
+  width: 80%;
   margin: 0 auto;
+  @media screen and (max-width: 768px) {
+    width: 90%;
+  }
 `;
 
 const GridTitle = styled.h2`
@@ -69,6 +72,10 @@ const GridTitle = styled.h2`
   font-size: 3em;
   color: ${({ theme }) => theme.fontColor};
   border-bottom: 3px solid ${({ theme }) => theme.fontColor};
+  @media screen and (max-width: 320px) {
+    font-size: 2em;
+    margin-top: 30px;
+  }
 `;
 
 const GridBox = styled.div`
@@ -76,8 +83,18 @@ const GridBox = styled.div`
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, 1fr);
   width: 100%;
-  height: 800px;
+  height: 700px;
   background-color: ${({ theme }) => theme.bgColor};
+  @media screen and (max-width: 640px) {
+    height: 650px;
+  }
+  @media screen and (max-width: 320px) {
+    height: 1200px;
+    font-size: 1.5em;
+    margin-top: 30px;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
 `;
 
 const GridImgBox1 = styled.div`
@@ -90,6 +107,14 @@ const GridImgBox1 = styled.div`
   grid-column: 1/3;
   grid-row: 1/3;
   cursor: pointer;
+  @media screen and (max-width: 768px) {
+    grid-column: 1/3;
+    grid-row: 1/2;
+  }
+  @media screen and (max-width: 320px) {
+    grid-column: 1/5;
+    grid-row: 1/2;
+  }
 `;
 const ImgItem1 = styled.img`
   width: 100%;
@@ -119,11 +144,22 @@ const ImgItem2 = styled.img`
   width: 100%;
   height: 100%;
   background: #fff;
+  @media screen and (max-width: 768px) {
+    grid-column: 3/5;
+    grid-row: 1/2;
+  }
+  @media screen and (max-width: 320px) {
+    grid-column: 1/5;
+    grid-row: 2/3;
+  }
 `;
 const ImgItem3 = styled.img`
   width: 100%;
   height: 70%;
   background: #fff;
+  @media screen and (max-width: 768px) {
+    height: 100%;
+  }
 `;
 const GridImgBox3 = styled.div`
   position: relative;
@@ -133,6 +169,14 @@ const GridImgBox3 = styled.div`
   overflow: hidden;
   grid-column: 4/4;
   grid-row: 1/3;
+  @media screen and (max-width: 768px) {
+    grid-column: 1/3;
+    grid-row: 2/3;
+  }
+  @media screen and (max-width: 320px) {
+    grid-column: 1/5;
+    grid-row: 3/4;
+  }
 `;
 const GridImgBox4 = styled.div`
   position: relative;
@@ -143,9 +187,20 @@ const GridImgBox4 = styled.div`
   grid-column: 3/4;
   grid-row: 2/3;
   cursor: pointer;
+  @media screen and (max-width: 768px) {
+    grid-column: 3/5;
+    grid-row: 2/3;
+  }
+  @media screen and (max-width: 320px) {
+    grid-column: 1/5;
+    grid-row: 4/5;
+  }
 `;
 const ImgItem4 = styled.img`
   width: 100%;
   height: 80%;
   background: #fff;
+  @media screen and (max-width: 768px) {
+    height: 100%;
+  }
 `;

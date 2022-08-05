@@ -72,6 +72,16 @@ const Wrapper = styled.div`
   margin: 0 auto;
   display: flex;
   align-items: center;
+  @media screen and (max-width: 768px) {
+    width: 90%;
+    justify-content: center;
+  }
+  @media screen and (max-width: 640px) {
+    width: 90%;
+  }
+  @media screen and (max-width: 640px) {
+    width: 90%;
+  }
 `;
 
 const NavItem = styled.div`
@@ -81,6 +91,14 @@ const Logo = styled.img`
   width: 180px;
   height: 90px;
   transform: rotate(1deg);
+  @media screen and (max-width: 640px) {
+    width: 150px;
+    height: 70px;
+  }
+  @media screen and (max-width: 320px) {
+    width: 50px;
+    height: 25px;
+  }
 `;
 
 const NavMenu = styled.div`
@@ -90,18 +108,41 @@ const NavMenu = styled.div`
   align-items: center;
   padding: 0px 50px;
   box-sizing: border-box;
+  @media screen and (max-width: 768px) {
+    padding: 0px 20px;
+  }
+  @media screen and (max-width: 640px) {
+    padding: 0px 0px;
+  }
+  @media screen and (max-width: 320px) {
+    padding: 0px 0px;
+  }
 `;
 
 const Menu = styled.div`
   display: flex;
   justify-content: center;
   width: 100px;
-  cursor: pointer;
   font-size: 1.2em;
   color: ${({ theme }) => theme.fontColor};
+  cursor: pointer;
+  @media screen and (max-width: 768px) {
+    font-size: 1.1em;
+  }
+  @media screen and (max-width: 640px) {
+    width: 80px;
+  }
+  @media screen and (max-width: 320px) {
+    width: 50px;
+    font-size: 0.8em;
+  }
 `;
 
 const MenuLogin = styled.img`
   width: 100px;
   padding: 10px;
+  @media screen and (max-width: 320px) {
+    width: 50px;
+    padding: 0px;
+  }
 `;
