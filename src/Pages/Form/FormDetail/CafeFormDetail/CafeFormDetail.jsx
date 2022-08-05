@@ -97,8 +97,8 @@ const CafeFormDetail = ({ detailFormData }) => {
           </CafeFormUpdateBtn>
           <CafeFormDeleteBtn
             onClick={() => {
-              if (window.confirm("삭제 하시겠습니까?")) {
-                if (status === "not_confirmed") {
+              if (status === "not_confirmed") {
+                if (window.confirm("삭제하시겠습니까?")) {
                   fetch(`http://15.164.163.31:8001/orders/${id}`, {
                     method: "delete",
                     headers: {
@@ -107,14 +107,34 @@ const CafeFormDetail = ({ detailFormData }) => {
                     },
                   }).then((res) => {
                     if (res.status === 204) {
+                      alert("삭제되었습니다.");
                       navigate("/formlist");
                     }
                   });
-                } else {
-                  alert("삭제가 불가합니다.");
                 }
               } else {
-                alert("삭제를 취소하셨습니다.");
+                if (is_staff) {
+                  if (
+                    window.confirm("컨펌 완료 상태입니다. 삭제하시겠습니까?")
+                  ) {
+                    fetch(`http://15.164.163.31:8001/orders/${id}`, {
+                      method: "delete",
+                      headers: {
+                        Authorization: `Bearer ${USER_TOKEN}`,
+                        "Content-Type": "application/json;charset=UTF-8",
+                      },
+                    }).then((res) => {
+                      if (res.status === 204) {
+                        alert("삭제되었습니다.");
+                        navigate("/formlist");
+                      }
+                    });
+                  }
+                } else {
+                  alert(
+                    "컨펌 완료가 되어 삭제가 불가능합니다. 변경을 원하실 경우 전화나 DM으로 연락 부탁드립니다."
+                  );
+                }
               }
             }}
           >
