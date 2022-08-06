@@ -83,10 +83,30 @@ const GridBox = styled.div`
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, 1fr);
   width: 100%;
-  height: 700px;
+  height: 800px;
   background-color: ${({ theme }) => theme.bgColor};
+  @media screen and (max-width: 1400px) {
+    height: 700px;
+  }
+  @media screen and (max-width: 1050px) {
+    height: 700px;
+  }
+  @media screen and (max-width: 990px) {
+    height: 700px;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+  }
   @media screen and (max-width: 640px) {
-    height: 650px;
+    height: 700px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+  }
+  @media screen and (max-width: 440px) {
+    height: 1200px;
+    font-size: 1.5em;
+    margin-top: 30px;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(4, 1fr);
   }
   @media screen and (max-width: 320px) {
     height: 1200px;
@@ -100,15 +120,27 @@ const GridBox = styled.div`
 const GridImgBox1 = styled.div`
   position: relative;
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   flex-direction: column;
   align-items: flex-start;
   overflow: hidden;
   grid-column: 1/3;
   grid-row: 1/3;
   cursor: pointer;
+  @media screen and (max-width: 990px) {
+    grid-column: 1/3;
+    grid-row: 1/2;
+  }
   @media screen and (max-width: 768px) {
     grid-column: 1/3;
+    grid-row: 1/2;
+  }
+  @media screen and (max-width: 640px) {
+    grid-column: 1/2;
+    grid-row: 1/2;
+  }
+  @media screen and (max-width: 440px) {
+    grid-column: 1/5;
     grid-row: 1/2;
   }
   @media screen and (max-width: 320px) {
@@ -120,12 +152,18 @@ const ImgItem1 = styled.img`
   width: 100%;
   height: 100%;
   background: #fff;
+  @media screen and (max-width: 990px) {
+    height: 80%;
+  }
+  @media screen and (max-width: 768px) {
+    height: 100%;
+  }
 
-  &:nth-child(4) {
+  /* &:nth-child(4) {
     width: 100%;
     height: 80%;
     background: #fff;
-  }
+  } */
 `;
 const TitleItem = styled.h3`
   position: absolute;
@@ -144,9 +182,21 @@ const ImgItem2 = styled.img`
   width: 100%;
   height: 100%;
   background: #fff;
+  @media screen and (max-width: 990px) {
+    grid-column: 3/5;
+    grid-row: 1/2;
+  }
   @media screen and (max-width: 768px) {
     grid-column: 3/5;
     grid-row: 1/2;
+  }
+  @media screen and (max-width: 640px) {
+    grid-column: 2/3;
+    grid-row: 1/2;
+  }
+  @media screen and (max-width: 440px) {
+    grid-column: 1/5;
+    grid-row: 2/3;
   }
   @media screen and (max-width: 320px) {
     grid-column: 1/5;
@@ -157,6 +207,9 @@ const ImgItem3 = styled.img`
   width: 100%;
   height: 70%;
   background: #fff;
+  @media screen and (max-width: 990px) {
+    height: 80%;
+  }
   @media screen and (max-width: 768px) {
     height: 100%;
   }
@@ -169,10 +222,23 @@ const GridImgBox3 = styled.div`
   overflow: hidden;
   grid-column: 4/4;
   grid-row: 1/3;
+  @media screen and (max-width: 990px) {
+    grid-column: 1/3;
+    grid-row: 2/3;
+  }
   @media screen and (max-width: 768px) {
     grid-column: 1/3;
     grid-row: 2/3;
   }
+  @media screen and (max-width: 640px) {
+    grid-column: 1/2;
+    grid-row: 2/3;
+  }
+  @media screen and (max-width: 440px) {
+    grid-column: 1/5;
+    grid-row: 3/4;
+  }
+
   @media screen and (max-width: 320px) {
     grid-column: 1/5;
     grid-row: 3/4;
@@ -187,9 +253,21 @@ const GridImgBox4 = styled.div`
   grid-column: 3/4;
   grid-row: 2/3;
   cursor: pointer;
+  @media screen and (max-width: 990px) {
+    grid-column: 3/5;
+    grid-row: 2/3;
+  }
   @media screen and (max-width: 768px) {
     grid-column: 3/5;
     grid-row: 2/3;
+  }
+  @media screen and (max-width: 640px) {
+    grid-column: 2/3;
+    grid-row: 2/3;
+  }
+  @media screen and (max-width: 440px) {
+    grid-column: 1/5;
+    grid-row: 4/5;
   }
   @media screen and (max-width: 320px) {
     grid-column: 1/5;
@@ -200,6 +278,9 @@ const ImgItem4 = styled.img`
   width: 100%;
   height: 80%;
   background: #fff;
+  @media screen and (max-width: 990px) {
+    height: 80%;
+  }
   @media screen and (max-width: 768px) {
     height: 100%;
   }

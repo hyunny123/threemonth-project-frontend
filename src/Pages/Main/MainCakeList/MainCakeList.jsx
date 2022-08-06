@@ -62,7 +62,7 @@ const CakeListBox = styled.div`
   display: flex;
   margin-top: 30px;
   border-bottom: 3px solid ${({ theme }) => theme.fontColor};
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 1200px) {
     padding-bottom: 30px;
   }
   @media screen and (max-width: 768px) {
@@ -79,12 +79,12 @@ const CakeListItems = styled.ul`
   width: 100%;
   overflow: hidden;
   cursor: pointer;
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 1200px) {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(1, 1fr);
     grid-gap: 25px 25px;
   }
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 790px) {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(1, 1fr);
     grid-gap: 25px 25px;
@@ -94,7 +94,7 @@ const CakeListItems = styled.ul`
     grid-template-rows: repeat(1, 1fr);
     grid-gap: 25px 25px;
   }
-  @media screen and (max-width: 320px) {
+  @media screen and (max-width: 400px) {
     grid-template-columns: repeat(1, 1fr);
     grid-template-rows: repeat(1, 1fr);
     grid-gap: 25px 25px;
@@ -109,14 +109,54 @@ const CakeItemTitle = styled.h3`
   padding-bottom: 10px;
   font-size: 20px;
   font-weight: 400;
+  @media screen and (max-width: 465px) {
+    font-size: 16px;
+  }
+  @media screen and (max-width: 400px) {
+    font-size: 20px;
+  }
 `;
 const CakeItemPrice = styled.p`
   font-size: 20px;
   font-weight: 300;
+  @media screen and (max-width: 465px) {
+    font-size: 16px;
+  }
+  @media screen and (max-width: 400px) {
+    font-size: 20px;
+  }
 `;
 
 const CakeItem = styled.img`
   width: 200px;
   height: 150px;
   border-radius: 5px;
+  @media screen and (max-width: 2560px) {
+    width: 400px;
+    height: 280px;
+  }
+  @media screen and (max-width: 2260px) {
+    width: 300px;
+    height: 200px;
+  }
+  @media screen and (max-width: 1700px) {
+    width: 260px;
+    height: 180px;
+  }
+  @media screen and (max-width: 1500px) {
+    width: 200px;
+    height: 150px;
+  }
+  @media screen and (max-width: 790px) {
+    width: 170px;
+    height: 130px;
+  }
+  @media screen and (max-width: 465px) {
+    width: 170px;
+    height: 130px;
+  }
+  @media screen and (max-width: 400px) {
+    width: 200px;
+    height: 150px;
+  }
 `;

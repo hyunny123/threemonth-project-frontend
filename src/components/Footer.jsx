@@ -99,6 +99,9 @@ const Container = styled.footer`
   @media screen and (max-width: 768px) {
     height: 350px;
   }
+  @media screen and (max-width: 450px) {
+    height: 450px;
+  }
   @media screen and (max-width: 320px) {
     height: 550px;
   }
@@ -129,6 +132,9 @@ const Title = styled.p`
 const SnsContainer = styled.div`
   @media screen and (max-width: 768px) {
     display: flex;
+  }
+  @media screen and (max-width: 450px) {
+    flex-direction: column;
   }
   @media screen and (max-width: 320px) {
     flex-direction: column;
@@ -168,8 +174,14 @@ const ButtonWrapper = styled.div`
     display: flex;
     width: 50%;
   }
+  @media screen and (max-width: 515px) {
+    display: flex;
+    justify-content: center;
+    width: 75%;
+  }
   @media screen and (max-width: 320px) {
     display: flex;
+    justify-content: center;
     width: 100%;
   }
 `;
@@ -187,6 +199,9 @@ const CafeFormButton = styled.button`
   cursor: pointer;
   @media screen and (max-width: 768px) {
     margin-right: 15px;
+  }
+  @media screen and (max-width: 515px) {
+    font-size: 0.9em;
   }
 `;
 const AdminButton = styled.button`
