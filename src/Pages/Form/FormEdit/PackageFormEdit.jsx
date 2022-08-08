@@ -190,15 +190,17 @@ const PackageFormEdit = ({ editData }) => {
       <PackageEditFormWidth>
         <PackageEditFormTitle>기프트박스 신청내역 수정</PackageEditFormTitle>
         <PackageEditFormInputWrapper>
-          <PackageEditFormName>글 제목</PackageEditFormName>
-          <PackageEditFormNameInput
-            placeholder="제목을 입력해 주세요"
+          <PackageEditFormInputTitle>글 제목</PackageEditFormInputTitle>
+          <PackageEditFormInputTitleInput
+            placeholder="제목을 입력해 주세요 최대 50자 입니다."
             required
             name="title"
             onChange={packageEditFormHandleInput}
             value={title}
           />
-          <PackageEditFormPurpose>프로모션 목적</PackageEditFormPurpose>
+          <PackageEditFormPurpose>
+            프로모션 <br /> 목적
+          </PackageEditFormPurpose>
           <PackageEditFormPurposeInput
             placeholder="ex) 기업 행사, 결혼 답례품 등 / 최대 200자입니다."
             required
@@ -215,7 +217,7 @@ const PackageFormEdit = ({ editData }) => {
             onChange={packageEditFormHandleInput}
             value={customer_name}
           />
-          <PackageEditFormPhoneNumber>전화번호</PackageEditFormPhoneNumber>
+          <PackageEditFormPhoneNumber>폰 번호</PackageEditFormPhoneNumber>
           <PackageEditFormPhoneNumberInput
             placeholder="전화번호를 입력해 주세요"
             required
@@ -223,10 +225,12 @@ const PackageFormEdit = ({ editData }) => {
             onChange={packageEditFormHandleInput}
             value={contact}
           />
-          <PackageEditFormDate>날짜</PackageEditFormDate>
+          <PackageEditFormDate>
+            프로모션 <br />
+            날짜
+          </PackageEditFormDate>
           <PackageEditFormDateDiv>
             <PackageEditFormDateInput
-              placeholder="날짜를 입력해 주세요"
               required
               type="date"
               name="delivery_date"
@@ -264,6 +268,11 @@ const PackageFormEdit = ({ editData }) => {
                   </PackageEditFormDescriptionList>
                 </InputWrap>
               ))}
+            <PackageFormEditDescriptionP>
+              * 선택하신 상품은 한 개의 수량이 입력됩니다. 2개 이상을 원하실
+              경우 기타사항에 작성해 주세요. <br />
+              상품 종류는 최소 2개 이상 선택해 주세요.
+            </PackageFormEditDescriptionP>
           </PackageEditFormDescriptionDiv>
           <PackageEditFormIsPackage>패키지 유무</PackageEditFormIsPackage>
           <PackageEditFormIsPackageInput
@@ -292,7 +301,8 @@ const PackageFormEdit = ({ editData }) => {
                 컨펌 완료!
               </PackageFormBtn>
               <PackageFormBtnNotion>
-                컨펌 완료 버튼은 더 이상 수정 사항이 없을 경우에만 눌러 주세요!
+                컨펌 완료 버튼은 더 이상 <br />
+                수정 사항이 없을 경우에만 눌러 주세요!
               </PackageFormBtnNotion>
             </PackageFormBtnStaffOnly>
           )}
@@ -317,6 +327,10 @@ const PackageEditFormWidth = styled.div`
   justify-content: center;
   align-items: center;
   width: 85%;
+  @media (max-width: 768px) {
+    font-size: 15px;
+    width: 90%;
+  }
 `;
 const PackageEditFormTitle = styled.p`
   font-size: 30px;
@@ -324,22 +338,36 @@ const PackageEditFormTitle = styled.p`
 const PackageEditFormInputWrapper = styled.form`
   display: grid;
   justify-content: center;
-  grid-template-rows: repeat(10, 100px);
+  grid-template-rows: repeat(9, minmax(100px, auto));
   grid-template-columns: 1fr 6fr;
   box-sizing: border-box;
   margin-top: 50px;
   width: 100%;
   color: ${({ theme }) => theme.fontColor};
   border: 7px solid ${({ theme }) => theme.bgColor};
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
+  @media (max-width: 600px) {
+    grid-template-rows: repeat(18, minmax(100px, auto));
+    grid-template-columns: 0.7fr;
+  }
 `;
 
-const PackageEditFormName = styled.p`
+const PackageEditFormName = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
 `;
-const PackageEditFormNameInput = styled.input`
+const PackageEditFormNameInput = styled.input.attrs((props) => ({
+  type: "text",
+  maxLength: 6,
+}))`
   border-style: none;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
@@ -347,16 +375,37 @@ const PackageEditFormNameInput = styled.input`
   &:focus {
     outline: none;
   }
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
   &::placeholder {
     font-family: ${({ theme }) => theme.fontFamily};
   }
 `;
 
+const PackageEditFormInputTitle = styled(PackageEditFormName)``;
+const PackageEditFormInputTitleInput = styled(PackageEditFormNameInput).attrs(
+  (props) => ({
+    type: "text",
+    maxLength: 50,
+  })
+)``;
+
 const PackageEditFormPurpose = styled(PackageEditFormName)``;
-const PackageEditFormPurposeInput = styled(PackageEditFormNameInput)``;
+const PackageEditFormPurposeInput = styled(PackageEditFormNameInput).attrs(
+  (props) => ({
+    type: "text",
+    maxLength: 200,
+  })
+)``;
 
 const PackageEditFormPhoneNumber = styled(PackageEditFormName)``;
-const PackageEditFormPhoneNumberInput = styled(PackageEditFormNameInput)``;
+const PackageEditFormPhoneNumberInput = styled(PackageEditFormNameInput).attrs(
+  (props) => ({
+    type: "text",
+    maxLength: 20,
+  })
+)``;
 
 const PackageEditFormDate = styled(PackageEditFormName)``;
 const PackageEditFormDateDiv = styled.div`
@@ -365,47 +414,83 @@ const PackageEditFormDateDiv = styled.div`
   width: 100%;
   border-bottom: 1px solid ${(props) => props.theme.bgColor};
 `;
-const PackageEditFormDateInput = styled(PackageEditFormNameInput)`
+const PackageEditFormDateInput = styled(PackageEditFormNameInput).attrs(
+  (props) => ({
+    type: "date",
+  })
+)`
   border: none;
 `;
 
 const PackageEditFormAddress = styled(PackageEditFormName)``;
-const PackageEditFormAddressInput = styled(PackageEditFormNameInput)``;
+const PackageEditFormAddressInput = styled(PackageEditFormNameInput).attrs(
+  (props) => ({
+    type: "text",
+    maxLength: 100,
+  })
+)``;
 
-const PackageEditFormDescription = styled(PackageEditFormName)`
-  grid-row: 7/9;
-`;
+const PackageEditFormDescription = styled(PackageEditFormName)``;
 const PackageEditFormDescriptionDiv = styled.div`
   display: flex;
   flex-wrap: wrap;
-  grid-row: 7/9;
   border-style: none;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
   resize: none;
+  padding: 20px 0;
+  box-sizing: border-box;
   font-family: ${({ theme }) => theme.fontFamily};
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
 `;
 
 const InputWrap = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   width: 180px;
+  @media (max-width: 768px) {
+    font-size: 15px;
+    width: 140px;
+  }
 `;
-const PackageEditFormDescriptionInput = styled.input``;
+const PackageFormEditDescriptionP = styled.p`
+  font-size: 13px;
+  color: red;
+`;
+const PackageEditFormDescriptionInput = styled.input`
+  margin-right: 10px;
+`;
 const PackageEditFormDescriptionList = styled.p``;
 
 const PackageEditFormIsPackage = styled(PackageEditFormName)``;
-const PackageEditFormIsPackageInput = styled(PackageEditFormNameInput)``;
+const PackageEditFormIsPackageInput = styled(PackageEditFormNameInput).attrs(
+  (props) => ({
+    type: "text",
+    maxLength: 50,
+  })
+)``;
 
-const PackageEditFormRemark = styled(PackageEditFormName)`
-  grid-row: 10/11;
+const PackageEditFormRemark = styled(PackageEditFormName)``;
+const PackageEditFormRemarkInput = styled.textarea.attrs((props) => ({
+  type: "text",
+  maxLength: 300,
+}))`
+  border-style: none;
+  border-bottom: ${({ theme }) => theme.bgColor};
+  font-size: 17px;
+  resize: none;
+  font-family: ${({ theme }) => theme.fontFamily};
+  &:focus {
+    outline: none;
+  }
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
 `;
-const PackageEditFormRemarkInput = styled(PackageEditFormNameInput)`
-  grid-row: 10/11;
-`;
-
 const PackageEditFormBtn = styled.button`
   border-style: none;
   margin-top: 100px;
@@ -424,6 +509,10 @@ const PackageFormBtnWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  /* border: 1px solid red; */
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 
 const PackageFormBtn = styled.button`
@@ -433,7 +522,6 @@ const PackageFormBtn = styled.button`
   height: 50px;
   border-radius: 10px;
   font-size: 20px;
-  margin-right: 20px;
   background-color: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
@@ -445,9 +533,11 @@ const PackageFormBtnStaffOnly = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  /* border: 1px solid black; */
 `;
 const PackageFormBtnNotion = styled.p`
   margin-top: 10px;
   font-size: 17px;
   color: red;
+  text-align: center;
 `;

@@ -11,6 +11,7 @@ import AdminPage from "./Pages/AdminPage/AdminPage";
 import Footer from "./components/Footer";
 import FormEdit from "./Pages/Form/FormEdit/FormEdit";
 import ReserveForm from "./Pages/Form/FormInput/ReserveForm";
+import LoginPage from "./Pages/Login/LoginPage";
 
 function Router() {
   return (
@@ -24,6 +25,7 @@ function Router() {
           element={<IndividualDetail />}
         />
         <Route path="/kakaologin" element={<LoginKakao />} />
+        <Route path="/loginpage" element={<LoginPage />} />
         <Route path="/formlist" element={<FormList />} />
         <Route path="/reserveform" element={<ReserveForm />} />
         <Route path="/formdetail/:formId" element={<FormDetail />} />
