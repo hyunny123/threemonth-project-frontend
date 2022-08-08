@@ -177,6 +177,15 @@ const CafeFormDetailFormWrapper = styled.form`
   width: 100%;
   color: ${({ theme }) => theme.fontColor};
   border: 7px solid ${({ theme }) => theme.bgColor};
+  @media screen and (max-width: 1200px) {
+    grid-template-columns: 1.5fr 3.5fr;
+  }
+  @media screen and (max-width: 720px) {
+    grid-template-columns: 2fr 3fr;
+  }
+  @media screen and (max-width: 720px) {
+    grid-template-columns: 2.5fr 2.5fr;
+  }
 `;
 const CafeFormCafeName = styled.p`
   display: flex;
@@ -257,6 +266,11 @@ const CafeFormBtn = styled.button`
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;
+  @media screen and (max-width: 900px) {
+    width: 100px;
+    height: 50px;
+    font-size: 15px;
+  }
 `;
 const CafeFormUpdateBtn = styled.button`
   border-style: none;
@@ -271,8 +285,18 @@ const CafeFormUpdateBtn = styled.button`
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;
+  @media screen and (max-width: 900px) {
+    width: 50px;
+    height: 50px;
+    font-size: 15px;
+  }
 `;
 
 const CafeFormDeleteBtn = styled(CafeFormUpdateBtn)`
   cursor: pointer;
+  @media screen and (max-width: 900px) {
+    width: 50px;
+    height: 50px;
+    font-size: 15px;
+  }
 `;

@@ -1,53 +1,93 @@
-import React from "react";
-import Carousel from "react-material-ui-carousel";
+import React, { useEffect, useState, useRef } from "react";
+import { API } from "../../../config";
+import styled from "styled-components";
 
-const CarouselMain = ({ carouselData }) => {
-  const componentDidMount = () => {
-    window.addEventListener("resize", this.updateDimensions);
-    this.updateDimensions();
-  };
+const MainCarousel = () => {
+  const [carouselList, setCarouselList] = useState([]);
+  const [bannerBtnNum, setBannerBtnNum] = useState(0);
 
-  const getMainDivHeight = () => {
-    const mainImageWidth = 1920;
-    const mainImageHeight = 900;
-    return Math.floor((window.innerWidth * mainImageHeight) / mainImageWidth);
-  };
+  const bannerContainer = useRef(null);
 
-  const updateDimensions = () => {
-    this.setHeightList({ height: this.getMainDivHeight() });
-  };
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setBannerBtnNum((bannerBtnNum) =>
+        bannerBtnNum < 3 ? bannerBtnNum + 1 : 0
+      );
+    }, 4000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [bannerBtnNum]);
+
+  const { MAIN_CAROUSEL } = API;
+
+  useEffect(() => {
+    fetch(`${MAIN_CAROUSEL}`)
+      .then((res) => res.json())
+      .then((data) => setCarouselList(data));
+  }, [MAIN_CAROUSEL]);
+
   return (
-    <div>
-      <Carousel
-        indicators={true}
-        getMainDivHeight={getMainDivHeight}
-        componentDidMount={componentDidMount}
-        updateDimensions={updateDimensions}
-      >
-        {carouselData.map((item, i) => (
-          <div
-            key={i}
-            style={{
-              width: "100%",
-              height: "auto",
-              margin: "0 auto",
-            }}
-          >
-            <img
-              src={item.img_src}
-              style={{
-                width: "100%",
-                height: "900px",
-                marginBottom: "20px",
-                "@media(max-width:768px)": { height: "700px" },
-                "@media(max-width:320px)": { height: "300px" },
-              }}
-            />
-          </div>
-        ))}
-      </Carousel>
-    </div>
+    <Container>
+      <CarouselBox ref={bannerContainer}>
+        c
+        {carouselList.map(({ img_src }, idx) => {
+          return (
+            <CarouselBoxItem
+              key={idx}
+              className={`inner ${bannerBtnNum === idx && "active"}`}
+            >
+              <CarouselBoxImg className="item" src={img_src} alt="img" />
+            </CarouselBoxItem>
+          );
+        })}
+      </CarouselBox>
+    </Container>
   );
 };
 
-export default CarouselMain;
+export default MainCarousel;
+
+const Container = styled.div`
+  padding-bottom: 50px;
+`;
+
+const CarouselBox = styled.div`
+  position: relative;
+  width: 100%;
+  height: 600px;
+  @media screen and (max-width: 781px) {
+    height: 500px;
+  }
+  @media screen and (max-width: 640px) {
+    height: 450px;
+  }
+  @media screen and (max-width: 515px) {
+    height: 400px;
+  }
+  @media screen and (max-width: 400px) {
+    height: 350px;
+  }
+`;
+
+const CarouselBoxItem = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s;
+  &.active {
+    opacity: 1;
+    transition: opacity 1s;
+  }
+`;
+
+const CarouselBoxImg = styled.img`
+  width: 100%;
+  height: 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+`;
