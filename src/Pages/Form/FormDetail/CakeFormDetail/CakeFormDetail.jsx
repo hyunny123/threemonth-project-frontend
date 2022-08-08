@@ -144,7 +144,7 @@ const CakeFormWrapper = styled.div`
   align-items: center;
   min-height: 800px;
   margin: 100px 0;
-  color: #331211;
+  color: ${({ theme }) => theme.fontColor};
 `;
 const CakeFormWidth = styled.div`
   display: flex;
@@ -164,14 +164,14 @@ const CakeFormInputWrapper = styled.form`
   box-sizing: border-box;
   margin-top: 50px;
   width: 100%;
-  color: #331211;
-  border: 7px solid #f1e6d1;
+  color: ${({ theme }) => theme.fontColor};
+  border: 7px solid ${({ theme }) => theme.bgColor};
 `;
 const CakeFormName = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid #f1e6d1;
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
 `;
 const CakeFormNameDetailForm = styled.div`
