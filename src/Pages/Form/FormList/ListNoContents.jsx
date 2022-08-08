@@ -63,6 +63,17 @@ const FormListWrapper = styled.div`
   align-items: center;
   width: 100%;
   color: ${(props) => props.theme.fontColor};
+  @media (max-width: 1400px) {
+  }
+  @media (max-width: 1024px) {
+  }
+  @media (max-width: 768px) {
+    width: 90%;
+  }
+  @media (max-width: 640px) {
+  }
+  @media (max-width: 320px) {
+  }
 `;
 
 const FormListWidth = styled.div`
@@ -128,4 +139,18 @@ const ReserveBtn = styled.button`
   border: 1px solid ${({ theme }) => theme.fontColor};
   color: ${({ theme }) => theme.fontColor};
   cursor: pointer;
+  @media (max-width: 1400px) {
+  }
+  @media (max-width: 1024px) {
+  }
+  @media (max-width: 768px) {
+    width: 100px;
+    height: 25px;
+    font-size: 0.6em;
+    font-weight: bold;
+  }
+  @media (max-width: 640px) {
+  }
+  @media (max-width: 320px) {
+  }
 `;

@@ -157,7 +157,10 @@ const CakeInputForm = () => {
               min={minDate}
             />
           </CakeFormPickUpDateDiv>
-          <CakeFormCakeName>케이크이름 및 수량</CakeFormCakeName>
+          <CakeFormCakeName>
+            케이크 이름 및<br />
+            수량
+          </CakeFormCakeName>
           <SelectCake>
             {cakeList.map((list, idx) => (
               <CakeFormCakeNameWrap key={idx}>
@@ -212,6 +215,18 @@ const CakeFormWidth = styled.div`
   justify-content: center;
   align-items: center;
   width: 85%;
+  @media (max-width: 1400px) {
+  }
+  @media (max-width: 1024px) {
+  }
+  @media (max-width: 768px) {
+    width: 90%;
+    font-size: 15px;
+  }
+  @media (max-width: 640px) {
+  }
+  @media (max-width: 320px) {
+  }
 `;
 const CakeFormTitle = styled.p`
   font-size: 30px;
@@ -219,7 +234,7 @@ const CakeFormTitle = styled.p`
 const CakeFormInputWrapper = styled.form`
   display: grid;
   justify-content: center;
-  grid-template-rows: repeat(7, 100px);
+  grid-template-rows: repeat(6, 100px);
   grid-template-columns: 1fr 6fr;
   box-sizing: border-box;
   margin-top: 50px;
@@ -233,8 +248,22 @@ const CakeFormName = styled.div`
   justify-content: center;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
+  @media (max-width: 1400px) {
+  }
+  @media (max-width: 1024px) {
+  }
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
+  @media (max-width: 640px) {
+  }
+  @media (max-width: 320px) {
+  }
 `;
-const CakeFormNameInput = styled.input`
+const CakeFormNameInput = styled.input.attrs((props) => ({
+  type: "text",
+  maxLength: 6,
+}))`
   border-style: none;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
@@ -242,30 +271,55 @@ const CakeFormNameInput = styled.input`
   &:focus {
     outline: none;
   }
+  @media (max-width: 1400px) {
+  }
+  @media (max-width: 1024px) {
+  }
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
+  @media (max-width: 640px) {
+  }
+  @media (max-width: 320px) {
+  }
 `;
 
 const CakeFormInputTitle = styled(CakeFormName)``;
-const CakeFormInputTitleInput = styled(CakeFormNameInput)``;
+const CakeFormInputTitleInput = styled(CakeFormNameInput).attrs((props) => ({
+  type: "text",
+  maxLength: 50,
+}))``;
 const CakeFormPhoneNumber = styled(CakeFormName)``;
-const CakeFormPhoneNumberInput = styled(CakeFormNameInput)``;
+const CakeFormPhoneNumberInput = styled(CakeFormNameInput).attrs((props) => ({
+  type: "text",
+  maxLength: 20,
+}))``;
 const CakeFormPickUpDate = styled(CakeFormName)``;
 const CakeFormPickUpDateDiv = styled.div`
   display: flex;
   width: 100%;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
 `;
-const CakeFormPickUpDateInput = styled(CakeFormNameInput)`
+const CakeFormPickUpDateInput = styled(CakeFormNameInput).attrs((props) => ({
+  type: "date",
+}))`
   border: none;
 `;
-const CakeFormCakeName = styled(CakeFormName)``;
-const CakeFormCakeNameInput = styled(CakeFormNameInput)`
+const CakeFormCakeName = styled(CakeFormName)`
+  text-align: center;
+`;
+const CakeFormCakeNameInput = styled(CakeFormNameInput).attrs((props) => ({
+  type: "radio",
+}))`
   margin-right: 20px;
 `;
 const CakeFormCakeNameWrap = styled.div`
   display: flex;
   width: 100%;
 `;
-const CakeFormOrderCountInput = styled(CakeFormNameInput)`
+const CakeFormOrderCountInput = styled(CakeFormNameInput).attrs((props) => ({
+  type: "number",
+}))`
   font-size: 0.9em;
   margin-right: 20px;
   width: 150px;
@@ -273,7 +327,10 @@ const CakeFormOrderCountInput = styled(CakeFormNameInput)`
 const CakeFormRemark = styled(CakeFormName)`
   grid-row: 6/8;
 `;
-const CakeFormRemarkInput = styled.textarea`
+const CakeFormRemarkInput = styled.textarea.attrs((props) => ({
+  type: "text",
+  maxLength: 300,
+}))`
   grid-row: 6/8;
   border-style: none;
   box-sizing: border-box;
@@ -288,14 +345,29 @@ const CakeFormRemarkInput = styled.textarea`
   &:focus {
     outline: none;
   }
+  @media (max-width: 1400px) {
+  }
+  @media (max-width: 1024px) {
+  }
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
+  @media (max-width: 640px) {
+  }
+  @media (max-width: 320px) {
+  }
 `;
 
 const SelectCake = styled.div`
   display: flex;
-  justify-content: flex- start;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   height: 100%;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
+  * {
+    margin-top: 5px;
+  }
 `;
 
 const SelectLabel = styled.label`

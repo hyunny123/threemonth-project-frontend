@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const PackageDetailMain = ({ packageData }) => {
+const PackageDetailMain = () => {
   return (
     <PackageDetailMainWrapper>
       <PackageDetailMainDes>
@@ -12,11 +12,9 @@ const PackageDetailMain = ({ packageData }) => {
         기프트 박스 구성은 원하시는 대로 구성하실 수 있으며,
         <br /> 행사 분위기나 장소에 따라 저희가 제안할 수 있습니다.
       </PackageDetailMainDes>
-      {packageData.map((img, idx) => (
-        <PackageImgWrapper key={idx}>
-          <PackageImg src={img} alt="images" />
-        </PackageImgWrapper>
-      ))}
+      <PackageImgWrapper>
+        <PackageImg src="/images/packagebox.jpg" alt="Giftbox Image" />
+      </PackageImgWrapper>
       <PackageDetailMainDes>
         기프트 박스는 상기 이미지와 다소 다를 수 있습니다.
       </PackageDetailMainDes>
@@ -42,14 +40,37 @@ const PackageDetailMainWrapper = styled.div`
 
 const PackageDetailMainDes = styled.p`
   font-size: 20px;
-  margin-bottom: 100px;
+  margin-bottom: 60px;
   text-align: center;
   line-height: 2;
   &:nth-child(1) {
-    margin-top: 100px;
+    margin-top: 50px;
+    @media (max-width: 1400px) {
+    }
+    @media (max-width: 1024px) {
+    }
+    @media (max-width: 768px) {
+      margin-top: 0;
+    }
+    @media (max-width: 640px) {
+    }
+    @media (max-width: 320px) {
+    }
   }
   &:last-child {
-    margin-bottom: 200px;
+    margin-bottom: 50px;
+  }
+  @media (max-width: 1400px) {
+  }
+  @media (max-width: 1024px) {
+  }
+  @media (max-width: 768px) {
+    font-size: 15px;
+    margin-bottom: 30px;
+  }
+  @media (max-width: 640px) {
+  }
+  @media (max-width: 320px) {
   }
 `;
 

@@ -86,7 +86,7 @@ const PackageInputForm = () => {
     additional_explanation;
 
   const lengthCheck =
-    title.length < 50 &&
+    title.length < 500 &&
     delivery_location.length < 100 &&
     is_packaging.length < 100 &&
     purpose.length < 200;
@@ -149,15 +149,19 @@ const PackageInputForm = () => {
         <PackageFormInputWrapper>
           <PackageFormInputTitle>글 제목</PackageFormInputTitle>
           <PackageFormTitleInput
-            placeholder="글 제목을 입력해 주세요"
+            placeholder="글 제목을 입력해 주세요 최대 50자입니다."
             required
             name="title"
             onChange={packageFormHandleInput}
           />
-          <PackageFormPurpose>프로모션 목적</PackageFormPurpose>
+          <PackageFormPurpose>
+            프로모션 <br /> 목적
+          </PackageFormPurpose>
           <PackageFormPurposeInput
             placeholder="ex) 기업 행사, 결혼 답례품 등 / 최대 200자입니다."
             required
+            type="text"
+            maxlength="3"
             name="purpose"
             onChange={packageFormHandleInput}
           />
@@ -175,10 +179,11 @@ const PackageInputForm = () => {
             name="contact"
             onChange={packageFormHandleInput}
           />
-          <PackageFormDate>프로모션 날짜</PackageFormDate>
+          <PackageFormDate>
+            프로모션 <br /> 날짜
+          </PackageFormDate>
           <PackageFormDateDiv>
             <PackageFormDateInput
-              placeholder="날짜를 입력해 주세요"
               required
               type="date"
               name="delivery_date"
@@ -188,7 +193,7 @@ const PackageInputForm = () => {
           </PackageFormDateDiv>
           <PackageFormAddress>주소</PackageFormAddress>
           <PackageFormAddressInput
-            placeholder="주소를 입력해 주세요"
+            placeholder="주소를 입력해 주세요 최대 100자입니다."
             required
             name="delivery_location"
             onChange={packageFormHandleInput}
@@ -207,13 +212,13 @@ const PackageInputForm = () => {
             ))}
             <PackageFormDescriptionP>
               * 선택하신 상품은 한 개의 수량이 입력됩니다. 2개 이상을 원하실
-              경우 기타사항에 작성해 주세요. 상품 종류는 최소 2개 이상 선택해
-              주세요.
+              경우 기타사항에 작성해 주세요. <br />
+              상품 종류는 최소 2개 이상 선택해 주세요.
             </PackageFormDescriptionP>
           </PackageFormDescriptionDiv>
           <PackageFormIsPackage>패키지 유무</PackageFormIsPackage>
           <PackageFormIsPackageInput
-            placeholder="패키지 유무를 입력해 주세요. 종이 포장으로 선택할 시 별도의 포장 요금이 추가되지 않습니다."
+            placeholder="종이 포장으로 선택할 시 별도의 포장 요금이 추가되지 않습니다."
             required
             name="is_packaging"
             onChange={packageFormHandleInput}
@@ -255,22 +260,33 @@ const PackageFormTitle = styled.p`
 const PackageFormInputWrapper = styled.form`
   display: grid;
   justify-content: center;
-  grid-template-rows: repeat(9, 100px);
+  grid-template-rows: repeat(9, minmax(100px, auto));
   grid-template-columns: 1fr 6fr;
   box-sizing: border-box;
   margin-top: 50px;
   width: 100%;
   color: ${({ theme }) => theme.fontColor};
   border: 7px solid ${({ theme }) => theme.bgColor};
+  @media (max-width: 600px) {
+    grid-template-rows: repeat(18, minmax(100px, auto));
+    grid-template-columns: 0.7fr;
+  }
 `;
 
 const PackageFormName = styled.p`
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
 `;
-const PackageFormNameInput = styled.input`
+const PackageFormNameInput = styled.input.attrs((props) => ({
+  type: "text",
+  maxLength: 6,
+}))`
   border-style: none;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
@@ -278,15 +294,29 @@ const PackageFormNameInput = styled.input`
   &:focus {
     outline: none;
   }
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
 `;
 
 const PackageFormInputTitle = styled(PackageFormName)``;
-const PackageFormTitleInput = styled(PackageFormNameInput)``;
+const PackageFormTitleInput = styled(PackageFormNameInput).attrs((props) => ({
+  type: "text",
+  maxLength: 50,
+}))``;
 
 const PackageFormPurpose = styled(PackageFormName)``;
-const PackageFormPurposeInput = styled(PackageFormNameInput)``;
+const PackageFormPurposeInput = styled(PackageFormNameInput).attrs((props) => ({
+  type: "text",
+  maxLength: 200,
+}))``;
 const PackageFormPhoneNumber = styled(PackageFormName)``;
-const PackageFormPhoneNumberInput = styled(PackageFormNameInput)``;
+const PackageFormPhoneNumberInput = styled(PackageFormNameInput).attrs(
+  (props) => ({
+    type: "text",
+    maxLength: 20,
+  })
+)``;
 
 const PackageFormDate = styled(PackageFormName)``;
 const PackageFormDateDiv = styled.div`
@@ -295,18 +325,25 @@ const PackageFormDateDiv = styled.div`
   width: 100%;
   border-bottom: 1px solid ${(props) => props.theme.bgColor};
 `;
-const PackageFormDateInput = styled(PackageFormNameInput)`
+const PackageFormDateInput = styled(PackageFormNameInput).attrs((props) => ({
+  type: "date",
+}))`
   border: none;
 `;
 
 const PackageFormAddress = styled(PackageFormName)``;
-const PackageFormAddressInput = styled(PackageFormNameInput)``;
+const PackageFormAddressInput = styled(PackageFormNameInput).attrs((props) => ({
+  type: "text",
+  maxLength: 100,
+}))``;
 
 const PackageFormDescription = styled(PackageFormName)``;
 const PackageFormDescriptionDiv = styled.div`
   display: flex;
   flex-wrap: wrap;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
+  padding: 20px 0;
+  box-sizing: border-box;
 `;
 
 const PackageFormDescriptionWrap = styled.div`
@@ -314,6 +351,10 @@ const PackageFormDescriptionWrap = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 180px;
+  @media (max-width: 768px) {
+    font-size: 15px;
+    width: 140px;
+  }
 `;
 const PackageFormDescriptionInput = styled.input`
   margin-right: 10px;
@@ -325,10 +366,18 @@ const PackageFormDescriptionP = styled.p`
 `;
 
 const PackageFormIsPackage = styled(PackageFormName)``;
-const PackageFormIsPackageInput = styled(PackageFormNameInput)``;
+const PackageFormIsPackageInput = styled(PackageFormNameInput).attrs(
+  (props) => ({
+    type: "text",
+    maxLength: 50,
+  })
+)``;
 
 const PackageFormRemark = styled(PackageFormName)``;
-const PackageFormRemarkInput = styled.textarea`
+const PackageFormRemarkInput = styled.textarea.attrs((props) => ({
+  type: "text",
+  maxLength: 300,
+}))`
   border-style: none;
   border-bottom: ${({ theme }) => theme.bgColor};
   font-size: 17px;
@@ -336,6 +385,9 @@ const PackageFormRemarkInput = styled.textarea`
   font-family: ${({ theme }) => theme.fontFamily};
   &:focus {
     outline: none;
+  }
+  @media (max-width: 768px) {
+    font-size: 15px;
   }
 `;
 
