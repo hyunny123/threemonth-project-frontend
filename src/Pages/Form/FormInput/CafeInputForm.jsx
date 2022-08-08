@@ -192,7 +192,9 @@ const CafeInputForm = () => {
             </CafeFormProductListNotion>
           </CafeFormProductListWrap>
 
-          <CafeFormDescription>원하는 제품과 수량</CafeFormDescription>
+          <CafeFormDescription>
+            원하는 제품과 <br /> 수량
+          </CafeFormDescription>
           <CafeFormDescriptionInput
             onChange={cafeFormHandleInput}
             placeholder="원하는 제품과 수량을 입력해 주세요"
@@ -238,7 +240,7 @@ const CafeFormTitle = styled.p`
 const CafeFormInputWrapper = styled.form`
   display: grid;
   justify-content: center;
-  grid-template-rows: repeat(12, 100px);
+  grid-template-rows: repeat(11, minmax(100px, auto));
   grid-template-columns: 1fr 5fr;
   box-sizing: border-box;
   margin-top: 50px;
@@ -254,7 +256,10 @@ const CafeFormCafeName = styled.p`
   font-size: 17px;
   font-family: ${({ theme }) => theme.fontFamily};
 `;
-const CafeFormCafeNameInput = styled.input`
+const CafeFormCafeNameInput = styled.input.attrs((props) => ({
+  type: "text",
+  maxLength: 6,
+}))`
   border-style: none;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
@@ -265,18 +270,44 @@ const CafeFormCafeNameInput = styled.input`
 `;
 
 const CafeFormInputTitle = styled(CafeFormCafeName)``;
-const CafeFormInputTitleInput = styled(CafeFormCafeNameInput)``;
+const CafeFormInputTitleInput = styled(CafeFormCafeNameInput).attrs(
+  (props) => ({
+    type: "text",
+    maxLength: 50,
+  })
+)``;
 
 const CafeFormBusinessNumber = styled(CafeFormCafeName)``;
-const CafeFormBusinessNumberInput = styled(CafeFormCafeNameInput)``;
+const CafeFormBusinessNumberInput = styled(CafeFormCafeNameInput).attrs(
+  (props) => ({
+    type: "text",
+    maxLength: 50,
+  })
+)``;
 const CafeFormCEOName = styled(CafeFormCafeName)``;
-const CafeFormCEONameInput = styled(CafeFormCafeNameInput)``;
+const CafeFormCEONameInput = styled(CafeFormCafeNameInput).attrs((props) => ({
+  type: "text",
+  maxLength: 6,
+}))``;
 const CafeFormManagerName = styled(CafeFormCafeName)``;
-const CafeFormManagerNameInput = styled(CafeFormCafeNameInput)``;
+const CafeFormManagerNameInput = styled(CafeFormCafeNameInput).attrs(
+  (props) => ({
+    type: "text",
+    maxLength: 6,
+  })
+)``;
 const CafeFormContact = styled(CafeFormCafeName)``;
-const CafeFormContactInput = styled(CafeFormCafeNameInput)``;
+const CafeFormContactInput = styled(CafeFormCafeNameInput).attrs((props) => ({
+  type: "text",
+  maxLength: 10,
+}))``;
 const CafeFormCafeAddress = styled(CafeFormCafeName)``;
-const CafeFormCafeAddressInput = styled(CafeFormCafeNameInput)``;
+const CafeFormCafeAddressInput = styled(CafeFormCafeNameInput).attrs(
+  (props) => ({
+    type: "text",
+    maxLength: 100,
+  })
+)``;
 const CafeFormProductListName = styled(CafeFormCafeName)``;
 const CafeFormProductListWrap = styled.div`
   display: flex;
@@ -308,10 +339,13 @@ const CafeFormDescriptionInput = styled.textarea`
   }
 `;
 const CafeFormRemark = styled(CafeFormCafeName)`
-  grid-row: 11/13;
+  grid-row: 11/12;
 `;
-const CafeFormRemarkInput = styled(CafeFormDescriptionInput)`
-  grid-row: 11/13;
+const CafeFormRemarkInput = styled(CafeFormDescriptionInput).attrs((props) => ({
+  type: "text",
+  maxLength: 300,
+}))`
+  grid-row: 11/12;
 `;
 
 const CafeFormBtn = styled.button`

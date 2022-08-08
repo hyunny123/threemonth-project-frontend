@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { USER_TOKEN, USER_NICKNAME } from "../config";
-import { LOGIN_URI } from "../Pages/Login/AuthData";
 
 const Nav = () => {
   const navigate = useNavigate();
@@ -16,6 +15,7 @@ const Nav = () => {
   const goLogout = () => {
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("nickname");
+    localStorage.removeItem("prevpath");
     window.location.reload();
   };
 
@@ -45,9 +45,14 @@ const Nav = () => {
               {USER_NICKNAME}님
             </Menu>
           ) : (
-            <a href={LOGIN_URI}>
-              <MenuLogin src="./images/kakao_login_medium.png" />
-            </a>
+            <Menu
+              onClick={() => {
+                localStorage.setItem("prevpath", pathname);
+                navigate("loginpage");
+              }}
+            >
+              login
+            </Menu>
           )}
           {USER_TOKEN && <Menu onClick={goLogout}>Logout</Menu>}
         </NavMenu>
@@ -167,15 +172,15 @@ const Menu = styled.div`
   }
 `;
 
-const MenuLogin = styled.img`
-  width: 100px;
-  padding: 10px;
-  @media screen and (max-width: 515px) {
-    width: 60px;
-    padding: 5px;
-  }
-  @media screen and (max-width: 320px) {
-    width: 50px;
-    padding: 0px;
-  }
-`;
+// const MenuLogin = styled.img`
+//   width: 100px;
+//   padding: 10px;
+//   @media screen and (max-width: 515px) {
+//     width: 60px;
+//     padding: 5px;
+//   }
+//   @media screen and (max-width: 320px) {
+//     width: 50px;
+//     padding: 0px;
+//   }
+// `;

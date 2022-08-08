@@ -4,12 +4,17 @@ import CakeInputForm from "./CakeInputForm";
 import CafeInputForm from "./CafeInputForm";
 import PackageInputForm from "./PackageInputForm";
 import NotValidBtn from "../../../components/NotValidBtn";
+import { USER_TOKEN } from "../../../config";
 
 const ReserveForm = () => {
   const location = useLocation();
   if (location.state === null) {
     return <NotValidBtn />;
   }
+  if (!USER_TOKEN) {
+    return <NotValidBtn />;
+  }
+
   return (
     <div>
       {location.state.formType === "cake" ? (

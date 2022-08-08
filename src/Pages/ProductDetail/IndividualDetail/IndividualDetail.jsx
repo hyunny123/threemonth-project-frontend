@@ -48,6 +48,16 @@ const IndividualDetailWrapper = styled.div`
   align-items: center;
   flex-direction: column;
   color: ${({ theme }) => theme.fontColor};
+  @media (max-width: 1400px) {
+  }
+  @media (max-width: 1024px) {
+  }
+  @media (max-width: 768px) {
+  }
+  @media (max-width: 640px) {
+  }
+  @media (max-width: 320px) {
+  }
 `;
 
 const IndividualDetailWidth = styled.div`
@@ -57,8 +67,27 @@ const IndividualDetailWidth = styled.div`
   min-height: 400px;
   width: 85%;
 
-  @media (max-width: 700px) {
-    grid-template-rows: 1fr 1fr;
+  @media (max-width: 1400px) {
+  }
+  @media (max-width: 1024px) {
+    width: 90%;
+  }
+  @media (max-width: 768px) {
     grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    width: 90%;
+    margin-top: 0px;
+  }
+  @media (max-width: 640px) {
+    place-items: center;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    width: 90%;
+  }
+  @media (max-width: 320px) {
+    place-items: center;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    width: 90%;
   }
 `;

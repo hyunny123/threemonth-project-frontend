@@ -1,11 +1,11 @@
 import React from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import styled from "styled-components";
 import { USER_TOKEN } from "../../../config";
-import { LOGIN_URI } from "../../Login/AuthData";
 
 const IndividualDetailAside = ({ individualData }) => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const { price, description, is_active, product_name, category } =
     individualData;
   const goReserveForm = () => {
@@ -19,7 +19,8 @@ const IndividualDetailAside = ({ individualData }) => {
       if (
         window.confirm("로그인이 필요한 서비스입니다. 로그인 하시겠습니까?")
       ) {
-        window.location = `${LOGIN_URI}`;
+        localStorage.setItem("prevpath", pathname);
+        navigate("/loginpage");
       }
     }
   };
@@ -54,6 +55,18 @@ const IndividualDetailAsideWrapper = styled.div`
   display: grid;
   grid-template-rows: repeat(2, 1fr);
   color: ${({ theme }) => theme.fontColor};
+  @media (max-width: 1400px) {
+  }
+  @media (max-width: 1024px) {
+  }
+  @media (max-width: 768px) {
+    grid-template-rows: 1fr;
+    width: 100%;
+  }
+  @media (max-width: 640px) {
+  }
+  @media (max-width: 320px) {
+  }
 `;
 
 const IndividualDetailAsideTop = styled.div`
@@ -63,13 +76,39 @@ const IndividualDetailAsideTop = styled.div`
   flex-direction: column;
   box-sizing: border-box;
   padding: 20px;
+  @media (max-width: 1400px) {
+  }
+  @media (max-width: 1024px) {
+  }
+  @media (max-width: 768px) {
+  }
+  @media (max-width: 640px) {
+  }
+  @media (max-width: 320px) {
+  }
 `;
 
 const IndividualDetailAsideP = styled.p`
   margin-top: 50px;
   font-size: 18px;
+  @media (max-width: 1400px) {
+  }
+  @media (max-width: 1024px) {
+  }
+  @media (max-width: 768px) {
+    margin-top: 10px;
+  }
+  @media (max-width: 640px) {
+  }
+  @media (max-width: 320px) {
+  }
   &:nth-child(odd) {
     font-size: 23px;
+  }
+  &:nth-child(even) {
+    width: 70%;
+    font-size: 15px;
+    margin-bottom: 20px;
   }
 `;
 
@@ -78,6 +117,16 @@ const GoToBamin = styled.a`
   justify-content: center;
   align-items: center;
   width: 100%;
+  @media (max-width: 1400px) {
+  }
+  @media (max-width: 1024px) {
+  }
+  @media (max-width: 768px) {
+  }
+  @media (max-width: 640px) {
+  }
+  @media (max-width: 320px) {
+  }
 `;
 
 const DetailIndividualReservBtn = styled.button`
@@ -92,4 +141,15 @@ const DetailIndividualReservBtn = styled.button`
   border: 1px solid ${({ theme }) => theme.fontColor};
   background-color: ${({ theme }) => theme.bgColor};
   cursor: pointer;
+  @media (max-width: 1400px) {
+  }
+  @media (max-width: 1024px) {
+  }
+  @media (max-width: 768px) {
+    margin-top: 30px;
+  }
+  @media (max-width: 640px) {
+  }
+  @media (max-width: 320px) {
+  }
 `;

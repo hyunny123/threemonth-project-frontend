@@ -42,7 +42,7 @@ const KakaoLogin = () => {
       .then((res) => {
         sessionStorage.setItem("token", res.jwt.access);
         sessionStorage.setItem("nickname", res.nickname);
-        navigate(-1);
+        navigate("/loginpage");
       });
   };
 

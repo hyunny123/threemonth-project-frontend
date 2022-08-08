@@ -1,19 +1,13 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import React from "react";
+import { useLocation, useNavigate } from "react-router";
 import styled from "styled-components";
 import { USER_TOKEN } from "../../../config";
-import { LOGIN_URI } from "../../Login/AuthData";
+
 import PackageDetailMain from "./PackageDetailMain";
 
 const PackageDetail = () => {
   const navigate = useNavigate();
-  const [packageData, setPackageData] = useState([]);
-  useEffect(() => {
-    axios
-      .get("/data/packagedata.json")
-      .then((res) => setPackageData(res.data.result.detailImg));
-  }, []);
+  const { pathname } = useLocation();
 
   const goReservGiftBox = () => {
     if (USER_TOKEN) {
@@ -22,14 +16,15 @@ const PackageDetail = () => {
       if (
         window.confirm("로그인이 필요한 서비스입니다. 로그인 하시겠습니까?")
       ) {
-        window.location = `${LOGIN_URI}`;
+        localStorage.setItem("prevpath", pathname);
+        navigate("/loginpage");
       }
     }
   };
   return (
     <PackageDetailWrapper>
       <PackageDetailWidth>
-        <PackageDetailMain packageData={packageData} />
+        <PackageDetailMain />
         <DetailIndividualReservBtnWrap>
           <DetailIndividualReservBtn onClick={goReservGiftBox}>
             기프트박스 신청하기
@@ -48,6 +43,16 @@ const PackageDetailWrapper = styled.div`
   align-items: center;
   flex-direction: column;
   color: ${({ theme }) => theme.fontColor};
+  @media (max-width: 1400px) {
+  }
+  @media (max-width: 1024px) {
+  }
+  @media (max-width: 768px) {
+  }
+  @media (max-width: 640px) {
+  }
+  @media (max-width: 320px) {
+  }
 `;
 
 const PackageDetailWidth = styled.div`
@@ -79,4 +84,16 @@ const DetailIndividualReservBtn = styled.button`
   border: 1px solid ${({ theme }) => theme.fontColor};
   background-color: ${({ theme }) => theme.bgColor};
   cursor: pointer;
+  @media (max-width: 1400px) {
+  }
+  @media (max-width: 1024px) {
+  }
+  @media (max-width: 768px) {
+    width: 100%;
+    font-size: 15px;
+  }
+  @media (max-width: 640px) {
+  }
+  @media (max-width: 320px) {
+  }
 `;
