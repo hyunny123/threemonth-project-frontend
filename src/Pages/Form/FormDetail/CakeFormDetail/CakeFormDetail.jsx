@@ -178,8 +178,8 @@ const CakeFormInputWrapper = styled.form`
     font-size: 15px;
   }
   @media (max-width: 600px) {
-    grid-template-rows: repeat(18, minmax(100px, auto));
-    grid-template-columns: 0.7fr;
+    grid-template-rows: repeat(12, minmax(50px, auto));
+    grid-template-columns: 0.9fr;
   }
 `;
 const CakeFormName = styled.div`
