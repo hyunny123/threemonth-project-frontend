@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
-import { USER_TOKEN } from "../../../config";
+import { USER_TOKEN, API } from "../../../config";
 import styled from "styled-components";
 import Loading from "../../../components/Loading";
 
@@ -16,9 +16,10 @@ const FormDetail = () => {
 
   const params = useParams();
   const location = useLocation();
+  const { DETAIL_FORM } = API;
 
   useEffect(() => {
-    fetch(`http://15.164.163.31:8001/orders/${params.formId}`, {
+    fetch(`${DETAIL_FORM}${params.formId}`, {
       method: "get",
       headers: {
         Authorization: `Bearer ${USER_TOKEN}`,
@@ -37,7 +38,7 @@ const FormDetail = () => {
           setDetailFormData(res);
         }
       });
-  }, [params.formId, navigate]);
+  }, [params.formId, navigate, DETAIL_FORM]);
   if (location.state === null) {
     return <NotValidBtn />;
   }

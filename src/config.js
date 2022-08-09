@@ -28,4 +28,7 @@ export const API = {
   GET_CAKE_FORM_DATA: `${BASE_URL}/products?category=cake`,
 
   CAFE_INPUT_GET: `${BASE_URL}/products?fields=product_name,id&category=bread`,
+
+  //detail form
+  DETAIL_FORM: `${BASE_URL}/orders/`,
 };

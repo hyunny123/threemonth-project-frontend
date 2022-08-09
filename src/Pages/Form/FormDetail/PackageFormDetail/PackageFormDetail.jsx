@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router";
-import { USER_TOKEN } from "../../../../config";
+import { USER_TOKEN, API } from "../../../../config";
 import styled from "styled-components";
 
 const PackageFormDetail = ({ detailFormData }) => {
@@ -19,6 +19,7 @@ const PackageFormDetail = ({ detailFormData }) => {
     packageorders;
 
   const navigate = useNavigate();
+  const { DETAIL_FORM } = API;
 
   return (
     <PackageFormWrapper>
@@ -108,7 +109,7 @@ const PackageFormDetail = ({ detailFormData }) => {
             onClick={() => {
               if (status === "not_confirmed") {
                 if (window.confirm("삭제하시겠습니까?")) {
-                  fetch(`http://15.164.163.31:8001/orders/${id}`, {
+                  fetch(`${DETAIL_FORM}${id}`, {
                     method: "delete",
                     headers: {
                       Authorization: `Bearer ${USER_TOKEN}`,
@@ -126,7 +127,7 @@ const PackageFormDetail = ({ detailFormData }) => {
                   if (
                     window.confirm("컨펌 완료 상태입니다. 삭제하시겠습니까?")
                   ) {
-                    fetch(`http://15.164.163.31:8001/orders/${id}`, {
+                    fetch(`${DETAIL_FORM}${id}`, {
                       method: "delete",
                       headers: {
                         Authorization: `Bearer ${USER_TOKEN}`,
@@ -178,6 +179,9 @@ const PackageFormWidth = styled.div`
 `;
 const PackageFormTitle = styled.p`
   font-size: 30px;
+  @media (max-width: 600px) {
+    font-size: 20px;
+  }
 `;
 const PackageFormInputWrapper = styled.form`
   display: grid;

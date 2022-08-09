@@ -19,21 +19,7 @@ const Footer = () => {
       }
     }
   };
-  // const adminClickHandler = () => {
-  //   fetch("", {
-  //     method: "POST",
-  //     headers: {
-  //       Authorization: `Bearer ${USER_TOKEN}`,
-  //       "Content-Type": "application/json",
-  //     },
-  //   }).then((res) => {
-  //     if (res.status === 200) {
-  //       navigate("/adminpage");
-  //     } else {
-  //       alert("관리자가 아니");
-  //     }
-  //   });
-  // };
+
   return (
     <Container>
       <Wrapper>
@@ -100,11 +86,14 @@ const Container = styled.footer`
   @media screen and (max-width: 768px) {
     height: 320px;
   }
+  @media screen and (max-width: 515px) {
+    height: 350px;
+  }
   @media screen and (max-width: 450px) {
-    height: 330px;
+    height: 320px;
   }
   @media screen and (max-width: 320px) {
-    height: 350px;
+    height: 330px;
   }
 `;
 const Wrapper = styled.div`
@@ -135,7 +124,7 @@ const Title = styled.p`
     font-size: 1em;
   }
   @media screen and (max-width: 320px) {
-    font-size: 0.9em;
+    font-size: 0.7em;
   }
 `;
 
@@ -165,10 +154,10 @@ const Sns = styled.div`
     margin-right: 30px;
   }
   @media screen and (max-width: 450px) {
-    font-size: 0.8em;
+    font-size: 0.7em;
   }
   @media screen and (max-width: 320px) {
-    font-size: 0.6em;
+    font-size: 0.5em;
   }
 `;
 
@@ -181,7 +170,7 @@ const SnsTitle = styled.div`
     font-size: 1em;
   }
   @media screen and (max-width: 320px) {
-    font-size: 0.8em;
+    font-size: 0.7em;
   }
 `;
 
@@ -200,11 +189,13 @@ const ButtonWrapper = styled.div`
   @media screen and (max-width: 515px) {
     display: flex;
     justify-content: center;
-    width: 75%;
+    align-items: center;
+    width: 100%;
   }
   @media screen and (max-width: 320px) {
     display: flex;
     justify-content: center;
+    align-items: center;
     width: 100%;
   }
 `;
@@ -238,6 +229,12 @@ const AdminButton = styled.button`
   border-radius: 5px;
   margin-top: 5px;
   cursor: pointer;
+  @media screen and (max-width: 768px) {
+    margin-right: 15px;
+  }
+  @media screen and (max-width: 515px) {
+    font-size: 0.9em;
+  }
 `;
 
 const IconWrapper = styled.a``;
@@ -277,17 +274,13 @@ const Rights = styled(Sns)`
     font-size: 1.2em;
     width: 80%;
   }
-  @media screen and (max-width: 1024px) {
-    font-size: 1.2em;
-    width: 80%;
-  }
   @media screen and (max-width: 768px) {
     font-size: 1.1em;
   }
   @media screen and (max-width: 515px) {
-    font-size: 0.9em;
+    font-size: 0.8em;
   }
   @media screen and (max-width: 320px) {
-    font-size: 0.8em;
+    font-size: 0.7em;
   }
 `;
