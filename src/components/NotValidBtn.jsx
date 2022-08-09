@@ -12,7 +12,8 @@ const NotValidBtn = () => {
           navigate(-1);
         }}
       >
-        비정상적인 접근입니다. Click Here!
+        비정상적인 접근입니다.
+        <br /> Click Here!
       </NotValidButton>
     </NotValidWrap>
   );
@@ -28,6 +29,12 @@ const NotValidWrap = styled.div`
   height: 500px;
   font-size: 30px;
   color: ${({ theme }) => theme.fontColor};
+  @media (max-width: 600px) {
+    font-size: 20px;
+  }
+  @media (max-width: 450px) {
+    font-size: 15px;
+  }
 `;
 const NotValidButton = styled.button`
   border-style: none;
@@ -38,4 +45,13 @@ const NotValidButton = styled.button`
   font-family: ${({ theme }) => theme.fontFamily};
   font-size: 20px;
   border-radius: 5px;
+  margin-top: 20px;
+  @media (max-width: 600px) {
+    height: 60px;
+    font-size: 15px;
+  }
+  @media (max-width: 450px) {
+    height: 40px;
+    font-size: 10px;
+  }
 `;

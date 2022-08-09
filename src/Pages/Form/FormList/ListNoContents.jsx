@@ -61,28 +61,26 @@ const FormListWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  color: ${(props) => props.theme.fontColor};
-  @media (max-width: 1400px) {
-  }
-  @media (max-width: 1024px) {
-  }
-  @media (max-width: 768px) {
-    width: 90%;
-  }
-  @media (max-width: 640px) {
-  }
-  @media (max-width: 320px) {
+  font-size: 1em;
+  box-sizing: border-box;
+  @media (max-width: 580px) {
+    width: 100vw;
   }
 `;
 
 const FormListWidth = styled.div`
   margin: 80px 0;
   width: 85%;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const FormListTitle = styled.p`
   font-size: 1.6em;
+  @media (max-width: 768px) {
+    padding: 0 20px;
+  }
 `;
 const ListBox = styled.div`
   width: 100%;
@@ -91,23 +89,46 @@ const ListBox = styled.div`
 `;
 const ListBoxMenu = styled.div`
   display: grid;
-  align-items: end;
-  grid-template-columns: 0.4fr 2fr 0.5fr 0.5fr 0.5fr;
+  grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr;
   grid-template-rows: 50px;
   box-sizing: border-box;
-  padding-bottom: 20px;
-  margin-bottom: 20px;
   border-bottom: 4px solid ${(props) => props.theme.bgColor};
+  margin-top: 50px;
+  @media (max-width: 580px) {
+    grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr;
+    grid-template-rows: 30px;
+  }
+  @media (max-width: 450px) {
+    grid-template-columns: 0.5fr 2fr 1fr;
+    grid-template-rows: 20px;
+    font-size: 14px;
+  }
 `;
 const MenuNum = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 400px;
+  @media (max-width: 580px) {
+    font-size: 13px;
+  }
 `;
 const MenuSub = styled(MenuNum)``;
-const MenuDate = styled(MenuNum)``;
-const MenuWriter = styled(MenuNum)``;
-const MenuIsChecked = styled(MenuNum)``;
+const MenuDate = styled(MenuNum)`
+  @media (max-width: 580px) {
+    justify-content: flex-end;
+    box-sizing: border-box;
+    padding: 0 10px;
+  }
+`;
+const MenuWriter = styled(MenuNum)`
+  @media (max-width: 450px) {
+    display: none;
+  }
+`;
+const MenuIsChecked = styled(MenuNum)`
+  @media (max-width: 450px) {
+    display: none;
+  }
+`;
 
 const NoContentWrap = styled.div`
   display: flex;
@@ -139,18 +160,10 @@ const ReserveBtn = styled.button`
   border: 1px solid ${({ theme }) => theme.fontColor};
   color: ${({ theme }) => theme.fontColor};
   cursor: pointer;
-  @media (max-width: 1400px) {
-  }
-  @media (max-width: 1024px) {
-  }
   @media (max-width: 768px) {
     width: 100px;
     height: 25px;
     font-size: 0.6em;
     font-weight: bold;
-  }
-  @media (max-width: 640px) {
-  }
-  @media (max-width: 320px) {
   }
 `;

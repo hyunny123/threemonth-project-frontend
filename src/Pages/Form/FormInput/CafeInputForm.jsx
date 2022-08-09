@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import Loading from "../../../components/Loading";
-import { USER_TOKEN } from "../../../config";
+import { USER_TOKEN, API } from "../../../config";
 
 const CafeInputForm = () => {
   const navigate = useNavigate();
@@ -18,6 +18,7 @@ const CafeInputForm = () => {
     type: "cafe",
     contact: "",
   });
+  const { CAFE_INPUT_GET } = API;
   const [productList, setProductList] = useState([
     {
       id: 0,
@@ -25,13 +26,11 @@ const CafeInputForm = () => {
     },
   ]);
   useEffect(() => {
-    fetch(
-      "http://15.164.163.31:8001/products?fields=id,product_name&category=bread"
-    )
+    fetch(`${CAFE_INPUT_GET}`)
       .then((res) => res.json())
       .then((data) => [...data].filter((x) => x.id !== 14))
       .then((data) => setProductList(data));
-  }, []);
+  }, [CAFE_INPUT_GET]);
 
   const {
     title,
@@ -236,17 +235,24 @@ const CafeFormWidth = styled.div`
 `;
 const CafeFormTitle = styled.p`
   font-size: 30px;
+  @media (max-width: 600px) {
+    font-size: 20px;
+  }
 `;
 const CafeFormInputWrapper = styled.form`
   display: grid;
   justify-content: center;
-  grid-template-rows: repeat(11, minmax(100px, auto));
+  grid-template-rows: repeat(10, minmax(100px, auto));
   grid-template-columns: 1fr 5fr;
   box-sizing: border-box;
   margin-top: 50px;
   width: 100%;
   color: ${({ theme }) => theme.fontColor};
   border: 7px solid ${({ theme }) => theme.bgColor};
+  @media (max-width: 600px) {
+    grid-template-rows: repeat(20, minmax(100px, auto));
+    grid-template-columns: 0.7fr;
+  }
 `;
 const CafeFormCafeName = styled.p`
   display: flex;
@@ -255,6 +261,9 @@ const CafeFormCafeName = styled.p`
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
   font-family: ${({ theme }) => theme.fontFamily};
+  @media (max-width: 600px) {
+    font-size: 13px;
+  }
 `;
 const CafeFormCafeNameInput = styled.input.attrs((props) => ({
   type: "text",
@@ -266,6 +275,9 @@ const CafeFormCafeNameInput = styled.input.attrs((props) => ({
   font-family: ${({ theme }) => theme.fontFamily};
   &:focus {
     outline: none;
+  }
+  @media (max-width: 600px) {
+    font-size: 13px;
   }
 `;
 
@@ -315,38 +327,44 @@ const CafeFormProductListWrap = styled.div`
   justify-content: flex-start;
   align-items: center;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
+  box-sizing: border-box;
+  padding: 20px 0;
 `;
 const CafeFormProductList = styled.p`
   width: 150px;
+  @media (max-width: 600px) {
+    font-size: 14px;
+    width: 100px;
+  }
 `;
 const CafeFormProductListNotion = styled.p`
   font-size: 14px;
   color: red;
+  @media (max-width: 600px) {
+    font-size: 12px;
+  }
 `;
 const CafeFormDescription = styled(CafeFormCafeName)`
   text-align: center;
-  grid-row: 9/11;
 `;
 const CafeFormDescriptionInput = styled.textarea`
   border-style: none;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
   resize: none;
-  grid-row: 9/11;
   font-family: ${({ theme }) => theme.fontFamily};
   &:focus {
     outline: none;
   }
+  @media (max-width: 600px) {
+    font-size: 13px;
+  }
 `;
-const CafeFormRemark = styled(CafeFormCafeName)`
-  grid-row: 11/12;
-`;
+const CafeFormRemark = styled(CafeFormCafeName)``;
 const CafeFormRemarkInput = styled(CafeFormDescriptionInput).attrs((props) => ({
   type: "text",
   maxLength: 300,
-}))`
-  grid-row: 11/12;
-`;
+}))``;
 
 const CafeFormBtn = styled.button`
   border-style: none;

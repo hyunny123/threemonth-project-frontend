@@ -9,28 +9,23 @@ export const API = {
   MAIN_GRID: `${BASE_URL}/products/independentimages?page=main&place=grid`,
   MAIN_CAROUSEL: `${BASE_URL}/products/independentimages?page=main&place=carousel`,
 
-  // detailpage
-  PACKAGEDETAIL: `${BASE_URL}/packagedetail`,
-  INDIVIDUALDETAIL: `${BASE_URL}/individualdetail`,
-
   // login
   KAKAOLOGIN: `${BASE_URL}/users/kakaologin`,
-  KAKAOLOGOUT: `${BASE_URL}/users/kakaologout`,
 
-  //form data
-  FORMLIST: `${BASE_URL}/formlist`,
-  FORMDETAIL: `${BASE_URL}/formdetail`,
+  //individual page
+  ITEM_GET: `${BASE_URL}/products`,
 
-  // editform
-  CAFEFORMEDIT: `${BASE_URL}/cafeformedit`,
-  CAKEFORMEDIT: `${BASE_URL}/cakeformedit`,
-  PACKAGEFORMEDIT: `${BASE_URL}/packageformedit`,
+  // edit form
+  GET_FORM_EDIT_DATA: `${BASE_URL}/orders`,
 
-  // inputpage
-  CAFEINPUT: `${BASE_URL}/cafeinputform`,
-  PACKAGEINPUT: `${BASE_URL}/packageinputform`,
-  CAKEINPUT: `${BASE_URL}/cakeinputform`,
+  CAFE_EDIT_GET: `${BASE_URL}/products?fields=product_name,id&category=bread`,
+  FORM_EDIT_PATCH: `${BASE_URL}/orders`,
 
-  // admin
-  ADMINPAGE: `${BASE_URL}/adminpage`,
+  //input form
+  POST_INPUT_FORM: `${BASE_URL}/orders/`,
+
+  GET_PACKAGE_FORM_DATA: `${BASE_URL}/products?category=bread`,
+  GET_CAKE_FORM_DATA: `${BASE_URL}/products?category=cake`,
+
+  CAFE_INPUT_GET: `${BASE_URL}/products?fields=product_name,id&category=bread`,
 };
