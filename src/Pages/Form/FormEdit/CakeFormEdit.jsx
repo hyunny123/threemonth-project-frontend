@@ -283,8 +283,8 @@ const CakeFormInputWrapper = styled.form`
   color: ${({ theme }) => theme.fontColor};
   border: 7px solid ${({ theme }) => theme.bgColor};
   @media (max-width: 600px) {
-    grid-template-rows: repeat(12, 100px);
-    grid-template-columns: 0.8fr;
+    grid-template-rows: repeat(12, 50px);
+    grid-template-columns: 0.9fr;
   }
 `;
 const CakeFormName = styled.div`
@@ -402,6 +402,11 @@ const CakeFormBtn = styled.button`
   color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
   cursor: pointer;
+  @media (max-width: 600px) {
+    width: 150px;
+    height: 40px;
+    font-size: 15px;
+  }
 `;
 
 const CakeEditFormBtnWrap = styled.div`
@@ -423,4 +428,7 @@ const CakeEditFormBtnNotion = styled.p`
   margin-top: 10px;
   font-size: 17px;
   color: red;
+  @media (max-width: 600px) {
+    font-size: 15px;
+  }
 `;
