@@ -62,13 +62,13 @@ const FormListBoxWrapper = styled.div`
 
 const ListBoxMenu = styled.div`
   display: grid;
-  grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr;
+  grid-template-columns: 0.5fr 3fr 1fr 1fr 1fr;
   grid-template-rows: 50px;
   box-sizing: border-box;
   border-bottom: 4px solid ${(props) => props.theme.bgColor};
   margin-top: 50px;
   @media (max-width: 580px) {
-    grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr;
+    grid-template-columns: 0.5fr 3fr 1fr 1fr 1fr;
     grid-template-rows: 30px;
   }
   @media (max-width: 450px) {
@@ -121,7 +121,7 @@ const List = styled.ul`
 const ListBoxContents = styled.div`
   border-style: none;
   display: grid;
-  grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr;
+  grid-template-columns: 0.5fr 3fr 1fr 1fr 1fr;
   width: 100%;
   background-color: white;
   font-family: ${({ theme }) => theme.fontFamily};

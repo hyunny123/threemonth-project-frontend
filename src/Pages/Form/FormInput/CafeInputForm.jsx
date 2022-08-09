@@ -196,7 +196,7 @@ const CafeInputForm = () => {
           </CafeFormDescription>
           <CafeFormDescriptionInput
             onChange={cafeFormHandleInput}
-            placeholder="원하는 제품과 수량을 입력해 주세요"
+            placeholder="ex) 플레인 휘낭시에 300개 / 월, 앙버터 스콘 100개 / 주"
             name="product_explanation"
             required
           />
@@ -250,8 +250,8 @@ const CafeFormInputWrapper = styled.form`
   color: ${({ theme }) => theme.fontColor};
   border: 7px solid ${({ theme }) => theme.bgColor};
   @media (max-width: 600px) {
-    grid-template-rows: repeat(20, minmax(100px, auto));
-    grid-template-columns: 0.7fr;
+    grid-template-rows: repeat(20, minmax(50px, auto));
+    grid-template-columns: 0.9fr;
   }
 `;
 const CafeFormCafeName = styled.p`
@@ -378,4 +378,9 @@ const CafeFormBtn = styled.button`
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;
+  @media (max-width: 600px) {
+    width: 150px;
+    height: 40px;
+    font-size: 15px;
+  }
 `;

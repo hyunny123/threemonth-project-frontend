@@ -353,8 +353,8 @@ const PackageEditFormInputWrapper = styled.form`
     font-size: 15px;
   }
   @media (max-width: 600px) {
-    grid-template-rows: repeat(18, minmax(100px, auto));
-    grid-template-columns: 0.7fr;
+    grid-template-rows: repeat(18, minmax(50px, auto));
+    grid-template-columns: 0.9fr;
   }
 `;
 
@@ -517,6 +517,11 @@ const PackageEditFormBtn = styled.button`
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;
+  @media (max-width: 600px) {
+    width: 150px;
+    height: 40px;
+    font-size: 15px;
+  }
 `;
 
 const PackageFormBtnWrap = styled.div`
@@ -540,6 +545,11 @@ const PackageFormBtn = styled.button`
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;
+  @media (max-width: 600px) {
+    width: 150px;
+    height: 40px;
+    font-size: 15px;
+  }
 `;
 const PackageFormBtnStaffOnly = styled.div`
   display: flex;
@@ -552,4 +562,7 @@ const PackageFormBtnNotion = styled.p`
   font-size: 17px;
   color: red;
   text-align: center;
+  @media (max-width: 600px) {
+    font-size: 15px;
+  }
 `;
