@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router";
-import { USER_TOKEN } from "../../../../config";
+import { USER_TOKEN, API } from "../../../../config";
 import styled from "styled-components";
 
 const CafeFormDetail = ({ detailFormData }) => {
@@ -24,6 +24,7 @@ const CafeFormDetail = ({ detailFormData }) => {
   } = cafeorders;
 
   const navigate = useNavigate();
+  const { DETAIL_FORM } = API;
 
   return (
     <CafeFormWrapper>
@@ -99,7 +100,7 @@ const CafeFormDetail = ({ detailFormData }) => {
             onClick={() => {
               if (status === "not_confirmed") {
                 if (window.confirm("삭제하시겠습니까?")) {
-                  fetch(`http://15.164.163.31:8001/orders/${id}`, {
+                  fetch(`${DETAIL_FORM}${id}`, {
                     method: "delete",
                     headers: {
                       Authorization: `Bearer ${USER_TOKEN}`,
@@ -117,7 +118,7 @@ const CafeFormDetail = ({ detailFormData }) => {
                   if (
                     window.confirm("컨펌 완료 상태입니다. 삭제하시겠습니까?")
                   ) {
-                    fetch(`http://15.164.163.31:8001/orders/${id}`, {
+                    fetch(`${DETAIL_FORM}${id}`, {
                       method: "delete",
                       headers: {
                         Authorization: `Bearer ${USER_TOKEN}`,
@@ -155,7 +156,7 @@ const CafeFormWrapper = styled.div`
   min-height: 800px;
   margin: 100px 0;
   color: ${({ theme }) => theme.fontColor};
-  /* font-size: 17px; */
+  font-size: 17px;
 `;
 const CafeFormWidth = styled.div`
   display: flex;
@@ -170,6 +171,9 @@ const CafeFormWidth = styled.div`
 `;
 const CafeFormTitle = styled.p`
   font-size: 30px;
+  @media (max-width: 600px) {
+    font-size: 20px;
+  }
 `;
 const CafeFormDetailFormWrapper = styled.form`
   display: grid;
@@ -195,21 +199,19 @@ const CafeFormCafeName = styled.p`
   align-items: center;
   text-align: center;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
-  /* font-size: 17px; */
+  font-size: 17px;
   @media (max-width: 768px) {
     font-size: 15px;
   }
-  border: 1px solid tomato;
 `;
 const CafeFormCafeNameDetailForm = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-
   border-style: none;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
-  border: 1px solid green;
+
   &:focus {
     outline: none;
   }
@@ -232,20 +234,18 @@ const CafeFormContactDetailForm = styled(CafeFormCafeNameDetailForm)``;
 const CafeFormCafeAddress = styled(CafeFormCafeName)``;
 const CafeFormCafeAddressDetailForm = styled(CafeFormCafeNameDetailForm)``;
 const CafeFormDescription = styled(CafeFormCafeName)`
-  /* text-align: center; */
-  grid-row: 8/9;
+  text-align: center;
 `;
 const CafeFormDescriptionDetailForm = styled(CafeFormCafeNameDetailForm)`
-  /* display: flex;
+  display: flex;
   justify-content: flex-start;
-  align-items: center; */
+  align-items: center;
   border-style: none;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
   line-height: 1.5;
   resize: none;
-  grid-row: 8/9;
-  border: 1px solid blue;
+
   &:focus {
     outline: none;
   }
@@ -253,11 +253,8 @@ const CafeFormDescriptionDetailForm = styled(CafeFormCafeNameDetailForm)`
     font-size: 15px;
   }
 `;
-const CafeFormRemark = styled(CafeFormCafeName)`
-  grid-row: 9/10;
-`;
+const CafeFormRemark = styled(CafeFormCafeName)``;
 const CafeFormRemarkDetailForm = styled(CafeFormDescriptionDetailForm)`
-  grid-row: 9/10;
   line-height: 1.5;
   @media (max-width: 768px) {
     font-size: 15px;

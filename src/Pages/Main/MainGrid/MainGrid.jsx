@@ -70,6 +70,7 @@ const GridContainer = styled.div`
 const GridTitle = styled.h2`
   margin-bottom: 30px;
   font-size: 3em;
+  line-height: 1.2;
   color: ${({ theme }) => theme.fontColor};
   border-bottom: 3px solid ${({ theme }) => theme.fontColor};
   @media screen and (max-width: 750px) {
@@ -92,22 +93,14 @@ const GridBox = styled.div`
   @media screen and (max-width: 1400px) {
     height: 700px;
   }
-  @media screen and (max-width: 1050px) {
-    height: 700px;
-  }
-  @media screen and (max-width: 990px) {
-    height: 700px;
-  }
   @media screen and (max-width: 640px) {
     height: 600px;
   }
   @media screen and (max-width: 440px) {
     height: 450px;
-    margin-top: 30px;
   }
   @media screen and (max-width: 320px) {
     height: 300px;
-    margin-top: 30px;
   }
 `;
 
@@ -138,7 +131,6 @@ const TitleItem = styled.h3`
 const GridImgBox1 = styled.div`
   position: relative;
   display: flex;
-  /* justify-content: center; */
   flex-direction: column;
   align-items: flex-start;
   overflow: hidden;

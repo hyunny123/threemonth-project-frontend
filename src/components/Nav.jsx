@@ -112,7 +112,7 @@ const Logo = styled.img`
     width: 80px;
     height: 40px;
   }
-  @media screen and (max-width: 320px) {
+  @media screen and (max-width: 340px) {
     width: 50px;
     height: 25px;
   }

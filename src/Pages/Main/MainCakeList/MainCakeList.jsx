@@ -40,7 +40,7 @@ export default MainCakeList;
 const MainCakeListContainer = styled.div`
   width: 80%;
   margin: 0 auto;
-  padding: 100px 0px;
+  padding: 20px 0px;
   @media screen and (max-width: 768px) {
     width: 90%;
   }
@@ -49,6 +49,7 @@ const MainCakeListContainer = styled.div`
 const CakeListTitle = styled.h2`
   margin-bottom: 20px;
   font-size: 3em;
+  line-height: 1.2;
   border-bottom: 3px solid ${({ theme }) => theme.fontColor};
   color: ${({ theme }) => theme.fontColor};
   @media screen and (max-width: 750px) {
@@ -65,12 +66,11 @@ const CakeListBox = styled.div`
   width: 100%;
   display: flex;
   margin-top: 30px;
-  border-bottom: 3px solid ${({ theme }) => theme.fontColor};
   @media screen and (max-width: 1200px) {
     padding-bottom: 30px;
   }
   @media screen and (max-width: 768px) {
-    padding-bottom: 30px;
+    padding-bottom: 0px;
   }
 `;
 
@@ -78,7 +78,7 @@ const CakeListItems = styled.ul`
   display: grid;
   justify-content: center;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(2, 1fr);
+  grid-template-rows: repeat(1, 1fr);
   grid-gap: 25px 50px;
   width: 100%;
   overflow: hidden;
@@ -91,17 +91,14 @@ const CakeListItems = styled.ul`
   @media screen and (max-width: 790px) {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(1, 1fr);
-    grid-gap: 25px 25px;
   }
   @media screen and (max-width: 640px) {
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(1, 1fr);
-    grid-gap: 25px 25px;
   }
   @media screen and (max-width: 400px) {
     grid-template-columns: repeat(1, 1fr);
     grid-template-rows: repeat(1, 1fr);
-    grid-gap: 25px 25px;
   }
 `;
 const CakeListItem = styled.li`

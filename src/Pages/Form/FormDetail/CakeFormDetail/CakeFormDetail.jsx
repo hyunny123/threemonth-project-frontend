@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router";
-import { USER_TOKEN } from "../../../../config";
+import { USER_TOKEN, API } from "../../../../config";
 import styled from "styled-components";
 
 const CakeFormDetail = ({ detailFormData }) => {
@@ -18,6 +18,7 @@ const CakeFormDetail = ({ detailFormData }) => {
   const { count, product_name, want_pick_up_date } = cakeorders;
 
   const navigate = useNavigate();
+  const { DETAIL_FORM } = API;
 
   return (
     <CakeFormWrapper>
@@ -90,7 +91,7 @@ const CakeFormDetail = ({ detailFormData }) => {
             onClick={() => {
               if (status === "not_confirmed") {
                 if (window.confirm("삭제하시겠습니까?")) {
-                  fetch(`http://15.164.163.31:8001/orders/${id}`, {
+                  fetch(`${DETAIL_FORM}${id}`, {
                     method: "delete",
                     headers: {
                       Authorization: `Bearer ${USER_TOKEN}`,
@@ -108,7 +109,7 @@ const CakeFormDetail = ({ detailFormData }) => {
                   if (
                     window.confirm("컨펌 완료 상태입니다. 삭제하시겠습니까?")
                   ) {
-                    fetch(`http://15.164.163.31:8001/orders/${id}`, {
+                    fetch(`${DETAIL_FORM}${id}`, {
                       method: "delete",
                       headers: {
                         Authorization: `Bearer ${USER_TOKEN}`,
@@ -159,6 +160,9 @@ const CakeFormWidth = styled.div`
 `;
 const CakeFormTitle = styled.p`
   font-size: 30px;
+  @media (max-width: 600px) {
+    font-size: 20px;
+  }
 `;
 const CakeFormInputWrapper = styled.form`
   display: grid;
@@ -215,7 +219,6 @@ const CakeFormCakeNameDetailForm = styled.div`
   justify-content: flex-start;
   align-items: center;
   border-style: none;
-
   font-size: 17px;
   &:focus {
     outline: none;
@@ -230,14 +233,11 @@ const CakeFormOrderCountDetailForm = styled(CakeFormNameDetailForm)`
   margin-left: 20px;
   border-style: none;
 `;
-const CakeFormRemark = styled(CakeFormName)`
-  grid-row: 6/7;
-`;
+const CakeFormRemark = styled(CakeFormName)``;
 const CakeFormRemarkDetailForm = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  grid-row: 6/7;
   border-style: none;
   box-sizing: border-box;
   width: 90%;

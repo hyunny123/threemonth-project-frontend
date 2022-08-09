@@ -31,7 +31,6 @@ const MainCarousel = () => {
   return (
     <Container>
       <CarouselBox ref={bannerContainer}>
-        c
         {carouselList.map(({ img_src }, idx) => {
           return (
             <CarouselBoxItem
@@ -50,13 +49,16 @@ const MainCarousel = () => {
 export default MainCarousel;
 
 const Container = styled.div`
-  padding-bottom: 50px;
+  padding-bottom: 10px;
 `;
 
 const CarouselBox = styled.div`
   position: relative;
   width: 100%;
   height: 600px;
+  @media screen and (max-width: 1400px) {
+    height: 1000px;
+  }
   @media screen and (max-width: 781px) {
     height: 500px;
   }
