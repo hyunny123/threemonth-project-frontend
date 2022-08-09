@@ -40,37 +40,24 @@ const PackageDetailMainWrapper = styled.div`
 
 const PackageDetailMainDes = styled.p`
   font-size: 20px;
-  margin-bottom: 60px;
+  /* margin-bottom: 60px; */
   text-align: center;
   line-height: 2;
   &:nth-child(1) {
     margin-top: 50px;
-    @media (max-width: 1400px) {
-    }
-    @media (max-width: 1024px) {
-    }
     @media (max-width: 768px) {
       margin-top: 0;
-    }
-    @media (max-width: 640px) {
-    }
-    @media (max-width: 320px) {
     }
   }
   &:last-child {
     margin-bottom: 50px;
-  }
-  @media (max-width: 1400px) {
-  }
-  @media (max-width: 1024px) {
+    @media (max-width: 630px) {
+      margin-bottom: 30px;
+    }
   }
   @media (max-width: 768px) {
     font-size: 15px;
     margin-bottom: 30px;
-  }
-  @media (max-width: 640px) {
-  }
-  @media (max-width: 320px) {
   }
 `;
 

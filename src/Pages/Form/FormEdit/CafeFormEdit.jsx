@@ -3,13 +3,14 @@ import { useNavigate } from "react-router";
 import { useParams } from "react-router";
 import styled from "styled-components";
 import Loading from "../../../components/Loading";
-import { USER_TOKEN } from "../../../config";
+import { API, USER_TOKEN } from "../../../config";
 
 const CafeFormEdit = ({ editData }) => {
   const { is_staff } = editData;
   const navigate = useNavigate();
   const { formId } = useParams();
   const [cafeEditList, setCafeEditList] = useState(editData);
+  const { CAFE_EDIT_GET, FORM_EDIT_PATCH } = API;
 
   const [editPruductList, setEditProductList] = useState([
     {
@@ -19,13 +20,11 @@ const CafeFormEdit = ({ editData }) => {
   ]);
 
   useEffect(() => {
-    fetch(
-      "http://15.164.163.31:8001/products?fields=product_name,id&category=bread"
-    )
+    fetch(`${CAFE_EDIT_GET}`)
       .then((res) => res.json())
       .then((data) => [...data].filter((x) => x.id !== 14))
       .then((data) => setEditProductList(data));
-  }, []);
+  }, [CAFE_EDIT_GET]);
 
   const { title, cafeorders, contact, additional_explanation, customer_name } =
     cafeEditList;
@@ -80,7 +79,7 @@ const CafeFormEdit = ({ editData }) => {
     if (checkValue) {
       if (lengthCheck) {
         if (window.confirm("수정하시겠습니까?")) {
-          fetch(`http://15.164.163.31:8001/orders/${formId}`, {
+          fetch(`${FORM_EDIT_PATCH}/${formId}`, {
             method: "PATCH",
             headers: {
               Authorization: `Bearer ${USER_TOKEN}`,
@@ -150,7 +149,7 @@ const CafeFormEdit = ({ editData }) => {
     if (checkValue) {
       if (lengthCheck) {
         if (window.confirm("수정하시겠습니까?")) {
-          fetch(`http://15.164.163.31:8001/orders/${formId}`, {
+          fetch(`${FORM_EDIT_PATCH}/${formId}`, {
             method: "PATCH",
             headers: {
               Authorization: `Bearer ${USER_TOKEN}`,
@@ -294,7 +293,8 @@ const CafeFormEdit = ({ editData }) => {
                 컨펌 완료!
               </CafeFormBtn>
               <CafeFormBtnNotion>
-                컨펌 완료 버튼은 더 이상 수정 사항이 없을 경우에만 눌러 주세요!
+                컨펌 완료 버튼은 더 이상 <br />
+                수정 사항이 없을 경우에만 눌러 주세요!
               </CafeFormBtnNotion>
             </CafeFormBtnStaffOnly>
           )}
@@ -324,6 +324,9 @@ const CafeFormWidth = styled.div`
 `;
 const CafeFormTitle = styled.p`
   font-size: 30px;
+  @media (max-width: 600px) {
+    font-size: 20px;
+  }
 `;
 const CafeFormInputWrapper = styled.form`
   display: grid;
@@ -335,6 +338,10 @@ const CafeFormInputWrapper = styled.form`
   width: 100%;
   color: ${({ theme }) => theme.fontColor};
   border: 7px solid ${({ theme }) => theme.bgColor};
+  @media (max-width: 600px) {
+    grid-template-rows: repeat(20, minmax(100px, auto));
+    grid-template-columns: 0.7fr;
+  }
 `;
 const CafeFormCafeName = styled.p`
   display: flex;
@@ -342,6 +349,9 @@ const CafeFormCafeName = styled.p`
   align-items: center;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
+  @media (max-width: 600px) {
+    font-size: 13px;
+  }
 `;
 const CafeFormCafeNameInput = styled.input.attrs((props) => ({
   type: "text",
@@ -353,6 +363,9 @@ const CafeFormCafeNameInput = styled.input.attrs((props) => ({
   font-family: ${({ theme }) => theme.fontFamily};
   &:focus {
     outline: none;
+  }
+  @media (max-width: 600px) {
+    font-size: 13px;
   }
 
   &::placeholder {
@@ -410,27 +423,34 @@ const CafeFormProductListDiv = styled.div`
   flex-wrap: wrap;
   width: 100%;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
+  box-sizing: border-box;
+  padding: 20px 0;
 `;
 const CafeFormProductList = styled.div`
   display: flex;
   justify-content: flex-start;
   width: 150px;
+  @media (max-width: 600px) {
+    font-size: 14px;
+    width: 100px;
+  }
 `;
 const CafeFormProductListNotion = styled.p`
   font-size: 14px;
   color: red;
+  @media (max-width: 600px) {
+    font-size: 12px;
+  }
 `;
 
 const CafeFormDescription = styled(CafeFormCafeName)`
   text-align: center;
-  grid-row: 9/11;
 `;
 const CafeFormDescriptionInput = styled.textarea`
   border-style: none;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
   resize: none;
-  grid-row: 9/11;
   font-family: ${({ theme }) => theme.fontFamily};
   &:focus {
     outline: none;
@@ -438,21 +458,23 @@ const CafeFormDescriptionInput = styled.textarea`
   &::placeholder {
     font-family: ${({ theme }) => theme.fontFamily};
   }
+  @media (max-width: 600px) {
+    font-size: 13px;
+  }
 `;
-const CafeFormRemark = styled(CafeFormCafeName)`
-  grid-row: 11/12;
-`;
+const CafeFormRemark = styled(CafeFormCafeName)``;
 const CafeFormRemarkInput = styled(CafeFormDescriptionInput).attrs((props) => ({
   type: "text",
   maxLength: 300,
-}))`
-  grid-row: 11/12;
-`;
+}))``;
 
 const CafeFormBtnWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 
 const CafeFormBtn = styled.button`
@@ -479,4 +501,5 @@ const CafeFormBtnNotion = styled.p`
   margin-top: 10px;
   font-size: 17px;
   color: red;
+  text-align: center;
 `;

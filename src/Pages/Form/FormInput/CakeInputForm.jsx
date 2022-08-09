@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
-import { USER_TOKEN } from "../../../config";
+import { USER_TOKEN, API } from "../../../config";
 import Loading from "../../../components/Loading";
 
 const CakeInputForm = () => {
@@ -16,6 +16,7 @@ const CakeInputForm = () => {
     additional_explanation: "",
     type: "cake",
   });
+  const { GET_CAKE_FORM_DATA, POST_INPUT_FORM } = API;
   const [cakeList, setCakeList] = useState([
     { id: 0, product_name: "", is_active: true },
   ]);
@@ -31,11 +32,11 @@ const CakeInputForm = () => {
   } = cakeForm;
 
   useEffect(() => {
-    fetch("http://15.164.163.31:8001/products?category=cake")
+    fetch(`${GET_CAKE_FORM_DATA}`)
       .then((res) => res.json())
       .then((data) => [...data].filter((x) => x.is_active === true))
       .then((data) => setCakeList(data));
-  }, []);
+  }, [GET_CAKE_FORM_DATA]);
 
   const cakeFormHandleInput = (e) => {
     const { name, value } = e.target;
@@ -67,42 +68,36 @@ const CakeInputForm = () => {
     count &&
     additional_explanation;
 
-  const lengthCheck = additional_explanation.length < 300 && title.length < 50;
-
   const cakeFormRequest = (e) => {
     e.preventDefault();
     if (checkValueData) {
       if (countDays > 1) {
         if (count > 0) {
-          if (lengthCheck) {
-            if (window.confirm(`${inputConfirmCheck}`)) {
-              fetch("http://15.164.163.31:8001/orders/", {
-                method: "POST",
-                headers: {
-                  Authorization: `Bearer ${USER_TOKEN}`,
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  title,
-                  customer_name,
-                  contact,
-                  want_pick_up_date,
-                  product_id,
-                  count,
-                  additional_explanation,
-                  type,
-                }),
-              }).then((res) => {
-                if (res.status === 201) {
-                  alert("신청이 완료되었습니다.");
-                  navigate("/formlist");
-                } else {
-                  alert("다시 시도해 주세요. 문제가 지속될 경우 연락바랍니다.");
-                }
-              });
-            }
-          } else {
-            alert("글자 수를 확인해 주세요");
+          if (window.confirm(`${inputConfirmCheck}`)) {
+            fetch(`${POST_INPUT_FORM}`, {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${USER_TOKEN}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                title,
+                customer_name,
+                contact,
+                want_pick_up_date,
+                product_id,
+                count,
+                additional_explanation,
+                type,
+              }),
+            }).then((res) => {
+              if (res.status === 201) {
+                alert("신청이 완료되었습니다.");
+                navigate("/formlist");
+              } else {
+                alert("다시 시도해 주세요. 문제가 지속될 경우 연락바랍니다.");
+              }
+            });
           }
         } else {
           alert("최소 1개 이상 수량을 입력해 주세요");
@@ -215,21 +210,16 @@ const CakeFormWidth = styled.div`
   justify-content: center;
   align-items: center;
   width: 85%;
-  @media (max-width: 1400px) {
-  }
-  @media (max-width: 1024px) {
-  }
   @media (max-width: 768px) {
     width: 90%;
     font-size: 15px;
   }
-  @media (max-width: 640px) {
-  }
-  @media (max-width: 320px) {
-  }
 `;
 const CakeFormTitle = styled.p`
   font-size: 30px;
+  @media (max-width: 600px) {
+    font-size: 20px;
+  }
 `;
 const CakeFormInputWrapper = styled.form`
   display: grid;
@@ -241,6 +231,10 @@ const CakeFormInputWrapper = styled.form`
   width: 100%;
   color: ${({ theme }) => theme.fontColor};
   border: 7px solid ${({ theme }) => theme.bgColor};
+  @media (max-width: 600px) {
+    grid-template-rows: repeat(12, 100px);
+    grid-template-columns: 0.8fr;
+  }
 `;
 const CakeFormName = styled.div`
   display: flex;
@@ -248,16 +242,11 @@ const CakeFormName = styled.div`
   justify-content: center;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
-  @media (max-width: 1400px) {
-  }
-  @media (max-width: 1024px) {
-  }
   @media (max-width: 768px) {
     font-size: 15px;
   }
-  @media (max-width: 640px) {
-  }
-  @media (max-width: 320px) {
+  @media (max-width: 600px) {
+    font-size: 13px;
   }
 `;
 const CakeFormNameInput = styled.input.attrs((props) => ({
@@ -271,16 +260,11 @@ const CakeFormNameInput = styled.input.attrs((props) => ({
   &:focus {
     outline: none;
   }
-  @media (max-width: 1400px) {
-  }
-  @media (max-width: 1024px) {
-  }
   @media (max-width: 768px) {
     font-size: 15px;
   }
-  @media (max-width: 640px) {
-  }
-  @media (max-width: 320px) {
+  @media (max-width: 600px) {
+    font-size: 13px;
   }
 `;
 
@@ -324,14 +308,11 @@ const CakeFormOrderCountInput = styled(CakeFormNameInput).attrs((props) => ({
   margin-right: 20px;
   width: 150px;
 `;
-const CakeFormRemark = styled(CakeFormName)`
-  grid-row: 6/8;
-`;
+const CakeFormRemark = styled(CakeFormName)``;
 const CakeFormRemarkInput = styled.textarea.attrs((props) => ({
   type: "text",
   maxLength: 300,
 }))`
-  grid-row: 6/8;
   border-style: none;
   box-sizing: border-box;
   width: 90%;
@@ -345,16 +326,11 @@ const CakeFormRemarkInput = styled.textarea.attrs((props) => ({
   &:focus {
     outline: none;
   }
-  @media (max-width: 1400px) {
-  }
-  @media (max-width: 1024px) {
-  }
   @media (max-width: 768px) {
     font-size: 15px;
   }
-  @media (max-width: 640px) {
-  }
-  @media (max-width: 320px) {
+  @media (max-width: 600px) {
+    font-size: 13px;
   }
 `;
 
@@ -372,6 +348,9 @@ const SelectCake = styled.div`
 
 const SelectLabel = styled.label`
   margin-right: 20px;
+  @media (max-width: 490px) {
+    font-size: 13px;
+  }
 `;
 
 const CakeFormBtn = styled.button`

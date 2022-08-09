@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import Loading from "../../../components/Loading";
-import { USER_TOKEN } from "../../../config";
+import { USER_TOKEN, API } from "../../../config";
 
 const PackageInputForm = () => {
   const navigate = useNavigate();
@@ -24,6 +24,7 @@ const PackageInputForm = () => {
     is_packaging: "",
     additional_explanation: "",
   });
+  const { GET_PACKAGE_FORM_DATA, POST_INPUT_FORM } = API;
 
   const {
     title,
@@ -38,11 +39,11 @@ const PackageInputForm = () => {
   let { orderedproducts } = packageForm;
 
   useEffect(() => {
-    fetch("http://15.164.163.31:8001/products?category=bread")
+    fetch(`${GET_PACKAGE_FORM_DATA}`)
       .then((res) => res.json())
       .then((data) => [...data].filter((data) => data.id !== 14))
       .then((data) => setSelectList(data));
-  }, []);
+  }, [GET_PACKAGE_FORM_DATA]);
 
   const packageFormHandleInput = (e) => {
     const { name, value } = e.target;
@@ -98,7 +99,7 @@ const PackageInputForm = () => {
         if (orderedproducts.length > 1) {
           if (lengthCheck) {
             if (window.confirm(`${inputConfirmCheck}`)) {
-              fetch("http://15.164.163.31:8001/orders/", {
+              fetch(`${POST_INPUT_FORM}`, {
                 method: "POST",
                 headers: {
                   Authorization: `Bearer ${USER_TOKEN}`,
@@ -256,6 +257,9 @@ const PackageFormWidth = styled.div`
 `;
 const PackageFormTitle = styled.p`
   font-size: 30px;
+  @media (max-width: 600px) {
+    font-size: 20px;
+  }
 `;
 const PackageFormInputWrapper = styled.form`
   display: grid;
@@ -282,6 +286,9 @@ const PackageFormName = styled.p`
   @media (max-width: 768px) {
     font-size: 15px;
   }
+  @media (max-width: 600px) {
+    font-size: 13px;
+  }
 `;
 const PackageFormNameInput = styled.input.attrs((props) => ({
   type: "text",
@@ -296,6 +303,9 @@ const PackageFormNameInput = styled.input.attrs((props) => ({
   }
   @media (max-width: 768px) {
     font-size: 15px;
+  }
+  @media (max-width: 600px) {
+    font-size: 13px;
   }
 `;
 
@@ -361,6 +371,7 @@ const PackageFormDescriptionInput = styled.input`
 `;
 
 const PackageFormDescriptionP = styled.p`
+  margin-top: 10px;
   font-size: 13px;
   color: red;
 `;
@@ -388,6 +399,9 @@ const PackageFormRemarkInput = styled.textarea.attrs((props) => ({
   }
   @media (max-width: 768px) {
     font-size: 15px;
+  }
+  @media (max-width: 600px) {
+    font-size: 13px;
   }
 `;
 

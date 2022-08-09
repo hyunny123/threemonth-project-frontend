@@ -34,33 +34,16 @@ const IndividualDetailMainWrapper = styled.div`
   box-sizing: border-box;
   padding: 20px;
 
-  @media (max-width: 1400px) {
-  }
-  @media (max-width: 1024px) {
-  }
   @media (max-width: 768px) {
     border-right: none;
-  }
-  @media (max-width: 640px) {
-  }
-  @media (max-width: 320px) {
   }
 `;
 
 const ProductImg = styled.img`
   margin-top: 30px;
-  width: 100%;
-  min-width: 300px;
-  height: 300px;
-  @media (max-width: 1400px) {
-  }
-  @media (max-width: 1024px) {
-  }
+  min-width: 150px;
+  height: 250px;
   @media (max-width: 768px) {
-  }
-  @media (max-width: 640px) {
-  }
-  @media (max-width: 320px) {
   }
 `;
 
@@ -73,18 +56,13 @@ const Origin = styled.div`
   border: 1px solid ${({ theme }) => theme.fontColor};
   border-radius: 10px;
   background-color: ${({ theme }) => theme.bgColor};
-  @media (max-width: 1400px) {
-  }
-  @media (max-width: 1024px) {
-  }
   @media (max-width: 768px) {
     width: 80%;
     margin-top: 40px;
     grid-template-rows: repeat(2, 40px);
   }
-  @media (max-width: 640px) {
-  }
-  @media (max-width: 320px) {
+  @media (max-width: 600px) {
+    font-size: 10px;
   }
 `;
 const OriginTitle = styled.div`
@@ -93,16 +71,8 @@ const OriginTitle = styled.div`
   align-items: center;
   grid-column: 1/5;
   border-bottom: 0.5px solid ${({ theme }) => theme.fontColor};
-  @media (max-width: 1400px) {
-  }
-  @media (max-width: 1024px) {
-  }
   @media (max-width: 768px) {
     font-size: 13px;
-  }
-  @media (max-width: 640px) {
-  }
-  @media (max-width: 320px) {
   }
 `;
 const OriginContent = styled.div`
@@ -112,15 +82,10 @@ const OriginContent = styled.div`
   font-size: 15px;
   box-sizing: border-box;
   padding: 10px;
-  @media (max-width: 1400px) {
-  }
-  @media (max-width: 1024px) {
-  }
   @media (max-width: 768px) {
     font-size: 13px;
   }
-  @media (max-width: 640px) {
-  }
-  @media (max-width: 320px) {
+  @media (max-width: 600px) {
+    font-size: 10px;
   }
 `;

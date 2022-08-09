@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
-import { USER_TOKEN } from "../../../config";
+import { USER_TOKEN, API } from "../../../config";
 import { useParams } from "react-router";
 
 const PackageFormEdit = ({ editData }) => {
@@ -16,6 +16,7 @@ const PackageFormEdit = ({ editData }) => {
     packageorders,
     additional_explanation,
   } = packageEditForm;
+  const { FORM_EDIT_PATCH } = API;
 
   const [packageEditDetailForm, setPackageEditDetailForm] =
     useState(packageorders);
@@ -82,7 +83,7 @@ const PackageFormEdit = ({ editData }) => {
       if (lengthCheck) {
         if (countDays > 2) {
           if (window.confirm("수정하시겠습니까?")) {
-            fetch(`http://15.164.163.31:8001/orders/${formId}`, {
+            fetch(`${FORM_EDIT_PATCH}/${formId}`, {
               method: "PATCH",
               headers: {
                 Authorization: `Bearer ${USER_TOKEN}`,
@@ -147,7 +148,7 @@ const PackageFormEdit = ({ editData }) => {
     if (checkValue) {
       if (lengthCheck) {
         if (window.confirm("수정하시겠습니까?")) {
-          fetch(`http://15.164.163.31:8001/orders/${formId}`, {
+          fetch(`${FORM_EDIT_PATCH}/${formId}`, {
             method: "PATCH",
             headers: {
               Authorization: `Bearer ${USER_TOKEN}`,
@@ -334,6 +335,9 @@ const PackageEditFormWidth = styled.div`
 `;
 const PackageEditFormTitle = styled.p`
   font-size: 30px;
+  @media (max-width: 600px) {
+    font-size: 20px;
+  }
 `;
 const PackageEditFormInputWrapper = styled.form`
   display: grid;
@@ -363,6 +367,9 @@ const PackageEditFormName = styled.div`
   @media (max-width: 768px) {
     font-size: 15px;
   }
+  @media (max-width: 600px) {
+    font-size: 13px;
+  }
 `;
 const PackageEditFormNameInput = styled.input.attrs((props) => ({
   type: "text",
@@ -380,6 +387,9 @@ const PackageEditFormNameInput = styled.input.attrs((props) => ({
   }
   &::placeholder {
     font-family: ${({ theme }) => theme.fontFamily};
+  }
+  @media (max-width: 600px) {
+    font-size: 13px;
   }
 `;
 
@@ -458,6 +468,7 @@ const InputWrap = styled.div`
   }
 `;
 const PackageFormEditDescriptionP = styled.p`
+  margin-top: 10px;
   font-size: 13px;
   color: red;
 `;
@@ -490,6 +501,9 @@ const PackageEditFormRemarkInput = styled.textarea.attrs((props) => ({
   @media (max-width: 768px) {
     font-size: 15px;
   }
+  @media (max-width: 600px) {
+    font-size: 13px;
+  }
 `;
 const PackageEditFormBtn = styled.button`
   border-style: none;
@@ -509,7 +523,6 @@ const PackageFormBtnWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* border: 1px solid red; */
   @media (max-width: 600px) {
     flex-direction: column;
   }
@@ -533,7 +546,6 @@ const PackageFormBtnStaffOnly = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* border: 1px solid black; */
 `;
 const PackageFormBtnNotion = styled.p`
   margin-top: 10px;

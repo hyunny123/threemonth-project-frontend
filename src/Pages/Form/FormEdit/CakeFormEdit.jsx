@@ -3,13 +3,14 @@ import { useNavigate } from "react-router";
 import { useParams } from "react-router";
 import styled from "styled-components";
 import Loading from "../../../components/Loading";
-import { USER_TOKEN } from "../../../config";
+import { USER_TOKEN, API } from "../../../config";
 
 const CakeFormEdit = ({ editData }) => {
   const { is_staff } = editData;
   const navigate = useNavigate();
   const { formId } = useParams();
   const [cakeEditForm, setCakeEditForm] = useState(editData);
+  const { FORM_EDIT_PATCH } = API;
 
   const { title, customer_name, cakeorders, contact, additional_explanation } =
     cakeEditForm;
@@ -59,7 +60,7 @@ const CakeFormEdit = ({ editData }) => {
       if (lengthCheck) {
         if (countDays > 1) {
           if (window.confirm("수정하시겠습니까?")) {
-            fetch(`http://15.164.163.31:8001/orders/${formId}`, {
+            fetch(`${FORM_EDIT_PATCH}/${formId}`, {
               method: "PATCH",
               headers: {
                 Authorization: `Bearer ${USER_TOKEN}`,
@@ -115,7 +116,7 @@ const CakeFormEdit = ({ editData }) => {
     if (checkValue) {
       if (lengthCheck) {
         if (window.confirm("수정하시겠습니까?")) {
-          fetch(`http://15.164.163.31:8001/orders/${formId}`, {
+          fetch(`${FORM_EDIT_PATCH}/${formId}`, {
             method: "PATCH",
             headers: {
               Authorization: `Bearer ${USER_TOKEN}`,
@@ -194,7 +195,9 @@ const CakeFormEdit = ({ editData }) => {
               min={minDate}
             />
           </CakeFormPickUpDateDiv>
-          <CakeFormCakeName>케이크이름 및 수량</CakeFormCakeName>
+          <CakeFormCakeName>
+            케이크이름 <br />및 수량
+          </CakeFormCakeName>
           <SelectCake>
             <CakeFormCakeNameInput
               type="radio"
@@ -204,7 +207,7 @@ const CakeFormEdit = ({ editData }) => {
               checked
               name="product_id"
             />
-            <div>{cakeorders.product_name}</div>
+            <SelectLabel>{cakeorders.product_name}</SelectLabel>
             <CakeFormOrderCountInput
               placeholder="수량을 입력하세요."
               onChange={cakeFormDetailHandleInput}
@@ -232,7 +235,8 @@ const CakeFormEdit = ({ editData }) => {
                 컨펌 완료!
               </CakeFormBtn>
               <CakeEditFormBtnNotion>
-                컨펌 완료 버튼은 더 이상 수정 사항이 없을 경우에만 눌러 주세요!
+                컨펌 완료 버튼은 더 이상 <br /> 수정 사항이 없을 경우에만 눌러
+                주세요!
               </CakeEditFormBtnNotion>
             </CakeEditFormBtnStaffOnly>
           )}
@@ -258,20 +262,15 @@ const CakeFormWidth = styled.div`
   justify-content: center;
   align-items: center;
   width: 85%;
-  @media (max-width: 1400px) {
-  }
-  @media (max-width: 1024px) {
-  }
   @media (max-width: 768px) {
     width: 90%;
-  }
-  @media (max-width: 640px) {
-  }
-  @media (max-width: 320px) {
   }
 `;
 const CakeFormTitle = styled.p`
   font-size: 30px;
+  @media (max-width: 600px) {
+    font-size: 20px;
+  }
 `;
 const CakeFormInputWrapper = styled.form`
   display: grid;
@@ -283,6 +282,10 @@ const CakeFormInputWrapper = styled.form`
   width: 100%;
   color: ${({ theme }) => theme.fontColor};
   border: 7px solid ${({ theme }) => theme.bgColor};
+  @media (max-width: 600px) {
+    grid-template-rows: repeat(12, 100px);
+    grid-template-columns: 0.8fr;
+  }
 `;
 const CakeFormName = styled.div`
   display: flex;
@@ -290,16 +293,8 @@ const CakeFormName = styled.div`
   justify-content: center;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
-  @media (max-width: 1400px) {
-  }
-  @media (max-width: 1024px) {
-  }
   @media (max-width: 768px) {
     font-size: 15px;
-  }
-  @media (max-width: 640px) {
-  }
-  @media (max-width: 320px) {
   }
 `;
 const CakeFormNameInput = styled.input.attrs((props) => ({
@@ -313,16 +308,8 @@ const CakeFormNameInput = styled.input.attrs((props) => ({
   &:focus {
     outline: none;
   }
-  @media (max-width: 1400px) {
-  }
-  @media (max-width: 1024px) {
-  }
   @media (max-width: 768px) {
     font-size: 15px;
-  }
-  @media (max-width: 640px) {
-  }
-  @media (max-width: 320px) {
   }
 `;
 
@@ -357,6 +344,12 @@ const CakeFormCakeNameInput = styled(CakeFormNameInput).attrs((props) => ({
 }))`
   margin-right: 20px;
 `;
+const SelectLabel = styled.label`
+  margin-right: 20px;
+  @media (max-width: 490px) {
+    font-size: 13px;
+  }
+`;
 const CakeFormOrderCountInput = styled(CakeFormNameInput).attrs((props) => ({
   type: "number",
 }))`
@@ -364,14 +357,11 @@ const CakeFormOrderCountInput = styled(CakeFormNameInput).attrs((props) => ({
   margin-left: 20px;
   width: 150px;
 `;
-const CakeFormRemark = styled(CakeFormName)`
-  grid-row: 6/8;
-`;
+const CakeFormRemark = styled(CakeFormName)``;
 const CakeFormRemarkInput = styled.textarea.attrs((props) => ({
   type: "text",
   maxLength: 300,
 }))`
-  grid-row: 6/8;
   border-style: none;
   box-sizing: border-box;
   width: 90%;
@@ -385,16 +375,11 @@ const CakeFormRemarkInput = styled.textarea.attrs((props) => ({
   &:focus {
     outline: none;
   }
-  @media (max-width: 1400px) {
-  }
-  @media (max-width: 1024px) {
-  }
   @media (max-width: 768px) {
     font-size: 15px;
   }
-  @media (max-width: 640px) {
-  }
-  @media (max-width: 320px) {
+  @media (max-width: 600px) {
+    font-size: 13px;
   }
 `;
 
@@ -423,6 +408,9 @@ const CakeEditFormBtnWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 
 const CakeEditFormBtnStaffOnly = styled.div`

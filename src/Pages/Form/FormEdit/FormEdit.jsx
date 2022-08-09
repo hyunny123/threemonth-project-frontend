@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
 import Loading from "../../../components/Loading";
 import NotValidBtn from "../../../components/NotValidBtn";
-import { USER_TOKEN } from "../../../config";
+import { USER_TOKEN, API } from "../../../config";
 import CafeFormEdit from "./CafeFormEdit.jsx";
 import CakeFormEdit from "./CakeFormEdit.jsx";
 import PackageFormEdit from "./PackageFormEdit.jsx";
@@ -12,8 +12,9 @@ const FormEdit = () => {
   const navigate = useNavigate();
   const { formId } = useParams();
   const [editData, setEditData] = useState({ id: 0, type: "cake" });
+  const { GET_FORM_EDIT_DATA } = API;
   useEffect(() => {
-    fetch(`http://15.164.163.31:8001/orders/${formId}`, {
+    fetch(`${GET_FORM_EDIT_DATA}/${formId}`, {
       method: "get",
       headers: {
         Authorization: `Bearer ${USER_TOKEN}`,
@@ -29,7 +30,7 @@ const FormEdit = () => {
           setEditData(res);
         }
       });
-  }, [formId, navigate]);
+  }, [formId, navigate, GET_FORM_EDIT_DATA]);
 
   if (location.state === null) {
     return <NotValidBtn />;

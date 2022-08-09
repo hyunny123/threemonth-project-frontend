@@ -54,36 +54,47 @@ const FormListBoxWrapper = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 1em;
+  box-sizing: border-box;
+  @media (max-width: 580px) {
+    width: 100vw;
+  }
 `;
 
 const ListBoxMenu = styled.div`
   display: grid;
-  align-items: end;
-  grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
+  grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr;
   grid-template-rows: 50px;
   box-sizing: border-box;
-  padding-bottom: 20px;
-  margin-bottom: 20px;
   border-bottom: 4px solid ${(props) => props.theme.bgColor};
+  margin-top: 50px;
   @media (max-width: 580px) {
-    grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
+    grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr;
+    grid-template-rows: 30px;
   }
   @media (max-width: 450px) {
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: 0.5fr 2fr 1fr;
+    grid-template-rows: 20px;
     font-size: 14px;
-    /* place-items: flex-start; */
   }
 `;
 const MenuNum = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 400px;
+  @media (max-width: 580px) {
+    font-size: 13px;
+  }
 `;
 const MenuSub = styled(MenuNum)`
   @media (max-width: 580px) {
   }
 `;
-const MenuDate = styled(MenuNum)``;
+const MenuDate = styled(MenuNum)`
+  @media (max-width: 580px) {
+    justify-content: flex-end;
+    box-sizing: border-box;
+    padding: 0 10px;
+  }
+`;
 const MenuWriter = styled(MenuNum)`
   @media (max-width: 450px) {
     display: none;
@@ -107,52 +118,61 @@ const List = styled.ul`
   border-radius: 10px;
 `;
 
-const ListBoxContents = styled.button`
+const ListBoxContents = styled.div`
   border-style: none;
   display: grid;
-  place-items: center;
-  grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
+  grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr;
   width: 100%;
   background-color: white;
   font-family: ${({ theme }) => theme.fontFamily};
   border-bottom: 1px solid ${(props) => props.theme.bgColor};
-  margin-top: 20px;
   font-size: 1em;
   cursor: pointer;
+  box-sizing: border-box;
+  padding: 10px 10px;
   @media (max-width: 450px) {
-    grid-template-columns: 1fr 2fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    place-items: flex-start;
+    grid-template-columns: 0.5fr 2fr 1fr;
+    grid-template-rows: 1fr 0.4fr;
+    padding: 5px;
+    align-items: center;
+    font-size: 2em;
   }
 `;
 const ListBoxContent = styled.div`
   display: flex;
   justify-content: center;
-  &:nth-child(2),
-  &:nth-child(3) {
+
+  &:nth-child(2) {
     justify-content: flex-start;
+    align-items: center;
     text-align: start;
     cursor: pointer;
   }
-  @media (max-width: 1400px) {
+  &:nth-child(3) {
+    place-items: center;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 10px;
   }
-  @media (max-width: 1024px) {
+  &:nth-child(4) {
+    align-items: center;
   }
   @media (max-width: 768px) {
     font-size: 0.7em;
   }
-  @media (max-width: 640px) {
-  }
-  @media (max-width: 450px) {
-    font-size: 12px;
-  }
-  @media (max-width: 320px) {
+  @media (max-width: 580px) {
+    font-size: 10px;
+    &:nth-child(3) {
+      justify-content: flex-end;
+    }
   }
 `;
 
 const ListFormStatus = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
   color: ${({ status }) =>
     status === "not_confirmed"
       ? "blue"
@@ -161,21 +181,15 @@ const ListFormStatus = styled.div`
       : status === "completed"
       ? "gray"
       : "green"};
-  &:nth-child(2) {
-    justify-content: flex-start;
-    text-align: start;
-  }
-  @media (max-width: 1400px) {
-  }
-  @media (max-width: 1024px) {
-  }
+  text-align: start;
+
   @media (max-width: 768px) {
     font-size: 0.8em;
   }
-  @media (max-width: 640px) {
-  }
   @media (max-width: 450px) {
-    font-size: 12px;
+    font-size: 10px;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    padding: 5px;
   }
-  @media (max-width: 320px);
 `;

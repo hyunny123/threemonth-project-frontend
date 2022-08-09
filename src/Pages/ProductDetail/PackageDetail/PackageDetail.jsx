@@ -43,15 +43,7 @@ const PackageDetailWrapper = styled.div`
   align-items: center;
   flex-direction: column;
   color: ${({ theme }) => theme.fontColor};
-  @media (max-width: 1400px) {
-  }
-  @media (max-width: 1024px) {
-  }
-  @media (max-width: 768px) {
-  }
-  @media (max-width: 640px) {
-  }
-  @media (max-width: 320px) {
+  @media (max-width: 630px) {
   }
 `;
 
@@ -61,6 +53,9 @@ const PackageDetailWidth = styled.div`
   margin-top: 50px;
   min-height: 400px;
   width: 85%;
+  @media (max-width: 630px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const DetailIndividualReservBtnWrap = styled.div`
@@ -68,6 +63,9 @@ const DetailIndividualReservBtnWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  @media (max-width: 630px) {
+    position: inherit;
+  }
 `;
 
 const DetailIndividualReservBtn = styled.button`
@@ -84,16 +82,13 @@ const DetailIndividualReservBtn = styled.button`
   border: 1px solid ${({ theme }) => theme.fontColor};
   background-color: ${({ theme }) => theme.bgColor};
   cursor: pointer;
-  @media (max-width: 1400px) {
-  }
-  @media (max-width: 1024px) {
-  }
   @media (max-width: 768px) {
     width: 100%;
     font-size: 15px;
   }
-  @media (max-width: 640px) {
-  }
-  @media (max-width: 320px) {
+  @media (max-width: 630px) {
+    position: inherit;
+    margin-top: -20px;
+    margin-bottom: 50px;
   }
 `;
