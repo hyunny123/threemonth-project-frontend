@@ -155,7 +155,7 @@ const CafeFormWrapper = styled.div`
   min-height: 800px;
   margin: 100px 0;
   color: ${({ theme }) => theme.fontColor};
-  font-size: 17px;
+  /* font-size: 17px; */
 `;
 const CafeFormWidth = styled.div`
   display: flex;
@@ -163,6 +163,10 @@ const CafeFormWidth = styled.div`
   justify-content: center;
   align-items: center;
   width: 85%;
+  @media (max-width: 768px) {
+    font-size: 15px;
+    width: 90%;
+  }
 `;
 const CafeFormTitle = styled.p`
   font-size: 30px;
@@ -170,39 +174,47 @@ const CafeFormTitle = styled.p`
 const CafeFormDetailFormWrapper = styled.form`
   display: grid;
   justify-content: center;
-  grid-template-rows: repeat(11, 100px);
-  grid-template-columns: 1fr 5fr;
+  grid-template-rows: repeat(9, minmax(100px, auto));
+  grid-template-columns: 1fr 6fr;
   box-sizing: border-box;
   margin-top: 50px;
   width: 100%;
   color: ${({ theme }) => theme.fontColor};
   border: 7px solid ${({ theme }) => theme.bgColor};
-  @media screen and (max-width: 1200px) {
-    grid-template-columns: 1.5fr 3.5fr;
+  @media (max-width: 768px) {
+    font-size: 15px;
   }
-  @media screen and (max-width: 720px) {
-    grid-template-columns: 2fr 3fr;
-  }
-  @media screen and (max-width: 720px) {
-    grid-template-columns: 2.5fr 2.5fr;
+  @media (max-width: 600px) {
+    grid-template-rows: repeat(18, minmax(100px, auto));
+    grid-template-columns: 0.7fr;
   }
 `;
 const CafeFormCafeName = styled.p`
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
-  font-size: 17px;
+  /* font-size: 17px; */
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
+  border: 1px solid tomato;
 `;
 const CafeFormCafeNameDetailForm = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+
   border-style: none;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
+  border: 1px solid green;
   &:focus {
     outline: none;
+  }
+  @media (max-width: 768px) {
+    font-size: 15px;
   }
 `;
 
@@ -220,32 +232,36 @@ const CafeFormContactDetailForm = styled(CafeFormCafeNameDetailForm)``;
 const CafeFormCafeAddress = styled(CafeFormCafeName)``;
 const CafeFormCafeAddressDetailForm = styled(CafeFormCafeNameDetailForm)``;
 const CafeFormDescription = styled(CafeFormCafeName)`
-  text-align: center;
-  grid-row: 8/10;
+  /* text-align: center; */
+  grid-row: 8/9;
 `;
-const CafeFormDescriptionDetailForm = styled.div`
-  display: flex;
+const CafeFormDescriptionDetailForm = styled(CafeFormCafeNameDetailForm)`
+  /* display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: center; */
   border-style: none;
-  line-height: 1.5;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
+  line-height: 1.5;
   resize: none;
-  grid-row: 8/10;
+  grid-row: 8/9;
+  border: 1px solid blue;
   &:focus {
     outline: none;
   }
-  &::placeholder {
-    font-family: "GangwonEdu_OTFBoldA";
+  @media (max-width: 768px) {
+    font-size: 15px;
   }
 `;
 const CafeFormRemark = styled(CafeFormCafeName)`
-  grid-row: 10/12;
+  grid-row: 9/10;
 `;
 const CafeFormRemarkDetailForm = styled(CafeFormDescriptionDetailForm)`
-  grid-row: 10/12;
+  grid-row: 9/10;
   line-height: 1.5;
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
 `;
 
 const CafeFormBtnWrap = styled.div`
@@ -266,10 +282,17 @@ const CafeFormBtn = styled.button`
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;
-  @media screen and (max-width: 900px) {
+  @media (max-width: 900px) {
     width: 100px;
     height: 50px;
     font-size: 15px;
+    margin-top: 50px;
+  }
+  @media (max-width: 650px) {
+    width: 75px;
+    height: 45px;
+    font-size: 13px;
+    margin-top: 50px;
   }
 `;
 const CafeFormUpdateBtn = styled.button`
@@ -285,18 +308,32 @@ const CafeFormUpdateBtn = styled.button`
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;
-  @media screen and (max-width: 900px) {
+  @media (max-width: 900px) {
     width: 50px;
     height: 50px;
     font-size: 15px;
+    margin-top: 50px;
+  }
+  @media (max-width: 650px) {
+    width: 45px;
+    height: 45px;
+    font-size: 13px;
+    margin-top: 50px;
   }
 `;
 
 const CafeFormDeleteBtn = styled(CafeFormUpdateBtn)`
   cursor: pointer;
-  @media screen and (max-width: 900px) {
+  @media (max-width: 900px) {
     width: 50px;
     height: 50px;
     font-size: 15px;
+    margin-top: 50px;
+  }
+  @media (max-width: 650px) {
+    width: 45px;
+    height: 45px;
+    font-size: 13px;
+    margin-top: 50px;
   }
 `;

@@ -72,8 +72,12 @@ const GridTitle = styled.h2`
   font-size: 3em;
   color: ${({ theme }) => theme.fontColor};
   border-bottom: 3px solid ${({ theme }) => theme.fontColor};
-  @media screen and (max-width: 320px) {
+  @media screen and (max-width: 750px) {
     font-size: 2em;
+    margin-top: 30px;
+  }
+  @media screen and (max-width: 500px) {
+    font-size: 1.5em;
     margin-top: 30px;
   }
 `;
@@ -93,27 +97,41 @@ const GridBox = styled.div`
   }
   @media screen and (max-width: 990px) {
     height: 700px;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(2, 1fr);
   }
   @media screen and (max-width: 640px) {
-    height: 700px;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    height: 600px;
   }
   @media screen and (max-width: 440px) {
-    height: 1200px;
-    font-size: 1.5em;
+    height: 450px;
     margin-top: 30px;
-    grid-template-columns: repeat(1, 1fr);
-    grid-template-rows: repeat(4, 1fr);
   }
   @media screen and (max-width: 320px) {
-    height: 1200px;
-    font-size: 1.5em;
+    height: 300px;
     margin-top: 30px;
-    grid-template-columns: repeat(1, 1fr);
-    grid-template-rows: repeat(4, 1fr);
+  }
+`;
+
+const TitleItem = styled.h3`
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  font-size: 30px;
+  font-weight: 500;
+  text-shadow: 3px 3px 7px RGB(51, 18, 17);
+  @media screen and (max-width: 1400px) {
+    font-size: 35px;
+  }
+  @media screen and (max-width: 1050px) {
+    font-size: 30px;
+  }
+  @media screen and (max-width: 640px) {
+    font-size: 25px;
+  }
+  @media screen and (max-width: 440px) {
+    font-size: 20px;
+  }
+  @media screen and (max-width: 320px) {
+    font-size: 15px;
   }
 `;
 
@@ -131,22 +149,6 @@ const GridImgBox1 = styled.div`
     grid-column: 1/3;
     grid-row: 1/2;
   }
-  @media screen and (max-width: 768px) {
-    grid-column: 1/3;
-    grid-row: 1/2;
-  }
-  @media screen and (max-width: 640px) {
-    grid-column: 1/2;
-    grid-row: 1/2;
-  }
-  @media screen and (max-width: 440px) {
-    grid-column: 1/5;
-    grid-row: 1/2;
-  }
-  @media screen and (max-width: 320px) {
-    grid-column: 1/5;
-    grid-row: 1/2;
-  }
 `;
 const ImgItem1 = styled.img`
   width: 100%;
@@ -158,21 +160,8 @@ const ImgItem1 = styled.img`
   @media screen and (max-width: 768px) {
     height: 100%;
   }
+`;
 
-  /* &:nth-child(4) {
-    width: 100%;
-    height: 80%;
-    background: #fff;
-  } */
-`;
-const TitleItem = styled.h3`
-  position: absolute;
-  left: 10px;
-  bottom: 10px;
-  font-size: 30px;
-  font-weight: 500;
-  text-shadow: 3px 3px 7px RGB(51, 18, 17);
-`;
 const ImgItem2 = styled.img`
   display: flex;
   justify-content: center;
@@ -185,22 +174,6 @@ const ImgItem2 = styled.img`
   @media screen and (max-width: 990px) {
     grid-column: 3/5;
     grid-row: 1/2;
-  }
-  @media screen and (max-width: 768px) {
-    grid-column: 3/5;
-    grid-row: 1/2;
-  }
-  @media screen and (max-width: 640px) {
-    grid-column: 2/3;
-    grid-row: 1/2;
-  }
-  @media screen and (max-width: 440px) {
-    grid-column: 1/5;
-    grid-row: 2/3;
-  }
-  @media screen and (max-width: 320px) {
-    grid-column: 1/5;
-    grid-row: 2/3;
   }
 `;
 const ImgItem3 = styled.img`
@@ -226,23 +199,6 @@ const GridImgBox3 = styled.div`
     grid-column: 1/3;
     grid-row: 2/3;
   }
-  @media screen and (max-width: 768px) {
-    grid-column: 1/3;
-    grid-row: 2/3;
-  }
-  @media screen and (max-width: 640px) {
-    grid-column: 1/2;
-    grid-row: 2/3;
-  }
-  @media screen and (max-width: 440px) {
-    grid-column: 1/5;
-    grid-row: 3/4;
-  }
-
-  @media screen and (max-width: 320px) {
-    grid-column: 1/5;
-    grid-row: 3/4;
-  }
 `;
 const GridImgBox4 = styled.div`
   position: relative;
@@ -257,21 +213,10 @@ const GridImgBox4 = styled.div`
     grid-column: 3/5;
     grid-row: 2/3;
   }
-  @media screen and (max-width: 768px) {
+
+  @media screen and (max-width: 320px) {
     grid-column: 3/5;
     grid-row: 2/3;
-  }
-  @media screen and (max-width: 640px) {
-    grid-column: 2/3;
-    grid-row: 2/3;
-  }
-  @media screen and (max-width: 440px) {
-    grid-column: 1/5;
-    grid-row: 4/5;
-  }
-  @media screen and (max-width: 320px) {
-    grid-column: 1/5;
-    grid-row: 4/5;
   }
 `;
 const ImgItem4 = styled.img`

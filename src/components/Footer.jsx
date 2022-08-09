@@ -1,11 +1,11 @@
 import React from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 import { USER_TOKEN } from "../config";
-import { LOGIN_URI } from "../Pages/Login/AuthData";
 import styled from "styled-components";
 
 const Footer = () => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const cafeFormClickHandler = () => {
     if (USER_TOKEN) {
@@ -14,7 +14,8 @@ const Footer = () => {
       if (
         window.confirm("로그인이 필요한 서비스입니다. 로그인을 하시겠습니까?")
       ) {
-        window.location = `${LOGIN_URI}`;
+        localStorage.setItem("prevpath", pathname);
+        navigate("/loginpage");
       }
     }
   };
@@ -97,13 +98,13 @@ const Container = styled.footer`
   padding: 30px 0px;
   background-color: ${({ theme }) => theme.bgColor};
   @media screen and (max-width: 768px) {
-    height: 350px;
+    height: 320px;
   }
   @media screen and (max-width: 450px) {
-    height: 450px;
+    height: 330px;
   }
   @media screen and (max-width: 320px) {
-    height: 550px;
+    height: 350px;
   }
 `;
 const Wrapper = styled.div`
@@ -127,6 +128,15 @@ const Title = styled.p`
   font-size: 1.3em;
   font-weight: 700;
   color: ${({ theme }) => theme.fontColor};
+  @media screen and (max-width: 768px) {
+    font-size: 1.2em;
+  }
+  @media screen and (max-width: 450px) {
+    font-size: 1em;
+  }
+  @media screen and (max-width: 320px) {
+    font-size: 0.9em;
+  }
 `;
 
 const SnsContainer = styled.div`
@@ -154,12 +164,25 @@ const Sns = styled.div`
     font-size: 1em;
     margin-right: 30px;
   }
+  @media screen and (max-width: 450px) {
+    font-size: 0.8em;
+  }
+  @media screen and (max-width: 320px) {
+    font-size: 0.6em;
+  }
 `;
 
 const SnsTitle = styled.div`
   padding: 5px 0px;
   font-size: 1.1em;
   color: ${({ theme }) => theme.fontColor};
+
+  @media screen and (max-width: 450px) {
+    font-size: 1em;
+  }
+  @media screen and (max-width: 320px) {
+    font-size: 0.8em;
+  }
 `;
 
 const Icon = styled.img`
@@ -223,18 +246,6 @@ const CompanyWrapper = styled.div`
   @media screen and (max-width: 2560px) {
     display: flex;
   }
-  @media screen and (max-width: 1400px) {
-    display: flex;
-  }
-  @media screen and (max-width: 1024px) {
-    display: flex;
-  }
-  @media screen and (max-width: 768px) {
-    display: flex;
-  }
-  @media screen and (max-width: 320px) {
-    flex-direction: column-reverse;
-  }
 `;
 
 const Company = styled.div`
@@ -271,9 +282,12 @@ const Rights = styled(Sns)`
     width: 80%;
   }
   @media screen and (max-width: 768px) {
-    font-size: 1.2em;
+    font-size: 1.1em;
+  }
+  @media screen and (max-width: 515px) {
+    font-size: 0.9em;
   }
   @media screen and (max-width: 320px) {
-    font-size: 1em;
+    font-size: 0.8em;
   }
 `;

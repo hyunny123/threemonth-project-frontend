@@ -171,6 +171,10 @@ const PackageFormWidth = styled.div`
   justify-content: center;
   align-items: center;
   width: 85%;
+  @media (max-width: 768px) {
+    font-size: 15px;
+    width: 90%;
+  }
 `;
 const PackageFormTitle = styled.p`
   font-size: 30px;
@@ -178,13 +182,20 @@ const PackageFormTitle = styled.p`
 const PackageFormInputWrapper = styled.form`
   display: grid;
   justify-content: center;
-  grid-template-rows: repeat(9, 100px);
+  grid-template-rows: repeat(9, minmax(100px, auto));
   grid-template-columns: 1fr 6fr;
   box-sizing: border-box;
   margin-top: 50px;
   width: 100%;
   color: ${({ theme }) => theme.fontColor};
   border: 7px solid ${({ theme }) => theme.bgColor};
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
+  @media (max-width: 600px) {
+    grid-template-rows: repeat(18, minmax(100px, auto));
+    grid-template-columns: 0.7fr;
+  }
 `;
 
 const PackageFormName = styled.p`
@@ -192,6 +203,9 @@ const PackageFormName = styled.p`
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
 `;
 const PackageFormNameDetailForm = styled.div`
   display: flex;
@@ -203,6 +217,9 @@ const PackageFormNameDetailForm = styled.div`
   font-family: ${({ theme }) => theme.fontFamily};
   &:focus {
     outline: none;
+  }
+  @media (max-width: 768px) {
+    font-size: 15px;
   }
 `;
 
@@ -262,6 +279,9 @@ const PackageFormRemarkDetailForm = styled.div`
   &:focus {
     outline: none;
   }
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
 `;
 
 const PackageFormBtnWrap = styled.div`
@@ -283,6 +303,18 @@ const PackageFormBtn = styled.button`
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;
+  @media (max-width: 900px) {
+    width: 100px;
+    height: 50px;
+    font-size: 15px;
+    margin-top: 50px;
+  }
+  @media (max-width: 650px) {
+    width: 75px;
+    height: 45px;
+    font-size: 13px;
+    margin-top: 50px;
+  }
 `;
 const PackageFormUpdateBtn = styled.button`
   border-style: none;
@@ -297,8 +329,30 @@ const PackageFormUpdateBtn = styled.button`
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;
+  @media (max-width: 900px) {
+    width: 50px;
+    height: 50px;
+    font-size: 15px;
+    margin-top: 50px;
+  }
+  @media (max-width: 650px) {
+    width: 45px;
+    height: 45px;
+    font-size: 13px;
+    margin-top: 50px;
+  }
 `;
 
 const PackageFormDeleteBtn = styled(PackageFormUpdateBtn)`
   cursor: pointer;
+  @media (max-width: 900px) {
+    width: 50px;
+    height: 50px;
+    font-size: 15px;
+  }
+  @media (max-width: 650px) {
+    width: 45px;
+    height: 45px;
+    font-size: 13px;
+  }
 `;
