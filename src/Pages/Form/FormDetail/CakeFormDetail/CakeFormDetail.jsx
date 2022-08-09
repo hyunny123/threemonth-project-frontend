@@ -144,7 +144,7 @@ const CakeFormWrapper = styled.div`
   align-items: center;
   min-height: 800px;
   margin: 100px 0;
-  color: #331211;
+  color: ${({ theme }) => theme.fontColor};
 `;
 const CakeFormWidth = styled.div`
   display: flex;
@@ -152,6 +152,10 @@ const CakeFormWidth = styled.div`
   justify-content: center;
   align-items: center;
   width: 85%;
+  @media (max-width: 768px) {
+    font-size: 15px;
+    width: 90%;
+  }
 `;
 const CakeFormTitle = styled.p`
   font-size: 30px;
@@ -159,20 +163,30 @@ const CakeFormTitle = styled.p`
 const CakeFormInputWrapper = styled.form`
   display: grid;
   justify-content: center;
-  grid-template-rows: repeat(7, 100px);
+  grid-template-rows: repeat(6, 100px);
   grid-template-columns: 1fr 6fr;
   box-sizing: border-box;
   margin-top: 50px;
   width: 100%;
-  color: #331211;
-  border: 7px solid #f1e6d1;
+  color: ${({ theme }) => theme.fontColor};
+  border: 7px solid ${({ theme }) => theme.bgColor};
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
+  @media (max-width: 600px) {
+    grid-template-rows: repeat(18, minmax(100px, auto));
+    grid-template-columns: 0.7fr;
+  }
 `;
 const CakeFormName = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid #f1e6d1;
+  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
 `;
 const CakeFormNameDetailForm = styled.div`
   display: flex;
@@ -183,6 +197,9 @@ const CakeFormNameDetailForm = styled.div`
   font-size: 17px;
   &:focus {
     outline: none;
+  }
+  @media (max-width: 768px) {
+    font-size: 15px;
   }
 `;
 
@@ -214,13 +231,13 @@ const CakeFormOrderCountDetailForm = styled(CakeFormNameDetailForm)`
   border-style: none;
 `;
 const CakeFormRemark = styled(CakeFormName)`
-  grid-row: 6/8;
+  grid-row: 6/7;
 `;
 const CakeFormRemarkDetailForm = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  grid-row: 6/8;
+  grid-row: 6/7;
   border-style: none;
   box-sizing: border-box;
   width: 90%;
@@ -231,6 +248,9 @@ const CakeFormRemarkDetailForm = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   &:focus {
     outline: none;
+  }
+  @media (max-width: 768px) {
+    font-size: 15px;
   }
 `;
 const CakeFormBtnWrap = styled.div`
@@ -252,6 +272,18 @@ const CakeFormBtn = styled.button`
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;
+  @media (max-width: 900px) {
+    width: 100px;
+    height: 50px;
+    font-size: 15px;
+    margin-top: 50px;
+  }
+  @media (max-width: 650px) {
+    width: 75px;
+    height: 45px;
+    font-size: 13px;
+    margin-top: 50px;
+  }
 `;
 
 const CakeFormUpdateBtn = styled.button`
@@ -267,8 +299,30 @@ const CakeFormUpdateBtn = styled.button`
   font-weight: bold;
   font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;
+  @media (max-width: 900px) {
+    width: 50px;
+    height: 50px;
+    font-size: 15px;
+    margin-top: 50px;
+  }
+  @media (max-width: 650px) {
+    width: 45px;
+    height: 45px;
+    font-size: 13px;
+    margin-top: 50px;
+  }
 `;
 
 const CakeFormDeleteBtn = styled(CakeFormUpdateBtn)`
   cursor: pointer;
+  @media (max-width: 900px) {
+    width: 50px;
+    height: 50px;
+    font-size: 15px;
+  }
+  @media (max-width: 650px) {
+    width: 45px;
+    height: 45px;
+    font-size: 13px;
+  }
 `;

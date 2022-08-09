@@ -51,8 +51,12 @@ const CakeListTitle = styled.h2`
   font-size: 3em;
   border-bottom: 3px solid ${({ theme }) => theme.fontColor};
   color: ${({ theme }) => theme.fontColor};
-  @media screen and (max-width: 320px) {
+  @media screen and (max-width: 750px) {
     font-size: 2em;
+    margin-top: 30px;
+  }
+  @media screen and (max-width: 500px) {
+    font-size: 1.5em;
     margin-top: 30px;
   }
 `;
