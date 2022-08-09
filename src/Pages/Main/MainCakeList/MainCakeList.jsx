@@ -64,45 +64,27 @@ const CakeListTitle = styled.h2`
 
 const CakeListBox = styled.div`
   width: 100%;
-  display: flex;
   margin-top: 30px;
-  @media screen and (max-width: 1200px) {
-    padding-bottom: 30px;
-  }
-  @media screen and (max-width: 768px) {
-    padding-bottom: 0px;
-  }
+  margin-bottom: 20px;
+  padding-bottom: 50px;
 `;
 
 const CakeListItems = styled.ul`
-  display: grid;
+  display: flex;
   justify-content: center;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(1, 1fr);
-  grid-gap: 25px 50px;
+  flex-wrap: wrap;
+  padding: 20px 0px;
   width: 100%;
   overflow: hidden;
   cursor: pointer;
-  @media screen and (max-width: 1200px) {
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(1, 1fr);
-    grid-gap: 25px 25px;
-  }
-  @media screen and (max-width: 790px) {
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(1, 1fr);
-  }
-  @media screen and (max-width: 640px) {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(1, 1fr);
-  }
-  @media screen and (max-width: 400px) {
-    grid-template-columns: repeat(1, 1fr);
-    grid-template-rows: repeat(1, 1fr);
-  }
 `;
 const CakeListItem = styled.li`
   text-align: center;
+  margin-right: 35px;
+  margin-top: 25px;
+  @media screen and (max-width: 400px) {
+    margin-right: 0px;
+  }
 `;
 
 const CakeItemTitle = styled.h3`
@@ -110,21 +92,21 @@ const CakeItemTitle = styled.h3`
   padding-bottom: 10px;
   font-size: 20px;
   font-weight: 400;
-  @media screen and (max-width: 465px) {
+  @media screen and (max-width: 770px) {
     font-size: 16px;
   }
-  @media screen and (max-width: 400px) {
-    font-size: 20px;
+  @media screen and (max-width: 465px) {
+    font-size: 16px;
   }
 `;
 const CakeItemPrice = styled.p`
   font-size: 20px;
   font-weight: 300;
-  @media screen and (max-width: 465px) {
+  @media screen and (max-width: 770px) {
     font-size: 16px;
   }
-  @media screen and (max-width: 400px) {
-    font-size: 20px;
+  @media screen and (max-width: 465px) {
+    font-size: 16px;
   }
 `;
 
@@ -145,16 +127,16 @@ const CakeItem = styled.img`
     height: 180px;
   }
   @media screen and (max-width: 1500px) {
-    width: 200px;
-    height: 150px;
+    width: 260px;
+    height: 180px;
   }
   @media screen and (max-width: 790px) {
     width: 170px;
     height: 130px;
   }
-  @media screen and (max-width: 465px) {
-    width: 170px;
-    height: 130px;
+  @media screen and (max-width: 485px) {
+    width: 200px;
+    height: 150px;
   }
   @media screen and (max-width: 400px) {
     width: 200px;
