@@ -53,45 +53,41 @@ const CakeFormEdit = ({ editData }) => {
       count &&
       want_pick_up_date &&
       product_id;
-    const lengthCheck =
-      additional_explanation.length < 300 && title.length < 50;
     e.preventDefault();
     if (checkValue) {
-      if (lengthCheck) {
-        if (countDays > 1) {
-          if (window.confirm("수정하시겠습니까?")) {
-            fetch(`${FORM_EDIT_PATCH}/${formId}`, {
-              method: "PATCH",
-              headers: {
-                Authorization: `Bearer ${USER_TOKEN}`,
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                title,
-                customer_name,
-                type,
-                additional_explanation,
-                contact,
-                count,
-                want_pick_up_date,
-                product_id,
-              }),
-            }).then((res) => {
-              if (res.status === 200) {
-                navigate(`/formdetail/${formId}`, {
-                  state: { checkValid: true },
-                });
-              } else {
-                alert("다시 시도해 주세요");
-                navigate(`/orders/${formId}`, { state: { checkValid: true } });
-              }
-            });
-          }
-        } else {
-          alert("신청일로부터 최소 2일 후 날짜부터 신청이 가능합니다.");
+      if (countDays > 1) {
+        if (window.confirm("수정하시겠습니까?")) {
+          fetch(`${FORM_EDIT_PATCH}/${formId}`, {
+            method: "PATCH",
+            headers: {
+              Authorization: `Bearer ${USER_TOKEN}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              title,
+              customer_name,
+              type,
+              additional_explanation,
+              contact,
+              count,
+              want_pick_up_date,
+              product_id,
+            }),
+          }).then((res) => {
+            if (res.status === 200) {
+              navigate(`/formdetail/${formId}`, {
+                state: { checkValid: true },
+              });
+            } else {
+              alert("다시 시도해 주세요");
+              navigate(`/formdetail/${formId}/edit`, {
+                state: { checkValid: true },
+              });
+            }
+          });
         }
       } else {
-        alert("글자 수를 확인해 주세요");
+        alert("신청일로부터 최소 2일 후 날짜부터 신청이 가능합니다.");
       }
     } else {
       alert("빈칸을 확인해 주세요");
@@ -110,42 +106,36 @@ const CakeFormEdit = ({ editData }) => {
       count &&
       want_pick_up_date &&
       product_id;
-    const lengthCheck =
-      additional_explanation.length < 300 && title.length < 50;
     e.preventDefault();
     if (checkValue) {
-      if (lengthCheck) {
-        if (window.confirm("수정하시겠습니까?")) {
-          fetch(`${FORM_EDIT_PATCH}/${formId}`, {
-            method: "PATCH",
-            headers: {
-              Authorization: `Bearer ${USER_TOKEN}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              title,
-              customer_name,
-              type,
-              additional_explanation,
-              contact,
-              count,
-              want_pick_up_date,
-              product_id,
-              status: "confirmed",
-            }),
-          }).then((res) => {
-            if (res.status === 200) {
-              navigate(`/formdetail/${formId}`, {
-                state: { checkValid: true },
-              });
-            } else {
-              alert("다시 시도해 주세요");
-              navigate(`/orders/${formId}`);
-            }
-          });
-        }
-      } else {
-        alert("글자 수를 확인해 주세요");
+      if (window.confirm("수정하시겠습니까?")) {
+        fetch(`${FORM_EDIT_PATCH}/${formId}`, {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${USER_TOKEN}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title,
+            customer_name,
+            type,
+            additional_explanation,
+            contact,
+            count,
+            want_pick_up_date,
+            product_id,
+            status: "confirmed",
+          }),
+        }).then((res) => {
+          if (res.status === 200) {
+            navigate(`/formdetail/${formId}`, {
+              state: { checkValid: true },
+            });
+          } else {
+            alert("다시 시도해 주세요");
+            navigate(`/formdetail/${formId}/edit`);
+          }
+        });
       }
     } else {
       alert("빈칸을 확인해 주세요");
@@ -220,7 +210,7 @@ const CakeFormEdit = ({ editData }) => {
           </SelectCake>
           <CakeFormRemark>기타사항</CakeFormRemark>
           <CakeFormRemarkInput
-            placeholder="남겨주실 말을 적어주세요 최대 300자입니다."
+            placeholder="남겨주실 말을 적어주세요."
             onChange={cakeFormHandleInput}
             required
             value={additional_explanation}
@@ -299,7 +289,7 @@ const CakeFormName = styled.div`
 `;
 const CakeFormNameInput = styled.input.attrs((props) => ({
   type: "text",
-  maxLength: 6,
+  maxLength: 30,
 }))`
   border-style: none;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
@@ -316,12 +306,12 @@ const CakeFormNameInput = styled.input.attrs((props) => ({
 const CakeFormInputTitle = styled(CakeFormName)``;
 const CakeFormInputTitleInput = styled(CakeFormNameInput).attrs((props) => ({
   type: "text",
-  maxLength: 50,
+  maxLength: 49,
 }))``;
 const CakeFormPhoneNumber = styled(CakeFormName)``;
 const CakeFormPhoneNumberInput = styled(CakeFormNameInput).attrs((props) => ({
   type: "text",
-  maxLength: 20,
+  maxLength: 49,
 }))``;
 const CakeFormPickUpDate = styled(CakeFormName)``;
 const CakeFormPickUpDateDiv = styled.div`
@@ -360,7 +350,7 @@ const CakeFormOrderCountInput = styled(CakeFormNameInput).attrs((props) => ({
 const CakeFormRemark = styled(CakeFormName)``;
 const CakeFormRemarkInput = styled.textarea.attrs((props) => ({
   type: "text",
-  maxLength: 300,
+  maxLength: 299,
 }))`
   border-style: none;
   box-sizing: border-box;

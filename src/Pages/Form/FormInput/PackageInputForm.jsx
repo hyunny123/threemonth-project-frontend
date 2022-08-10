@@ -86,47 +86,37 @@ const PackageInputForm = () => {
     is_packaging &&
     additional_explanation;
 
-  const lengthCheck =
-    title.length < 500 &&
-    delivery_location.length < 100 &&
-    is_packaging.length < 100 &&
-    purpose.length < 200;
-
   const packageFormRequest = (e) => {
     e.preventDefault();
     if (checkValueData) {
       if (countDays > 2) {
         if (orderedproducts.length > 1) {
-          if (lengthCheck) {
-            if (window.confirm(`${inputConfirmCheck}`)) {
-              fetch(`${POST_INPUT_FORM}`, {
-                method: "POST",
-                headers: {
-                  Authorization: `Bearer ${USER_TOKEN}`,
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  title,
-                  customer_name,
-                  contact,
-                  delivery_date,
-                  purpose,
-                  delivery_location,
-                  orderedproducts,
-                  is_packaging,
-                  additional_explanation,
-                  type: "package",
-                }),
-              }).then((res) => {
-                if (res.status === 201) {
-                  navigate("/formlist");
-                } else {
-                  alert("다시 시도해 주세요. 문제가 지속될 경우 연락바랍니다.");
-                }
-              });
-            }
-          } else {
-            alert("글자 수를 확인해 주세요");
+          if (window.confirm(`${inputConfirmCheck}`)) {
+            fetch(`${POST_INPUT_FORM}`, {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${USER_TOKEN}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                title,
+                customer_name,
+                contact,
+                delivery_date,
+                purpose,
+                delivery_location,
+                orderedproducts,
+                is_packaging,
+                additional_explanation,
+                type: "package",
+              }),
+            }).then((res) => {
+              if (res.status === 201) {
+                navigate("/formlist");
+              } else {
+                alert("다시 시도해 주세요. 문제가 지속될 경우 연락바랍니다.");
+              }
+            });
           }
         } else {
           alert("최소 2개 이상 선택해 주세요.");
@@ -150,7 +140,7 @@ const PackageInputForm = () => {
         <PackageFormInputWrapper>
           <PackageFormInputTitle>글 제목</PackageFormInputTitle>
           <PackageFormTitleInput
-            placeholder="글 제목을 입력해 주세요 최대 50자입니다."
+            placeholder="글 제목을 입력해 주세요."
             required
             name="title"
             onChange={packageFormHandleInput}
@@ -159,7 +149,7 @@ const PackageInputForm = () => {
             프로모션 <br /> 목적
           </PackageFormPurpose>
           <PackageFormPurposeInput
-            placeholder="ex) 기업 행사, 결혼 답례품 등 / 최대 200자입니다."
+            placeholder="ex) 기업 행사, 결혼 답례품 등."
             required
             type="text"
             maxlength="3"
@@ -194,7 +184,7 @@ const PackageInputForm = () => {
           </PackageFormDateDiv>
           <PackageFormAddress>주소</PackageFormAddress>
           <PackageFormAddressInput
-            placeholder="주소를 입력해 주세요 최대 100자입니다."
+            placeholder="주소를 입력해 주세요."
             required
             name="delivery_location"
             onChange={packageFormHandleInput}
@@ -226,7 +216,7 @@ const PackageInputForm = () => {
           />
           <PackageFormRemark>기타사항</PackageFormRemark>
           <PackageFormRemarkInput
-            placeholder="남겨주실 말을 입력해 주세요 최대 300자입니다."
+            placeholder="남겨주실 말을 입력해 주세요."
             name="additional_explanation"
             required
             onChange={packageFormHandleInput}
@@ -292,7 +282,7 @@ const PackageFormName = styled.p`
 `;
 const PackageFormNameInput = styled.input.attrs((props) => ({
   type: "text",
-  maxLength: 6,
+  maxLength: 30,
 }))`
   border-style: none;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
@@ -312,19 +302,19 @@ const PackageFormNameInput = styled.input.attrs((props) => ({
 const PackageFormInputTitle = styled(PackageFormName)``;
 const PackageFormTitleInput = styled(PackageFormNameInput).attrs((props) => ({
   type: "text",
-  maxLength: 50,
+  maxLength: 49,
 }))``;
 
 const PackageFormPurpose = styled(PackageFormName)``;
 const PackageFormPurposeInput = styled(PackageFormNameInput).attrs((props) => ({
   type: "text",
-  maxLength: 200,
+  maxLength: 199,
 }))``;
 const PackageFormPhoneNumber = styled(PackageFormName)``;
 const PackageFormPhoneNumberInput = styled(PackageFormNameInput).attrs(
   (props) => ({
     type: "text",
-    maxLength: 20,
+    maxLength: 49,
   })
 )``;
 
@@ -344,7 +334,7 @@ const PackageFormDateInput = styled(PackageFormNameInput).attrs((props) => ({
 const PackageFormAddress = styled(PackageFormName)``;
 const PackageFormAddressInput = styled(PackageFormNameInput).attrs((props) => ({
   type: "text",
-  maxLength: 100,
+  maxLength: 99,
 }))``;
 
 const PackageFormDescription = styled(PackageFormName)``;
@@ -380,14 +370,14 @@ const PackageFormIsPackage = styled(PackageFormName)``;
 const PackageFormIsPackageInput = styled(PackageFormNameInput).attrs(
   (props) => ({
     type: "text",
-    maxLength: 50,
+    maxLength: 99,
   })
 )``;
 
 const PackageFormRemark = styled(PackageFormName)``;
 const PackageFormRemarkInput = styled.textarea.attrs((props) => ({
   type: "text",
-  maxLength: 300,
+  maxLength: 299,
 }))`
   border-style: none;
   border-bottom: ${({ theme }) => theme.bgColor};

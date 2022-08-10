@@ -72,51 +72,44 @@ const PackageFormEdit = ({ editData }) => {
       delivery_location &&
       is_packaging &&
       purpose;
-    const lengthCheck =
-      title.length < 50 &&
-      additional_explanation.length < 300 &&
-      delivery_location.length < 100 &&
-      is_packaging.length < 100 &&
-      purpose.length < 200;
+
     e.preventDefault();
     if (checkValue) {
-      if (lengthCheck) {
-        if (countDays > 2) {
-          if (window.confirm("수정하시겠습니까?")) {
-            fetch(`${FORM_EDIT_PATCH}/${formId}`, {
-              method: "PATCH",
-              headers: {
-                Authorization: `Bearer ${USER_TOKEN}`,
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                additional_explanation,
-                contact,
-                customer_name,
-                title,
-                purpose,
-                type,
-                delivery_date,
-                delivery_location,
-                is_packaging,
-                orderedproducts,
-              }),
-            }).then((res) => {
-              if (res.status === 200) {
-                navigate(`/formdetail/${formId}`, {
-                  state: { checkValid: true },
-                });
-              } else {
-                alert("다시 시도해 주세요");
-                navigate(`/orders/${formId}`, { state: { checkValid: true } });
-              }
-            });
-          }
-        } else {
-          alert("신청일로부터 최소 3일 후 날짜부터 신청이 가능합니다.");
+      if (countDays > 2) {
+        if (window.confirm("수정하시겠습니까?")) {
+          fetch(`${FORM_EDIT_PATCH}/${formId}`, {
+            method: "PATCH",
+            headers: {
+              Authorization: `Bearer ${USER_TOKEN}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              additional_explanation,
+              contact,
+              customer_name,
+              title,
+              purpose,
+              type,
+              delivery_date,
+              delivery_location,
+              is_packaging,
+              orderedproducts,
+            }),
+          }).then((res) => {
+            if (res.status === 200) {
+              navigate(`/formdetail/${formId}`, {
+                state: { checkValid: true },
+              });
+            } else {
+              alert("다시 시도해 주세요");
+              navigate(`/formdetail/${formId}/edit`, {
+                state: { checkValid: true },
+              });
+            }
+          });
         }
       } else {
-        alert("글자 수를 확인해 주세요.");
+        alert("신청일로부터 최소 3일 후 날짜부터 신청이 가능합니다.");
       }
     } else {
       alert("빈칸을 확인해 주세요");
@@ -138,48 +131,41 @@ const PackageFormEdit = ({ editData }) => {
       delivery_location &&
       is_packaging &&
       purpose;
-    const lengthCheck =
-      title.length < 50 &&
-      additional_explanation.length < 300 &&
-      delivery_location.length < 100 &&
-      is_packaging.length < 100 &&
-      purpose.length < 200;
+
     e.preventDefault();
     if (checkValue) {
-      if (lengthCheck) {
-        if (window.confirm("수정하시겠습니까?")) {
-          fetch(`${FORM_EDIT_PATCH}/${formId}`, {
-            method: "PATCH",
-            headers: {
-              Authorization: `Bearer ${USER_TOKEN}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              additional_explanation,
-              contact,
-              customer_name,
-              title,
-              purpose,
-              type,
-              delivery_date,
-              delivery_location,
-              is_packaging,
-              orderedproducts,
-              status: "confirmed",
-            }),
-          }).then((res) => {
-            if (res.status === 200) {
-              navigate(`/formdetail/${formId}`, {
-                state: { checkValid: true },
-              });
-            } else {
-              alert("다시 시도해 주세요");
-              navigate(`/orders/${formId}`, { state: { checkValid: true } });
-            }
-          });
-        }
-      } else {
-        alert("글자 수를 확인해 주세요.");
+      if (window.confirm("수정하시겠습니까?")) {
+        fetch(`${FORM_EDIT_PATCH}/${formId}`, {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${USER_TOKEN}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            additional_explanation,
+            contact,
+            customer_name,
+            title,
+            purpose,
+            type,
+            delivery_date,
+            delivery_location,
+            is_packaging,
+            orderedproducts,
+            status: "confirmed",
+          }),
+        }).then((res) => {
+          if (res.status === 200) {
+            navigate(`/formdetail/${formId}`, {
+              state: { checkValid: true },
+            });
+          } else {
+            alert("다시 시도해 주세요");
+            navigate(`/formdetail/${formId}/edit`, {
+              state: { checkValid: true },
+            });
+          }
+        });
       }
     } else {
       alert("빈칸을 확인해 주세요");
@@ -193,7 +179,7 @@ const PackageFormEdit = ({ editData }) => {
         <PackageEditFormInputWrapper>
           <PackageEditFormInputTitle>글 제목</PackageEditFormInputTitle>
           <PackageEditFormInputTitleInput
-            placeholder="제목을 입력해 주세요 최대 50자 입니다."
+            placeholder="제목을 입력해 주세요."
             required
             name="title"
             onChange={packageEditFormHandleInput}
@@ -203,7 +189,7 @@ const PackageFormEdit = ({ editData }) => {
             프로모션 <br /> 목적
           </PackageEditFormPurpose>
           <PackageEditFormPurposeInput
-            placeholder="ex) 기업 행사, 결혼 답례품 등 / 최대 200자입니다."
+            placeholder="ex) 기업 행사, 결혼 답례품 등."
             required
             name="purpose"
             onChange={packageEditFormDetailHandleInput}
@@ -242,7 +228,7 @@ const PackageFormEdit = ({ editData }) => {
           </PackageEditFormDateDiv>
           <PackageEditFormAddress>주소</PackageEditFormAddress>
           <PackageEditFormAddressInput
-            placeholder="주소를 입력해 주세요 최대 100자입니다."
+            placeholder="주소를 입력해 주세요."
             required
             name="delivery_location"
             onChange={packageEditFormDetailHandleInput}
@@ -285,7 +271,7 @@ const PackageFormEdit = ({ editData }) => {
           />
           <PackageEditFormRemark>기타사항</PackageEditFormRemark>
           <PackageEditFormRemarkInput
-            placeholder="남겨주실 말을 입력해 주세요 최대 300자 입니다."
+            placeholder="남겨주실 말을 입력해 주세요."
             name="additional_explanation"
             required
             onChange={packageEditFormHandleInput}
@@ -373,7 +359,7 @@ const PackageEditFormName = styled.div`
 `;
 const PackageEditFormNameInput = styled.input.attrs((props) => ({
   type: "text",
-  maxLength: 6,
+  maxLength: 30,
 }))`
   border-style: none;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
@@ -397,7 +383,7 @@ const PackageEditFormInputTitle = styled(PackageEditFormName)``;
 const PackageEditFormInputTitleInput = styled(PackageEditFormNameInput).attrs(
   (props) => ({
     type: "text",
-    maxLength: 50,
+    maxLength: 49,
   })
 )``;
 
@@ -405,7 +391,7 @@ const PackageEditFormPurpose = styled(PackageEditFormName)``;
 const PackageEditFormPurposeInput = styled(PackageEditFormNameInput).attrs(
   (props) => ({
     type: "text",
-    maxLength: 200,
+    maxLength: 199,
   })
 )``;
 
@@ -413,7 +399,7 @@ const PackageEditFormPhoneNumber = styled(PackageEditFormName)``;
 const PackageEditFormPhoneNumberInput = styled(PackageEditFormNameInput).attrs(
   (props) => ({
     type: "text",
-    maxLength: 20,
+    maxLength: 49,
   })
 )``;
 
@@ -436,7 +422,7 @@ const PackageEditFormAddress = styled(PackageEditFormName)``;
 const PackageEditFormAddressInput = styled(PackageEditFormNameInput).attrs(
   (props) => ({
     type: "text",
-    maxLength: 100,
+    maxLength: 99,
   })
 )``;
 
@@ -481,14 +467,14 @@ const PackageEditFormIsPackage = styled(PackageEditFormName)``;
 const PackageEditFormIsPackageInput = styled(PackageEditFormNameInput).attrs(
   (props) => ({
     type: "text",
-    maxLength: 50,
+    maxLength: 99,
   })
 )``;
 
 const PackageEditFormRemark = styled(PackageEditFormName)``;
 const PackageEditFormRemarkInput = styled.textarea.attrs((props) => ({
   type: "text",
-  maxLength: 300,
+  maxLength: 299,
 }))`
   border-style: none;
   border-bottom: ${({ theme }) => theme.bgColor};

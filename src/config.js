@@ -1,4 +1,4 @@
-const BASE_URL = "http://54.180.152.144:8001";
+const BASE_URL = "http://threemonths.shop:8001";
 
 export const USER_TOKEN = sessionStorage.getItem("token");
 export const USER_NICKNAME = sessionStorage.getItem("nickname");
