@@ -68,46 +68,35 @@ const CafeInputForm = () => {
       additional_explanation &&
       type &&
       contact;
-    const lengthCheck =
-      additional_explanation.length < 300 &&
-      title.length < 50 &&
-      cafename.length < 30 &&
-      cafe_owner_name.length < 30 &&
-      corporate_registration_num.length < 50 &&
-      cafe_location.length < 100;
 
     if (checkValueData) {
-      if (lengthCheck) {
-        if (window.confirm(`${inputConfirmCheck}`)) {
-          fetch("http://15.164.163.31:8001/orders/", {
-            method: "post",
-            headers: {
-              Authorization: `Bearer ${USER_TOKEN}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              title,
-              cafename,
-              contact,
-              corporate_registration_num,
-              cafe_owner_name,
-              customer_name,
-              cafe_location,
-              product_explanation,
-              additional_explanation,
-              type,
-            }),
-          }).then((res) => {
-            if (res.status === 201) {
-              alert("신청이 완료되었습니다.");
-              navigate("/formlist");
-            } else {
-              alert("다시 시도해 주세요. 문제가 지속될 경우 연락바랍니다.");
-            }
-          });
-        }
-      } else {
-        alert("글자 수를 확인해 주세요.");
+      if (window.confirm(`${inputConfirmCheck}`)) {
+        fetch("http://15.164.163.31:8001/orders/", {
+          method: "post",
+          headers: {
+            Authorization: `Bearer ${USER_TOKEN}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title,
+            cafename,
+            contact,
+            corporate_registration_num,
+            cafe_owner_name,
+            customer_name,
+            cafe_location,
+            product_explanation,
+            additional_explanation,
+            type,
+          }),
+        }).then((res) => {
+          if (res.status === 201) {
+            alert("신청이 완료되었습니다.");
+            navigate("/formlist");
+          } else {
+            alert("다시 시도해 주세요. 문제가 지속될 경우 연락바랍니다.");
+          }
+        });
       }
     } else {
       alert("빈칸을 확인해 주세요");
@@ -204,7 +193,7 @@ const CafeInputForm = () => {
           <CafeFormRemark>기타사항</CafeFormRemark>
           <CafeFormRemarkInput
             onChange={cafeFormHandleInput}
-            placeholder="남겨주실 말을 입력해 주세요 최대 300자입니다."
+            placeholder="남겨주실 말을 입력해 주세요."
             name="additional_explanation"
             required
           />
@@ -267,7 +256,7 @@ const CafeFormCafeName = styled.p`
 `;
 const CafeFormCafeNameInput = styled.input.attrs((props) => ({
   type: "text",
-  maxLength: 6,
+  maxLength: 30,
 }))`
   border-style: none;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
@@ -285,7 +274,7 @@ const CafeFormInputTitle = styled(CafeFormCafeName)``;
 const CafeFormInputTitleInput = styled(CafeFormCafeNameInput).attrs(
   (props) => ({
     type: "text",
-    maxLength: 50,
+    maxLength: 49,
   })
 )``;
 
@@ -293,31 +282,31 @@ const CafeFormBusinessNumber = styled(CafeFormCafeName)``;
 const CafeFormBusinessNumberInput = styled(CafeFormCafeNameInput).attrs(
   (props) => ({
     type: "text",
-    maxLength: 50,
+    maxLength: 49,
   })
 )``;
 const CafeFormCEOName = styled(CafeFormCafeName)``;
 const CafeFormCEONameInput = styled(CafeFormCafeNameInput).attrs((props) => ({
   type: "text",
-  maxLength: 6,
+  maxLength: 30,
 }))``;
 const CafeFormManagerName = styled(CafeFormCafeName)``;
 const CafeFormManagerNameInput = styled(CafeFormCafeNameInput).attrs(
   (props) => ({
     type: "text",
-    maxLength: 6,
+    maxLength: 29,
   })
 )``;
 const CafeFormContact = styled(CafeFormCafeName)``;
 const CafeFormContactInput = styled(CafeFormCafeNameInput).attrs((props) => ({
   type: "text",
-  maxLength: 10,
+  maxLength: 49,
 }))``;
 const CafeFormCafeAddress = styled(CafeFormCafeName)``;
 const CafeFormCafeAddressInput = styled(CafeFormCafeNameInput).attrs(
   (props) => ({
     type: "text",
-    maxLength: 100,
+    maxLength: 99,
   })
 )``;
 const CafeFormProductListName = styled(CafeFormCafeName)``;
@@ -363,7 +352,7 @@ const CafeFormDescriptionInput = styled.textarea`
 const CafeFormRemark = styled(CafeFormCafeName)``;
 const CafeFormRemarkInput = styled(CafeFormDescriptionInput).attrs((props) => ({
   type: "text",
-  maxLength: 300,
+  maxLength: 299,
 }))``;
 
 const CafeFormBtn = styled.button`

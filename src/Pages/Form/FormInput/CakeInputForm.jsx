@@ -182,7 +182,7 @@ const CakeInputForm = () => {
           </SelectCake>
           <CakeFormRemark>기타사항</CakeFormRemark>
           <CakeFormRemarkInput
-            placeholder="남겨주실 말을 적어주세요 최대 300자입니다."
+            placeholder="남겨주실 말을 적어주세요."
             onChange={cakeFormHandleInput}
             required
             name="additional_explanation"
@@ -251,7 +251,7 @@ const CakeFormName = styled.div`
 `;
 const CakeFormNameInput = styled.input.attrs((props) => ({
   type: "text",
-  maxLength: 6,
+  maxLength: 30,
 }))`
   border-style: none;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
@@ -271,12 +271,12 @@ const CakeFormNameInput = styled.input.attrs((props) => ({
 const CakeFormInputTitle = styled(CakeFormName)``;
 const CakeFormInputTitleInput = styled(CakeFormNameInput).attrs((props) => ({
   type: "text",
-  maxLength: 50,
+  maxLength: 49,
 }))``;
 const CakeFormPhoneNumber = styled(CakeFormName)``;
 const CakeFormPhoneNumberInput = styled(CakeFormNameInput).attrs((props) => ({
   type: "text",
-  maxLength: 20,
+  maxLength: 49,
 }))``;
 const CakeFormPickUpDate = styled(CakeFormName)``;
 const CakeFormPickUpDateDiv = styled.div`
@@ -311,7 +311,7 @@ const CakeFormOrderCountInput = styled(CakeFormNameInput).attrs((props) => ({
 const CakeFormRemark = styled(CakeFormName)``;
 const CakeFormRemarkInput = styled.textarea.attrs((props) => ({
   type: "text",
-  maxLength: 300,
+  maxLength: 299,
 }))`
   border-style: none;
   box-sizing: border-box;
