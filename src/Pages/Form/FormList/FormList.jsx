@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Loading from "../../../components/Loading";
 import ListNoContents from "./ListNoContents";
 import { useNavigate } from "react-router";
-import { USER_TOKEN } from "../../../config";
+import { USER_TOKEN, API } from "../../../config";
 import { LOGIN_URI } from "../../Login/AuthData";
 
 const FormList = () => {
@@ -18,11 +18,12 @@ const FormList = () => {
       create_at: "",
     },
   ]);
+  const { FORM_LIST } = API;
   useEffect(() => {
-    fetch("http://15.164.163.31:8001/orders")
+    fetch(`${FORM_LIST}`)
       .then((res) => res.json())
       .then((data) => setFormList(data));
-  }, []);
+  }, [FORM_LIST]);
 
   if (formList.length === 0) {
     return <ListNoContents />;

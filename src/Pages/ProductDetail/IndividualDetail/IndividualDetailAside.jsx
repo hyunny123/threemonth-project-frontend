@@ -9,18 +9,18 @@ const IndividualDetailAside = ({ individualData }) => {
   const { price, description, is_active, product_name, category } =
     individualData;
   const goReserveForm = () => {
-    if (USER_TOKEN) {
-      if (is_active === false) {
-        alert("현재 판매중인 케이크가 아닙니다.");
-      } else {
-        navigate("/reserveform", { state: { formType: "cake" } });
-      }
+    if (is_active === false) {
+      alert("현재 판매중인 케이크가 아닙니다.");
     } else {
-      if (
-        window.confirm("로그인이 필요한 서비스입니다. 로그인 하시겠습니까?")
-      ) {
-        localStorage.setItem("prevpath", pathname);
-        navigate("/loginpage");
+      if (USER_TOKEN) {
+        navigate("/reserveform", { state: { formType: "cake" } });
+      } else {
+        if (
+          window.confirm("로그인이 필요한 서비스입니다. 로그인 하시겠습니까?")
+        ) {
+          localStorage.setItem("prevpath", pathname);
+          navigate("/loginpage");
+        }
       }
     }
   };
@@ -40,7 +40,7 @@ const IndividualDetailAside = ({ individualData }) => {
         ) : (
           <GoToBamin href="https://baemin.me/vrmWr_I9d">
             <DetailIndividualReservBtn>
-              주문은 배달의 민족에서!
+              주문은 <br /> 배달의 민족에서!
             </DetailIndividualReservBtn>
           </GoToBamin>
         )}

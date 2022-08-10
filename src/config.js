@@ -1,4 +1,4 @@
-const BASE_URL = "http://15.164.163.31:8001";
+const BASE_URL = "http://54.180.152.144:8001";
 
 export const USER_TOKEN = sessionStorage.getItem("token");
 export const USER_NICKNAME = sessionStorage.getItem("nickname");
@@ -31,4 +31,7 @@ export const API = {
 
   //detail form
   DETAIL_FORM: `${BASE_URL}/orders/`,
+
+  //formlist
+  FORM_LIST: `${BASE_URL}/orders/`,
 };

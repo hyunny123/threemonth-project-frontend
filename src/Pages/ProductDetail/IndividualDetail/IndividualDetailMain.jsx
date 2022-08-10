@@ -32,7 +32,7 @@ const IndividualDetailMainWrapper = styled.div`
   justify-content: center;
   border-right: 0.5px solid ${({ theme }) => theme.fontColor};
   box-sizing: border-box;
-  padding: 20px;
+  margin-bottom: 40px;
 
   @media (max-width: 768px) {
     border-right: none;
@@ -42,13 +42,15 @@ const IndividualDetailMainWrapper = styled.div`
 const ProductImg = styled.img`
   margin-top: 30px;
   min-width: 150px;
-  height: 250px;
+  height: 300px;
   @media (max-width: 768px) {
+    min-width: 150px;
+    height: 200px;
   }
 `;
 
 const Origin = styled.div`
-  margin-top: 150px;
+  margin-top: 50px;
   display: grid;
   width: 70%;
   grid-template-rows: repeat(2, 50px);
@@ -56,6 +58,8 @@ const Origin = styled.div`
   border: 1px solid ${({ theme }) => theme.fontColor};
   border-radius: 10px;
   background-color: ${({ theme }) => theme.bgColor};
+  box-sizing: border-box;
+  padding: 5px 0;
   @media (max-width: 768px) {
     width: 80%;
     margin-top: 40px;
