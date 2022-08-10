@@ -57,10 +57,16 @@ const CarouselBox = styled.div`
   width: 100%;
   height: 600px;
   @media screen and (max-width: 2650px) {
-    height: 1400px;
+    height: 1000px;
   }
   @media screen and (max-width: 1400px) {
-    height: 1000px;
+    height: 800px;
+  }
+  @media screen and (max-width: 1200px) {
+    height: 700px;
+  }
+  @media screen and (max-width: 1000px) {
+    height: 600px;
   }
   @media screen and (max-width: 781px) {
     height: 500px;
