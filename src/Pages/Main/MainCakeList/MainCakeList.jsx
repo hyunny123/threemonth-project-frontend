@@ -1,0 +1,145 @@
+import React from "react";
+import { useNavigate } from "react-router";
+import styled from "styled-components";
+
+const MainCakeList = ({ mainCakeList }) => {
+  const navigate = useNavigate();
+
+  const goToCakeDetail = (id) => {
+    navigate(`/individualdetail/${id}`);
+  };
+  return (
+    <MainCakeListContainer id="cakeList">
+      <CakeListTitle>뜨리먼뜨 CakeList</CakeListTitle>
+      <CakeListBox>
+        <CakeListItems>
+          {mainCakeList.map((item, idx) => {
+            return (
+              <CakeListItem
+                onClick={() => {
+                  goToCakeDetail(item.id);
+                }}
+                key={idx}
+              >
+                <CakeItem src={item.product_images[0].img_src} />
+                <CakeItemTitle>{item.product_name}</CakeItemTitle>
+                <CakeItemPrice>
+                  {item.price && item.price.toLocaleString()}원
+                </CakeItemPrice>
+              </CakeListItem>
+            );
+          })}
+        </CakeListItems>
+      </CakeListBox>
+    </MainCakeListContainer>
+  );
+};
+
+export default MainCakeList;
+
+const MainCakeListContainer = styled.div`
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px 0px;
+  @media screen and (max-width: 768px) {
+    width: 90%;
+  }
+`;
+
+const CakeListTitle = styled.h2`
+  margin-bottom: 20px;
+  font-size: 3em;
+  line-height: 1.2;
+  border-bottom: 3px solid ${({ theme }) => theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
+  @media screen and (max-width: 750px) {
+    font-size: 2em;
+    margin-top: 30px;
+  }
+  @media screen and (max-width: 500px) {
+    font-size: 1.5em;
+    margin-top: 30px;
+  }
+`;
+
+const CakeListBox = styled.div`
+  width: 100%;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  padding-bottom: 50px;
+`;
+
+const CakeListItems = styled.ul`
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 20px 0px;
+  width: 100%;
+  overflow: hidden;
+  cursor: pointer;
+`;
+const CakeListItem = styled.li`
+  text-align: center;
+  margin-right: 35px;
+  margin-top: 25px;
+  @media screen and (max-width: 400px) {
+    margin-right: 0px;
+  }
+`;
+
+const CakeItemTitle = styled.h3`
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 20px;
+  font-weight: 400;
+  @media screen and (max-width: 770px) {
+    font-size: 16px;
+  }
+  @media screen and (max-width: 465px) {
+    font-size: 16px;
+  }
+`;
+const CakeItemPrice = styled.p`
+  font-size: 20px;
+  font-weight: 300;
+  @media screen and (max-width: 770px) {
+    font-size: 16px;
+  }
+  @media screen and (max-width: 465px) {
+    font-size: 16px;
+  }
+`;
+
+const CakeItem = styled.img`
+  width: 200px;
+  height: 150px;
+  border-radius: 5px;
+  @media screen and (max-width: 2560px) {
+    width: 400px;
+    height: 280px;
+  }
+  @media screen and (max-width: 2260px) {
+    width: 300px;
+    height: 200px;
+  }
+  @media screen and (max-width: 1700px) {
+    width: 260px;
+    height: 180px;
+  }
+  @media screen and (max-width: 1500px) {
+    width: 260px;
+    height: 180px;
+  }
+  @media screen and (max-width: 790px) {
+    width: 170px;
+    height: 130px;
+  }
+  @media screen and (max-width: 485px) {
+    width: 200px;
+    height: 150px;
+  }
+  @media screen and (max-width: 400px) {
+    width: 200px;
+    height: 150px;
+  }
+`;
