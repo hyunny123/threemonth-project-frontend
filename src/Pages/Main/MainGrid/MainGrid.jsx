@@ -3,8 +3,10 @@ import { useNavigate } from "react-router";
 import Loading from "../../../components/Loading";
 import styled from "styled-components";
 
-const GridMain = ({ gridData }) => {
+const GridMain = ({ gridData }, props) => {
   const navigate = useNavigate();
+  const classes = "true";
+  const packages = "true";
 
   const packagedesfilter = [...gridData].find(
     (v) => v.description === "package-main-grid-package"
@@ -33,12 +35,12 @@ const GridMain = ({ gridData }) => {
 
   return (
     <GridContainer>
-      <GridTitle>뜨리먼뜨 Form</GridTitle>
+      <GridTitle>뜨리먼뜨 신청하기</GridTitle>
       <GridBox>
         <GridImgBox1 onClick={goToPackageForm}>
           <ImgItem1 src={packagedesfilter.img_src} />
 
-          <TitleItem>Package Form</TitleItem>
+          <TitleItem packages={packages}>답례품 패키지 신청서 Click!</TitleItem>
         </GridImgBox1>
         <GridImgBox2>
           <ImgItem2 src={logodesfilter.img_src} />
@@ -47,12 +49,12 @@ const GridMain = ({ gridData }) => {
         <GridImgBox3>
           <ImgItem3 src={madedesfilter.img_src} />
 
-          <TitleItem>All Handmade </TitleItem>
+          <TitleItem classes={classes}>All Handmade </TitleItem>
         </GridImgBox3>
         <GridImgBox4 onClick={goToCakeList}>
           <ImgItem4 src={cakedesfilter.img_src} />
 
-          <TitleItem>Cake Form</TitleItem>
+          <TitleItem classes={classes}>홀케이크 주문서 Click!</TitleItem>
         </GridImgBox4>
       </GridBox>
     </GridContainer>
@@ -71,16 +73,20 @@ const GridContainer = styled.div`
 
 const GridTitle = styled.h2`
   margin-bottom: 30px;
-  font-size: 3em;
+  font-size: 2.5em;
   line-height: 1.2;
   color: ${({ theme }) => theme.fontColor};
   border-bottom: 3px solid ${({ theme }) => theme.fontColor};
+  @media screen and (max-width: 1400px) {
+    font-size: 1.7em;
+    margin-top: 30px;
+  }
   @media screen and (max-width: 750px) {
-    font-size: 2em;
+    font-size: 1.5em;
     margin-top: 30px;
   }
   @media screen and (max-width: 500px) {
-    font-size: 1.5em;
+    font-size: 1em;
     margin-top: 30px;
   }
 `;
@@ -125,23 +131,37 @@ const TitleItem = styled.h3`
   position: absolute;
   left: 10px;
   bottom: 10px;
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 500;
+  /* color: ${({ classes, theme }) =>
+    classes === "true" ? "white" : theme.fontColor}; */
+  color: ${({ theme }) => theme.fontColor};
   text-shadow: 3px 3px 7px RGB(51, 18, 17);
+  @media screen and (max-width: 2560px) {
+    font-size: 25px;
+    color: ${({ theme, packages }) =>
+      packages === "true" ? "white" : theme.fontColor};
+  }
+
   @media screen and (max-width: 1400px) {
-    font-size: 35px;
-  }
-  @media screen and (max-width: 1050px) {
-    font-size: 30px;
-  }
-  @media screen and (max-width: 640px) {
     font-size: 25px;
   }
-  @media screen and (max-width: 440px) {
+  @media screen and (max-width: 1050px) {
+    font-size: 25px;
+  }
+  @media screen and (max-width: 990px) {
+    font-size: 25px;
+    color: ${({ classes, theme, packages }) =>
+      classes || packages === "true" ? "white" : theme.fontColor};
+  }
+  @media screen and (max-width: 640px) {
     font-size: 20px;
   }
-  @media screen and (max-width: 320px) {
+  @media screen and (max-width: 440px) {
     font-size: 15px;
+  }
+  @media screen and (max-width: 320px) {
+    font-size: 10px;
   }
 `;
 
