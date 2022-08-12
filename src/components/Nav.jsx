@@ -13,8 +13,8 @@ const Nav = () => {
   }, [pathname]);
 
   const goLogout = () => {
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("nickname");
+    localStorage.removeItem("token");
+    localStorage.removeItem("nickname");
     localStorage.removeItem("prevpath");
     window.location.reload();
   };

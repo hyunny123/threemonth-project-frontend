@@ -40,8 +40,8 @@ const KakaoLogin = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        sessionStorage.setItem("token", res.jwt.access);
-        sessionStorage.setItem("nickname", res.nickname);
+        localStorage.setItem("token", res.jwt.access);
+        localStorage.setItem("nickname", res.nickname);
         navigate("/loginpage");
       });
   };
