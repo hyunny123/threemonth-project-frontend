@@ -3,12 +3,12 @@ import FormListBox from "./FormListBox/FormListBox";
 import styled from "styled-components";
 import Loading from "../../../components/Loading";
 import ListNoContents from "./ListNoContents";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 import { USER_TOKEN, API } from "../../../config";
-import { LOGIN_URI } from "../../Login/AuthData";
 
 const FormList = () => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const [formList, setFormList] = useState([
     {
       id: 0,
@@ -52,26 +52,36 @@ const FormList = () => {
         <ReserveBtnWrap>
           <ReserveBtn
             onClick={() => {
-              USER_TOKEN
-                ? navigate("/reserveform", { state: { formType: "cake" } })
-                : window.confirm(
+              if (USER_TOKEN) {
+                navigate("/reserveform", { state: { formType: "cake" } });
+              } else {
+                if (
+                  window.confirm(
                     "로그인이 필요한 서비스입니다. 로그인 하시겠습니까?"
                   )
-                ? (window.location = `${LOGIN_URI}`)
-                : navigate("/formlist");
+                ) {
+                  localStorage.setItem("prevpath", pathname);
+                  navigate("/login");
+                }
+              }
             }}
           >
             케이크 신청하기
           </ReserveBtn>
           <ReserveBtn
             onClick={() => {
-              USER_TOKEN
-                ? navigate("/reserveform", { state: { formType: "package" } })
-                : window.confirm(
+              if (USER_TOKEN) {
+                navigate("/reserveform", { state: { formType: "package" } });
+              } else {
+                if (
+                  window.confirm(
                     "로그인이 필요한 서비스입니다. 로그인 하시겠습니까?"
                   )
-                ? (window.location = `${LOGIN_URI}`)
-                : navigate("/formlist");
+                ) {
+                  localStorage.setItem("prevpath", pathname);
+                  navigate("/login");
+                }
+              }
             }}
           >
             기프트박스 신청하기
