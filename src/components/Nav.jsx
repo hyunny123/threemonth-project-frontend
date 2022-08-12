@@ -31,13 +31,13 @@ const Nav = () => {
           </Link>
         </NavItem>
         <NavMenu>
-          <Menu onClick={() => alert("준비중인 페이지입니다")}>Notice</Menu>
+          <Menu onClick={() => alert("준비중인 페이지입니다")}>공지사항</Menu>
           <Menu
             onClick={() => {
               navigate("/formlist");
             }}
           >
-            Form
+            주문서 목록
           </Menu>
           <Menu onClick={() => alert("준비중인 페이지입니다")}>QnA</Menu>
           {USER_TOKEN ? (
@@ -147,40 +147,27 @@ const Menu = styled.div`
   color: ${({ theme }) => theme.fontColor};
   cursor: pointer;
   @media screen and (max-width: 2560px) {
-    font-size: 1.5em;
+    font-size: 1.3em;
   }
   @media screen and (max-width: 1400px) {
-    font-size: 1.2em;
+    font-size: 1.1em;
   }
   @media screen and (max-width: 768px) {
-    font-size: 1.1em;
+    font-size: 1em;
   }
   @media screen and (max-width: 640px) {
     width: 80px;
   }
   @media screen and (max-width: 515px) {
     width: 60px;
-    font-size: 1em;
+    font-size: 0.7em;
   }
   @media screen and (max-width: 390px) {
     width: 50px;
-    font-size: 0.8em;
+    font-size: 0.5em;
   }
   @media screen and (max-width: 320px) {
     width: 50px;
-    font-size: 0.7em;
+    font-size: 0.4em;
   }
 `;
-
-// const MenuLogin = styled.img`
-//   width: 100px;
-//   padding: 10px;
-//   @media screen and (max-width: 515px) {
-//     width: 60px;
-//     padding: 5px;
-//   }
-//   @media screen and (max-width: 320px) {
-//     width: 50px;
-//     padding: 0px;
-//   }
-// `;
