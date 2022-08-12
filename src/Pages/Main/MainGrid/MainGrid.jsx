@@ -40,7 +40,9 @@ const GridMain = ({ gridData }) => {
 
           <TitleItem>Package Form</TitleItem>
         </GridImgBox1>
-        <ImgItem2 src={logodesfilter.img_src} />
+        <GridImgBox2>
+          <ImgItem2 src={logodesfilter.img_src} />
+        </GridImgBox2>
 
         <GridImgBox3>
           <ImgItem3 src={madedesfilter.img_src} />
@@ -93,11 +95,26 @@ const GridBox = styled.div`
   @media screen and (max-width: 1400px) {
     height: 700px;
   }
-  @media screen and (max-width: 640px) {
+  @media screen and (max-width: 1300px) {
     height: 600px;
+  }
+  @media screen and (max-width: 1200px) {
+    height: 550px;
+  }
+  @media screen and (max-width: 1100px) {
+    height: 450px;
+  }
+  @media screen and (max-width: 1000px) {
+    height: 600px;
+  }
+  @media screen and (max-width: 640px) {
+    height: 500px;
   }
   @media screen and (max-width: 440px) {
     height: 450px;
+  }
+  @media screen and (max-width: 380px) {
+    height: 400px;
   }
   @media screen and (max-width: 320px) {
     height: 300px;
@@ -143,39 +160,42 @@ const GridImgBox1 = styled.div`
   }
 `;
 const ImgItem1 = styled.img`
+  object-fit: cover;
   width: 100%;
   height: 100%;
-  background: #fff;
+  background: ${({ theme }) => theme.bgColor};
   @media screen and (max-width: 990px) {
-    height: 80%;
-  }
-  @media screen and (max-width: 768px) {
     height: 100%;
   }
 `;
 
-const ImgItem2 = styled.img`
+const GridImgBox2 = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   grid-column: 3/4;
   overflow: hidden;
-  width: 100%;
-  height: 100%;
-  background: #fff;
   @media screen and (max-width: 990px) {
     grid-column: 3/5;
     grid-row: 1/2;
   }
 `;
+
+const ImgItem2 = styled.img`
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  background: ${({ theme }) => theme.bgColor};
+  @media screen and (max-width: 990px) {
+    height: 100%;
+  }
+`;
 const ImgItem3 = styled.img`
+  object-fit: cover;
   width: 100%;
   height: 70%;
-  background: #fff;
+  background: ${({ theme }) => theme.bgColor};
   @media screen and (max-width: 990px) {
-    height: 80%;
-  }
-  @media screen and (max-width: 768px) {
     height: 100%;
   }
 `;
@@ -193,6 +213,7 @@ const GridImgBox3 = styled.div`
   }
 `;
 const GridImgBox4 = styled.div`
+  object-fit: cover;
   position: relative;
   display: flex;
   justify-content: center;
@@ -214,11 +235,8 @@ const GridImgBox4 = styled.div`
 const ImgItem4 = styled.img`
   width: 100%;
   height: 80%;
-  background: #fff;
+  background: ${({ theme }) => theme.bgColor};
   @media screen and (max-width: 990px) {
-    height: 80%;
-  }
-  @media screen and (max-width: 768px) {
     height: 100%;
   }
 `;

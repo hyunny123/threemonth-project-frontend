@@ -8,7 +8,7 @@ const LoginPage = () => {
   const { pathname } = useLocation();
   useEffect(() => {
     if (localStorage.getItem("prevpath")) {
-      if (sessionStorage.getItem("token")) {
+      if (localStorage.getItem("token")) {
         window.location = `${localStorage.getItem("prevpath")}`;
       }
     }
