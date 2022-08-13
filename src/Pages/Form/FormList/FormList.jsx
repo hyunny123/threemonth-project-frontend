@@ -61,7 +61,7 @@ const FormList = () => {
                   )
                 ) {
                   localStorage.setItem("prevpath", pathname);
-                  navigate("/login");
+                  navigate("/loginpage");
                 }
               }
             }}
@@ -79,7 +79,7 @@ const FormList = () => {
                   )
                 ) {
                   localStorage.setItem("prevpath", pathname);
-                  navigate("/login");
+                  navigate("/loginpage");
                 }
               }
             }}

@@ -34,7 +34,7 @@ const ListNoContents = () => {
                   )
                 ) {
                   localStorage.setItem("prevpath", pathname);
-                  navigate("/login");
+                  navigate("/loginpage");
                 }
               }
             }}
@@ -52,7 +52,7 @@ const ListNoContents = () => {
                   )
                 ) {
                   localStorage.setItem("prevpath", pathname);
-                  navigate("/login");
+                  navigate("/loginpage");
                 }
               }
             }}
