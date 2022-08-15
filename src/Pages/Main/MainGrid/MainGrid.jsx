@@ -3,8 +3,10 @@ import { useNavigate } from "react-router";
 import Loading from "../../../components/Loading";
 import styled from "styled-components";
 
-const GridMain = ({ gridData }) => {
+const GridMain = ({ gridData }, props) => {
   const navigate = useNavigate();
+  const classes = "true";
+  const packages = "true";
 
   const packagedesfilter = [...gridData].find(
     (v) => v.description === "package-main-grid-package"
@@ -33,24 +35,26 @@ const GridMain = ({ gridData }) => {
 
   return (
     <GridContainer>
-      <GridTitle>뜨리먼뜨 Form</GridTitle>
+      <GridTitle>뜨리먼뜨 신청하기</GridTitle>
       <GridBox>
         <GridImgBox1 onClick={goToPackageForm}>
           <ImgItem1 src={packagedesfilter.img_src} />
 
-          <TitleItem>Package Form</TitleItem>
+          <TitleItem packages={packages}>답례품 패키지 신청서 Click!</TitleItem>
         </GridImgBox1>
-        <ImgItem2 src={logodesfilter.img_src} />
+        <GridImgBox2>
+          <ImgItem2 src={logodesfilter.img_src} />
+        </GridImgBox2>
 
         <GridImgBox3>
           <ImgItem3 src={madedesfilter.img_src} />
 
-          <TitleItem>All Handmade </TitleItem>
+          <TitleItem classes={classes}>All Handmade </TitleItem>
         </GridImgBox3>
         <GridImgBox4 onClick={goToCakeList}>
           <ImgItem4 src={cakedesfilter.img_src} />
 
-          <TitleItem>Cake Form</TitleItem>
+          <TitleItem classes={classes}>홀케이크 주문서 Click!</TitleItem>
         </GridImgBox4>
       </GridBox>
     </GridContainer>
@@ -69,16 +73,20 @@ const GridContainer = styled.div`
 
 const GridTitle = styled.h2`
   margin-bottom: 30px;
-  font-size: 3em;
+  font-size: 2.5em;
   line-height: 1.2;
   color: ${({ theme }) => theme.fontColor};
   border-bottom: 3px solid ${({ theme }) => theme.fontColor};
+  @media screen and (max-width: 1400px) {
+    font-size: 1.7em;
+    margin-top: 30px;
+  }
   @media screen and (max-width: 750px) {
-    font-size: 2em;
+    font-size: 1.5em;
     margin-top: 30px;
   }
   @media screen and (max-width: 500px) {
-    font-size: 1.5em;
+    font-size: 1em;
     margin-top: 30px;
   }
 `;
@@ -93,11 +101,26 @@ const GridBox = styled.div`
   @media screen and (max-width: 1400px) {
     height: 700px;
   }
-  @media screen and (max-width: 640px) {
+  @media screen and (max-width: 1300px) {
     height: 600px;
+  }
+  @media screen and (max-width: 1200px) {
+    height: 550px;
+  }
+  @media screen and (max-width: 1100px) {
+    height: 450px;
+  }
+  @media screen and (max-width: 1000px) {
+    height: 600px;
+  }
+  @media screen and (max-width: 640px) {
+    height: 500px;
   }
   @media screen and (max-width: 440px) {
     height: 450px;
+  }
+  @media screen and (max-width: 380px) {
+    height: 400px;
   }
   @media screen and (max-width: 320px) {
     height: 300px;
@@ -108,23 +131,37 @@ const TitleItem = styled.h3`
   position: absolute;
   left: 10px;
   bottom: 10px;
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 500;
+  /* color: ${({ classes, theme }) =>
+    classes === "true" ? "white" : theme.fontColor}; */
+  color: ${({ theme }) => theme.fontColor};
   text-shadow: 3px 3px 7px RGB(51, 18, 17);
+  @media screen and (max-width: 2560px) {
+    font-size: 25px;
+    color: ${({ theme, packages }) =>
+      packages === "true" ? "white" : theme.fontColor};
+  }
+
   @media screen and (max-width: 1400px) {
-    font-size: 35px;
-  }
-  @media screen and (max-width: 1050px) {
-    font-size: 30px;
-  }
-  @media screen and (max-width: 640px) {
     font-size: 25px;
   }
-  @media screen and (max-width: 440px) {
+  @media screen and (max-width: 1050px) {
+    font-size: 25px;
+  }
+  @media screen and (max-width: 990px) {
+    font-size: 25px;
+    color: ${({ classes, theme, packages }) =>
+      classes || packages === "true" ? "white" : theme.fontColor};
+  }
+  @media screen and (max-width: 640px) {
     font-size: 20px;
   }
-  @media screen and (max-width: 320px) {
+  @media screen and (max-width: 440px) {
     font-size: 15px;
+  }
+  @media screen and (max-width: 320px) {
+    font-size: 10px;
   }
 `;
 
@@ -143,39 +180,42 @@ const GridImgBox1 = styled.div`
   }
 `;
 const ImgItem1 = styled.img`
+  object-fit: cover;
   width: 100%;
   height: 100%;
-  background: #fff;
+  background: ${({ theme }) => theme.bgColor};
   @media screen and (max-width: 990px) {
-    height: 80%;
-  }
-  @media screen and (max-width: 768px) {
     height: 100%;
   }
 `;
 
-const ImgItem2 = styled.img`
+const GridImgBox2 = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   grid-column: 3/4;
   overflow: hidden;
-  width: 100%;
-  height: 100%;
-  background: #fff;
   @media screen and (max-width: 990px) {
     grid-column: 3/5;
     grid-row: 1/2;
   }
 `;
+
+const ImgItem2 = styled.img`
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  background: ${({ theme }) => theme.bgColor};
+  @media screen and (max-width: 990px) {
+    height: 100%;
+  }
+`;
 const ImgItem3 = styled.img`
+  object-fit: cover;
   width: 100%;
   height: 70%;
-  background: #fff;
+  background: ${({ theme }) => theme.bgColor};
   @media screen and (max-width: 990px) {
-    height: 80%;
-  }
-  @media screen and (max-width: 768px) {
     height: 100%;
   }
 `;
@@ -193,6 +233,7 @@ const GridImgBox3 = styled.div`
   }
 `;
 const GridImgBox4 = styled.div`
+  object-fit: cover;
   position: relative;
   display: flex;
   justify-content: center;
@@ -214,11 +255,8 @@ const GridImgBox4 = styled.div`
 const ImgItem4 = styled.img`
   width: 100%;
   height: 80%;
-  background: #fff;
+  background: ${({ theme }) => theme.bgColor};
   @media screen and (max-width: 990px) {
-    height: 80%;
-  }
-  @media screen and (max-width: 768px) {
     height: 100%;
   }
 `;

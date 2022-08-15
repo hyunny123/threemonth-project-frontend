@@ -55,8 +55,10 @@ const Footer = () => {
             <Info>Mon - Wed, Fri - Sun </Info>
             <Info>Open 12:00 - Closed 20:00</Info>
             <Info>Every Thursday OFF</Info>
+
             <Rights>ⓒthreemonths. All Rights Reserved</Rights>
           </Company>
+
           <Company>
             <CompanyTitle>Threemonths's Info</CompanyTitle>
 
@@ -68,6 +70,22 @@ const Footer = () => {
             </Info>
             <Info>Email : rse_0507@naver.com</Info>
             <Info>통신판매정보 : 2021-서울강서-0412</Info>
+            <PrivacyWrap>
+              <InfoPrivacy
+                onClick={() => {
+                  navigate("/terms", { state: { info: "privacy" } });
+                }}
+              >
+                개인정보처리방침
+              </InfoPrivacy>
+              <InfoPrivacy
+                onClick={() => {
+                  navigate("/terms", { state: { info: "terms" } });
+                }}
+              >
+                홈페이지 이용약관
+              </InfoPrivacy>
+            </PrivacyWrap>
           </Company>
         </CompanyWrapper>
       </Wrapper>
@@ -79,21 +97,21 @@ export default Footer;
 
 const Container = styled.footer`
   width: 100%;
-  height: 250px;
+  min-height: 270px;
   margin: 0 auto;
   padding: 30px 0px;
   background-color: ${({ theme }) => theme.bgColor};
   @media screen and (max-width: 768px) {
-    height: 320px;
+    min-height: 350px;
   }
   @media screen and (max-width: 520px) {
-    height: 380px;
+    min-height: 380px;
   }
   @media screen and (max-width: 450px) {
-    height: 320px;
+    min-height: 330px;
   }
   @media screen and (max-width: 320px) {
-    height: 330px;
+    min-height: 340px;
   }
 `;
 const Wrapper = styled.div`
@@ -109,6 +127,9 @@ const Wrapper = styled.div`
 const FooterSns = styled.div`
   @media screen and (max-width: 768px) {
     margin-bottom: 20px;
+  }
+  @media screen and (max-width: 500px) {
+    margin-bottom: 0px;
   }
 `;
 
@@ -129,8 +150,9 @@ const Title = styled.p`
 `;
 
 const SnsContainer = styled.div`
+  /* display: flex; */
   @media screen and (max-width: 768px) {
-    display: flex;
+    flex-direction: column;
   }
   @media screen and (max-width: 520px) {
     flex-direction: column;
@@ -187,7 +209,9 @@ const Icon = styled.img`
 const ButtonWrapper = styled.div`
   @media screen and (max-width: 768px) {
     display: flex;
-    width: 50%;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
   }
   @media screen and (max-width: 520px) {
     display: flex;
@@ -221,7 +245,7 @@ const CafeFormButton = styled.button`
     font-size: 0.85em;
   }
   @media screen and (max-width: 495px) {
-    font-size: 0.9em;
+    font-size: 0.8em;
   }
 `;
 const AdminButton = styled.button`
@@ -242,7 +266,6 @@ const AdminButton = styled.button`
     font-size: 0.9em;
   }
 `;
-
 const IconWrapper = styled.a``;
 
 const CompanyWrapper = styled.div`
@@ -268,6 +291,24 @@ const CompanyTitle = styled(Title)``;
 const Info = styled(Sns)`
   @media screen and (max-width: 768px) {
     margin-bottom: 5px;
+  }
+`;
+const PrivacyWrap = styled.div`
+  display: flex;
+  padding-top: 10px;
+`;
+const InfoPrivacy = styled(Sns)`
+  margin-right: 15px;
+  cursor: pointer;
+  @media screen and (max-width: 768px) {
+    margin-bottom: 5px;
+  }
+  @media screen and (max-width: 360px) {
+    font-size: 0.6em;
+  }
+  @media screen and (max-width: 320px) {
+    margin-right: 10px;
+    font-size: 0.4em;
   }
 `;
 

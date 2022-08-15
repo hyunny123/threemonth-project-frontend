@@ -12,6 +12,7 @@ import Footer from "./components/Footer";
 import FormEdit from "./Pages/Form/FormEdit/FormEdit";
 import ReserveForm from "./Pages/Form/FormInput/ReserveForm";
 import LoginPage from "./Pages/Login/LoginPage";
+import Terms from "./Pages/Terms/Terms";
 
 function Router() {
   return (
@@ -31,6 +32,7 @@ function Router() {
         <Route path="/formdetail/:formId" element={<FormDetail />} />
         <Route path="/adminpage" element={<AdminPage />} />
         <Route path="/formdetail/:formId/edit" element={<FormEdit />} />
+        <Route path="/terms" element={<Terms />} />
       </Routes>
       <Footer />
     </BrowserRouter>

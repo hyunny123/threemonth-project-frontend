@@ -10,7 +10,7 @@ const MainCakeList = ({ mainCakeList }) => {
   };
   return (
     <MainCakeListContainer id="cakeList">
-      <CakeListTitle>뜨리먼뜨 CakeList</CakeListTitle>
+      <CakeListTitle>홀케이크 주문서</CakeListTitle>
       <CakeListBox>
         <CakeListItems>
           {mainCakeList.map((item, idx) => {
@@ -48,16 +48,20 @@ const MainCakeListContainer = styled.div`
 
 const CakeListTitle = styled.h2`
   margin-bottom: 20px;
-  font-size: 3em;
+  font-size: 2.5em;
   line-height: 1.2;
   border-bottom: 3px solid ${({ theme }) => theme.fontColor};
   color: ${({ theme }) => theme.fontColor};
+  @media screen and (max-width: 1400px) {
+    font-size: 1.7em;
+    margin-top: 30px;
+  }
   @media screen and (max-width: 750px) {
-    font-size: 2em;
+    font-size: 1.5em;
     margin-top: 30px;
   }
   @media screen and (max-width: 500px) {
-    font-size: 1.5em;
+    font-size: 1em;
     margin-top: 30px;
   }
 `;
@@ -76,12 +80,12 @@ const CakeListItems = styled.ul`
   padding: 20px 0px;
   width: 100%;
   overflow: hidden;
-  cursor: pointer;
 `;
 const CakeListItem = styled.li`
   text-align: center;
   margin-right: 35px;
   margin-top: 25px;
+  cursor: pointer;
   @media screen and (max-width: 400px) {
     margin-right: 0px;
   }

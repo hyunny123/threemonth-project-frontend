@@ -1,11 +1,11 @@
 import React from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 import styled from "styled-components";
 import { USER_TOKEN } from "../../../config";
-import { LOGIN_URI } from "../../Login/AuthData";
 
 const ListNoContents = () => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   return (
     <FormListWrapper>
       <FormListWidth>
@@ -25,26 +25,36 @@ const ListNoContents = () => {
         <ReserveBtnWrap>
           <ReserveBtn
             onClick={() => {
-              USER_TOKEN
-                ? navigate("/reserveform", { state: { formType: "cake" } })
-                : window.confirm(
+              if (USER_TOKEN) {
+                navigate("/reserveform", { state: { formType: "cake" } });
+              } else {
+                if (
+                  window.confirm(
                     "로그인이 필요한 서비스입니다. 로그인 하시겠습니까?"
                   )
-                ? (window.location = `${LOGIN_URI}`)
-                : navigate("/formlist");
+                ) {
+                  localStorage.setItem("prevpath", pathname);
+                  navigate("/loginpage");
+                }
+              }
             }}
           >
             케이크 신청하기
           </ReserveBtn>
           <ReserveBtn
             onClick={() => {
-              USER_TOKEN
-                ? navigate("/reserveform", { state: { formType: "package" } })
-                : window.confirm(
+              if (USER_TOKEN) {
+                navigate("/reserveform", { state: { formType: "package" } });
+              } else {
+                if (
+                  window.confirm(
                     "로그인이 필요한 서비스입니다. 로그인 하시겠습니까?"
                   )
-                ? (window.location = `${LOGIN_URI}`)
-                : navigate("/formlist");
+                ) {
+                  localStorage.setItem("prevpath", pathname);
+                  navigate("/loginpage");
+                }
+              }
             }}
           >
             기프트박스 신청하기
