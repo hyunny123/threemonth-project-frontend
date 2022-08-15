@@ -84,9 +84,9 @@ const ListItems = styled.ul`
   padding: 20px 0px;
   width: 100%;
   overflow: hidden;
-  cursor: pointer;
 `;
 const ListItem = styled.li`
+  cursor: pointer;
   text-align: center;
   margin-right: 35px;
   margin-top: 25px;

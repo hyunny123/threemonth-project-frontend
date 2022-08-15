@@ -80,12 +80,12 @@ const CakeListItems = styled.ul`
   padding: 20px 0px;
   width: 100%;
   overflow: hidden;
-  cursor: pointer;
 `;
 const CakeListItem = styled.li`
   text-align: center;
   margin-right: 35px;
   margin-top: 25px;
+  cursor: pointer;
   @media screen and (max-width: 400px) {
     margin-right: 0px;
   }
