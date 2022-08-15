@@ -12,7 +12,7 @@ import Footer from "./components/Footer";
 import FormEdit from "./Pages/Form/FormEdit/FormEdit";
 import ReserveForm from "./Pages/Form/FormInput/ReserveForm";
 import LoginPage from "./Pages/Login/LoginPage";
-import Terms from "./components/Terms";
+import Terms from "./Pages/Terms/Terms";
 
 function Router() {
   return (
