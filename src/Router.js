@@ -16,6 +16,9 @@ import HomePageTerms from "./Pages/Terms/HomepageTerms";
 import Privacy from "./Pages/Terms/Privacy";
 import QnA from "./Pages/QnA/QnA";
 import Notice from "./Pages/Notice/Notice";
+import NoticeList from "./Pages/Notice/NoticeList/NoticeList";
+import NoticeInput from "./Pages/Notice/NoticeInput/NoticeInput";
+import NoticeEdit from "./Pages/Notice/NoticeEdit/NoticeEdit";
 
 function Router() {
   return (
@@ -38,7 +41,10 @@ function Router() {
         <Route path="/terms" element={<HomePageTerms />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/qna" element={<QnA />} />
-        <Route path="/notice" element={<Notice />} />
+        <Route path="/noticelist" element={<NoticeList />} />
+        <Route path="/notice/:noticeId" element={<Notice />} />
+        <Route path="/noticeinput" element={<NoticeInput />} />
+        <Route path="/noticeedit" element={<NoticeEdit />} />
       </Routes>
       <Footer />
     </BrowserRouter>
