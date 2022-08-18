@@ -51,10 +51,10 @@ const Nav = () => {
                 navigate("loginpage");
               }}
             >
-              login
+              로그인
             </Menu>
           )}
-          {USER_TOKEN && <Menu onClick={goLogout}>Logout</Menu>}
+          {USER_TOKEN && <Menu onClick={goLogout}>로그아웃</Menu>}
         </NavMenu>
       </Wrapper>
     </NavContainer>

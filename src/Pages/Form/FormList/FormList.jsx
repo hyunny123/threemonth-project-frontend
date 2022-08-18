@@ -47,7 +47,7 @@ const FormList = () => {
   return (
     <FormListWrapper>
       <FormListWidth>
-        <FormListTitle>뜨리먼뜨 Form</FormListTitle>
+        <FormListTitle>주문서 목록</FormListTitle>
         <FormListBox sortedList={sortedList} />
         <ReserveBtnWrap>
           <ReserveBtn
