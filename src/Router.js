@@ -14,6 +14,8 @@ import ReserveForm from "./Pages/Form/FormInput/ReserveForm";
 import LoginPage from "./Pages/Login/LoginPage";
 import HomePageTerms from "./Pages/Terms/HomepageTerms";
 import Privacy from "./Pages/Terms/Privacy";
+import QnA from "./Pages/QnA/QnA";
+import Notice from "./Pages/Notice/Notice";
 
 function Router() {
   return (
@@ -35,6 +37,8 @@ function Router() {
         <Route path="/formdetail/:formId/edit" element={<FormEdit />} />
         <Route path="/terms" element={<HomePageTerms />} />
         <Route path="/privacy" element={<Privacy />} />
+        <Route path="/qna" element={<QnA />} />
+        <Route path="/notice" element={<Notice />} />
       </Routes>
       <Footer />
     </BrowserRouter>
