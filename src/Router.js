@@ -16,6 +16,9 @@ import HomePageTerms from "./Pages/Terms/HomepageTerms";
 import Privacy from "./Pages/Terms/Privacy";
 import QnA from "./Pages/QnA/QnA";
 import Notice from "./Pages/Notice/Notice";
+import QnAList from "./Pages/QnA/QnAList/QnAList";
+import QnAEdit from "./Pages/QnA/QnAEdit/QnAEdit";
+import QnAInput from "./Pages/QnA/QnAInput/QnAInput";
 
 function Router() {
   return (
@@ -37,7 +40,10 @@ function Router() {
         <Route path="/formdetail/:formId/edit" element={<FormEdit />} />
         <Route path="/terms" element={<HomePageTerms />} />
         <Route path="/privacy" element={<Privacy />} />
-        <Route path="/qna" element={<QnA />} />
+        <Route path="/qna/:qnaId" element={<QnA />} />
+        <Route path="/qnalist" element={<QnAList />} />
+        <Route path="/qnainput" element={<QnAInput />} />
+        <Route path="/qnaedit" element={<QnAEdit />} />
         <Route path="/notice" element={<Notice />} />
       </Routes>
       <Footer />
