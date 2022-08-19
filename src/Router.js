@@ -19,6 +19,9 @@ import Notice from "./Pages/Notice/Notice";
 import QnAList from "./Pages/QnA/QnAList/QnAList";
 import QnAEdit from "./Pages/QnA/QnAEdit/QnAEdit";
 import QnAInput from "./Pages/QnA/QnAInput/QnAInput";
+import NoticeList from "./Pages/Notice/NoticeList/NoticeList";
+import NoticeInput from "./Pages/Notice/NoticeInput/NoticeInput";
+import NoticeEdit from "./Pages/Notice/NoticeEdit/NoticeEdit";
 
 function Router() {
   return (
@@ -44,7 +47,10 @@ function Router() {
         <Route path="/qnalist" element={<QnAList />} />
         <Route path="/qnainput" element={<QnAInput />} />
         <Route path="/qnaedit" element={<QnAEdit />} />
-        <Route path="/notice" element={<Notice />} />
+        <Route path="/noticelist" element={<NoticeList />} />
+        <Route path="/notice/:noticeId" element={<Notice />} />
+        <Route path="/noticeinput" element={<NoticeInput />} />
+        <Route path="/noticeedit" element={<NoticeEdit />} />
       </Routes>
       <Footer />
     </BrowserRouter>
