@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { useParams } from "react-router";
@@ -30,7 +31,7 @@ const CakeFormEdit = ({ editData }) => {
       [name]: value,
     });
   };
-  const { want_pick_up_date } = orderDetail;
+  const { count, product_id, want_pick_up_date } = orderDetail;
   const minDate = new Date(
     new Date().getTime() - new Date().getTimezoneOffset() * 60000
   )
@@ -40,51 +41,54 @@ const CakeFormEdit = ({ editData }) => {
     (new Date(want_pick_up_date).getTime() - new Date(minDate).getTime()) /
     (1000 * 3600 * 24);
 
+  const checkValue =
+    title &&
+    customer_name &&
+    additional_explanation &&
+    contact &&
+    count &&
+    want_pick_up_date &&
+    product_id;
+
+  const submitCakeEditData = {
+    title,
+    customer_name,
+    additional_explanation,
+    contact,
+    count,
+    want_pick_up_date,
+    product_id,
+    type: "cake",
+  };
+
   const cakeFormRequest = (e) => {
-    const { title, customer_name, type, additional_explanation, contact } =
-      cakeEditForm;
-    const { count, want_pick_up_date, product_id } = orderDetail;
-    const checkValue =
-      title &&
-      customer_name &&
-      type &&
-      additional_explanation &&
-      contact &&
-      count &&
-      want_pick_up_date &&
-      product_id;
     e.preventDefault();
     if (checkValue) {
       if (countDays > 1) {
         if (window.confirm("수정하시겠습니까?")) {
-          fetch(`${FORM_EDIT_PATCH}/${formId}`, {
-            method: "PATCH",
-            headers: {
-              Authorization: `Bearer ${USER_TOKEN}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              title,
-              customer_name,
-              type,
-              additional_explanation,
-              contact,
-              count,
-              want_pick_up_date,
-              product_id,
-            }),
-          }).then((res) => {
-            if (res.status === 200) {
-              navigate(`/formdetail/${formId}`, {
-                state: { checkValid: true },
-              });
-            } else {
-              alert("다시 시도해 주세요");
-              navigate(`/formdetail/${formId}/edit`, {
-                state: { checkValid: true },
-              });
-            }
-          });
+          axios
+            .patch(
+              `${FORM_EDIT_PATCH}/${formId}`,
+              { ...submitCakeEditData },
+              {
+                headers: {
+                  Authorization: `Bearer ${USER_TOKEN}`,
+                  "Content-Type": "application/json",
+                },
+              }
+            )
+            .then((res) => {
+              if (res.status === 200) {
+                navigate(`/formdetail/${formId}`, {
+                  state: { checkValue: true },
+                });
+              } else {
+                alert("다시 시도해 주세요");
+                navigate(`/formdetail/${formId}/edit`, {
+                  state: { checkValue: true },
+                });
+              }
+            });
         }
       } else {
         alert("신청일로부터 최소 2일 후 날짜부터 신청이 가능합니다.");
@@ -94,48 +98,32 @@ const CakeFormEdit = ({ editData }) => {
     }
   };
   const cakeFormStaffRequest = (e) => {
-    const { title, customer_name, type, additional_explanation, contact } =
-      cakeEditForm;
-    const { count, want_pick_up_date, product_id } = orderDetail;
-    const checkValue =
-      title &&
-      customer_name &&
-      type &&
-      additional_explanation &&
-      contact &&
-      count &&
-      want_pick_up_date &&
-      product_id;
     e.preventDefault();
     if (checkValue) {
       if (window.confirm("수정하시겠습니까?")) {
-        fetch(`${FORM_EDIT_PATCH}/${formId}`, {
-          method: "PATCH",
-          headers: {
-            Authorization: `Bearer ${USER_TOKEN}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            title,
-            customer_name,
-            type,
-            additional_explanation,
-            contact,
-            count,
-            want_pick_up_date,
-            product_id,
-            status: "confirmed",
-          }),
-        }).then((res) => {
-          if (res.status === 200) {
-            navigate(`/formdetail/${formId}`, {
-              state: { checkValid: true },
-            });
-          } else {
-            alert("다시 시도해 주세요");
-            navigate(`/formdetail/${formId}/edit`);
-          }
-        });
+        axios
+          .patch(
+            `${FORM_EDIT_PATCH}/${formId}`,
+            { ...submitCakeEditData, status: "confirmed" },
+            {
+              headers: {
+                Authorization: `Bearer ${USER_TOKEN}`,
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then((res) => {
+            if (res.status === 200) {
+              navigate(`/formdetail/${formId}`, {
+                state: { checkValue: true },
+              });
+            } else {
+              alert("다시 시도해 주세요");
+              navigate(`/formdetail/${formId}/edit`, {
+                state: { checkValue: true },
+              });
+            }
+          });
       }
     } else {
       alert("빈칸을 확인해 주세요");

@@ -3,32 +3,69 @@ import styled from "styled-components";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { USER_TOKEN } from "../../../config";
+import axios from "axios";
+import { useNavigate } from "react-router";
 
 const QnAInput = () => {
-  const [qnaInputValue, setQnaInputValue] = useState("");
+  const navigate = useNavigate();
+  const [qnaContentValue, setQnaContentValue] = useState("");
+  const [qnaTitleValue, setQnaTitleValue] = useState("");
+  const qnaTitleHandle = (e) => {
+    const { name, value } = e.target;
+    setQnaTitleValue({
+      ...qnaTitleValue,
+      [name]: value,
+    });
+  };
+  const qnaCheckValue = qnaContentValue !== "" && qnaTitleValue !== "";
   const QnASubmit = () => {
-    if (qnaInputValue === "") {
+    if (qnaCheckValue) {
       alert("내용을 입력해 주세요");
     } else {
-      fetch("", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${USER_TOKEN}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ qnaInputValue }),
-      }).then((res) => res.json());
+      // fetch("", {
+      //   method: "POST",
+      // //   headers: {
+      //     Authorization: `Bearer ${USER_TOKEN}`,
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({ qnaInputValue }),
+      // }).then((res) => res.json());
+      axios
+        .post(
+          "",
+          { qnaContentValue, qnaTitleValue },
+          {
+            headers: {
+              Authorization: `Bearer ${USER_TOKEN}`,
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          if (res.status === 201) {
+            navigate("/qnalist");
+          } else {
+            alert("다시 시도해 주세요.");
+          }
+        });
     }
   };
+
   return (
     <QnAInputWrap>
       <QnAInputWidth>
         <QnAInputTitle>QnA 작성하기</QnAInputTitle>
         <QnAInputContents>
+          <QnaTitleInput
+            placeholder="제목을 입력하세요"
+            name="title"
+            onChange={qnaTitleHandle}
+            type="text"
+          />
           <ReactQuill
             theme="snow"
-            value={qnaInputValue}
-            onChange={setQnaInputValue}
+            value={qnaContentValue}
+            onChange={setQnaContentValue}
             style={{ height: "400px" }}
           />
         </QnAInputContents>
@@ -58,6 +95,15 @@ const QnAInputTitle = styled.p`
   margin: 50px 0;
   font-size: 30px;
 `;
+const QnaTitleInput = styled.input`
+  border-style: none;
+  border: 1px solid #cccccc;
+  width: 100%;
+  height: 40px;
+  margin-bottom: 20px;
+  font-size: 1.2em;
+  font-family: ${({ theme }) => theme.fontFamily};
+`;
 const QnAInputContents = styled.div`
   min-height: 500px;
   width: 100%;
@@ -69,6 +115,7 @@ const QnAInputSubmitBtn = styled.button`
   border-radius: 10px;
   font-size: 20px;
   font-weight: bold;
+  margin-top: 30px;
   background-color: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
   font-family: ${({ theme }) => theme.fontFamily};

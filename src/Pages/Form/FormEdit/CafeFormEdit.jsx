@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useParams } from "react-router";
@@ -20,10 +21,12 @@ const CafeFormEdit = ({ editData }) => {
   ]);
 
   useEffect(() => {
-    fetch(`${CAFE_EDIT_GET}`)
-      .then((res) => res.json())
-      .then((data) => [...data].filter((x) => x.id !== 14))
-      .then((data) => setEditProductList(data));
+    axios.get(`${CAFE_EDIT_GET}`).then((res) => {
+      if (res.status === 200) {
+        const { data } = res;
+        setEditProductList([...data].filter((x) => x.id !== 14));
+      }
+    });
   }, [CAFE_EDIT_GET]);
 
   const { title, cafeorders, contact, additional_explanation, customer_name } =
@@ -45,124 +48,95 @@ const CafeFormEdit = ({ editData }) => {
       [name]: value,
     });
   };
+  const {
+    cafename,
+    cafe_owner_name,
+    corporate_registration_num,
+    product_explanation,
+    cafe_location,
+  } = cafeOrders;
+
+  const checkValue =
+    title &&
+    additional_explanation &&
+    contact &&
+    customer_name &&
+    cafename &&
+    cafe_owner_name &&
+    corporate_registration_num &&
+    product_explanation &&
+    cafe_location;
+  const submitCafeEditData = {
+    title,
+    cafename,
+    corporate_registration_num,
+    cafe_owner_name,
+    customer_name,
+    cafe_location,
+    product_explanation,
+    additional_explanation,
+    type: "cafe",
+    contact,
+  };
   const cafeFormRequest = (e) => {
-    const { title, additional_explanation, type, contact, customer_name } =
-      cafeEditList;
-    const {
-      cafename,
-      cafe_owner_name,
-      corporate_registration_num,
-      product_explanation,
-      cafe_location,
-    } = cafeOrders;
-
-    const checkValue =
-      title &&
-      additional_explanation &&
-      type &&
-      contact &&
-      customer_name &&
-      cafename &&
-      cafe_owner_name &&
-      corporate_registration_num &&
-      product_explanation &&
-      cafe_location;
-
     e.preventDefault();
     if (checkValue) {
       if (window.confirm("수정하시겠습니까?")) {
-        fetch(`${FORM_EDIT_PATCH}/${formId}`, {
-          method: "PATCH",
-          headers: {
-            Authorization: `Bearer ${USER_TOKEN}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            title,
-            cafename,
-            corporate_registration_num,
-            cafe_owner_name,
-            customer_name,
-            cafe_location,
-            product_explanation,
-            additional_explanation,
-            type,
-            contact,
-          }),
-        }).then((res) => {
-          if (res.status === 200) {
-            navigate(`/formdetail/${formId}`, {
-              state: { checkValid: true },
-            });
-          } else {
-            alert("다시 시도해 주세요");
-            navigate(`/formdetail/${formId}/edit`, {
-              state: { checkValid: true },
-            });
-          }
-        });
+        axios
+          .patch(
+            `${FORM_EDIT_PATCH}/${formId}`,
+            { ...submitCafeEditData },
+            {
+              headers: {
+                Authorization: `Bearer ${USER_TOKEN}`,
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then((res) => {
+            if (res.status === 200) {
+              navigate(`/formdetail/${formId}`, {
+                state: { checkValue: true },
+              });
+            } else {
+              alert("다시 시도해 주세요");
+              navigate(`/formdetail/${formId}/edit`, {
+                state: { checkValue: true },
+              });
+            }
+          });
       }
     } else {
       alert("빈칸을 확인해 주세요");
     }
   };
   const cafeFormStaffRequest = (e) => {
-    const { title, additional_explanation, type, contact, customer_name } =
-      cafeEditList;
-    const {
-      cafename,
-      cafe_owner_name,
-      corporate_registration_num,
-      product_explanation,
-      cafe_location,
-    } = cafeOrders;
-
-    const checkValue =
-      title &&
-      additional_explanation &&
-      type &&
-      contact &&
-      customer_name &&
-      cafename &&
-      cafe_owner_name &&
-      corporate_registration_num &&
-      product_explanation &&
-      cafe_location;
-
     e.preventDefault();
     if (checkValue) {
       if (window.confirm("수정하시겠습니까?")) {
-        fetch(`${FORM_EDIT_PATCH}/${formId}`, {
-          method: "PATCH",
-          headers: {
-            Authorization: `Bearer ${USER_TOKEN}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            title,
-            cafename,
-            corporate_registration_num,
-            cafe_owner_name,
-            customer_name,
-            cafe_location,
-            product_explanation,
-            additional_explanation,
-            type,
-            contact,
-            status: "confirmed",
-          }),
-        }).then((res) => {
-          if (res.status === 200) {
-            navigate(`/formdetail/${formId}`, {
-              state: { checkValid: true },
-            });
-          } else {
-            alert("다시 시도해 주세요");
-            navigate(`/formdetail/${formId}/edit`, {
-              state: { checkValid: true },
-            });
-          }
-        });
+        axios
+          .patch(
+            `${FORM_EDIT_PATCH}/${formId}`,
+            { ...submitCafeEditData, status: "confirmed" },
+            {
+              headers: {
+                Authorization: `Bearer ${USER_TOKEN}`,
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then((res) => {
+            if (res.status === 200) {
+              navigate(`/formdetail/${formId}`, {
+                state: { checkValue: true },
+              });
+            } else {
+              alert("다시 시도해 주세요");
+              navigate(`/formdetail/${formId}/edit`, {
+                state: { checkValue: true },
+              });
+            }
+          });
       }
     } else {
       alert("빈칸을 확인해 주세요");

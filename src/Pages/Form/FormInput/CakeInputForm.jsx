@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { USER_TOKEN, API } from "../../../config";
 import Loading from "../../../components/Loading";
+import axios from "axios";
 
 const CakeInputForm = () => {
   const navigate = useNavigate();
@@ -28,7 +29,6 @@ const CakeInputForm = () => {
     product_id,
     count,
     additional_explanation,
-    type,
   } = cakeForm;
 
   useEffect(() => {
@@ -68,36 +68,42 @@ const CakeInputForm = () => {
     count &&
     additional_explanation;
 
+  const submitCakeData = {
+    title,
+    customer_name,
+    contact,
+    want_pick_up_date,
+    product_id,
+    count,
+    additional_explanation,
+    type: "cake",
+  };
+
   const cakeFormRequest = (e) => {
     e.preventDefault();
     if (checkValueData) {
       if (countDays > 1) {
         if (count > 0) {
           if (window.confirm(`${inputConfirmCheck}`)) {
-            fetch(`${POST_INPUT_FORM}`, {
-              method: "POST",
-              headers: {
-                Authorization: `Bearer ${USER_TOKEN}`,
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                title,
-                customer_name,
-                contact,
-                want_pick_up_date,
-                product_id,
-                count,
-                additional_explanation,
-                type,
-              }),
-            }).then((res) => {
-              if (res.status === 201) {
-                alert("신청이 완료되었습니다.");
-                navigate("/formlist");
-              } else {
-                alert("다시 시도해 주세요. 문제가 지속될 경우 연락바랍니다.");
-              }
-            });
+            axios
+              .post(
+                `${POST_INPUT_FORM}`,
+                { ...submitCakeData },
+                {
+                  headers: {
+                    Authorization: `Bearer ${USER_TOKEN}`,
+                    "Content-Type": "application/json",
+                  },
+                }
+              )
+              .then((res) => {
+                if (res.status === 201) {
+                  alert("신청이 완료되었습니다.");
+                  navigate("/formlist");
+                } else {
+                  alert("다시 시도해 주세요. 문제가 지속될 경우 연락바랍니다.");
+                }
+              });
           }
         } else {
           alert("최소 1개 이상 수량을 입력해 주세요");
