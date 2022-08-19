@@ -9,7 +9,7 @@ const ListNoContents = () => {
   return (
     <FormListWrapper>
       <FormListWidth>
-        <FormListTitle>뜨리먼뜨 Form</FormListTitle>
+        <FormListTitle>주문서 목록</FormListTitle>
         <ListBox>
           <ListBoxMenu>
             <MenuNum>글 번호</MenuNum>

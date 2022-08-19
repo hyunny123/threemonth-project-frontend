@@ -12,7 +12,13 @@ import Footer from "./components/Footer";
 import FormEdit from "./Pages/Form/FormEdit/FormEdit";
 import ReserveForm from "./Pages/Form/FormInput/ReserveForm";
 import LoginPage from "./Pages/Login/LoginPage";
-import Terms from "./Pages/Terms/Terms";
+import HomePageTerms from "./Pages/Terms/HomepageTerms";
+import Privacy from "./Pages/Terms/Privacy";
+import QnA from "./Pages/QnA/QnA";
+import Notice from "./Pages/Notice/Notice";
+import NoticeList from "./Pages/Notice/NoticeList/NoticeList";
+import NoticeInput from "./Pages/Notice/NoticeInput/NoticeInput";
+import NoticeEdit from "./Pages/Notice/NoticeEdit/NoticeEdit";
 
 function Router() {
   return (
@@ -32,7 +38,13 @@ function Router() {
         <Route path="/formdetail/:formId" element={<FormDetail />} />
         <Route path="/adminpage" element={<AdminPage />} />
         <Route path="/formdetail/:formId/edit" element={<FormEdit />} />
-        <Route path="/terms" element={<Terms />} />
+        <Route path="/terms" element={<HomePageTerms />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/qna" element={<QnA />} />
+        <Route path="/noticelist" element={<NoticeList />} />
+        <Route path="/notice/:noticeId" element={<Notice />} />
+        <Route path="/noticeinput" element={<NoticeInput />} />
+        <Route path="/noticeedit" element={<NoticeEdit />} />
       </Routes>
       <Footer />
     </BrowserRouter>

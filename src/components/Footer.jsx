@@ -73,14 +73,14 @@ const Footer = () => {
             <PrivacyWrap>
               <InfoPrivacy
                 onClick={() => {
-                  navigate("/terms", { state: { info: "privacy" } });
+                  navigate("/privacy");
                 }}
               >
                 개인정보처리방침
               </InfoPrivacy>
               <InfoPrivacy
                 onClick={() => {
-                  navigate("/terms", { state: { info: "terms" } });
+                  navigate("/terms");
                 }}
               >
                 홈페이지 이용약관
