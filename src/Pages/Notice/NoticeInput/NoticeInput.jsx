@@ -1,6 +1,8 @@
+import axios from "axios";
 import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { USER_TOKEN } from "../../../config";
 
@@ -37,35 +39,71 @@ const NoticeInput = () => {
     "color",
     "background",
   ];
-  const [InputData, setInputData] = useState("");
-  // console.log(InputData);
+  const navigate = useNavigate();
+  const [inputTitle, setInputTitle] = useState("");
+  const [inputData, setInputData] = useState("");
+
+  const inputTitlehandler = (e) => {
+    const { name, value } = e.target;
+    setInputTitle({ ...inputTitle, [name]: value });
+  };
+
   const noticeSubmitBtn = () => {
-    fetch("", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${USER_TOKEN}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        InputData,
-      }),
-    }).then((res) => res.json());
+    axios
+      .post(
+        `url`,
+        {
+          inputData,
+          inputTitle,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${USER_TOKEN}`,
+            "Content-Type": "application/json;charset=UTF-8",
+          },
+        }
+      )
+      .then((res) => {
+        if (res.status === 201) {
+          navigate("/noticelist");
+        }
+      });
+
+    // fetch("", {
+    //   method: "POST",
+    //   headers: {
+    //     Authorization: `Bearer ${USER_TOKEN}`,
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     inputData,
+    //   }),
+    // }).then((res) => res.json());
     // .then((res)=>console.log(res));
   };
+
   return (
     <NoticeInputContainer>
       <NoticeInputWrapper>
         <NoticeInputTitle>공지사항 입력폼</NoticeInputTitle>
         <ReactQuillWrapper>
+          <InputTitle
+            type="text"
+            onChange={inputTitlehandler}
+            name="noticetitle"
+            placeholder="제목을 입력하세요."
+          />
+
           <ReactQuill
             style={{ height: "400px" }}
-            value={InputData}
+            value={inputData}
             theme="snow"
             modules={modules}
             formats={formats}
             onChange={setInputData}
           />
         </ReactQuillWrapper>
+        <input type="file" />
         <NoticeInputBtnWrapper>
           <NoticeInputBtn onClick={noticeSubmitBtn}>작성하기</NoticeInputBtn>
         </NoticeInputBtnWrapper>
@@ -97,6 +135,16 @@ const ReactQuillWrapper = styled.div`
   min-height: 500px;
 `;
 
+const InputTitle = styled.input`
+  border-style: none;
+  width: 100%;
+  height: 40px;
+  margin-bottom: 20px;
+  border: 1px solid #cccccc;
+  font-family: ${({ theme }) => theme.fontFamily};
+  font-size: 1.2em;
+`;
+
 const NoticeInputBtnWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -106,6 +154,7 @@ const NoticeInputBtnWrapper = styled.div`
 const NoticeInputBtn = styled.button`
   border-style: none;
   margin-left: 10px;
+  margin-top: 30px;
   width: 200px;
   height: 50px;
   border-radius: 5px;
