@@ -19,21 +19,13 @@ const QnAInput = () => {
   };
   const qnaCheckValue = qnaContentValue !== "" && qnaTitleValue !== "";
   const QnASubmit = () => {
-    if (qnaCheckValue) {
+    if (!qnaCheckValue) {
       alert("내용을 입력해 주세요");
     } else {
-      // fetch("", {
-      //   method: "POST",
-      // //   headers: {
-      //     Authorization: `Bearer ${USER_TOKEN}`,
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({ qnaInputValue }),
-      // }).then((res) => res.json());
       axios
         .post(
-          "",
-          { qnaContentValue, qnaTitleValue },
+          `http://15.164.163.31:8001/announcements/QnA`,
+          { content: qnaContentValue, title: qnaTitleValue.title },
           {
             headers: {
               Authorization: `Bearer ${USER_TOKEN}`,
