@@ -2,22 +2,30 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 const FAQ = ({ faqList }) => {
-  const [faqOpen, setFaqOpen] = useState(false);
+  const sortedFAQList = [...faqList].map((x) => {
+    return { ...x, is_open: false };
+  });
+  const [faqOpen, setFaqOpen] = useState(sortedFAQList);
+  const openHandle = (id) => {
+    const productIdx = faqOpen.findIndex((product) => product.id === id);
+    const newSortedList = [...faqOpen];
+    newSortedList[productIdx].is_open = !newSortedList[productIdx].is_open;
+    setFaqOpen(newSortedList);
+  };
   return (
     <FAQWrap>
       <FAQWidth>
         <FAQTitle>FAQ</FAQTitle>
-        {faqList.map((x, idx) => (
+        {faqOpen.map((x, idx) => (
           <FAQMap key={idx}>
             <FAQQuestion
-              faqOpen={faqOpen}
               onClick={() => {
-                setFaqOpen(!faqOpen);
+                openHandle(x.id);
               }}
             >
               {x.question}
             </FAQQuestion>
-            {faqOpen && <FAQAnswer>{x.answer}</FAQAnswer>}
+            {x.is_open && <FAQAnswer>{x.answer}</FAQAnswer>}
           </FAQMap>
         ))}
       </FAQWidth>
@@ -56,8 +64,6 @@ const FAQQuestion = styled.p`
   padding: 5px;
   box-sizing: border-box;
   font-size: 20px;
-  /* border-bottom: ${({ faqOpen }) =>
-    faqOpen ? "1px solid blue" : "none"}; */
   border-bottom: 1px solid ${({ theme }) => theme.fontColor};
   cursor: pointer;
 `;

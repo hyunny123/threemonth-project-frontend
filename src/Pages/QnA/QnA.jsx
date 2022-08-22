@@ -36,9 +36,8 @@ const QnA = () => {
     return <Loading />;
   }
   const QnADetailInput = () => {
-    const sortValue = content.replace(/\n/g, "<br>\n");
     return {
-      __html: sortValue,
+      __html: content.replace(/\n/g, "<br>\n"),
     };
   };
   const postComment = () => {

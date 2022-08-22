@@ -101,6 +101,7 @@ const QnaTitleInput = styled.input`
   padding-left: 20px;
   margin-bottom: 20px;
   font-size: 1.2em;
+  color: ${({ theme }) => theme.fontColor};
   font-family: ${({ theme }) => theme.fontFamily};
   &:focus {
     outline: none;
@@ -119,6 +120,7 @@ const QnAContentInput = styled.textarea`
   box-sizing: border-box;
   padding: 10px 20px;
   font-size: 1.2em;
+  color: ${({ theme }) => theme.fontColor};
   font-family: ${({ theme }) => theme.fontFamily};
   &:focus {
     outline: none;
