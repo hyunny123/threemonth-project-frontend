@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { USER_TOKEN, API } from "../../../config";
 import styled from "styled-components";
@@ -19,14 +20,13 @@ const FormDetail = () => {
   const { DETAIL_FORM } = API;
 
   useEffect(() => {
-    fetch(`${DETAIL_FORM}${params.formId}`, {
-      method: "get",
-      headers: {
-        Authorization: `Bearer ${USER_TOKEN}`,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
+    axios
+      .get(`${DETAIL_FORM}${params.formId}`, {
+        headers: {
+          Authorization: `Bearer ${USER_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+      })
       .then((res) => {
         if (
           res.code === "token_not_valid" ||
@@ -35,10 +35,33 @@ const FormDetail = () => {
           alert("권한이 없습니다.");
           navigate(-1);
         } else {
-          setDetailFormData(res);
+          setDetailFormData(res.data);
         }
       });
-  }, [params.formId, navigate, DETAIL_FORM]);
+  }, [DETAIL_FORM, navigate, params.formId]);
+
+  // useEffect(() => {
+  //   fetch(`${DETAIL_FORM}${params.formId}`, {
+  //     method: "get",
+  //     headers: {
+  //       Authorization: `Bearer ${USER_TOKEN}`,
+  //       "Content-Type": "application/json",
+  //     },
+  //   })
+  //     .then((res) => res.json())
+  //     .then((res) => {
+  //       if (
+  //         res.code === "token_not_valid" ||
+  //         res.detail === "You do not have permission to perform this action."
+  //       ) {
+  //         alert("권한이 없습니다.");
+  //         navigate(-1);
+  //       } else {
+  //         setDetailFormData(res);
+  //       }
+  //     });
+  // }, [params.formId, navigate, DETAIL_FORM]);
+
   if (location.state === null) {
     return <NotValidBtn />;
   }

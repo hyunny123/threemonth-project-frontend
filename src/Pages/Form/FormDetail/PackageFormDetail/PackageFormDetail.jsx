@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router";
 import { USER_TOKEN, API } from "../../../../config";
 import styled from "styled-components";
+import axios from "axios";
 
 const PackageFormDetail = ({ detailFormData }) => {
   const {
@@ -109,26 +110,26 @@ const PackageFormDetail = ({ detailFormData }) => {
             onClick={() => {
               if (status === "not_confirmed") {
                 if (window.confirm("삭제하시겠습니까?")) {
-                  fetch(`${DETAIL_FORM}${id}`, {
-                    method: "delete",
-                    headers: {
-                      Authorization: `Bearer ${USER_TOKEN}`,
-                      "Content-Type": "application/json;charset=UTF-8",
-                    },
-                  }).then((res) => {
-                    if (res.status === 204) {
-                      alert("삭제되었습니다.");
-                      navigate("/formlist");
-                    }
-                  });
+                  axios
+                    .delete(`${DETAIL_FORM}${id}`, {
+                      headers: {
+                        Authorization: `Bearer ${USER_TOKEN}`,
+                        "Content-Type": "application/json;charset=UTF-8",
+                      },
+                    })
+                    .then((res) => {
+                      if (status === 204) {
+                        alert("삭제되었습니다.");
+                        navigate("/formlist");
+                      }
+                    });
                 }
               } else {
                 if (is_staff) {
                   if (
                     window.confirm("컨펌 완료 상태입니다. 삭제하시겠습니까?")
                   ) {
-                    fetch(`${DETAIL_FORM}${id}`, {
-                      method: "delete",
+                    axios(`${DETAIL_FORM}${id}`, {
                       headers: {
                         Authorization: `Bearer ${USER_TOKEN}`,
                         "Content-Type": "application/json;charset=UTF-8",

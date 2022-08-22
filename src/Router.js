@@ -50,7 +50,7 @@ function Router() {
         <Route path="/noticelist" element={<NoticeList />} />
         <Route path="/notice/:noticeId" element={<Notice />} />
         <Route path="/noticeinput" element={<NoticeInput />} />
-        <Route path="/noticeedit" element={<NoticeEdit />} />
+        <Route path="/notice/:noticeId/edit" element={<NoticeEdit />} />
       </Routes>
       <Footer />
     </BrowserRouter>
