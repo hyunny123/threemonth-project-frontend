@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
 import Loading from "../../../components/Loading";
@@ -14,22 +15,14 @@ const FormEdit = () => {
   const [editData, setEditData] = useState({ id: 0, type: "cake" });
   const { GET_FORM_EDIT_DATA } = API;
   useEffect(() => {
-    fetch(`${GET_FORM_EDIT_DATA}/${formId}`, {
-      method: "get",
-      headers: {
-        Authorization: `Bearer ${USER_TOKEN}`,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.code === "token_not_valid") {
-          alert("권한이 없습니다");
-          navigate(-1);
-        } else {
-          setEditData(res);
-        }
-      });
+    axios
+      .get(`${GET_FORM_EDIT_DATA}/${formId}`, {
+        headers: {
+          Authorization: `Bearer ${USER_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => setEditData(res.data));
   }, [formId, navigate, GET_FORM_EDIT_DATA]);
 
   if (location.state === null) {

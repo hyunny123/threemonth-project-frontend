@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
@@ -23,9 +24,9 @@ const IndividualDetail = () => {
   const { ITEM_GET } = API;
 
   useEffect(() => {
-    fetch(`${ITEM_GET}/${productId}`)
-      .then((res) => res.json())
-      .then((data) => setIndividualData(data));
+    axios
+      .get(`${ITEM_GET}/${productId}`)
+      .then((res) => setIndividualData(res.data));
   }, [ITEM_GET, productId]);
 
   if (individualData.id === 0) {

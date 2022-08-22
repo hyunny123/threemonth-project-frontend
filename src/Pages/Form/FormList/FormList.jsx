@@ -5,6 +5,7 @@ import Loading from "../../../components/Loading";
 import ListNoContents from "./ListNoContents";
 import { useNavigate, useLocation } from "react-router";
 import { USER_TOKEN, API } from "../../../config";
+import axios from "axios";
 
 const FormList = () => {
   const navigate = useNavigate();
@@ -20,9 +21,7 @@ const FormList = () => {
   ]);
   const { FORM_LIST } = API;
   useEffect(() => {
-    fetch(`${FORM_LIST}`)
-      .then((res) => res.json())
-      .then((data) => setFormList(data));
+    axios.get(`${FORM_LIST}`).then((res) => setFormList(res.data));
   }, [FORM_LIST]);
 
   if (formList.length === 0) {

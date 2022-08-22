@@ -46,7 +46,7 @@ function Router() {
         <Route path="/qna/:qnaId" element={<QnA />} />
         <Route path="/qnalist" element={<QnAList />} />
         <Route path="/qnainput" element={<QnAInput />} />
-        <Route path="/qnaedit" element={<QnAEdit />} />
+        <Route path="/qna/:qnaId/edit" element={<QnAEdit />} />
         <Route path="/noticelist" element={<NoticeList />} />
         <Route path="/notice/:noticeId" element={<Notice />} />
         <Route path="/noticeinput" element={<NoticeInput />} />
