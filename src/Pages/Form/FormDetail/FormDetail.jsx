@@ -19,24 +19,26 @@ const FormDetail = () => {
   const location = useLocation();
   const { DETAIL_FORM } = API;
 
-  axios
-    .get(`${DETAIL_FORM}${params.formId}`, {
-      headers: {
-        Authorization: `Bearer ${USER_TOKEN}`,
-        "Content-Type": "application/json",
-      },
-    })
-    .then((res) => {
-      if (
-        res.code === "token_not_valid" ||
-        res.detail === "You do not have permission to perform this action."
-      ) {
-        alert("권한이 없습니다.");
-        navigate(-1);
-      } else {
-        setDetailFormData(res.data);
-      }
-    });
+  useEffect(() => {
+    axios
+      .get(`${DETAIL_FORM}${params.formId}`, {
+        headers: {
+          Authorization: `Bearer ${USER_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        if (
+          res.code === "token_not_valid" ||
+          res.detail === "You do not have permission to perform this action."
+        ) {
+          alert("권한이 없습니다.");
+          navigate(-1);
+        } else {
+          setDetailFormData(res.data);
+        }
+      });
+  }, [DETAIL_FORM, navigate, params.formId]);
 
   // useEffect(() => {
   //   fetch(`${DETAIL_FORM}${params.formId}`, {

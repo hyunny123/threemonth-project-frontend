@@ -1,51 +1,18 @@
 import axios from "axios";
 import React, { useState } from "react";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { USER_TOKEN } from "../../../config";
 
 const NoticeInput = () => {
-  const modules = {
-    toolbar: [
-      [{ header: [1, 2, false] }],
-      ["bold", "italic", "underline", "strike", "blockquote"],
-      [
-        { list: "ordered" },
-        { list: "bullet" },
-        { indent: "-1" },
-        { indent: "+1" },
-      ],
-      ["link", "image"],
-      [{ align: [] }, { color: [] }, { background: [] }], // dropdown with defaults from theme
-      ["clean"],
-    ],
-  };
-
-  const formats = [
-    "header",
-    "bold",
-    "italic",
-    "underline",
-    "strike",
-    "blockquote",
-    "list",
-    "bullet",
-    "indent",
-    "link",
-    "image",
-    "align",
-    "color",
-    "background",
-  ];
   const navigate = useNavigate();
-  const [inputTitle, setInputTitle] = useState("");
+  // const [inputTitle, setInputTitle] = useState("");
   const [inputData, setInputData] = useState("");
 
   const inputTitlehandler = (e) => {
     const { name, value } = e.target;
-    setInputTitle({ ...inputTitle, [name]: value });
+    setInputData({ ...inputData, [name]: value });
   };
 
   const noticeSubmitBtn = () => {
@@ -53,8 +20,9 @@ const NoticeInput = () => {
       .post(
         `url`,
         {
-          inputData,
-          inputTitle,
+          // title,
+          // content,
+          // img_src,
         },
         {
           headers: {
@@ -86,24 +54,26 @@ const NoticeInput = () => {
     <NoticeInputContainer>
       <NoticeInputWrapper>
         <NoticeInputTitle>공지사항 입력폼</NoticeInputTitle>
-        <ReactQuillWrapper>
+        <InputWrapper>
           <InputTitle
             type="text"
             onChange={inputTitlehandler}
             name="noticetitle"
             placeholder="제목을 입력하세요."
           />
-
-          <ReactQuill
-            style={{ height: "400px" }}
-            value={inputData}
-            theme="snow"
-            modules={modules}
-            formats={formats}
-            onChange={setInputData}
-          />
-        </ReactQuillWrapper>
-        <input type="file" />
+          <InputContentWrapper>
+            <InputContent
+              type="text"
+              name="noticeContent"
+              onChange={inputTitlehandler}
+              placeholder="내용을 입력해주세요."
+              wrap="hard"
+              rows="20"
+              cols="20"
+            />
+          </InputContentWrapper>
+        </InputWrapper>
+        <InputImage type="file" />
         <NoticeInputBtnWrapper>
           <NoticeInputBtn onClick={noticeSubmitBtn}>작성하기</NoticeInputBtn>
         </NoticeInputBtnWrapper>
@@ -131,7 +101,7 @@ const NoticeInputTitle = styled.h2`
   color: ${({ theme }) => theme.fontColor};
 `;
 
-const ReactQuillWrapper = styled.div`
+const InputWrapper = styled.div`
   min-height: 500px;
 `;
 
@@ -139,12 +109,40 @@ const InputTitle = styled.input`
   border-style: none;
   width: 100%;
   height: 40px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  padding-left: 20px;
+  box-sizing: border-box;
   border: 1px solid #cccccc;
   font-family: ${({ theme }) => theme.fontFamily};
+  color: ${({ theme }) => theme.fontColor};
   font-size: 1.2em;
+  &:focus {
+    outline: none;
+  }
 `;
 
+const InputContentWrapper = styled.div`
+  min-height: 400px;
+  border: 1px solid #cccccc;
+  width: 100%;
+`;
+
+const InputContent = styled.textarea`
+  border-style: none;
+  width: 100%;
+  height: 100%;
+  resize: none;
+  box-sizing: border-box;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  font-family: ${({ theme }) => theme.fontFamily};
+  color: ${({ theme }) => theme.fontColor};
+  &:focus {
+    outline: none;
+  }
+`;
+
+const InputImage = styled.input``;
 const NoticeInputBtnWrapper = styled.div`
   display: flex;
   justify-content: center;
