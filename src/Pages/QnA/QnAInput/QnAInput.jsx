@@ -1,45 +1,45 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
 import { USER_TOKEN } from "../../../config";
 import axios from "axios";
 import { useNavigate } from "react-router";
 
 const QnAInput = () => {
   const navigate = useNavigate();
-  const [qnaContentValue, setQnaContentValue] = useState("");
-  const [qnaTitleValue, setQnaTitleValue] = useState("");
+  const [qnaContentsValue, setQnaContentsValue] = useState("");
   const qnaTitleHandle = (e) => {
     const { name, value } = e.target;
-    setQnaTitleValue({
-      ...qnaTitleValue,
+    setQnaContentsValue({
+      ...qnaContentsValue,
       [name]: value,
     });
   };
-  const qnaCheckValue = qnaContentValue !== "" && qnaTitleValue !== "";
-  const QnASubmit = () => {
+  const { title, content } = qnaContentsValue;
+  const qnaCheckValue = title !== "" && content !== "";
+  const QnAPostSubmit = () => {
     if (!qnaCheckValue) {
       alert("내용을 입력해 주세요");
     } else {
-      axios
-        .post(
-          `http://15.164.163.31:8001/announcements/QnA`,
-          { content: qnaContentValue, title: qnaTitleValue.title },
-          {
-            headers: {
-              Authorization: `Bearer ${USER_TOKEN}`,
-              "Content-Type": "application/json",
-            },
-          }
-        )
-        .then((res) => {
-          if (res.status === 201) {
-            navigate("/qnalist");
-          } else {
-            alert("다시 시도해 주세요.");
-          }
-        });
+      if (window.confirm("작성 하시겠습니까?")) {
+        axios
+          .post(
+            `http://15.164.163.31:8001/announcements/QnA`,
+            { content, title },
+            {
+              headers: {
+                Authorization: `Bearer ${USER_TOKEN}`,
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then((res) => {
+            if (res.status === 201) {
+              navigate("/qnalist");
+            } else {
+              alert("다시 시도해 주세요.");
+            }
+          });
+      }
     }
   };
 
@@ -53,15 +53,20 @@ const QnAInput = () => {
             name="title"
             onChange={qnaTitleHandle}
             type="text"
+            maxLength="50"
           />
-          <ReactQuill
-            theme="snow"
-            value={qnaContentValue}
-            onChange={setQnaContentValue}
-            style={{ height: "400px" }}
-          />
+          <QnaContentInputDiv>
+            <QnAContentInput
+              name="content"
+              wrap="hard"
+              cols="20"
+              rows="20"
+              placeholder="내용을 입력하세요"
+              onChange={qnaTitleHandle}
+            />
+          </QnaContentInputDiv>
         </QnAInputContents>
-        <QnAInputSubmitBtn onClick={QnASubmit}>작성 하기</QnAInputSubmitBtn>
+        <QnAInputSubmitBtn onClick={QnAPostSubmit}>작성 하기</QnAInputSubmitBtn>
       </QnAInputWidth>
     </QnAInputWrap>
   );
@@ -92,9 +97,32 @@ const QnaTitleInput = styled.input`
   border: 1px solid #cccccc;
   width: 100%;
   height: 40px;
+  box-sizing: border-box;
+  padding-left: 20px;
   margin-bottom: 20px;
   font-size: 1.2em;
   font-family: ${({ theme }) => theme.fontFamily};
+  &:focus {
+    outline: none;
+  }
+`;
+const QnaContentInputDiv = styled.div`
+  min-height: 400px;
+  border: 1px solid #cccccc;
+  width: 100%;
+`;
+const QnAContentInput = styled.textarea`
+  border-style: none;
+  width: 100%;
+  height: 100%;
+  resize: none;
+  box-sizing: border-box;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  font-family: ${({ theme }) => theme.fontFamily};
+  &:focus {
+    outline: none;
+  }
 `;
 const QnAInputContents = styled.div`
   min-height: 500px;

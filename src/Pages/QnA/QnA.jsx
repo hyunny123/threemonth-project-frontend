@@ -6,18 +6,12 @@ import { USER_TOKEN } from "../../config";
 import Loading from "../../components/Loading";
 
 const QnA = () => {
-  const navigate = useNavigate();
-  const [qnaCommentValue, setQnaCommentValue] = useState("");
-  const qnaCommentHandle = (e) => {
-    const { name, value } = e.target;
-    setQnaCommentValue({ ...qnaCommentValue, [name]: value });
-  };
+  const { qnaId } = useParams();
   const [qnaDetail, setQnaDetail] = useState({
     id: 0,
     content: "",
     title: "",
   });
-  const { qnaId } = useParams();
   useEffect(() => {
     axios
       .get(`http://15.164.163.31:8001/announcements/QnA/${qnaId}`, {
@@ -28,14 +22,23 @@ const QnA = () => {
       })
       .then((res) => setQnaDetail(res.data));
   }, [qnaId]);
+  const navigate = useNavigate();
+  const [qnaCommentValue, setQnaCommentValue] = useState("");
+  const qnaCommentHandle = (e) => {
+    const { name, value } = e.target;
+    setQnaCommentValue({ ...qnaCommentValue, [name]: value });
+  };
   const { content, title, qna_comments } = qnaDetail;
-  const [qnaComment, setQnaComment] = useState(qna_comments);
+  // const [qnaCommentList, setQnaCommentList] = useState(qna_comments);
+  // console.log(qna_comments);
+  // console.log(qnaCommentList);
   if (qnaDetail.id === 0) {
     return <Loading />;
   }
   const QnADetailInput = () => {
+    const sortValue = content.replace(/\n/g, "<br>\n");
     return {
-      __html: content,
+      __html: sortValue,
     };
   };
   const postComment = () => {
@@ -51,39 +54,99 @@ const QnA = () => {
         }
       )
       .then((res) => {
-        console.log(res);
+        // console.log(res.data);
         if (res.status === 201) {
-          // setQnaComment([...qnaComment, res.data]);
+          // setQnaCommentList([qna_comments, res.data]);
           window.location.reload();
         }
       });
   };
-  console.log(qnaDetail);
   return (
     <QnADetailWrap>
       <QnADetailWidth>
         <QnADetailTitle>{title}</QnADetailTitle>
         <QnADetailContent dangerouslySetInnerHTML={QnADetailInput()} />
         <QnADetailBtnWrap>
-          <QnADetailEditBtn>수정</QnADetailEditBtn>
-          <QnADetailEditBtn>삭제</QnADetailEditBtn>
+          <QnADetailEditBtn
+            onClick={() => {
+              navigate(`/qna/${qnaId}/edit`, { state: { data: qnaDetail } });
+            }}
+          >
+            수정
+          </QnADetailEditBtn>
+          <QnADetailEditBtn
+            onClick={() => {
+              if (window.confirm("삭제하시겠습니까?")) {
+                axios
+                  .delete(
+                    `http://15.164.163.31:8001/announcements/QnA/${qnaId}`,
+                    {
+                      headers: {
+                        Authorization: `Bearer ${USER_TOKEN}`,
+                        "Content-Type": "application/json",
+                      },
+                    }
+                  )
+                  .then((res) => {
+                    if (res.status === 204) {
+                      alert("삭제되었습니다.");
+                      navigate("/qnalist");
+                    }
+                  });
+              }
+            }}
+          >
+            삭제
+          </QnADetailEditBtn>
         </QnADetailBtnWrap>
         <QnACommentWrap>
+          {qna_comments &&
+            qna_comments.map((x, idx) => (
+              <QnACommentContents key={idx}>
+                <QnACommentContent>{x.id}</QnACommentContent>
+                <QnACommentContent>{x.content}</QnACommentContent>
+                <QnACommentContent>
+                  {x.created_at.slice(0, 10)}
+                </QnACommentContent>
+                <QnACommentContent>
+                  <i
+                    className="fa-solid fa-trash-can"
+                    onClick={() => {
+                      if (window.confirm("삭제하시겠습니까?")) {
+                        axios
+                          .delete(
+                            `http://15.164.163.31:8001/announcements/QnA/${qnaId}/comments/${x.id}`,
+                            {
+                              headers: {
+                                Authorization: `Bearer ${USER_TOKEN}`,
+                                "Content-Type": "application/json",
+                              },
+                            }
+                          )
+                          .then((res) => {
+                            if (res.status === 204) {
+                              window.location.reload();
+                            }
+                          });
+                      }
+                    }}
+                  />
+                </QnACommentContent>
+              </QnACommentContents>
+            ))}
           <QnACommentInputWrap>
             <QnACommentInput
               name="comment"
               onChange={qnaCommentHandle}
               placeholder="댓글을 입력해 주세요"
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  postComment();
+                }
+              }}
             />
             <PostCommentBtn onClick={postComment}>댓글 입력</PostCommentBtn>
           </QnACommentInputWrap>
-          {qna_comments.map((x, idx) => (
-            <QnACommentContents key={idx}>
-              <QnACommentContent>{x.id}</QnACommentContent>
-              <QnACommentContent>{x.content}</QnACommentContent>
-              <QnACommentContent>{x.created_at.slice(0, 10)}</QnACommentContent>
-            </QnACommentContents>
-          ))}
         </QnACommentWrap>
       </QnADetailWidth>
     </QnADetailWrap>
@@ -118,7 +181,6 @@ const QnADetailBtnWrap = styled.div`
   justify-content: flex-end;
   box-sizing: border-box;
   padding: 30px 0;
-  /* border: 1px solid red; */
 `;
 const QnADetailEditBtn = styled.button`
   border-style: none;
@@ -126,6 +188,7 @@ const QnADetailEditBtn = styled.button`
   height: 50px;
   font-size: 18px;
   border-radius: 10px;
+  cursor: pointer;
   background-color: ${({ theme }) => theme.bgColor};
   font-family: ${({ theme }) => theme.fontFamily};
   &:nth-child(2) {
@@ -178,7 +241,7 @@ const QnACommentContents = styled.div`
   /* border: 1px solid red; */
   display: grid;
   grid-template-rows: 1fr;
-  grid-template-columns: 0.3fr 8fr 1fr;
+  grid-template-columns: 0.3fr 8fr 1fr 0.5fr;
   align-items: center;
   box-sizing: border-box;
   padding: 15px;
@@ -192,6 +255,13 @@ const QnACommentContent = styled.p`
   display: grid;
   &:nth-child(3) {
     justify-items: flex-end;
+  }
+  &:last-child {
+    justify-items: flex-end;
+  }
+  i {
+    font-size: 20px;
+    cursor: pointer;
   }
   @media (max-width: 500px) {
     &:nth-child(3) {
