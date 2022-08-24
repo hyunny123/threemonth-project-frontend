@@ -13,13 +13,19 @@ const QnAListBox = () => {
       title: "",
     },
   ]);
+  // console.log(typeof qnaList[0].created_at);
   useEffect(() => {
     axios
       .get("http://15.164.163.31:8001/announcements/QnA")
-      // .get("/data/qnadata.json")
-      // .then((res) => setQnaList(res.data.result));
+      .catch((error) => {
+        const { response } = error;
+        if (response.status === 403) {
+          alert("다시 시도해 주세요");
+          navigate(-1);
+        }
+      })
       .then((res) => setQnaList(res.data));
-  }, []);
+  }, [navigate]);
   const sortedQnAList = [...qnaList]
     .sort(function (a, b) {
       if (a.id > b.id) {
@@ -41,7 +47,7 @@ const QnAListBox = () => {
           <QnAContent>{list.id}</QnAContent>
           <QnAContent
             onClick={() => {
-              navigate(`/qna/${list.id}`);
+              navigate(`/qna/${list.id}`, { state: { qnaValidCheck: true } });
             }}
           >
             {list.title}
@@ -60,7 +66,7 @@ const QnAContentsDetailWrap = styled.div`
   grid-template-rows: 1fr;
   box-sizing: border-box;
   padding: 5px;
-  grid-template-columns: 0.5fr 3fr 1fr 1fr;
+  grid-template-columns: 0.5fr 3fr 0.7fr 0.7fr;
   place-items: center;
   margin-bottom: 5px;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};

@@ -89,7 +89,7 @@ const QnATitle = styled.p`
 const QnAMenuWrap = styled.div`
   display: grid;
   grid-template-rows: 1fr;
-  grid-template-columns: 0.5fr 3fr 1fr 1fr;
+  grid-template-columns: 0.5fr 3fr 0.7fr 0.7fr;
   place-items: center;
   box-sizing: border-box;
   padding-bottom: 15px;
