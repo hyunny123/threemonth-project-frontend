@@ -27,17 +27,17 @@ const FormDetail = () => {
           "Content-Type": "application/json",
         },
       })
-      .then((res) => {
-        if (
-          res.code === "token_not_valid" ||
-          res.detail === "You do not have permission to perform this action."
-        ) {
+      .catch((error) => {
+        const { response } = error;
+        if (response.status === 403) {
           alert("권한이 없습니다.");
           navigate(-1);
         } else {
-          setDetailFormData(res.data);
+          alert("다시 시도 부탁드립니다.");
+          navigate(-1);
         }
-      });
+      })
+      .then((res) => setDetailFormData(res.data));
   }, [DETAIL_FORM, navigate, params.formId]);
 
   // useEffect(() => {

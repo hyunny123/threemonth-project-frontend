@@ -1,20 +1,75 @@
+import axios from "axios";
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
+import { USER_TOKEN } from "../../../config";
 
 const NoticeEdit = () => {
-  const [noticeEditForm, setNoticeEditForm] = useState();
+  const [noticeEditForm, setNoticeEditForm] = useState("");
+  const navigate = useNavigate();
+
+  const noticeEditDatahandler = (e) => {
+    const { name, value } = e.target;
+    setNoticeEditForm({
+      ...noticeEditForm,
+      [name]: value,
+    });
+  };
+
+  const noticeEditSubmitBtn = () => {
+    // if (title != "" && content != "") {
+    //   axios
+    //     .patch(
+    //       `url`,
+    //       { title, content },
+    //       {
+    //         headers: {
+    //           Authrization: `Bearer ${USER_TOKEN}`,
+    //           "Content-Type": "application/json",
+    //         },
+    //       }
+    //     )
+    //     .then((res) => {
+    //       if (res.status === 200) {
+    //         alert("수정이 완료되었습니다.");
+    //         navigate(`/notice/${noticeId}`);
+    //       }
+    //     });
+    // } else {
+    //   alert("빈칸을 확인하세요.");
+    // }
+  };
 
   return (
     <NoticeDetailContainer>
       <NoticeDetailForm>
         <NoticeDetailFormTitle>공지사항 수정페이지</NoticeDetailFormTitle>
         <NoticeDetailInputWrapper>
-          <NoticeDetailTitle>8월 신제품 출시!</NoticeDetailTitle>
+          <NoticeDetailTitle
+            type="text"
+            onChange={noticeEditDatahandler}
+            // value={title}
+            name="noticetitle"
+            placeholder="제목을 입력하세요."
+          >
+            8월 신제품 출시!
+          </NoticeDetailTitle>
           <NoticeDetailDate>작성일자 : 2022.08.21</NoticeDetailDate>
-          <NoticeDetailContent>신제품이 나왔어요!!!!</NoticeDetailContent>
+          <NoticeDetailContent
+            type="text"
+            name="noticeContent"
+            onChange={noticeEditDatahandler}
+            // value={content}
+            placeholder="내용을 입력해주세요."
+            wrap="hard"
+            rows="20"
+            cols="20"
+          />
         </NoticeDetailInputWrapper>
         <NoticeDetailBtnWrap>
-          <NoticeDetailBtn>수정완료</NoticeDetailBtn>
+          <NoticeDetailBtn onClick={noticeEditSubmitBtn}>
+            수정완료
+          </NoticeDetailBtn>
         </NoticeDetailBtnWrap>
       </NoticeDetailForm>
     </NoticeDetailContainer>

@@ -14,7 +14,7 @@ const NoticeList = () => {
   //     id: 0,
   //     title: "",
   //     created_at: "",
-  //     description: "",
+  //     content: "",
   //   },
   // ]);
 

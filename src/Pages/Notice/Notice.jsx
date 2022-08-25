@@ -5,21 +5,26 @@ import styled from "styled-components";
 import { USER_TOKEN } from "../../config";
 import NoticeListNoContents from "./NoticeListNoContents";
 import Loading from "../../components/Loading";
+import NotValidBtn from "../../components/NotValidBtn";
 
 const Notice = () => {
-  const [noticeData, setNoticeData] = useState({});
-
-  const navigate = useNavigate();
-  const params = useParams();
+  // const [noticeDetailData, setNoticeDetailData] = useState({
+  //   id: 0,
+  //   title: "",
+  //   content: "",
+  // });
+  // const params = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
 
-  useEffect = () => {
-    axios.get(`url`).then((res) => {
-      if (res.status === 200) {
-        setNoticeData(res.data);
-      }
-    });
-  };
+  // const noticeEditHandler = (e) => {
+  //   const { name, value } = e.target;
+  //   setNoticeDetailData({ ...noticeDetailData, [name]: value });
+  // };
+
+  // useEffect = () => {
+  //   axios.get(`url${params.noticeId}`).then((res) => setNoticeDetailData(res.data));
+  // ,[]};
 
   // const noticeDetailInput = () => {
   //   const sortValue = content.replace(/\n/g, "<br>\n");
@@ -29,20 +34,34 @@ const Notice = () => {
   // };
 
   if (location.state === null) {
-    return <NoticeListNoContents />;
+    return <NotValidBtn />;
   }
 
-  if (noticeData.id === 0) {
-    return <Loading />;
-  }
+  // if (noticeData.id === 0) {
+  //   return <Loading />;
+  // }
   return (
     <NoticeDetailContainer>
       <NoticeDetailForm>
         <NoticeDetailFormTitle>공지사항 상세페이지</NoticeDetailFormTitle>
         <NoticeDetailInputWrapper>
-          <NoticeDetailTitle>8월 신제품 출시!</NoticeDetailTitle>
+          <NoticeDetailTitle
+            type="text"
+            // onChange={noticeEditHandler}
+            name="noticetitle"
+            placeholder="제목을 입력하세요."
+          />
+
           <NoticeDetailDate>작성일자 : 2022.08.21</NoticeDetailDate>
-          <NoticeDetailContent>
+          <NoticeDetailContent
+            type="text"
+            name="noticeContent"
+            // onChange={noticeEditHandler}
+            placeholder="내용을 입력해주세요."
+            wrap="hard"
+            rows="20"
+            cols="20"
+          >
             {/* dangerouslySetInnerHTML={noticeDetailInput} */}
             신제품이 나왔어요!!!!
           </NoticeDetailContent>
@@ -74,7 +93,7 @@ const Notice = () => {
           //   if (is_staff) {
           //     if (window.confirm("삭제하시겠습니까?")) {
           //       axios
-          //         .delete(`${DETAIL_FORM}${id}`, {
+          //         .delete(`${NOTICE_FORM}${id}`, {
           //           headers: {
           //             Authorization: `Bearer ${USER_TOKEN}`,
           //             "Content-Type": "application/json;charset=UTF-8",
@@ -83,7 +102,7 @@ const Notice = () => {
           //         .then((res) => {
           //           if (res.status === 204) {
           //             alert("삭제되었습니다.");
-          //             navigate("/formlist");
+          //             navigate("/noticelist");
           //           }
           //         });
           //     }
@@ -93,7 +112,7 @@ const Notice = () => {
           //         window.confirm("컨펌 완료 상태입니다. 삭제하시겠습니까?")
           //       ) {
           //         axios
-          //           .delete(`${DETAIL_FORM}${id}`, {
+          //           .delete(`${NOTICE_FORM}${id}`, {
           //             headers: {
           //               Authorization: `Bearer ${USER_TOKEN}`,
           //               "Content-Type": "application/json;charset=UTF-8",
@@ -102,7 +121,7 @@ const Notice = () => {
           //           .then((res) => {
           //             if (res.status === 204) {
           //               alert("삭제되었습니다.");
-          //               navigate("/formlist");
+          //               navigate("/noticelist");
           //             }
           //           });
           //       }

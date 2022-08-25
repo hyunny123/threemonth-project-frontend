@@ -6,37 +6,42 @@ import styled from "styled-components";
 import { USER_TOKEN } from "../../../config";
 
 const NoticeInput = () => {
-  const navigate = useNavigate();
-  // const [inputTitle, setInputTitle] = useState("");
   const [inputData, setInputData] = useState("");
+  const navigate = useNavigate();
 
-  const inputTitlehandler = (e) => {
+  const inputDatahandler = (e) => {
     const { name, value } = e.target;
     setInputData({ ...inputData, [name]: value });
   };
 
+  // const noticeCheckValue = title !== "" && content !== "";
   const noticeSubmitBtn = () => {
-    axios
-      .post(
-        `url`,
-        {
-          // title,
-          // content,
-          // img_src,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${USER_TOKEN}`,
-            "Content-Type": "application/json;charset=UTF-8",
-          },
-        }
-      )
-      .then((res) => {
-        if (res.status === 201) {
-          navigate("/noticelist");
-        }
-      });
-
+    // if (!noticeCheckValue) {
+    //   alert("내용을 입력해 주세요.");
+    // } else {
+    //   if (window.confirm("작성 하시겠습니까?")) {
+    //     axios
+    //       .post(
+    //         `url`,
+    //         {
+    //           // title,
+    //           // content,
+    //           // img_src,
+    //         },
+    //         {
+    //           headers: {
+    //             Authorization: `Bearer ${USER_TOKEN}`,
+    //             "Content-Type": "application/json;charset=UTF-8",
+    //           },
+    //         }
+    //       )
+    //       .then((res) => {
+    //         if (res.status === 201) {
+    //           navigate("/noticelist");
+    //         }
+    //       });
+    //   }
+    // }
     // fetch("", {
     //   method: "POST",
     //   headers: {
@@ -57,7 +62,7 @@ const NoticeInput = () => {
         <InputWrapper>
           <InputTitle
             type="text"
-            onChange={inputTitlehandler}
+            onChange={inputDatahandler}
             name="noticetitle"
             placeholder="제목을 입력하세요."
           />
@@ -65,7 +70,7 @@ const NoticeInput = () => {
             <InputContent
               type="text"
               name="noticeContent"
-              onChange={inputTitlehandler}
+              onChange={inputDatahandler}
               placeholder="내용을 입력해주세요."
               wrap="hard"
               rows="20"
@@ -73,7 +78,7 @@ const NoticeInput = () => {
             />
           </InputContentWrapper>
         </InputWrapper>
-        <InputImage type="file" />
+        <InputImage type="file" accept="image/*" onChange={inputDatahandler} />
         <NoticeInputBtnWrapper>
           <NoticeInputBtn onClick={noticeSubmitBtn}>작성하기</NoticeInputBtn>
         </NoticeInputBtnWrapper>

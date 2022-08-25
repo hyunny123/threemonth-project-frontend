@@ -60,7 +60,7 @@ const NoticeListBoxContainer = styled.div`
 `;
 
 const ListBox = styled.div`
-  width: 100%;
+  width: 85%;
   min-height: 400px;
   border-radius: 20px;
 `;
