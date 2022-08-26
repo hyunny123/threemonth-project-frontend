@@ -25,6 +25,7 @@ const IndividualDetail = () => {
   const [cakeCommentList, setCakeCommentList] = useState([
     { id: 0, content: "", order: 0 },
   ]);
+
   const params = useParams();
   const { productId } = params;
   const { ITEM_GET } = API;
@@ -42,7 +43,6 @@ const IndividualDetail = () => {
       .get(`http://15.164.163.31:8001/orders/reviews?type=cake`)
       .catch((error) => new Error(error.response))
       .then((res) => {
-        console.log(res.data);
         setCakeCommentList(res.data);
       });
   }, [ITEM_GET, productId, navigate]);
@@ -59,26 +59,24 @@ const IndividualDetail = () => {
       </IndividualDetailWidth>
       {category === "cake" && (
         <DetailCommentWrap>
-          <div style={{ marginBottom: "20px" }}>내돈 내산 솔직 리뷰들</div>
+          <DetailCommentTitle>Review</DetailCommentTitle>
           {cakeCommentList.map((x, idx) => (
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                height: "100px",
-                border: "1px solid red",
-              }}
-              key={idx}
-            >
-              <p style={{ marginRight: "40px", width: "50px" }}>
-                {x.user_nickname}님
-              </p>
-              <div>
-                <p>{x.content}</p>
+            <CakeCommentListWrap key={idx}>
+              <CakeCommentUserWrap>
+                <CakeCommentUserName>{x.user_nickname}님</CakeCommentUserName>
+                <CakeCommentTime>
+                  {String(x.created_at).slice(0, 10)}
+                </CakeCommentTime>
+              </CakeCommentUserWrap>
+              <CakeCommentContents>
+                <CakeCommentContent>{x.content}</CakeCommentContent>
                 {x.img_url && <TestImg src={x.img_url} alt="ReviewImage" />}
-              </div>
-            </div>
+              </CakeCommentContents>
+            </CakeCommentListWrap>
           ))}
+          <ReviewWriteNotice>
+            리뷰는 마이페이지에서 작성할 수 있습니다.
+          </ReviewWriteNotice>
         </DetailCommentWrap>
       )}
     </IndividualDetailWrapper>
@@ -125,10 +123,55 @@ const DetailCommentWrap = styled.div`
   border-radius: 10px;
   width: 85%;
   min-height: 100px;
-  background-color: ${({ theme }) => theme.bgColor};
+  background-color: #deb17a;
   font-family: ${({ theme }) => theme.fontFamily};
 `;
+const DetailCommentTitle = styled.p`
+  font-size: 30px;
+  margin-bottom: 50px;
+  color: ${({ theme }) => theme.fontColor};
+`;
+const CakeCommentListWrap = styled.div`
+  display: flex;
+  justify-items: center;
+  min-height: 100px;
+  margin-bottom: 40px;
+  box-sizing: border-box;
+  padding: 20px;
+  background-color: ${({ theme }) => theme.bgColor};
+  border-radius: 10px;
+  color: ${({ theme }) => theme.fontColor};
+`;
+const CakeCommentUserWrap = styled.div`
+  margin-right: 40px;
+  border-right: 1px solid black;
+  width: 200px;
+`;
+const CakeCommentUserName = styled.p`
+  color: ${({ theme }) => theme.fontColor};
+  margin-bottom: 10px;
+`;
+const CakeCommentTime = styled.p`
+  color: ${({ theme }) => theme.fontColor};
+`;
+const CakeCommentContents = styled.div`
+  width: 100%;
+`;
+const CakeCommentContent = styled.p`
+  width: 100%;
+  margin-bottom: 20px;
+  color: ${({ theme }) => theme.fontColor};
+`;
 const TestImg = styled.img`
-  width: 50px;
-  height: 50px;
+  width: 300px;
+`;
+const ReviewWriteNotice = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.bgColor};
+  color: ${({ theme }) => theme.fontColor};
 `;
