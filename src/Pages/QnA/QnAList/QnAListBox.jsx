@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
+import { API } from "../../../config";
 import QnANoList from "./QnANoList";
 
 const QnAListBox = () => {
@@ -13,10 +14,10 @@ const QnAListBox = () => {
       title: "",
     },
   ]);
-  // console.log(typeof qnaList[0].created_at);
+  const { QNA_LIST } = API;
   useEffect(() => {
     axios
-      .get("http://15.164.163.31:8001/announcements/QnA")
+      .get(`${QNA_LIST}`)
       .catch((error) => {
         const { response } = error;
         if (response.status === 403) {
@@ -25,7 +26,7 @@ const QnAListBox = () => {
         }
       })
       .then((res) => setQnaList(res.data));
-  }, [navigate]);
+  }, [navigate, QNA_LIST]);
   const sortedQnAList = [...qnaList]
     .sort(function (a, b) {
       if (a.id > b.id) {

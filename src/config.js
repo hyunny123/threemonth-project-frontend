@@ -34,4 +34,8 @@ export const API = {
 
   //formlist
   FORM_LIST: `${BASE_URL}/orders/`,
+
+  //qnaList
+  QNA_LIST: `${BASE_URL}/announcements/QnA`,
+  FAQ_LIST: `${BASE_URL}/announcements/FAQ`,
 };

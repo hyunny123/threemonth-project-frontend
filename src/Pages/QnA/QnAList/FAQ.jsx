@@ -71,6 +71,7 @@ const FAQQuestion = styled.p`
 `;
 const FAQAnswer = styled.p`
   padding: 5px;
+  width: 100%;
   box-sizing: border-box;
   padding: 10px 20px;
   border: 1.5px solid #d1c5b0;

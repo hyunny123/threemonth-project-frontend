@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useNavigate, useLocation, useParams } from "react-router";
 import NotValidBtn from "../../../components/NotValidBtn";
 import axios from "axios";
-import { USER_TOKEN } from "../../../config";
+import { API, USER_TOKEN } from "../../../config";
 import Loading from "../../../components/Loading";
 
 const QnAEdit = () => {
@@ -14,11 +14,12 @@ const QnAEdit = () => {
     title: "",
     content: "",
   });
+  const { QNA_LIST } = API;
   const navigate = useNavigate();
   const { title, content } = qnaEditValue;
   useEffect(() => {
     axios
-      .get(`http://15.164.163.31:8001/announcements/QnA/${qnaId}`, {
+      .get(`${QNA_LIST}/${qnaId}`, {
         headers: {
           Authorization: `Bearer ${USER_TOKEN}`,
           "Content-Type": "application/json",
@@ -32,7 +33,7 @@ const QnAEdit = () => {
         }
       })
       .then((res) => setQnaEditValue(res.data));
-  }, [qnaId, navigate]);
+  }, [qnaId, navigate, QNA_LIST]);
   if (location.state === null) {
     return <NotValidBtn />;
   }
@@ -53,7 +54,7 @@ const QnAEdit = () => {
       if (window.confirm("수정하시겠습니까?")) {
         axios
           .patch(
-            `http://15.164.163.31:8001/announcements/QnA/${qnaId}`,
+            `${QNA_LIST}/${qnaId}`,
             { title, content },
             {
               headers: {

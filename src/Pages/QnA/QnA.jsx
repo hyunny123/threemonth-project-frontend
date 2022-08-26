@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useLocation, useNavigate, useParams } from "react-router";
-import { USER_TOKEN } from "../../config";
+import { API, USER_TOKEN } from "../../config";
 import Loading from "../../components/Loading";
 import NotValidBtn from "../../components/NotValidBtn";
 
@@ -15,9 +15,10 @@ const QnA = () => {
     content: "",
     title: "",
   });
+  const { QNA_LIST } = API;
   useEffect(() => {
     axios
-      .get(`http://15.164.163.31:8001/announcements/QnA/${qnaId}`, {
+      .get(`${QNA_LIST}/${qnaId}`, {
         headers: {
           Authorization: `Bearer ${USER_TOKEN}`,
           "Content-Type": "application/json",
@@ -33,11 +34,8 @@ const QnA = () => {
           navigate(-1);
         }
       })
-      .then((res) => {
-        console.log(res.data.qna_comments);
-        setQnaDetail(res.data);
-      });
-  }, [qnaId, navigate]);
+      .then((res) => setQnaDetail(res.data));
+  }, [qnaId, navigate, QNA_LIST]);
 
   const [qnaCommentValue, setQnaCommentValue] = useState("");
   const qnaCommentHandle = (e) => {
@@ -63,7 +61,7 @@ const QnA = () => {
   const postComment = () => {
     axios
       .post(
-        `http://15.164.163.31:8001/announcements/QnA/${qnaId}/comments`,
+        `${QNA_LIST}/${qnaId}/comments`,
         { content: qnaCommentValue },
         {
           headers: {
@@ -73,18 +71,15 @@ const QnA = () => {
         }
       )
       .catch((error) => {
-        alert(`${error.response.toString()}, 다시 시도해 주세요`);
+        alert(
+          `error_code: ${error.response.status.toString()}, 다시 시도해 주세요`
+        );
       })
-      .then(
-        // (res) => {
-        // if (res.status === 201) {
-        window.location.reload()
-        // setQnaCommentList([...qna_comments, res.data]);
-        // setQnaCommentValue("");
-        // document.getElementById("commentInput").value = null;
-        // }
-        // }
-      );
+      .then((res) => {
+        const { status } = res;
+        alert(`${status}, 댓글이 등록되었습니다.`);
+        window.location.reload();
+      });
   };
   return (
     <QnADetailWrap>
@@ -103,15 +98,12 @@ const QnA = () => {
             onClick={() => {
               if (window.confirm("삭제하시겠습니까?")) {
                 axios
-                  .delete(
-                    `http://15.164.163.31:8001/announcements/QnA/${qnaId}`,
-                    {
-                      headers: {
-                        Authorization: `Bearer ${USER_TOKEN}`,
-                        "Content-Type": "application/json",
-                      },
-                    }
-                  )
+                  .delete(`${QNA_LIST}/${qnaId}`, {
+                    headers: {
+                      Authorization: `Bearer ${USER_TOKEN}`,
+                      "Content-Type": "application/json",
+                    },
+                  })
                   .then((res) => {
                     if (res.status === 204) {
                       alert("삭제되었습니다.");
@@ -128,7 +120,7 @@ const QnA = () => {
           {qnaCommentList &&
             qnaCommentList.map((x, idx) => (
               <QnACommentContents key={idx}>
-                <QnACommentContent>{x.id}</QnACommentContent>
+                <QnACommentContent>{x.user_nickname}님</QnACommentContent>
                 <QnACommentContent>{x.content}</QnACommentContent>
                 <QnACommentContent>
                   {x.created_at.slice(0, 10)}
@@ -139,15 +131,12 @@ const QnA = () => {
                     onClick={() => {
                       if (window.confirm("삭제하시겠습니까?")) {
                         axios
-                          .delete(
-                            `http://15.164.163.31:8001/announcements/QnA/${qnaId}/comments/${x.id}`,
-                            {
-                              headers: {
-                                Authorization: `Bearer ${USER_TOKEN}`,
-                                "Content-Type": "application/json",
-                              },
-                            }
-                          )
+                          .delete(`${QNA_LIST}/${qnaId}/comments/${x.id}`, {
+                            headers: {
+                              Authorization: `Bearer ${USER_TOKEN}`,
+                              "Content-Type": "application/json",
+                            },
+                          })
                           .then((res) => {
                             if (res.status === 204) {
                               window.location.reload();
