@@ -23,9 +23,9 @@ const FAQ = ({ faqList }) => {
                 openHandle(x.id);
               }}
             >
-              {x.question}
+              Q: {x.question}
             </FAQQuestion>
-            {x.is_open && <FAQAnswer>{x.answer}</FAQAnswer>}
+            {x.is_open && <FAQAnswer>A: {x.answer}</FAQAnswer>}
           </FAQMap>
         ))}
       </FAQWidth>
@@ -57,17 +57,24 @@ const FAQMap = styled.div`
   width: 100%;
   min-height: 40px;
   box-sizing: border-box;
-  padding: 15px;
-  /* border: 1px solid black; */
+  margin-bottom: 5px;
 `;
 const FAQQuestion = styled.p`
   padding: 5px;
   box-sizing: border-box;
+  padding: 20px;
+  border-radius: 10px;
   font-size: 20px;
-  border-bottom: 1px solid ${({ theme }) => theme.fontColor};
+  border: 1.5px solid ${({ theme }) => theme.bgColor};
   cursor: pointer;
+  margin-bottom: 5px;
 `;
 const FAQAnswer = styled.p`
   padding: 5px;
+  width: 100%;
   box-sizing: border-box;
+  padding: 10px 20px;
+  border: 1.5px solid #d1c5b0;
+  border-radius: 10px;
+  margin-bottom: 20px;
 `;

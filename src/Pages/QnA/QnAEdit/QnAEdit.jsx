@@ -1,18 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate, useLocation, useParams } from "react-router";
 import NotValidBtn from "../../../components/NotValidBtn";
 import axios from "axios";
-import { USER_TOKEN } from "../../../config";
+import { API, USER_TOKEN } from "../../../config";
+import Loading from "../../../components/Loading";
 
 const QnAEdit = () => {
   const location = useLocation();
   const { qnaId } = useParams();
-  const [qnaEditValue, setQnaEditValue] = useState(location.state.data);
+  const [qnaEditValue, setQnaEditValue] = useState({
+    id: 0,
+    title: "",
+    content: "",
+  });
+  const { QNA_LIST } = API;
   const navigate = useNavigate();
   const { title, content } = qnaEditValue;
-  if (!location.state.data) {
+  useEffect(() => {
+    axios
+      .get(`${QNA_LIST}/${qnaId}`, {
+        headers: {
+          Authorization: `Bearer ${USER_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .catch((error) => {
+        const { response } = error;
+        if (response.status === 403) {
+          alert("다시 시도해 주세요");
+          navigate(-1);
+        }
+      })
+      .then((res) => setQnaEditValue(res.data));
+  }, [qnaId, navigate, QNA_LIST]);
+  if (location.state === null) {
     return <NotValidBtn />;
+  }
+  if (qnaEditValue.id === 0) {
+    return <Loading />;
   }
 
   const qnaTitleEditHandle = (e) => {
@@ -25,23 +51,31 @@ const QnAEdit = () => {
   const qnaCheckValue = content !== "" && title !== "";
   const qnAEditSubmit = () => {
     if (qnaCheckValue) {
-      axios
-        .patch(
-          `http://15.164.163.31:8001/announcements/QnA/${qnaId}`,
-          { title, content },
-          {
-            headers: {
-              Authorization: `Bearer ${USER_TOKEN}`,
-              "Content-Type": "application/json",
-            },
-          }
-        )
-        .then((res) => {
-          if (res.status === 200) {
-            alert("수정이 완료되었습니다.");
-            navigate(`/qna/${qnaId}`);
-          }
-        });
+      if (window.confirm("수정하시겠습니까?")) {
+        axios
+          .patch(
+            `${QNA_LIST}/${qnaId}`,
+            { title, content },
+            {
+              headers: {
+                Authorization: `Bearer ${USER_TOKEN}`,
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .catch((error) => {
+            const { response } = error;
+            if (response.status === 403) {
+              alert("다시 시도해 주세요");
+            }
+          })
+          .then((res) => {
+            if (res.status === 200) {
+              alert("수정이 완료되었습니다.");
+              navigate(`/qna/${qnaId}`, { state: { qnaValidCheck: true } });
+            }
+          });
+      }
     } else {
       alert("빈칸을 확인하세요");
     }
@@ -58,6 +92,7 @@ const QnAEdit = () => {
             value={title}
             onChange={qnaTitleEditHandle}
             type="text"
+            maxLength="50"
           />
           <QnaContentEditInputDiv>
             <QnaContentEditInput
