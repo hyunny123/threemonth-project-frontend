@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import styled from "styled-components";
 import Loading from "../../../components/Loading";
-import { USER_TOKEN } from "../../../config";
+import { API, USER_TOKEN } from "../../../config";
 import FnQ from "./FAQ";
 import QnAListBox from "./QnAListBox";
 
@@ -17,12 +17,11 @@ const QnAList = () => {
       awnser: "",
     },
   ]);
+  const { FAQ_LIST } = API;
 
   useEffect(() => {
-    axios
-      .get("http://15.164.163.31:8001/announcements/FAQ")
-      .then((res) => setFaqList(res.data));
-  }, []);
+    axios.get(`${FAQ_LIST}`).then((res) => setFaqList(res.data));
+  }, [FAQ_LIST]);
 
   if (faqList[0].id === 0) {
     return <Loading />;
@@ -89,7 +88,7 @@ const QnATitle = styled.p`
 const QnAMenuWrap = styled.div`
   display: grid;
   grid-template-rows: 1fr;
-  grid-template-columns: 0.5fr 3fr 1fr 1fr;
+  grid-template-columns: 0.5fr 3fr 0.7fr 0.7fr;
   place-items: center;
   box-sizing: border-box;
   padding-bottom: 15px;
