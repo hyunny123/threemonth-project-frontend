@@ -28,7 +28,7 @@ const IndividualDetail = () => {
 
   const params = useParams();
   const { productId } = params;
-  const { ITEM_GET } = API;
+  const { ITEM_GET, GET_CAKE_REVIEW } = API;
 
   useEffect(() => {
     axios
@@ -40,12 +40,12 @@ const IndividualDetail = () => {
       })
       .then((res) => setIndividualData(res.data));
     axios
-      .get(`http://15.164.163.31:8001/orders/reviews?type=cake`)
+      .get(`${GET_CAKE_REVIEW}`)
       .catch((error) => new Error(error.response))
       .then((res) => {
         setCakeCommentList(res.data);
       });
-  }, [ITEM_GET, productId, navigate]);
+  }, [ITEM_GET, productId, navigate, GET_CAKE_REVIEW]);
 
   if (individualData.id === 0) {
     return <Loading />;
