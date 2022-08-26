@@ -38,4 +38,10 @@ export const API = {
   //qnaList
   QNA_LIST: `${BASE_URL}/announcements/QnA`,
   FAQ_LIST: `${BASE_URL}/announcements/FAQ`,
+
+  // GET Cake Review
+  GET_CAKE_REVIEW: `${BASE_URL}/orders/reviews?type=cake`,
+
+  // GET Package Review
+  GET_PACKAGE_REVIEW: `${BASE_URL}/orders/reviews?type=package`,
 };
