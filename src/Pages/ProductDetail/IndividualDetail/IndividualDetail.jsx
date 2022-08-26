@@ -1,13 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import styled from "styled-components";
 import Loading from "../../../components/Loading";
-import { API, USER_TOKEN } from "../../../config";
+import { API } from "../../../config";
 import IndividualDetailAside from "./IndividualDetailAside";
 import IndividualDetailMain from "./IndividualDetailMain";
 
 const IndividualDetail = () => {
+  const navigate = useNavigate();
   const [individualData, setIndividualData] = useState({
     buying: false,
     description: null,
@@ -20,42 +21,35 @@ const IndividualDetail = () => {
     category: "bread",
   });
   const { category } = individualData;
-  const [detailComment, setDetailComment] = useState("");
+
+  const [cakeCommentList, setCakeCommentList] = useState([
+    { id: 0, content: "", order: 0 },
+  ]);
   const params = useParams();
   const { productId } = params;
   const { ITEM_GET } = API;
 
   useEffect(() => {
-    fetch(`${ITEM_GET}/${productId}`)
-      .then((res) => res.json())
-      .then((data) => setIndividualData(data));
-  }, [ITEM_GET, productId]);
+    axios
+      .get(`${ITEM_GET}/${productId}`)
+      .catch((error) => {
+        const { response } = error;
+        alert(`error: ${response.status}`);
+        navigate(-1);
+      })
+      .then((res) => setIndividualData(res.data));
+    axios
+      .get(`http://15.164.163.31:8001/orders/reviews?type=cake`)
+      .catch((error) => new Error(error.response))
+      .then((res) => {
+        console.log(res.data);
+        setCakeCommentList(res.data);
+      });
+  }, [ITEM_GET, productId, navigate]);
 
   if (individualData.id === 0) {
     return <Loading />;
   }
-  const detailCommentHandle = (e) => {
-    const { name, value } = e.target;
-    setDetailComment({ ...detailComment, [name]: value });
-  };
-  const postDetailComment = () => {
-    axios
-      .post(
-        // `http://15.164.163.31:8001/products/${productId}/comments`,
-        { content: detailComment.comment },
-        {
-          headers: {
-            Authorization: `Bearer ${USER_TOKEN}`,
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((res) => {
-        if (res.status === 201) {
-          window.location.reload();
-        }
-      });
-  };
 
   return (
     <IndividualDetailWrapper>
@@ -65,21 +59,26 @@ const IndividualDetail = () => {
       </IndividualDetailWidth>
       {category === "cake" && (
         <DetailCommentWrap>
-          <IndividualDetailInputWrap>
-            <IndividualDetailCommentInput
-              name="comment"
-              onChange={detailCommentHandle}
-              placeholder="댓글을 입력해 주세요"
-              onKeyPress={(e) => {
-                if (e.key === "Enter") {
-                  postDetailComment();
-                }
+          <div style={{ marginBottom: "20px" }}>내돈 내산 솔직 리뷰들</div>
+          {cakeCommentList.map((x, idx) => (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                height: "100px",
+                border: "1px solid red",
               }}
-            />
-            <PostDetailCommentBtn onClick={postDetailComment}>
-              댓글 입력
-            </PostDetailCommentBtn>
-          </IndividualDetailInputWrap>
+              key={idx}
+            >
+              <p style={{ marginRight: "40px", width: "50px" }}>
+                {x.user_nickname}님
+              </p>
+              <div>
+                <p>{x.content}</p>
+                {x.img_url && <TestImg src={x.img_url} alt="ReviewImage" />}
+              </div>
+            </div>
+          ))}
         </DetailCommentWrap>
       )}
     </IndividualDetailWrapper>
@@ -129,33 +128,7 @@ const DetailCommentWrap = styled.div`
   background-color: ${({ theme }) => theme.bgColor};
   font-family: ${({ theme }) => theme.fontFamily};
 `;
-const IndividualDetailInputWrap = styled.div`
-  display: grid;
-  grid-template-rows: 50px;
-  grid-template-columns: 8fr 1fr;
-  place-items: center;
-  margin-bottom: 20px;
-`;
-const IndividualDetailCommentInput = styled.input`
-  border-style: none;
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
-  font-size: 16px;
-  padding-left: 20px;
-  &:focus {
-    outline: none;
-  }
-  font-family: ${({ theme }) => theme.fontFamily};
-`;
-const PostDetailCommentBtn = styled.button`
-  border-style: none;
-  width: 70%;
-  height: 100%;
-  font-size: 16px;
-  border-radius: 10px;
-  background-color: ${({ theme }) => theme.bgColor};
-  border: 2px solid ${({ theme }) => theme.fontColor};
-  color: ${({ theme }) => theme.fontColor};
-  font-family: ${({ theme }) => theme.fontFamily};
+const TestImg = styled.img`
+  width: 50px;
+  height: 50px;
 `;
