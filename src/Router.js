@@ -22,6 +22,7 @@ import QnAInput from "./Pages/QnA/QnAInput/QnAInput";
 import NoticeList from "./Pages/Notice/NoticeList/NoticeList";
 import NoticeInput from "./Pages/Notice/NoticeInput/NoticeInput";
 import NoticeEdit from "./Pages/Notice/NoticeEdit/NoticeEdit";
+import MyPage from "./Pages/MyPage/MyPage";
 
 function Router() {
   return (
@@ -51,6 +52,7 @@ function Router() {
         <Route path="/notice/:noticeId" element={<Notice />} />
         <Route path="/noticeinput" element={<NoticeInput />} />
         <Route path="/notice/:noticeId/edit" element={<NoticeEdit />} />
+        <Route path="/mypage" element={<MyPage />} />
       </Routes>
       <Footer />
     </BrowserRouter>
