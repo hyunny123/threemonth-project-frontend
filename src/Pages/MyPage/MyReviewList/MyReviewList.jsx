@@ -111,7 +111,7 @@ const ListBox = styled.div`
 
 const ListBoxMenu = styled.div`
   display: grid;
-  grid-template-columns: 0.9fr 3fr 0.4fr;
+  grid-template-columns: 0.9fr 3fr 0.5fr;
   grid-template-rows: 30px;
   box-sizing: border-box;
   border-bottom: 4px solid ${(props) => props.theme.bgColor};
