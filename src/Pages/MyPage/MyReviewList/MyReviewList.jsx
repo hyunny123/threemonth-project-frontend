@@ -151,6 +151,9 @@ const MenuDate = styled(MenuNum)`
 const MenuIsReviewChecked = styled.div`
   display: flex;
   justify-content: center;
+  @media (max-width: 580px) {
+    font-size: 13px;
+  }
   @media (max-width: 450px) {
     display: none;
   }

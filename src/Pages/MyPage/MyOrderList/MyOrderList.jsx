@@ -18,14 +18,14 @@ const MyOrderList = ({ orderList }) => {
               <MenuDate>주문 날짜</MenuDate>
               <MenuTitle>주문타이틀</MenuTitle>
 
-              <MenuIsReviewChecked>리뷰확인</MenuIsReviewChecked>
+              {/* <MenuIsReviewChecked>리뷰확인</MenuIsReviewChecked> */}
             </ListBoxMenu>
           </ListBox>
           <List>
             {orderList.map((list, idx) => (
               <ListBoxContents key={idx}>
                 {/* <ListBoxContent>{list.id}</ListBoxContent> */}
-                <ListBoxContent>{list.created_at}</ListBoxContent>
+                <ListBoxContent>{list.created_at.slice(0, 10)}</ListBoxContent>
                 <ListBoxContent
                   onClick={() => {
                     goFormDetail(list.id);
@@ -34,7 +34,7 @@ const MyOrderList = ({ orderList }) => {
                   {list.title}
                 </ListBoxContent>
                 {/* <ListBoxContent>{list.created_at}</ListBoxContent> */}
-                <ListBoxContentBtnWrap>
+                {/* <ListBoxContentBtnWrap>
                   {list.review_id ? (
                     <ListBoxContentReviewBtn>작성완료</ListBoxContentReviewBtn>
                   ) : (
@@ -46,7 +46,7 @@ const MyOrderList = ({ orderList }) => {
                       {list.review_id}리뷰쓰기
                     </ListBoxContentBtn>
                   )}
-                </ListBoxContentBtnWrap>
+                </ListBoxContentBtnWrap> */}
               </ListBoxContents>
             ))}
           </List>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 import axios from "axios";
 import { USER_TOKEN } from "../../../config";
@@ -7,7 +8,7 @@ const MyReviewInput = () => {
   const [uploadDataForm, setUploadDataForm] = useState({
     content: "",
     img: null,
-    title: "asdf",
+    title: "",
     order: 0,
   });
   // const [uploadData, setUploadData] = useState({
@@ -19,16 +20,16 @@ const MyReviewInput = () => {
   // const uploadReview = (e) => {
   //   setUploadDataForm();
   // };
-
+  const navigate = useNavigate();
   const uploadFile = (e) => {
     const { target } = e;
-    const { name } = target;
+    // const { name } = target;
     if (typeof target.value === typeof "") {
-      const { value } = target;
-      setUploadDataForm({ ...uploadDataForm, [name]: value });
+      // const { value } = target;
+      setUploadDataForm({ ...uploadDataForm, [target.name]: target.value });
     } else {
-      const { files } = target;
-      setUploadDataForm({ ...uploadDataForm, [name]: files });
+      // const { files } = target;
+      setUploadDataForm({ ...uploadDataForm, [target.name]: target.files });
     }
   };
   console.log(uploadDataForm);
@@ -36,6 +37,8 @@ const MyReviewInput = () => {
   const submitReviewData = {
     content: uploadDataForm.content,
     img: uploadDataForm.img,
+    order: uploadDataForm.order,
+    title: uploadDataForm.title,
   };
 
   const uploadHandler = (e) => {
@@ -47,8 +50,8 @@ const MyReviewInput = () => {
         `http://15.164.163.31:8001/orders/reviews`,
         {
           ...submitReviewData,
-          title: "asdf",
-          order: 374,
+          title: "",
+          order: 0,
         },
         {
           headers: {
@@ -57,7 +60,8 @@ const MyReviewInput = () => {
         }
       )
       .catch((error) => console.log(error.response))
-      .then((res) => console.log(res.data));
+      .then((res) => setUploadDataForm(res.data));
+    navigate("/mypage");
   };
   return (
     <MyReviewInputContainer>
