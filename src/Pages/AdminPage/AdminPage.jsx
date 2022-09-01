@@ -1,24 +1,34 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import AdminAddProduct from "./AdminMainContents/AdminAddProduct";
+import AdminProductList from "./AdminMainContents/AdminProduct/AdminProductList";
 import AdminOrderedList from "./AdminMainContents/AdminOrderedList/AdminOrderedList";
-import AdminReviews from "./AdminMainContents/AdminReviews";
+import AdminReviews from "./AdminMainContents/AdminReview/AdminReviews";
 import AdminPageAside from "./AdminPageAside";
+import AdminFAQ from "./AdminMainContents/FAQList/AdminFAQ";
+// import AdminNotice from "./AdminMainContents/NoticeList/AdminNotice";
 
 const AdminPage = () => {
-  const [asideState, setAsideState] = useState("orderedList");
+  const [asideState, setAsideState] = useState("productHandle");
+  const switchStatus = (status) => {
+    switch (status) {
+      case "orderedList":
+        return <AdminOrderedList />;
+      case "handleReview":
+        return <AdminReviews />;
+      case "productHandle":
+        return <AdminProductList />;
+      case "faq":
+        return <AdminFAQ />;
+      // case "notice":
+      //   return <AdminNotice />;
+      default:
+        return <AdminOrderedList />;
+    }
+  };
   return (
     <AdminContainer>
-      <AdminPageAside asideState={asideState} setAsideState={setAsideState} />
-      <AdminpageMain>
-        {asideState === "orderedList" ? (
-          <AdminOrderedList />
-        ) : asideState === "handleReview" ? (
-          <AdminReviews />
-        ) : (
-          <AdminAddProduct />
-        )}
-      </AdminpageMain>
+      <AdminPageAside setAsideState={setAsideState} />
+      <AdminpageMain>{switchStatus(asideState)}</AdminpageMain>
     </AdminContainer>
   );
 };
@@ -37,5 +47,4 @@ const AdminContainer = styled.div`
 
 const AdminpageMain = styled.div`
   display: flex;
-  /* border: 1px solid blue; */
 `;

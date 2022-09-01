@@ -11,9 +11,16 @@ const AdminOrderedListBox = ({ props }) => {
     <>
       {props.map((x, idx) => (
         <AdminCafeListBox key={idx}>
-          <p>{x.title}</p>
+          <p>{String(x.title).slice(0, 50)}</p>
           <p>{String(x.created_at.slice(0, 10))}</p>
-          <p>수정</p>
+          <p>{x.customer_name}님</p>
+          <p
+            onClick={() => {
+              navigate(`/formdetail/${x.id}`, { state: { editCheck: true } });
+            }}
+          >
+            수정
+          </p>
           <i
             className="fa-solid fa-trash-can"
             onClick={() => {
@@ -46,7 +53,10 @@ export default AdminOrderedListBox;
 const AdminCafeListBox = styled.div`
   display: grid;
   grid-template-rows: 20px;
-  grid-template-columns: 5fr 1fr 0.5fr 0.3fr;
+  grid-template-columns: 5fr 1fr 1fr 0.5fr 0.3fr;
   box-sizing: border-box;
   padding: 5px;
+  border-bottom: 1px solid ${({ theme }) => theme.fontColor};
+  margin-bottom: 5px;
+  align-items: center;
 `;

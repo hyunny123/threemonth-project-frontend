@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const AdminPageAside = ({ asideState, setAsideState }) => {
+const AdminPageAside = ({ setAsideState }) => {
   const ChangeAdminState = (state) => {
     setAsideState(state);
   };
@@ -28,6 +28,20 @@ const AdminPageAside = ({ asideState, setAsideState }) => {
       >
         상품 관리
       </AdminAsideState>
+      <AdminAsideState
+        onClick={() => {
+          ChangeAdminState("faq");
+        }}
+      >
+        FAQ
+      </AdminAsideState>
+      {/* <AdminAsideState
+        onClick={() => {
+          ChangeAdminState("notice");
+        }}
+      >
+        공지사항 관리
+      </AdminAsideState> */}
     </AdminPageAsideContainer>
   );
 };

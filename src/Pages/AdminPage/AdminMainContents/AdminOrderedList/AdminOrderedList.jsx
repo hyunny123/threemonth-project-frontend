@@ -16,7 +16,7 @@ const AdminOrderedList = () => {
   const { FORM_LIST } = API;
   useEffect(() => {
     axios
-      .get(`${FORM_LIST}`)
+      .get(`${FORM_LIST}?fields=id,customer_name,type,title,created_at`)
       .catch((error) => alert(error.response.status))
       .then((res) => setOrderedList(res.data));
   }, [FORM_LIST]);
@@ -35,15 +35,27 @@ const AdminOrderedList = () => {
       <AdminOrderedListBoxs>
         <AdminOrderedListCafeTitle>카페 납품</AdminOrderedListCafeTitle>
         <AdminCafeList>
-          <AdminOrderedListBox props={cafeList} />
+          {cafeList.length === 0 ? (
+            <p>no list</p>
+          ) : (
+            <AdminOrderedListBox props={cafeList} />
+          )}
         </AdminCafeList>
         <AdminOrderedListCakeTitle>케이크</AdminOrderedListCakeTitle>
         <AdminCakeList>
-          <AdminOrderedListBox props={cakeList} />
+          {cakeList.length === 0 ? (
+            <p>no list</p>
+          ) : (
+            <AdminOrderedListBox props={cakeList} />
+          )}
         </AdminCakeList>
         <AdminOrderedListPackageTitle>기프트박스</AdminOrderedListPackageTitle>
         <AdminPackageList>
-          <AdminOrderedListBox props={packageList} />
+          {packageList.length === 0 ? (
+            <p>no list</p>
+          ) : (
+            <AdminOrderedListBox props={packageList} />
+          )}
         </AdminPackageList>
       </AdminOrderedListBoxs>
     </AdminOrderedListContain>
@@ -73,7 +85,7 @@ const AdminOrderedListCafeTitle = styled.p`
   box-sizing: border-box;
   padding: 20px;
   font-size: 20px;
-  border-bottom: 1px solid ${({ theme }) => theme.fontColor};
+  border-bottom: 3px solid ${({ theme }) => theme.fontColor};
 `;
 const AdminOrderedListCakeTitle = styled(AdminOrderedListCafeTitle)``;
 const AdminOrderedListPackageTitle = styled(AdminOrderedListCafeTitle)``;
