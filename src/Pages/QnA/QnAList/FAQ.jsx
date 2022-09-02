@@ -68,6 +68,9 @@ const FAQQuestion = styled.p`
   border: 1.5px solid ${({ theme }) => theme.bgColor};
   cursor: pointer;
   margin-bottom: 5px;
+  @media (max-width: 700px) {
+    font-size: 16px;
+  }
 `;
 const FAQAnswer = styled.p`
   padding: 5px;
@@ -77,4 +80,8 @@ const FAQAnswer = styled.p`
   border: 1.5px solid #d1c5b0;
   border-radius: 10px;
   margin-bottom: 20px;
+  word-break: break-all;
+  @media (max-width: 700px) {
+    font-size: 14px;
+  }
 `;
