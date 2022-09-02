@@ -1,14 +1,7 @@
 import React from "react";
-import { useNavigate } from "react-router";
 import styled from "styled-components";
-import OrderReviewNoContents from "./OrderReviewNoContents";
 
-const MyOrderReview = ({ orderReviewList }) => {
-  const navigate = useNavigate();
-
-  if (orderReviewList.length === 0) {
-    return <OrderReviewNoContents />;
-  }
+const OrderReviewNoContents = ({ orderReviewList }) => {
   return (
     <MyOrderReviewContainer>
       <MyOrderReviewWrap>
@@ -20,25 +13,11 @@ const MyOrderReview = ({ orderReviewList }) => {
               <MenuTitle>리뷰작성 목록</MenuTitle>
               <MenuIsReviewChecked>리뷰확인</MenuIsReviewChecked>
             </ListMenu>
-            {orderReviewList.map((list, idx) => (
-              <OrderReviewWrapper key={idx}>
-                <OrderReviewUserType>{list.type}</OrderReviewUserType>
-                <OrderReviewUserTitle>{list.title}</OrderReviewUserTitle>
-                <OrderReviewBtnWrap>
-                  {list.id && (
-                    <OrderReviewBtn
-                      onClick={() => {
-                        navigate("/myreviewinput/", {
-                          state: { selectedId: list.id },
-                        });
-                      }}
-                    >
-                      리뷰쓰기
-                    </OrderReviewBtn>
-                  )}
-                </OrderReviewBtnWrap>
-              </OrderReviewWrapper>
-            ))}
+            <List>
+              <NoContentWrap>
+                <NoContent>리뷰를 작성할 내역이 없습니다.</NoContent>
+              </NoContentWrap>
+            </List>
           </ListBox>
         </MyReviewListBox>
       </MyOrderReviewWrap>
@@ -46,7 +25,7 @@ const MyOrderReview = ({ orderReviewList }) => {
   );
 };
 
-export default MyOrderReview;
+export default OrderReviewNoContents;
 
 const MyOrderReviewContainer = styled.div`
   display: flex;
@@ -130,6 +109,25 @@ const MenuIsReviewChecked = styled.div`
     padding: 0 10px;
     font-size: 13px;
   }
+`;
+
+const List = styled.ul`
+  width: 100%;
+  min-height: 100px;
+  border-radius: 10px;
+`;
+
+const NoContentWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100px;
+  font-size: 20px;
+`;
+
+const NoContent = styled.p`
+  color: ${({ theme }) => theme.fontColor};
 `;
 
 const OrderReviewWrapper = styled.div`

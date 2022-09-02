@@ -41,7 +41,7 @@ function Router() {
         <Route path="/formlist" element={<FormList />} />
         <Route path="/reserveform" element={<ReserveForm />} />
         <Route path="/formdetail/:formId" element={<FormDetail />} />
-        <Route path="/adminpage" element={<AdminPage />} />
+        <Route path="/admin" element={<AdminPage />} />
         <Route path="/formdetail/:formId/edit" element={<FormEdit />} />
         <Route path="/terms" element={<HomePageTerms />} />
         <Route path="/privacy" element={<Privacy />} />

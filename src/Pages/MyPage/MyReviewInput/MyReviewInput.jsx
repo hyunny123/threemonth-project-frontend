@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import styled from "styled-components";
 import axios from "axios";
 import { USER_TOKEN } from "../../../config";
@@ -7,61 +7,35 @@ import { USER_TOKEN } from "../../../config";
 const MyReviewInput = () => {
   const [uploadDataForm, setUploadDataForm] = useState({
     content: "",
-    img: null,
-    title: "",
-    order: 0,
   });
-  // const [uploadData, setUploadData] = useState({
-  //   file: null,
-  //   id: 0,
-  //   content: "",
-  // });
-
-  // const uploadReview = (e) => {
-  //   setUploadDataForm();
-  // };
+  const [imgValue, setImgValue] = useState();
+  const location = useLocation();
   const navigate = useNavigate();
   const uploadFile = (e) => {
     const { target } = e;
-    // const { name } = target;
-    if (typeof target.value === typeof "") {
-      // const { value } = target;
-      setUploadDataForm({ ...uploadDataForm, [target.name]: target.value });
-    } else {
-      // const { files } = target;
-      setUploadDataForm({ ...uploadDataForm, [target.name]: target.files });
-    }
+    setUploadDataForm({ ...uploadDataForm, [target.name]: target.value });
   };
-  console.log(uploadDataForm);
-
-  const submitReviewData = {
-    content: uploadDataForm.content,
-    img: uploadDataForm.img,
-    order: uploadDataForm.order,
-    title: uploadDataForm.title,
+  const uploadImg = (e) => {
+    setImgValue(e.target.files[0]);
   };
 
   const uploadHandler = (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("image", e.target.files);
+    formData.append("img", imgValue);
+    formData.append("content", uploadDataForm.content);
+    formData.append("title", "title_test");
+    formData.append("order", location.state.selectedId);
+
     axios
-      .post(
-        `http://15.164.163.31:8001/orders/reviews`,
-        {
-          ...submitReviewData,
-          title: "",
-          order: 0,
+      .post(`http://15.164.163.31:8001/orders/reviews`, formData, {
+        headers: {
+          Authorization: `Bearer ${USER_TOKEN}`,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${USER_TOKEN}`,
-          },
-        }
-      )
+      })
       .catch((error) => console.log(error.response))
       .then((res) => setUploadDataForm(res.data));
-    navigate("/mypage");
+    navigate(-1);
   };
   return (
     <MyReviewInputContainer>
@@ -79,7 +53,7 @@ const MyReviewInput = () => {
               />
               <ReviewInputFileContent
                 type="file"
-                onChange={uploadFile}
+                onChange={uploadImg}
                 accept="image/*"
                 name="img"
                 id="imageinput"
@@ -89,14 +63,13 @@ const MyReviewInput = () => {
                 style={{ marginBottom: "20px" }}
                 htmlFor="imageinput"
               >
-                파일 선택하기
+                파일 선택하기 Click
               </ReviewInputFileBtnContent>
             </Wrap>
 
             <ReviewInputFileBtn onClick={uploadHandler}>
               리뷰 입력완료
             </ReviewInputFileBtn>
-            {/* <ReviewInputBtn onClick={uploadHandler}>리뷰 입력</ReviewInputBtn> */}
           </ReviewInputWrap>
         </ReviewInputContainer>
       </MyReviewInputWrap>
@@ -134,27 +107,24 @@ const MyReviewInputTitle = styled.p`
 const ReviewInputContainer = styled.div`
   box-sizing: border-box;
   padding: 20px;
-  /* display: flex; */
+  display: flex;
   font-size: 16px;
-  /* flex-direction: column; */
+  flex-direction: column;
   margin: 20px 0;
   border-radius: 10px;
   width: 100%;
-  min-height: 100px;
+  min-height: 120px;
   background-color: ${({ theme }) => theme.bgColor};
   font-family: ${({ theme }) => theme.fontFamily};
 `;
 const ReviewInputWrap = styled.div`
   display: grid;
   grid-template-rows: 50px;
-  grid-template-columns: 7fr 1fr;
-  place-items: center;
-  margin-bottom: 20px;
+  grid-template-columns: 5fr 1fr;
 `;
 
 const Wrap = styled.div`
-  /* display: flex; */
-  /* flex-direction: column; */
+  margin-right: 20px;
 `;
 
 const ReviewInputContent = styled.input`
@@ -164,27 +134,22 @@ const ReviewInputContent = styled.input`
   border-radius: 10px;
   font-size: 16px;
   padding-left: 20px;
+
   &:focus {
     outline: none;
   }
   font-family: ${({ theme }) => theme.fontFamily};
 `;
 
-const ReviewInputBtn = styled.button`
-  border-style: none;
-  width: 70%;
-  height: 100%;
-  font-size: 16px;
-  border-radius: 10px;
-  background-color: ${({ theme }) => theme.bgColor};
-  border: 2px solid ${({ theme }) => theme.fontColor};
-  color: ${({ theme }) => theme.fontColor};
-  font-family: ${({ theme }) => theme.fontFamily};
+const ReviewInputFileContent = styled.input`
+  margin-top: 20px;
 `;
 
-const ReviewInputFileContent = styled.input``;
-
-const ReviewInputFileBtnContent = styled.label``;
+const ReviewInputFileBtnContent = styled.label`
+  display: inline-block;
+  margin-top: 15px;
+  cursor: pointer;
+`;
 
 const ReviewInputFileBtn = styled.button`
   border-style: none;

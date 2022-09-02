@@ -7,6 +7,7 @@ import MyOrderList from "./MyOrderList/MyOrderList";
 import MyReviewList from "./MyReviewList/MyReviewList";
 import MyOrderReview from "./MyOrderReview/MyOrderReview";
 import ReviewListNoContents from "./MyReviewList/ReviewListNoContents";
+import OrderReviewNoContents from "./MyOrderReview/OrderReviewNoContents";
 
 const MyPage = () => {
   const [orderList, setOrderList] = useState([
@@ -24,7 +25,7 @@ const MyPage = () => {
       title: "",
     },
   ]);
-  console.log(orderReviewList);
+  // console.log(orderReviewList);
   const [reviewList, setReviewList] = useState([
     {
       id: 0,
@@ -32,13 +33,18 @@ const MyPage = () => {
       order: 0,
     },
   ]);
-  console.log(reviewList);
+  // console.log(reviewList);
   useEffect(() => {
     axios
-      .get(`http://15.164.163.31:8001/orders/`)
+      .get(`https://threemonth.shop/orders/userorders?all=True`, {
+        headers: {
+          Authorization: `Bearer ${USER_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+      })
       .then((res) => setOrderList(res.data));
     axios
-      .get(`http://15.164.163.31:8001/orders/userorders`, {
+      .get(`https://threemonth.shop/orders/userorders`, {
         headers: {
           Authorization: `Bearer ${USER_TOKEN}`,
           "Content-Type": "application/json",
@@ -46,21 +52,13 @@ const MyPage = () => {
       })
       .then((res) => setOrderReviewList(res.data));
     axios
-      .get(`http://15.164.163.31:8001/orders/reviews`)
+      .get(`https://threemonth.shop/orders/reviews`)
       .then((res) => setReviewList(res.data));
   }, []);
 
-  if (orderList.length === 0) {
-    return <OrderListNoContents />;
-  }
-
-  if (reviewList.length === 0) {
-    return <ReviewListNoContents />;
-  }
-
   return (
     <MyPageContainer>
-      <MyPageTitle>MyPage</MyPageTitle>
+      {/* <MyPageTitle>MyPage</MyPageTitle> */}
       <MyOrderList orderList={orderList} />
       <MyOrderReview orderReviewList={orderReviewList} />
       <MyReviewList reviewList={reviewList} />

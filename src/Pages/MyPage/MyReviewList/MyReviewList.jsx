@@ -2,8 +2,14 @@ import React from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { USER_TOKEN } from "../../../config";
+import ReviewListNoContents from "./ReviewListNoContents";
 
 const MyReviewList = ({ reviewList }) => {
+  if (reviewList.length === 0) {
+    return <ReviewListNoContents />;
+  }
+
+  // console.log(reviewList);
   return (
     <MyReviewListContainer>
       <MyReviewListWrap>
@@ -15,7 +21,7 @@ const MyReviewList = ({ reviewList }) => {
               <MenuNum>리뷰 번호/날짜</MenuNum>
               {/* <MenuTitle>작성 날짜</MenuTitle> */}
               <MenuDate>리뷰</MenuDate>
-              <MenuIsReviewChecked>삭제</MenuIsReviewChecked>
+              <MenuIsReviewChecked>수정/삭제</MenuIsReviewChecked>
             </ListBoxMenu>
             {reviewList.map((list, idx) => (
               <MyReviewListWrapper key={idx}>
@@ -32,28 +38,33 @@ const MyReviewList = ({ reviewList }) => {
                   )}
                 </MyReviewContents>
                 <MyReviewDelBtnWrap>
-                  <i
-                    className="fa-solid fa-trash-can"
-                    onClick={() => {
-                      if (window.confirm("삭제하시겠습니까?")) {
-                        axios
-                          .delete(
-                            `http://15.164.163.31:8001/orders/reviews/${list.id}`,
-                            {
-                              headers: {
-                                Authorization: `Bearer ${USER_TOKEN}`,
-                                "Content-Type": "application/json",
-                              },
-                            }
-                          )
-                          .then((res) => {
-                            if (res.status === 204) {
-                              window.location.reload();
-                            }
-                          });
-                      }
-                    }}
-                  />
+                  <ReviewUpdateBtn>
+                    <i class="fa-regular fa-pen-to-square" />
+                  </ReviewUpdateBtn>
+                  <ReviewDelBtn>
+                    <i
+                      className="fa-solid fa-trash-can"
+                      onClick={() => {
+                        if (window.confirm("삭제하시겠습니까?")) {
+                          axios
+                            .delete(
+                              `https://threemonth.shop/orders/reviews/${list.id}`,
+                              {
+                                headers: {
+                                  Authorization: `Bearer ${USER_TOKEN}`,
+                                  "Content-Type": "application/json",
+                                },
+                              }
+                            )
+                            .then((res) => {
+                              if (res.status === 204) {
+                                window.location.reload();
+                              }
+                            });
+                        }
+                      }}
+                    />
+                  </ReviewDelBtn>
                 </MyReviewDelBtnWrap>
               </MyReviewListWrapper>
             ))}
@@ -200,5 +211,16 @@ const MyReviewImg = styled.img`
 `;
 
 const MyReviewDelBtnWrap = styled.div`
+  display: flex;
+  justify-content: flex-start;
   margin-right: 15px;
+`;
+
+const ReviewUpdateBtn = styled.div`
+  margin-right: 10px;
+  cursor: pointer;
+`;
+
+const ReviewDelBtn = styled.div`
+  cursor: pointer;
 `;

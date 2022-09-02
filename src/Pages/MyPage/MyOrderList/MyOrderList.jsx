@@ -1,12 +1,17 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
+import OrderListNoContents from "./OrderListNoContents";
 
 const MyOrderList = ({ orderList }) => {
   const navigate = useNavigate();
   const goFormDetail = (id) => {
     navigate(`/formdetail/${id}`, { state: { checkValid: true } });
   };
+
+  if (orderList.length === 0) {
+    return <OrderListNoContents />;
+  }
   return (
     <MyPageListContainer>
       <MyPageListWrap>
