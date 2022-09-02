@@ -22,4 +22,7 @@ const QnANoListWrap = styled.div`
 
 const QnANoListTitle = styled.p`
   font-size: 20px;
+  @media (max-width: 500px) {
+    font-size: 15px;
+  }
 `;

@@ -94,11 +94,28 @@ const QnAMenuWrap = styled.div`
   padding-bottom: 15px;
   margin-bottom: 10px;
   border-bottom: 4px solid ${({ theme }) => theme.bgColor};
+  @media (max-width: 700px) {
+    grid-template-columns: 0.5fr 3fr 0.5fr;
+    grid-template-rows: repeat(2, minmax(10px, auto));
+    padding-bottom: 5px;
+    /* display: none; */
+  }
 `;
-const QnAMenuId = styled.p``;
-const QnAMenuTitle = styled.p``;
-const QnAMenuName = styled.p``;
-const QnAMenuTime = styled.p``;
+const QnAMenuId = styled.p`
+  @media (max-width: 700px) {
+    font-size: 14px;
+  }
+  @media (max-width: 600px) {
+    font-size: 12px;
+  }
+`;
+const QnAMenuTitle = styled(QnAMenuId)``;
+const QnAMenuName = styled(QnAMenuId)``;
+const QnAMenuTime = styled(QnAMenuId)`
+  @media (max-width: 700px) {
+    display: none;
+  }
+`;
 
 const QnAContentsWrap = styled.div`
   min-height: 200px;
