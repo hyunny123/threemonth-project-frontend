@@ -3,8 +3,10 @@ import axios from "axios";
 import styled from "styled-components";
 import { USER_TOKEN } from "../../../config";
 import ReviewListNoContents from "./ReviewListNoContents";
+import { useNavigate } from "react-router";
 
 const MyReviewList = ({ reviewList }) => {
+  const navigate = useNavigate();
   if (reviewList.length === 0) {
     return <ReviewListNoContents />;
   }
@@ -39,7 +41,16 @@ const MyReviewList = ({ reviewList }) => {
                 </MyReviewContents>
                 <MyReviewDelBtnWrap>
                   <ReviewUpdateBtn>
-                    <i class="fa-regular fa-pen-to-square" />
+                    <i
+                      className="fa-regular fa-pen-to-square"
+                      onClick={() => {
+                        if (window.confirm("수정하시겠습니까?")) {
+                          navigate(`/mypage/${list.id}/edit`);
+                        } else {
+                          alert("수정이 불가합니다.");
+                        }
+                      }}
+                    />
                   </ReviewUpdateBtn>
                   <ReviewDelBtn>
                     <i

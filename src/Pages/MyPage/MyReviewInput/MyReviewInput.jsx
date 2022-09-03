@@ -27,6 +27,8 @@ const MyReviewInput = () => {
     formData.append("title", "title_test");
     formData.append("order", location.state.selectedId);
 
+    console.log(formData);
+
     axios
       .post(`http://15.164.163.31:8001/orders/reviews`, formData, {
         headers: {

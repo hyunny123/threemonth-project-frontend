@@ -24,6 +24,7 @@ import NoticeInput from "./Pages/Notice/NoticeInput/NoticeInput";
 import NoticeEdit from "./Pages/Notice/NoticeEdit/NoticeEdit";
 import MyPage from "./Pages/MyPage/MyPage";
 import MyReviewInput from "./Pages/MyPage/MyReviewInput/MyReviewInput";
+import MyReviewEdit from "./Pages/MyPage/MyReviewEdit/MyReviewEdit";
 
 function Router() {
   return (
@@ -55,6 +56,7 @@ function Router() {
         <Route path="/notice/:noticeId/edit" element={<NoticeEdit />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/myreviewinput" element={<MyReviewInput />} />
+        <Route path="/mypage/:reviewId/edit" element={<MyReviewEdit />} />
       </Routes>
       <Footer />
     </BrowserRouter>
