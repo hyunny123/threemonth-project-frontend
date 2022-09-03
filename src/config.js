@@ -1,4 +1,4 @@
-const BASE_URL = "http://15.164.163.31:8001";
+const BASE_URL = "https://threemonth.shop";
 
 export const USER_TOKEN = localStorage.getItem("token");
 export const USER_NICKNAME = localStorage.getItem("nickname");
