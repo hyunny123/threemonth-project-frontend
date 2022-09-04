@@ -22,7 +22,7 @@ const MyReviewList = ({ reviewList }) => {
               {/* <BoxWrap /> */}
               <MenuNum>리뷰 번호/날짜</MenuNum>
               {/* <MenuTitle>작성 날짜</MenuTitle> */}
-              <MenuDate>리뷰</MenuDate>
+              <MenuTitle>리뷰</MenuTitle>
               <MenuIsReviewChecked>수정/삭제</MenuIsReviewChecked>
             </ListBoxMenu>
             {reviewList.map((list, idx) => (
@@ -42,7 +42,7 @@ const MyReviewList = ({ reviewList }) => {
                 <MyReviewDelBtnWrap>
                   <ReviewUpdateBtn>
                     <i
-                      className="fa-regular fa-pen-to-square"
+                      className="fa-regular fa-pen-to-square "
                       onClick={() => {
                         if (window.confirm("수정하시겠습니까?")) {
                           navigate(`/mypage/${list.id}/edit`);
@@ -108,7 +108,11 @@ const MyReviewListWrap = styled.div`
 `;
 const MyReviewListTitle = styled.p`
   font-size: 1.6em;
+  @media (max-width: 768px) {
+    font-size: 1.2em;
+  }
   @media (max-width: 580px) {
+    font-size: 1em;
     padding: 0 20px;
   }
 `;
@@ -133,38 +137,49 @@ const ListBox = styled.div`
 
 const ListBoxMenu = styled.div`
   display: grid;
-  grid-template-columns: 0.9fr 3fr 0.5fr;
+  grid-template-columns: 0.5fr 4fr 0.4fr;
   grid-template-rows: 30px;
   box-sizing: border-box;
   border-bottom: 4px solid ${(props) => props.theme.bgColor};
   margin-top: 50px;
   margin-bottom: 20px;
-  /* @media (max-width: 580px) {
-    grid-template-columns: 0.5fr 3fr 1fr 1fr ;
+  @media (max-width: 1400px) {
+    grid-template-columns: 0.6fr 4fr 0.6fr;
+    grid-template-rows: 30px;
+  }
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr 4fr 0.8fr;
+    grid-template-rows: 30px;
+  }
+  @media (max-width: 610px) {
+    grid-template-columns: 1fr 3fr 0.8fr;
     grid-template-rows: 30px;
   }
   @media (max-width: 450px) {
-    grid-template-columns: 0.5fr 2fr 1fr;
+    grid-template-columns: 1fr 3fr 1fr;
     grid-template-rows: 20px;
     font-size: 14px;
-  } */
+  }
 `;
 const MenuNum = styled.div`
   display: flex;
   justify-content: center;
 
-  @media (max-width: 580px) {
-    font-size: 13px;
+  @media (max-width: 610px) {
+    font-size: 0.8em;
+  }
+  @media (max-width: 450px) {
+    font-size: 0.6em;
   }
 `;
-const MenuTitle = styled(MenuNum)`
-  @media (max-width: 580px) {
-  }
-`;
+// const MenuTitle = styled(MenuNum)`
+//   @media (max-width: 580px) {
+//   }
+// `;
 
-const MenuDate = styled(MenuNum)`
-  @media (max-width: 580px) {
-    justify-content: flex-end;
+const MenuTitle = styled(MenuNum)`
+  @media (max-width: 610px) {
+    justify-content: center;
     box-sizing: border-box;
     padding: 0 10px;
   }
@@ -173,18 +188,17 @@ const MenuDate = styled(MenuNum)`
 const MenuIsReviewChecked = styled.div`
   display: flex;
   justify-content: center;
-  @media (max-width: 580px) {
-    font-size: 13px;
+  @media (max-width: 610px) {
+    font-size: 0.8em;
   }
-  @media (max-width: 450px) {
+  /* @media (max-width: 450px) {
     display: none;
-  }
+  } */
 `;
 
 const MyReviewListWrapper = styled.div`
   display: flex;
   justify-items: center;
-
   min-height: 100px;
   margin-bottom: 40px;
   box-sizing: border-box;
@@ -203,22 +217,53 @@ const MyReviewUserWrap = styled.div`
 const MyReviewUserName = styled.p`
   color: ${({ theme }) => theme.fontColor};
   margin-bottom: 10px;
+  @media (max-width: 768px) {
+    font-size: 0.7em;
+  }
+  @media (max-width: 450px) {
+    font-size: 0.6em;
+  }
 `;
 
 const MyReviewDate = styled.p`
   color: ${({ theme }) => theme.fontColor};
+  @media (max-width: 768px) {
+    font-size: 0.7em;
+  }
+  @media (max-width: 450px) {
+    font-size: 0.6em;
+  }
 `;
 const MyReviewContents = styled.div`
   width: 100%;
+  @media (max-width: 768px) {
+    font-size: 0.9em;
+  }
+  @media (max-width: 610px) {
+    font-size: 0.8em;
+  }
+  @media (max-width: 450px) {
+    font-size: 0.6em;
+  }
 `;
 const MyReviewContent = styled.p`
   width: 100%;
+  word-break: break-all;
   margin-bottom: 20px;
   color: ${({ theme }) => theme.fontColor};
 `;
 
 const MyReviewImg = styled.img`
   width: 300px;
+  @media (max-width: 610px) {
+    width: 200px;
+  }
+  @media (max-width: 450px) {
+    width: 150px;
+  }
+  @media (max-width: 360px) {
+    width: 100px;
+  }
 `;
 
 const MyReviewDelBtnWrap = styled.div`
@@ -230,8 +275,18 @@ const MyReviewDelBtnWrap = styled.div`
 const ReviewUpdateBtn = styled.div`
   margin-right: 10px;
   cursor: pointer;
+  @media (max-width: 610px) {
+    width: 10px;
+    margin-right: 5px;
+    padding-left: 20px;
+  }
 `;
 
 const ReviewDelBtn = styled.div`
   cursor: pointer;
+  @media (max-width: 610px) {
+    width: 10px;
+    margin-right: 5px;
+    padding-left: 20px;
+  }
 `;

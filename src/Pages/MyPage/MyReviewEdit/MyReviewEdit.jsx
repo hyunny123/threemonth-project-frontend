@@ -75,7 +75,7 @@ const MyReviewEdit = () => {
     };
     return previewImg;
   };
-  const asdf = () => {
+  const deleteHandler = () => {
     setImgValue({ name: "" });
     setPreviewImg(null);
     setDeleteValue(true);
@@ -150,8 +150,12 @@ const MyReviewEdit = () => {
                 img_url && <button onClick={asdf}>삭제</button>
               )} */}
               {img_url
-                ? !deleteValue && <button onClick={asdf}>삭제</button>
-                : !deleteValue && <button onClick={asdf}>삭제</button>}
+                ? !deleteValue && (
+                    <ImgDelBtn onClick={deleteHandler}>삭제</ImgDelBtn>
+                  )
+                : !deleteValue && (
+                    <ImgDelBtn onClick={deleteHandler}>삭제</ImgDelBtn>
+                  )}
             </Wrap>
 
             <ReviewInputFileBtn onClick={postpatch}>
@@ -244,6 +248,18 @@ const ReviewInputFileBtnContent = styled.label`
 `;
 
 const ReviewInputFileBtn = styled.button`
+  border-style: none;
+  width: 70%;
+  height: 100%;
+  font-size: 16px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.bgColor};
+  border: 2px solid ${({ theme }) => theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
+  font-family: ${({ theme }) => theme.fontFamily};
+`;
+
+const ImgDelBtn = styled.button`
   border-style: none;
   width: 70%;
   height: 100%;

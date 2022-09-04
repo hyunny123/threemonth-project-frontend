@@ -9,6 +9,8 @@ const MyReviewInput = () => {
     content: "",
   });
   const [imgValue, setImgValue] = useState();
+  const [previewImg, setPreviewImg] = useState(null);
+  const [deleteValue, setDeleteValue] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const uploadFile = (e) => {
@@ -16,7 +18,24 @@ const MyReviewInput = () => {
     setUploadDataForm({ ...uploadDataForm, [target.name]: target.value });
   };
   const uploadImg = (e) => {
-    setImgValue(e.target.files[0]);
+    const { files } = e.target;
+    setImgValue(files[0]);
+    previewURLImg(files[0]);
+    setDeleteValue(false);
+  };
+  const previewURLImg = (prev) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(prev);
+    reader.onloadend = () => {
+      setPreviewImg(reader.result);
+    };
+    return previewImg;
+  };
+
+  const prevDeleteHandler = () => {
+    setImgValue();
+    setPreviewImg(null);
+    setDeleteValue(true);
   };
 
   const uploadHandler = (e) => {
@@ -65,8 +84,14 @@ const MyReviewInput = () => {
                 style={{ marginBottom: "20px" }}
                 htmlFor="imageinput"
               >
-                파일 선택하기 Click
+                파일 선택하기
               </ReviewInputFileBtnContent>
+              <PreviewImg src={previewImg && previewImg} />
+              {previewImg && (
+                <PreveiwImgDelBtn onClick={prevDeleteHandler}>
+                  삭제
+                </PreveiwImgDelBtn>
+              )}
             </Wrap>
 
             <ReviewInputFileBtn onClick={uploadHandler}>
@@ -149,8 +174,23 @@ const ReviewInputFileContent = styled.input`
 
 const ReviewInputFileBtnContent = styled.label`
   display: inline-block;
+  text-align: center;
   margin-top: 15px;
   cursor: pointer;
+  border-style: none;
+  /* width: 100px;
+  height: 50px; */
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.bgColor};
+  border: 2px solid ${({ theme }) => theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
+  font-family: ${({ theme }) => theme.fontFamily};
+`;
+
+const PreviewImg = styled.img`
+  width: 150px;
 `;
 
 const ReviewInputFileBtn = styled.button`
@@ -158,6 +198,19 @@ const ReviewInputFileBtn = styled.button`
   width: 70%;
   height: 100%;
   font-size: 16px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.bgColor};
+  border: 2px solid ${({ theme }) => theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
+  font-family: ${({ theme }) => theme.fontFamily};
+`;
+
+const PreveiwImgDelBtn = styled.button`
+  border-style: none;
+  width: 50px;
+  /* padding: 10px; */
+  height: 40px;
+  font-size: 14px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.bgColor};
   border: 2px solid ${({ theme }) => theme.fontColor};

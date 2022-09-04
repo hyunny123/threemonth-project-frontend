@@ -2,12 +2,10 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { API, USER_TOKEN } from "../../config";
 import styled from "styled-components";
-import OrderListNoContents from "./MyOrderList/OrderListNoContents";
+
 import MyOrderList from "./MyOrderList/MyOrderList";
 import MyReviewList from "./MyReviewList/MyReviewList";
 import MyOrderReview from "./MyOrderReview/MyOrderReview";
-import ReviewListNoContents from "./MyReviewList/ReviewListNoContents";
-import OrderReviewNoContents from "./MyOrderReview/OrderReviewNoContents";
 
 const MyPage = () => {
   const [orderList, setOrderList] = useState([
@@ -52,13 +50,17 @@ const MyPage = () => {
       })
       .then((res) => setOrderReviewList(res.data));
     axios
-      .get(`https://threemonth.shop/orders/reviews`)
+      .get(`https://threemonth.shop/orders/reviews?user_review=True`, {
+        headers: {
+          Authorization: `Bearer ${USER_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+      })
       .then((res) => setReviewList(res.data));
   }, []);
 
   return (
     <MyPageContainer>
-      {/* <MyPageTitle>MyPage</MyPageTitle> */}
       <MyOrderList orderList={orderList} />
       <MyOrderReview orderReviewList={orderReviewList} />
       <MyReviewList reviewList={reviewList} />
@@ -71,4 +73,3 @@ export default MyPage;
 const MyPageContainer = styled.div`
   width: 100%;
 `;
-const MyPageTitle = styled.h2``;
