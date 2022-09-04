@@ -150,9 +150,15 @@ const CakeCommentUserWrap = styled.div`
 const CakeCommentUserName = styled.p`
   color: ${({ theme }) => theme.fontColor};
   margin-bottom: 10px;
+  @media (max-width: 700px) {
+    font-size: 14px;
+  }
 `;
 const CakeCommentTime = styled.p`
   color: ${({ theme }) => theme.fontColor};
+  @media (max-width: 700px) {
+    font-size: 10px;
+  }
 `;
 const CakeCommentContents = styled.div`
   width: 100%;
@@ -161,9 +167,22 @@ const CakeCommentContent = styled.p`
   width: 100%;
   margin-bottom: 20px;
   color: ${({ theme }) => theme.fontColor};
+  word-break: break-all;
+  @media (max-width: 700px) {
+    font-size: 14px;
+  }
 `;
 const TestImg = styled.img`
   width: 300px;
+  @media (max-width: 700px) {
+    width: 150px;
+  }
+  @media (max-width: 500px) {
+    width: 100px;
+  }
+  @media (max-width: 360px) {
+    width: 70px;
+  }
 `;
 const ReviewWriteNotice = styled.div`
   display: flex;
@@ -174,4 +193,8 @@ const ReviewWriteNotice = styled.div`
   border-radius: 10px;
   background-color: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
+  @media (max-width: 700px) {
+    width: 200px;
+    font-size: 12px;
+  }
 `;

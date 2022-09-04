@@ -123,7 +123,7 @@ const QnA = () => {
                 <QnACommentContent>{x.user_nickname}님</QnACommentContent>
                 <QnACommentContent>{x.content}</QnACommentContent>
                 <QnACommentContent>
-                  {x.created_at.slice(0, 10)}
+                  {x.created_at.slice(5, 10)}
                 </QnACommentContent>
                 <QnACommentContent>
                   <i
@@ -159,7 +159,9 @@ const QnA = () => {
                 }
               }}
             />
-            <PostCommentBtn onClick={postComment}>댓글 입력</PostCommentBtn>
+            <PostCommentBtn onClick={postComment}>
+              댓글 <br /> 입력
+            </PostCommentBtn>
           </QnACommentInputWrap>
         </QnACommentWrap>
       </QnADetailWidth>
@@ -208,6 +210,11 @@ const QnADetailEditBtn = styled.button`
   &:nth-child(2) {
     margin-left: 20px;
   }
+  @media (max-width: 500px) {
+    width: 60px;
+    height: 30px;
+    font-size: 14px;
+  }
 `;
 const QnACommentWrap = styled.div`
   box-sizing: border-box;
@@ -227,6 +234,15 @@ const QnACommentInputWrap = styled.div`
   grid-template-columns: 8fr 1fr;
   place-items: center;
   margin: 20px 0;
+  @media (max-width: 700px) {
+    grid-template-columns: 6fr 1fr;
+  }
+  @media (max-width: 500px) {
+    grid-template-columns: 4fr 1fr;
+  }
+  @media (max-width: 400px) {
+    grid-template-columns: 3fr 1fr;
+  }
 `;
 const QnACommentInput = styled.input`
   border-style: none;
@@ -239,6 +255,9 @@ const QnACommentInput = styled.input`
     outline: none;
   }
   font-family: ${({ theme }) => theme.fontFamily};
+  @media (max-width: 500px) {
+    font-size: 12px;
+  }
 `;
 const PostCommentBtn = styled.button`
   border-style: none;
@@ -250,6 +269,12 @@ const PostCommentBtn = styled.button`
   border: 2px solid ${({ theme }) => theme.fontColor};
   color: ${({ theme }) => theme.fontColor};
   font-family: ${({ theme }) => theme.fontFamily};
+  @media (max-width: 700px) {
+    font-size: 13px;
+  }
+  @media (max-width: 500px) {
+    font-size: 11px;
+  }
 `;
 const QnACommentContents = styled.div`
   display: grid;
@@ -259,13 +284,14 @@ const QnACommentContents = styled.div`
   box-sizing: border-box;
   padding: 15px;
   border-bottom: 1px solid white;
-  @media (max-width: 500px) {
-    grid-template-columns: 1fr 5fr;
-    padding: 10px;
+  @media (max-width: 700px) {
+    grid-template-columns: 8fr 2fr 0.5fr;
+    grid-template-rows: repeat(2, minmax(10px, auto));
   }
 `;
 const QnACommentContent = styled.p`
   display: grid;
+  font-size: 14px;
   &:nth-child(1) {
     box-sizing: border-box;
     padding-right: 20px;
@@ -280,10 +306,18 @@ const QnACommentContent = styled.p`
   i {
     font-size: 20px;
     cursor: pointer;
+    @media (max-width: 700px) {
+      font-size: 12px;
+    }
   }
-  @media (max-width: 500px) {
-    &:nth-child(3) {
-      display: none;
+  @media (max-width: 700px) {
+    font-size: 12px;
+    &:nth-child(1) {
+      width: 100%;
+      justify-items: flex-start;
+      grid-column: 1/4;
+      font-size: 10px;
+      margin-bottom: 5px;
     }
   }
 `;

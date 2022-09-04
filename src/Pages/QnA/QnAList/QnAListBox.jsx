@@ -18,6 +18,7 @@ const QnAListBox = () => {
   useEffect(() => {
     axios
       .get(`${QNA_LIST}`)
+      // .get("/data/data.json")
       .catch((error) => {
         const { response } = error;
         if (response.status === 403) {
@@ -71,6 +72,10 @@ const QnAContentsDetailWrap = styled.div`
   place-items: center;
   margin-bottom: 5px;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
+  @media (max-width: 700px) {
+    grid-template-columns: 0.5fr 3fr 0.5fr;
+    grid-template-rows: repeat(2, minmax(10px, auto));
+  }
 `;
 const QnAContent = styled.p`
   line-height: 1.3;
@@ -78,5 +83,18 @@ const QnAContent = styled.p`
     width: 100%;
     justify-content: flex-start;
     cursor: pointer;
+  }
+  @media (max-width: 700px) {
+    font-size: 14px;
+  }
+  @media (max-width: 600px) {
+    font-size: 12px;
+  }
+  &:nth-child(4) {
+    @media (max-width: 700px) {
+      grid-column: 1/3;
+      justify-content: flex-start;
+      width: 100%;
+    }
   }
 `;
