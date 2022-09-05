@@ -108,11 +108,7 @@ const MyReviewListWrap = styled.div`
 `;
 const MyReviewListTitle = styled.p`
   font-size: 1.6em;
-  @media (max-width: 768px) {
-    font-size: 1.2em;
-  }
   @media (max-width: 580px) {
-    font-size: 1em;
     padding: 0 20px;
   }
 `;

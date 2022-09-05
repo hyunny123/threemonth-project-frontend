@@ -87,6 +87,7 @@ const MyReviewInput = () => {
                 파일 선택하기
               </ReviewInputFileBtnContent>
               <PreviewImg src={previewImg && previewImg} />
+
               {previewImg && (
                 <PreveiwImgDelBtn onClick={prevDeleteHandler}>
                   삭제
@@ -140,7 +141,7 @@ const ReviewInputContainer = styled.div`
   margin: 20px 0;
   border-radius: 10px;
   width: 100%;
-  min-height: 120px;
+  min-height: 350px;
   background-color: ${({ theme }) => theme.bgColor};
   font-family: ${({ theme }) => theme.fontFamily};
 `;
@@ -151,6 +152,7 @@ const ReviewInputWrap = styled.div`
 `;
 
 const Wrap = styled.div`
+  position: relative;
   margin-right: 20px;
 `;
 
@@ -166,6 +168,12 @@ const ReviewInputContent = styled.input`
     outline: none;
   }
   font-family: ${({ theme }) => theme.fontFamily};
+  @media (max-width: 1010px) {
+    font-size: 0.8em;
+  }
+  @media (max-width: 640px) {
+    font-size: 0.6em;
+  }
 `;
 
 const ReviewInputFileContent = styled.input`
@@ -175,11 +183,8 @@ const ReviewInputFileContent = styled.input`
 const ReviewInputFileBtnContent = styled.label`
   display: inline-block;
   text-align: center;
-  margin-top: 15px;
   cursor: pointer;
   border-style: none;
-  /* width: 100px;
-  height: 50px; */
   padding: 10px;
   font-size: 14px;
   border-radius: 10px;
@@ -187,10 +192,59 @@ const ReviewInputFileBtnContent = styled.label`
   border: 2px solid ${({ theme }) => theme.fontColor};
   color: ${({ theme }) => theme.fontColor};
   font-family: ${({ theme }) => theme.fontFamily};
+  @media (max-width: 900px) {
+    font-size: 0.8em;
+  }
+  @media (max-width: 640px) {
+    font-size: 0.6em;
+  }
+  @media (max-width: 330px) {
+    margin-top: 10px;
+  }
 `;
 
 const PreviewImg = styled.img`
-  width: 150px;
+  width: 200px;
+  margin-top: 35px;
+  padding-left: 10px;
+  @media (max-width: 450px) {
+    width: 150px;
+  }
+  @media (max-width: 330px) {
+    margin-top: 0px;
+  }
+`;
+
+const PreveiwImgDelBtn = styled.button`
+  position: relative;
+  right: 240px;
+  bottom: 45px;
+  border-style: none;
+  width: 40px;
+  height: 40px;
+  font-size: 14px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.bgColor};
+  border: 2px solid ${({ theme }) => theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
+  font-family: ${({ theme }) => theme.fontFamily};
+  @media (max-width: 900px) {
+    font-size: 0.8em;
+  }
+  @media (max-width: 640px) {
+    font-size: 0.6em;
+  }
+  @media (max-width: 450px) {
+    margin-left: 48px;
+  }
+  @media (max-width: 437px) {
+    right: 50px;
+    bottom: 100px;
+  }
+  @media (max-width: 330px) {
+    right: 50px;
+    bottom: -10px;
+  }
 `;
 
 const ReviewInputFileBtn = styled.button`
@@ -203,17 +257,43 @@ const ReviewInputFileBtn = styled.button`
   border: 2px solid ${({ theme }) => theme.fontColor};
   color: ${({ theme }) => theme.fontColor};
   font-family: ${({ theme }) => theme.fontFamily};
-`;
 
-const PreveiwImgDelBtn = styled.button`
-  border-style: none;
-  width: 50px;
-  /* padding: 10px; */
-  height: 40px;
-  font-size: 14px;
-  border-radius: 10px;
-  background-color: ${({ theme }) => theme.bgColor};
-  border: 2px solid ${({ theme }) => theme.fontColor};
-  color: ${({ theme }) => theme.fontColor};
-  font-family: ${({ theme }) => theme.fontFamily};
+  @media (max-width: 1010px) {
+    font-size: 0.8em;
+  }
+  @media (max-width: 855px) {
+    font-size: 1em;
+  }
+  @media (max-width: 750px) {
+    font-size: 0.8em;
+  }
+  @media (max-width: 640px) {
+    font-size: 0.6em;
+    width: 100%;
+  }
+  @media (max-width: 450px) {
+    font-size: 0.6em;
+    width: 100%;
+  }
+  @media (max-width: 435px) {
+    font-size: 0.6em;
+    width: 80%;
+  }
+
+  @media (max-width: 435px) {
+    font-size: 0.6em;
+    width: 80%;
+  }
+  @media (max-width: 410px) {
+    font-size: 0.6em;
+    width: 90%;
+  }
+  @media (max-width: 365px) {
+    font-size: 0.6em;
+    width: 100%;
+  }
+  @media (max-width: 340px) {
+    font-size: 0.5em;
+    width: 110%;
+  }
 `;
