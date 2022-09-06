@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { API, USER_TOKEN } from "../../config";
@@ -7,6 +7,7 @@ import Loading from "../../components/Loading";
 import NotValidBtn from "../../components/NotValidBtn";
 
 const QnA = () => {
+  const inputRef = useRef();
   const { qnaId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
@@ -38,8 +39,8 @@ const QnA = () => {
   }, [qnaId, navigate, QNA_LIST]);
 
   const [qnaCommentValue, setQnaCommentValue] = useState("");
-  const qnaCommentHandle = (e) => {
-    setQnaCommentValue(e.target.value);
+  const qnaCommentHandle = (value) => {
+    setQnaCommentValue(value);
   };
   const { content, title, qna_comments } = qnaDetail;
 
@@ -76,9 +77,10 @@ const QnA = () => {
         );
       })
       .then((res) => {
-        const { status } = res;
+        const { status, data } = res;
         alert(`${status}, 댓글이 등록되었습니다.`);
-        window.location.reload();
+        setQnaCommentList([...qnaCommentList, data]);
+        inputRef.current.value = "";
       });
   };
   return (
@@ -151,7 +153,10 @@ const QnA = () => {
           <QnACommentInputWrap>
             <QnACommentInput
               id="commentInput"
-              onChange={qnaCommentHandle}
+              ref={inputRef}
+              onChange={(e) => {
+                qnaCommentHandle(e.target.value);
+              }}
               placeholder="댓글을 입력해 주세요"
               onKeyPress={(e) => {
                 if (e.key === "Enter") {
