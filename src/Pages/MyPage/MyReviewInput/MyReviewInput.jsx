@@ -72,6 +72,7 @@ const MyReviewInput = () => {
                 // onChange={uploadReview}
                 onChange={uploadFile}
               />
+              <PreviewImg src={previewImg && previewImg} />
               <ReviewInputFileContent
                 type="file"
                 onChange={uploadImg}
@@ -80,19 +81,22 @@ const MyReviewInput = () => {
                 id="imageinput"
                 style={{ display: "none" }}
               />
-              <ReviewInputFileBtnContent
-                style={{ marginBottom: "20px" }}
-                htmlFor="imageinput"
-              >
-                파일 선택하기
-              </ReviewInputFileBtnContent>
-              <PreviewImg src={previewImg && previewImg} />
+              <ReviewInputFileBtnWrap>
+                {/* <div style={{ display: "flex", marginTop: "10px" }}> */}
+                <ReviewInputFileBtnContent
+                  style={{ marginBottom: "20px" }}
+                  htmlFor="imageinput"
+                >
+                  파일 선택하기
+                </ReviewInputFileBtnContent>
 
-              {previewImg && (
-                <PreveiwImgDelBtn onClick={prevDeleteHandler}>
-                  삭제
-                </PreveiwImgDelBtn>
-              )}
+                {previewImg && (
+                  <PreveiwImgDelBtn onClick={prevDeleteHandler}>
+                    삭제
+                  </PreveiwImgDelBtn>
+                )}
+                {/* </div> */}
+              </ReviewInputFileBtnWrap>
             </Wrap>
 
             <ReviewInputFileBtn onClick={uploadHandler}>
@@ -112,6 +116,7 @@ const MyReviewInputContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin-bottom: 100px;
   color: ${({ theme }) => theme.fontColor};
   @media (max-width: 580px) {
     width: 100%;
@@ -149,11 +154,17 @@ const ReviewInputWrap = styled.div`
   display: grid;
   grid-template-rows: 50px;
   grid-template-columns: 5fr 1fr;
+  @media (max-width: 400px) {
+    grid-template-rows: 30px 30px;
+    grid-template-columns: 1fr;
+  }
 `;
 
 const Wrap = styled.div`
-  position: relative;
   margin-right: 20px;
+  @media (max-width: 400px) {
+    margin-right: 0px;
+  }
 `;
 
 const ReviewInputContent = styled.input`
@@ -180,11 +191,16 @@ const ReviewInputFileContent = styled.input`
   margin-top: 20px;
 `;
 
+const ReviewInputFileBtnWrap = styled.div`
+  display: flex;
+`;
+
 const ReviewInputFileBtnContent = styled.label`
   display: inline-block;
   text-align: center;
   cursor: pointer;
   border-style: none;
+  height: 40px;
   padding: 10px;
   font-size: 14px;
   border-radius: 10px;
@@ -197,32 +213,28 @@ const ReviewInputFileBtnContent = styled.label`
   }
   @media (max-width: 640px) {
     font-size: 0.6em;
-  }
-  @media (max-width: 330px) {
-    margin-top: 10px;
+    padding: 13px;
   }
 `;
 
 const PreviewImg = styled.img`
   width: 200px;
-  margin-top: 35px;
+  margin-top: 15px;
   padding-left: 10px;
   @media (max-width: 450px) {
     width: 150px;
   }
-  @media (max-width: 330px) {
-    margin-top: 0px;
+  @media (max-width: 400px) {
+    margin-top: 60px;
   }
 `;
 
 const PreveiwImgDelBtn = styled.button`
-  position: relative;
-  right: 240px;
-  bottom: 45px;
   border-style: none;
   width: 40px;
   height: 40px;
   font-size: 14px;
+  margin-left: 10px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.bgColor};
   border: 2px solid ${({ theme }) => theme.fontColor};
@@ -233,17 +245,6 @@ const PreveiwImgDelBtn = styled.button`
   }
   @media (max-width: 640px) {
     font-size: 0.6em;
-  }
-  @media (max-width: 450px) {
-    margin-left: 48px;
-  }
-  @media (max-width: 437px) {
-    right: 50px;
-    bottom: 100px;
-  }
-  @media (max-width: 330px) {
-    right: 50px;
-    bottom: -10px;
   }
 `;
 
@@ -284,16 +285,15 @@ const ReviewInputFileBtn = styled.button`
     font-size: 0.6em;
     width: 80%;
   }
-  @media (max-width: 410px) {
+  @media (max-width: 400px) {
     font-size: 0.6em;
-    width: 90%;
+    width: 100%;
+    margin: 10px 0;
   }
   @media (max-width: 365px) {
     font-size: 0.6em;
-    width: 100%;
   }
   @media (max-width: 340px) {
     font-size: 0.5em;
-    width: 110%;
   }
 `;

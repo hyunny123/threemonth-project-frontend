@@ -22,7 +22,7 @@ const MyReviewEdit = () => {
     axios
       .get(`https://threemonth.shop/orders/reviews/${reviewId}`)
       .then((res) => setReviewEditData(res.data));
-  }, []);
+  }, [reviewId]);
   const uploadEditFile = (e) => {
     const { name, value } = e.target;
     setReviewEditData({ ...reviewEditData, [name]: value });
@@ -36,7 +36,7 @@ const MyReviewEdit = () => {
       if (imgValue.name !== "") {
         formData.append("img", imgValue);
       } else {
-        const img = "img";
+        const img = true;
         formData.append("img_delete", [img]);
       }
       return formData;
@@ -50,14 +50,16 @@ const MyReviewEdit = () => {
       return formData;
     };
     const a = img_url ? existURL() : noURL();
-
+    const patchAPI = a.get("img_delete")
+      ? `https://threemonth.shop/orders/reviews/${reviewId}?img_delete=[img]`
+      : `https://threemonth.shop/orders/reviews/${reviewId}`;
     axios
-      .patch(`https://threemonth.shop/orders/reviews/${reviewId}`, a, {
+      .patch(`${patchAPI}`, a, {
         headers: {
           Authorization: `Bearer ${USER_TOKEN}`,
         },
       })
-      .catch((error) => console.log(error.response))
+      .catch((error) => error(error.response))
       .then((res) => console.log(res));
   };
   const imgHandle = (e) => {
@@ -84,7 +86,7 @@ const MyReviewEdit = () => {
   return (
     <MyReviewInputContainer>
       <MyReviewInputWrap>
-        <MyReviewInputTitle>리뷰 입력</MyReviewInputTitle>
+        <MyReviewInputTitle>리뷰 수정</MyReviewInputTitle>
         <ReviewInputContainer>
           <ReviewInputWrap>
             <Wrap>
@@ -104,22 +106,6 @@ const MyReviewEdit = () => {
                 id="imageinput"
                 style={{ display: "none" }}
               />
-              {!previewImg &&
-                (img_url ? (
-                  <ReviewInputFileBtnContent
-                    style={{ marginBottom: "20px" }}
-                    htmlFor="imageinput"
-                  >
-                    파일 변경하기 Click
-                  </ReviewInputFileBtnContent>
-                ) : (
-                  <ReviewInputFileBtnContent
-                    style={{ marginBottom: "20px" }}
-                    htmlFor="imageinput"
-                  >
-                    파일 추가하기 Click
-                  </ReviewInputFileBtnContent>
-                ))}
 
               {img_url ? (
                 deleteValue ? (
@@ -136,26 +122,45 @@ const MyReviewEdit = () => {
               ) : (
                 <div />
               )}
-              {/* <PreviewImg src={previewImg ? previewImg : img_url && img_url} /> */}
-              {/* {img_url ? <div /> : <button onClick={asdf}>삭제</button>} */}
-              {/* {sdfg && <button onClick={asdf}>삭제</button>} */}
-              {/* {img_url ? (
+              <ReviewInputFileBtnWrap>
+                {!previewImg &&
+                  (img_url ? (
+                    <ReviewInputFileBtnContent
+                      style={{ marginBottom: "20px" }}
+                      htmlFor="imageinput"
+                    >
+                      파일 변경하기 Click
+                    </ReviewInputFileBtnContent>
+                  ) : (
+                    <ReviewInputFileBtnContent
+                      style={{ marginBottom: "20px" }}
+                      htmlFor="imageinput"
+                    >
+                      파일 추가하기 Click
+                    </ReviewInputFileBtnContent>
+                  ))}
+
+                {/* <PreviewImg src={previewImg ? previewImg : img_url && img_url} /> */}
+                {/* {img_url ? <div /> : <button onClick={asdf}>삭제</button>} */}
+                {/* {sdfg && <button onClick={asdf}>삭제</button>} */}
+                {/* {img_url ? (
                 <button onClick={asdf}>삭제</button>
               ) : (
                 previewImg && <button onClick={asdf}>삭제</button>
               )} */}
-              {/* {previewImg ? (
+                {/* {previewImg ? (
                 <button onClick={asdf}>삭제</button>
               ) : (
                 img_url && <button onClick={asdf}>삭제</button>
               )} */}
-              {img_url
-                ? !deleteValue && (
-                    <ImgDelBtn onClick={deleteHandler}>삭제</ImgDelBtn>
-                  )
-                : !deleteValue && (
-                    <ImgDelBtn onClick={deleteHandler}>삭제</ImgDelBtn>
-                  )}
+                {img_url
+                  ? !deleteValue && (
+                      <ImgDelBtn onClick={deleteHandler}>삭제</ImgDelBtn>
+                    )
+                  : !deleteValue && (
+                      <ImgDelBtn onClick={deleteHandler}>삭제</ImgDelBtn>
+                    )}
+              </ReviewInputFileBtnWrap>
             </Wrap>
 
             <ReviewInputFileBtn onClick={postpatch}>
@@ -205,7 +210,7 @@ const ReviewInputContainer = styled.div`
   margin: 20px 0;
   border-radius: 10px;
   width: 100%;
-  min-height: 120px;
+  min-height: 350px;
   background-color: ${({ theme }) => theme.bgColor};
   font-family: ${({ theme }) => theme.fontFamily};
 `;
@@ -213,14 +218,16 @@ const ReviewInputWrap = styled.div`
   display: grid;
   grid-template-rows: 50px;
   grid-template-columns: 5fr 1fr;
+  @media (max-width: 400px) {
+    grid-template-rows: 30px 30px;
+    grid-template-columns: 1fr;
+  }
 `;
-
-const PreviewImg = styled.img`
-  width: 150px;
-`;
-
 const Wrap = styled.div`
   margin-right: 20px;
+  @media (max-width: 400px) {
+    margin-right: 0px;
+  }
 `;
 
 const ReviewInputContent = styled.input`
@@ -235,16 +242,74 @@ const ReviewInputContent = styled.input`
     outline: none;
   }
   font-family: ${({ theme }) => theme.fontFamily};
+  @media (max-width: 1010px) {
+    font-size: 0.8em;
+  }
+  @media (max-width: 640px) {
+    font-size: 0.6em;
+  }
 `;
 
 const ReviewInputFileContent = styled.input`
   margin-top: 20px;
 `;
+const ReviewInputFileBtnWrap = styled.div`
+  display: flex;
+`;
 
 const ReviewInputFileBtnContent = styled.label`
   display: inline-block;
-  margin-top: 15px;
+  text-align: center;
+  align-items: center;
   cursor: pointer;
+  border-style: none;
+  padding: 10px;
+  height: 40px;
+  font-size: 14px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.bgColor};
+  border: 2px solid ${({ theme }) => theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
+  font-family: ${({ theme }) => theme.fontFamily};
+  @media (max-width: 900px) {
+    font-size: 0.8em;
+  }
+  @media (max-width: 640px) {
+    font-size: 0.6em;
+    padding: 13px;
+  }
+`;
+
+const PreviewImg = styled.img`
+  width: 200px;
+  margin-top: 35px;
+  padding-left: 10px;
+  @media (max-width: 450px) {
+    width: 150px;
+  }
+  @media (max-width: 400px) {
+    margin-top: 60px;
+  }
+`;
+
+const ImgDelBtn = styled.button`
+  border-style: none;
+  text-align: center;
+  width: 40px;
+  height: 40px;
+  font-size: 14px;
+  margin-left: 10px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.bgColor};
+  border: 2px solid ${({ theme }) => theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
+  font-family: ${({ theme }) => theme.fontFamily};
+  @media (max-width: 900px) {
+    font-size: 0.8em;
+  }
+  @media (max-width: 640px) {
+    font-size: 0.6em;
+  }
 `;
 
 const ReviewInputFileBtn = styled.button`
@@ -257,16 +322,41 @@ const ReviewInputFileBtn = styled.button`
   border: 2px solid ${({ theme }) => theme.fontColor};
   color: ${({ theme }) => theme.fontColor};
   font-family: ${({ theme }) => theme.fontFamily};
-`;
+  @media (max-width: 1010px) {
+    font-size: 0.8em;
+  }
+  @media (max-width: 855px) {
+    font-size: 1em;
+  }
+  @media (max-width: 750px) {
+    font-size: 0.8em;
+  }
+  @media (max-width: 640px) {
+    font-size: 0.6em;
+    width: 100%;
+  }
+  @media (max-width: 450px) {
+    font-size: 0.6em;
+    width: 100%;
+  }
+  @media (max-width: 435px) {
+    font-size: 0.6em;
+    width: 80%;
+  }
 
-const ImgDelBtn = styled.button`
-  border-style: none;
-  width: 70%;
-  height: 100%;
-  font-size: 16px;
-  border-radius: 10px;
-  background-color: ${({ theme }) => theme.bgColor};
-  border: 2px solid ${({ theme }) => theme.fontColor};
-  color: ${({ theme }) => theme.fontColor};
-  font-family: ${({ theme }) => theme.fontFamily};
+  @media (max-width: 435px) {
+    font-size: 0.6em;
+    width: 80%;
+  }
+  @media (max-width: 400px) {
+    font-size: 0.6em;
+    width: 100%;
+    margin: 10px 0;
+  }
+  @media (max-width: 365px) {
+    font-size: 0.6em;
+  }
+  @media (max-width: 340px) {
+    font-size: 0.5em;
+  }
 `;
