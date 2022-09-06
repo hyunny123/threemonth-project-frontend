@@ -1,39 +1,57 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useNavigate, useParams } from "react-router";
-import { USER_TOKEN } from "../../config";
+import { useLocation, useNavigate, useParams } from "react-router";
+import { API, USER_TOKEN } from "../../config";
 import Loading from "../../components/Loading";
+import NotValidBtn from "../../components/NotValidBtn";
 
 const QnA = () => {
   const { qnaId } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [qnaDetail, setQnaDetail] = useState({
     id: 0,
     content: "",
     title: "",
   });
+  const { QNA_LIST } = API;
   useEffect(() => {
     axios
-      .get(`http://15.164.163.31:8001/announcements/QnA/${qnaId}`, {
+      .get(`${QNA_LIST}/${qnaId}`, {
         headers: {
           Authorization: `Bearer ${USER_TOKEN}`,
           "Content-Type": "application/json",
         },
       })
+      .catch((error) => {
+        const { response } = error;
+        if (response.status === 403) {
+          alert("권한이 없습니다.");
+          navigate(-1);
+        } else {
+          alert("다시 시도해 주세요.");
+          navigate(-1);
+        }
+      })
       .then((res) => setQnaDetail(res.data));
-  }, [qnaId]);
-  const navigate = useNavigate();
+  }, [qnaId, navigate, QNA_LIST]);
+
   const [qnaCommentValue, setQnaCommentValue] = useState("");
   const qnaCommentHandle = (e) => {
-    const { name, value } = e.target;
-    setQnaCommentValue({ ...qnaCommentValue, [name]: value });
+    setQnaCommentValue(e.target.value);
   };
   const { content, title, qna_comments } = qnaDetail;
-  // const [qnaCommentList, setQnaCommentList] = useState(qna_comments);
-  // console.log(qna_comments);
-  // console.log(qnaCommentList);
+
+  const [qnaCommentList, setQnaCommentList] = useState(qna_comments);
+  useEffect(() => {
+    setQnaCommentList(qna_comments);
+  }, [qna_comments]);
   if (qnaDetail.id === 0) {
     return <Loading />;
+  }
+  if (location.state === null) {
+    return <NotValidBtn />;
   }
   const QnADetailInput = () => {
     return {
@@ -43,8 +61,8 @@ const QnA = () => {
   const postComment = () => {
     axios
       .post(
-        `http://15.164.163.31:8001/announcements/QnA/${qnaId}/comments`,
-        { content: qnaCommentValue.comment },
+        `${QNA_LIST}/${qnaId}/comments`,
+        { content: qnaCommentValue },
         {
           headers: {
             Authorization: `Bearer ${USER_TOKEN}`,
@@ -52,12 +70,15 @@ const QnA = () => {
           },
         }
       )
+      .catch((error) => {
+        alert(
+          `error_code: ${error.response.status.toString()}, 다시 시도해 주세요`
+        );
+      })
       .then((res) => {
-        // console.log(res.data);
-        if (res.status === 201) {
-          // setQnaCommentList([qna_comments, res.data]);
-          window.location.reload();
-        }
+        const { status } = res;
+        alert(`${status}, 댓글이 등록되었습니다.`);
+        window.location.reload();
       });
   };
   return (
@@ -68,7 +89,7 @@ const QnA = () => {
         <QnADetailBtnWrap>
           <QnADetailEditBtn
             onClick={() => {
-              navigate(`/qna/${qnaId}/edit`, { state: { data: qnaDetail } });
+              navigate(`/qna/${qnaId}/edit`, { state: { checkValue: true } });
             }}
           >
             수정
@@ -77,15 +98,12 @@ const QnA = () => {
             onClick={() => {
               if (window.confirm("삭제하시겠습니까?")) {
                 axios
-                  .delete(
-                    `http://15.164.163.31:8001/announcements/QnA/${qnaId}`,
-                    {
-                      headers: {
-                        Authorization: `Bearer ${USER_TOKEN}`,
-                        "Content-Type": "application/json",
-                      },
-                    }
-                  )
+                  .delete(`${QNA_LIST}/${qnaId}`, {
+                    headers: {
+                      Authorization: `Bearer ${USER_TOKEN}`,
+                      "Content-Type": "application/json",
+                    },
+                  })
                   .then((res) => {
                     if (res.status === 204) {
                       alert("삭제되었습니다.");
@@ -99,13 +117,13 @@ const QnA = () => {
           </QnADetailEditBtn>
         </QnADetailBtnWrap>
         <QnACommentWrap>
-          {qna_comments &&
-            qna_comments.map((x, idx) => (
+          {qnaCommentList &&
+            qnaCommentList.map((x, idx) => (
               <QnACommentContents key={idx}>
-                <QnACommentContent>{x.id}</QnACommentContent>
+                <QnACommentContent>{x.user_nickname}님</QnACommentContent>
                 <QnACommentContent>{x.content}</QnACommentContent>
                 <QnACommentContent>
-                  {x.created_at.slice(0, 10)}
+                  {x.created_at.slice(5, 10)}
                 </QnACommentContent>
                 <QnACommentContent>
                   <i
@@ -113,15 +131,12 @@ const QnA = () => {
                     onClick={() => {
                       if (window.confirm("삭제하시겠습니까?")) {
                         axios
-                          .delete(
-                            `http://15.164.163.31:8001/announcements/QnA/${qnaId}/comments/${x.id}`,
-                            {
-                              headers: {
-                                Authorization: `Bearer ${USER_TOKEN}`,
-                                "Content-Type": "application/json",
-                              },
-                            }
-                          )
+                          .delete(`${QNA_LIST}/${qnaId}/comments/${x.id}`, {
+                            headers: {
+                              Authorization: `Bearer ${USER_TOKEN}`,
+                              "Content-Type": "application/json",
+                            },
+                          })
                           .then((res) => {
                             if (res.status === 204) {
                               window.location.reload();
@@ -135,7 +150,7 @@ const QnA = () => {
             ))}
           <QnACommentInputWrap>
             <QnACommentInput
-              name="comment"
+              id="commentInput"
               onChange={qnaCommentHandle}
               placeholder="댓글을 입력해 주세요"
               onKeyPress={(e) => {
@@ -144,7 +159,9 @@ const QnA = () => {
                 }
               }}
             />
-            <PostCommentBtn onClick={postComment}>댓글 입력</PostCommentBtn>
+            <PostCommentBtn onClick={postComment}>
+              댓글 <br /> 입력
+            </PostCommentBtn>
           </QnACommentInputWrap>
         </QnACommentWrap>
       </QnADetailWidth>
@@ -193,6 +210,11 @@ const QnADetailEditBtn = styled.button`
   &:nth-child(2) {
     margin-left: 20px;
   }
+  @media (max-width: 500px) {
+    width: 60px;
+    height: 30px;
+    font-size: 14px;
+  }
 `;
 const QnACommentWrap = styled.div`
   box-sizing: border-box;
@@ -211,7 +233,16 @@ const QnACommentInputWrap = styled.div`
   grid-template-rows: 50px;
   grid-template-columns: 8fr 1fr;
   place-items: center;
-  margin-bottom: 20px;
+  margin: 20px 0;
+  @media (max-width: 700px) {
+    grid-template-columns: 6fr 1fr;
+  }
+  @media (max-width: 500px) {
+    grid-template-columns: 4fr 1fr;
+  }
+  @media (max-width: 400px) {
+    grid-template-columns: 3fr 1fr;
+  }
 `;
 const QnACommentInput = styled.input`
   border-style: none;
@@ -224,6 +255,9 @@ const QnACommentInput = styled.input`
     outline: none;
   }
   font-family: ${({ theme }) => theme.fontFamily};
+  @media (max-width: 500px) {
+    font-size: 12px;
+  }
 `;
 const PostCommentBtn = styled.button`
   border-style: none;
@@ -235,23 +269,34 @@ const PostCommentBtn = styled.button`
   border: 2px solid ${({ theme }) => theme.fontColor};
   color: ${({ theme }) => theme.fontColor};
   font-family: ${({ theme }) => theme.fontFamily};
+  @media (max-width: 700px) {
+    font-size: 13px;
+  }
+  @media (max-width: 500px) {
+    font-size: 11px;
+  }
 `;
 const QnACommentContents = styled.div`
-  /* border: 1px solid red; */
   display: grid;
   grid-template-rows: 1fr;
-  grid-template-columns: 0.3fr 8fr 1fr 0.5fr;
+  grid-template-columns: 1fr 8fr 1fr 0.5fr;
   align-items: center;
   box-sizing: border-box;
   padding: 15px;
-  @media (max-width: 500px) {
-    grid-template-columns: 1fr 5fr;
-
-    padding: 10px;
+  border-bottom: 1px solid white;
+  @media (max-width: 700px) {
+    grid-template-columns: 8fr 2fr 0.5fr;
+    grid-template-rows: repeat(2, minmax(10px, auto));
   }
 `;
 const QnACommentContent = styled.p`
   display: grid;
+  font-size: 14px;
+  &:nth-child(1) {
+    box-sizing: border-box;
+    padding-right: 20px;
+    justify-items: center;
+  }
   &:nth-child(3) {
     justify-items: flex-end;
   }
@@ -261,10 +306,18 @@ const QnACommentContent = styled.p`
   i {
     font-size: 20px;
     cursor: pointer;
+    @media (max-width: 700px) {
+      font-size: 12px;
+    }
   }
-  @media (max-width: 500px) {
-    &:nth-child(3) {
-      display: none;
+  @media (max-width: 700px) {
+    font-size: 12px;
+    &:nth-child(1) {
+      width: 100%;
+      justify-items: flex-start;
+      grid-column: 1/4;
+      font-size: 10px;
+      margin-bottom: 5px;
     }
   }
 `;

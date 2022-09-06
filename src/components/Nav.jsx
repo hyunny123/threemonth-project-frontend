@@ -41,9 +41,7 @@ const Nav = () => {
           </Menu>
           <Menu onClick={() => navigate("/qnalist")}>QnA</Menu>
           {USER_TOKEN ? (
-            <Menu onClick={() => alert(`${myPageNotice}`)}>
-              {USER_NICKNAME}님
-            </Menu>
+            <Menu onClick={() => navigate("/mypage")}>{USER_NICKNAME}님</Menu>
           ) : (
             <Menu
               onClick={() => {

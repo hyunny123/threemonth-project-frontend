@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { USER_TOKEN } from "../../../config";
+import { API, USER_TOKEN } from "../../../config";
 import axios from "axios";
 import { useNavigate } from "react-router";
 
 const QnAInput = () => {
   const navigate = useNavigate();
   const [qnaContentsValue, setQnaContentsValue] = useState("");
+  const { QNA_LIST } = API;
   const qnaTitleHandle = (e) => {
     const { name, value } = e.target;
     setQnaContentsValue({
@@ -23,7 +24,7 @@ const QnAInput = () => {
       if (window.confirm("작성 하시겠습니까?")) {
         axios
           .post(
-            `http://15.164.163.31:8001/announcements/QnA`,
+            `${QNA_LIST}`,
             { content, title },
             {
               headers: {
