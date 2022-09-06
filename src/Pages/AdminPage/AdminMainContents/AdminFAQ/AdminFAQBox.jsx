@@ -1,11 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 
-const AdminFAQBox = ({
-  adminFAQList,
-  setAdminFAQEditOpen,
-  adminFAQEditOpen,
-}) => {
+const AdminFAQBox = ({ adminFAQList }) => {
+  const navigate = useNavigate();
   const { id, question, answer, created_at } = adminFAQList;
   const AdminFAQQuestionHTML = () => {
     return {
@@ -26,7 +24,7 @@ const AdminFAQBox = ({
       <i
         className="fa-regular fa-pen-to-square"
         onClick={() => {
-          setAdminFAQEditOpen(!adminFAQEditOpen);
+          navigate(`/admin/${id}`);
         }}
       />
       <i className="fa-solid fa-trash-can" />
