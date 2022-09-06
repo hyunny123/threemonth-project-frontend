@@ -22,6 +22,9 @@ import QnAInput from "./Pages/QnA/QnAInput/QnAInput";
 import NoticeList from "./Pages/Notice/NoticeList/NoticeList";
 import NoticeInput from "./Pages/Notice/NoticeInput/NoticeInput";
 import NoticeEdit from "./Pages/Notice/NoticeEdit/NoticeEdit";
+import MyPage from "./Pages/MyPage/MyPage";
+import MyReviewInput from "./Pages/MyPage/MyReviewInput/MyReviewInput";
+import MyReviewEdit from "./Pages/MyPage/MyReviewEdit/MyReviewEdit";
 
 function Router() {
   return (
@@ -39,7 +42,7 @@ function Router() {
         <Route path="/formlist" element={<FormList />} />
         <Route path="/reserveform" element={<ReserveForm />} />
         <Route path="/formdetail/:formId" element={<FormDetail />} />
-        <Route path="/adminpage" element={<AdminPage />} />
+        <Route path="/admin" element={<AdminPage />} />
         <Route path="/formdetail/:formId/edit" element={<FormEdit />} />
         <Route path="/terms" element={<HomePageTerms />} />
         <Route path="/privacy" element={<Privacy />} />
@@ -51,6 +54,9 @@ function Router() {
         <Route path="/notice/:noticeId" element={<Notice />} />
         <Route path="/noticeinput" element={<NoticeInput />} />
         <Route path="/notice/:noticeId/edit" element={<NoticeEdit />} />
+        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/myreviewinput" element={<MyReviewInput />} />
+        <Route path="/mypage/:reviewId/edit" element={<MyReviewEdit />} />
       </Routes>
       <Footer />
     </BrowserRouter>
