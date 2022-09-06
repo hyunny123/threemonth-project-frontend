@@ -19,17 +19,13 @@ const MyOrderList = ({ orderList }) => {
         <MyPageListBox>
           <ListBox>
             <ListBoxMenu>
-              {/* <MenuNum>글 번호</MenuNum> */}
               <MenuDate>주문 날짜</MenuDate>
               <MenuTitle>주문타이틀</MenuTitle>
-
-              {/* <MenuIsReviewChecked>리뷰확인</MenuIsReviewChecked> */}
             </ListBoxMenu>
           </ListBox>
           <List>
             {orderList.map((list, idx) => (
               <ListBoxContents key={idx}>
-                {/* <ListBoxContent>{list.id}</ListBoxContent> */}
                 <ListBoxContent>{list.created_at.slice(0, 10)}</ListBoxContent>
                 <ListBoxContent
                   onClick={() => {
@@ -38,20 +34,6 @@ const MyOrderList = ({ orderList }) => {
                 >
                   {list.title}
                 </ListBoxContent>
-                {/* <ListBoxContent>{list.created_at}</ListBoxContent> */}
-                {/* <ListBoxContentBtnWrap>
-                  {list.review_id ? (
-                    <ListBoxContentReviewBtn>작성완료</ListBoxContentReviewBtn>
-                  ) : (
-                    <ListBoxContentBtn
-                      onClick={() => {
-                        navigate("/myreviewinput/");
-                      }}
-                    >
-                      {list.review_id}리뷰쓰기
-                    </ListBoxContentBtn>
-                  )}
-                </ListBoxContentBtnWrap> */}
               </ListBoxContents>
             ))}
           </List>
@@ -118,15 +100,6 @@ const ListBoxMenu = styled.div`
   box-sizing: border-box;
   border-bottom: 4px solid ${(props) => props.theme.bgColor};
   margin-top: 50px;
-  /* @media (max-width: 580px) {
-    grid-template-columns: 0.5fr 3fr 1fr 1fr ;
-    grid-template-rows: 30px;
-  }
-  @media (max-width: 450px) {
-    grid-template-columns: 0.5fr 2fr 1fr;
-    grid-template-rows: 20px;
-    font-size: 14px;
-  } */
 `;
 const MenuDate = styled.div`
   display: flex;
@@ -138,27 +111,6 @@ const MenuDate = styled.div`
 `;
 const MenuTitle = styled(MenuDate)`
   @media (max-width: 580px) {
-  }
-`;
-
-// const MenuDate = styled(MenuDate)`
-//   @media (max-width: 580px) {
-//     justify-content: flex-end;
-//     box-sizing: border-box;
-//     padding: 0 10px;
-//   }
-// `;
-
-const MenuIsReviewChecked = styled.div`
-  display: flex;
-  justify-content: center;
-  /* @media (max-width: 450px) {
-    display: none;
-  } */
-  @media (max-width: 580px) {
-    justify-content: flex-end;
-    box-sizing: border-box;
-    padding: 0 10px;
   }
 `;
 

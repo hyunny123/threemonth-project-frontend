@@ -72,21 +72,29 @@ const ListBox = styled.div`
 
 const ListBoxMenu = styled.div`
   display: grid;
-  grid-template-columns: 0.9fr 3fr 0.4fr;
+  grid-template-columns: 0.5fr 4fr 0.4fr;
   grid-template-rows: 30px;
   box-sizing: border-box;
   border-bottom: 4px solid ${(props) => props.theme.bgColor};
   margin-top: 50px;
   margin-bottom: 20px;
-  /* @media (max-width: 580px) {
-    grid-template-columns: 0.5fr 3fr 1fr 1fr ;
+  @media (max-width: 1400px) {
+    grid-template-columns: 0.6fr 4fr 0.6fr;
+    grid-template-rows: 30px;
+  }
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr 4fr 0.8fr;
+    grid-template-rows: 30px;
+  }
+  @media (max-width: 610px) {
+    grid-template-columns: 1fr 3fr 0.8fr;
     grid-template-rows: 30px;
   }
   @media (max-width: 450px) {
-    grid-template-columns: 0.5fr 2fr 1fr;
+    grid-template-columns: 1fr 3fr 1fr;
     grid-template-rows: 20px;
     font-size: 14px;
-  } */
+  }
 `;
 const List = styled.ul`
   width: 100%;
@@ -105,6 +113,12 @@ const NoContentWrap = styled.div`
 
 const NoContent = styled.p`
   color: ${({ theme }) => theme.fontColor};
+  @media (max-width: 610px) {
+    font-size: 0.8em;
+  }
+  @media (max-width: 450px) {
+    font-size: 0.6em;
+  }
 `;
 
 const MenuNum = styled.div`
@@ -115,12 +129,6 @@ const MenuNum = styled.div`
     font-size: 13px;
   }
 `;
-
-// const MenuTitle = styled(MenuNum)`
-//   @media (max-width: 580px) {
-//   }
-// `;
-
 const MenuDate = styled(MenuNum)`
   @media (max-width: 580px) {
     justify-content: flex-end;

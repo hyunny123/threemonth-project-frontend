@@ -48,7 +48,11 @@ const MyOrderReviewWrap = styled.div`
 
 const MyOrderReviewTitle = styled.p`
   font-size: 1.6em;
+  @media (max-width: 768px) {
+    font-size: 1.2em;
+  }
   @media (max-width: 580px) {
+    font-size: 1em;
     padding: 0 20px;
   }
 `;
@@ -72,29 +76,36 @@ const ListBox = styled.div`
 
 const ListMenu = styled.div`
   display: grid;
-  grid-template-columns: 1.5fr 5fr 1fr;
+  grid-template-columns: 1fr 5fr 1fr;
   grid-template-rows: 30px;
   box-sizing: border-box;
   border-bottom: 4px solid ${(props) => props.theme.bgColor};
   margin-top: 50px;
-  margin-bottom: 20px;
-  /* @media (max-width: 580px) {
-    grid-template-columns: 0.5fr 3fr 1fr 1fr ;
+  /* margin-bottom: 20px; */
+  @media (max-width: 768px) {
+    grid-template-columns: 1.3fr 5fr 1.5fr;
     grid-template-rows: 30px;
   }
+  @media (max-width: 610px) {
+    grid-template-columns: 1.2fr 4fr 1.6fr;
+    grid-template-rows: 25px;
+  }
   @media (max-width: 450px) {
-    grid-template-columns: 0.5fr 2fr 1fr;
+    grid-template-columns: 1fr 4fr 1.5fr;
     grid-template-rows: 20px;
     font-size: 14px;
-  } */
+  }
 `;
 
 const MenuDate = styled.div`
   display: flex;
   justify-content: center;
 
-  @media (max-width: 580px) {
-    font-size: 13px;
+  @media (max-width: 610px) {
+    font-size: 0.8em;
+  }
+  @media (max-width: 450px) {
+    font-size: 0.6em;
   }
 `;
 
@@ -103,11 +114,21 @@ const MenuTitle = styled(MenuDate)``;
 const MenuIsReviewChecked = styled.div`
   display: flex;
   justify-content: center;
-  @media (max-width: 580px) {
-    justify-content: flex-end;
+  @media (max-width: 768px) {
+    justify-content: center;
     box-sizing: border-box;
     padding: 0 10px;
-    font-size: 13px;
+    font-size: 1em;
+  }
+  @media (max-width: 610px) {
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 0 10px;
+    font-size: 0.8em;
+  }
+
+  @media (max-width: 450px) {
+    font-size: 0.6em;
   }
 `;
 
@@ -128,57 +149,10 @@ const NoContentWrap = styled.div`
 
 const NoContent = styled.p`
   color: ${({ theme }) => theme.fontColor};
-`;
-
-const OrderReviewWrapper = styled.div`
-  border-style: none;
-  display: grid;
-  grid-template-columns: 1.5fr 5fr 1fr;
-  width: 100%;
-  background-color: white;
-  font-family: ${({ theme }) => theme.fontFamily};
-  border-bottom: 1px solid ${(props) => props.theme.bgColor};
-  font-size: 1em;
-  box-sizing: border-box;
-  padding: 10px 10px;
-`;
-const OrderReviewUserType = styled.p`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  @media (max-width: 768px) {
-    font-size: 0.7em;
+  @media (max-width: 610px) {
+    font-size: 0.8em;
   }
-  @media (max-width: 580px) {
-    font-size: 10px;
-    &:nth-child(3) {
-      justify-content: flex-end;
-    }
+  @media (max-width: 450px) {
+    font-size: 0.6em;
   }
-`;
-const OrderReviewUserTitle = styled(OrderReviewUserType)`
-  justify-content: flex-start;
-  align-items: center;
-  text-align: start;
-`;
-
-const OrderReviewBtnWrap = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-left: 20px;
-`;
-
-const OrderReviewBtn = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-style: none;
-  border-radius: 5px;
-  background-color: ${({ theme }) => theme.bgColor};
-  color: ${({ theme }) => theme.fontColor};
-  width: 80px;
-  height: 40px;
-  font-family: ${({ theme }) => theme.fontFamily};
-  cursor: pointer;
 `;

@@ -168,10 +168,6 @@ const MenuNum = styled.div`
     font-size: 0.6em;
   }
 `;
-// const MenuTitle = styled(MenuNum)`
-//   @media (max-width: 580px) {
-//   }
-// `;
 
 const MenuTitle = styled(MenuNum)`
   @media (max-width: 610px) {
@@ -187,9 +183,6 @@ const MenuIsReviewChecked = styled.div`
   @media (max-width: 610px) {
     font-size: 0.8em;
   }
-  /* @media (max-width: 450px) {
-    display: none;
-  } */
 `;
 
 const MyReviewListWrapper = styled.div`

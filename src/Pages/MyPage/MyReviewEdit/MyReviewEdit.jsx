@@ -8,7 +8,6 @@ import { USER_TOKEN } from "../../../config";
 const MyReviewEdit = () => {
   const navigate = useNavigate();
   const { reviewId } = useParams();
-  // console.log(params);
   const [reviewEditData, setReviewEditData] = useState({
     content: "",
     img_url: "",
@@ -16,7 +15,7 @@ const MyReviewEdit = () => {
   const [imgValue, setImgValue] = useState({ name: "" });
   const [previewImg, setPreviewImg] = useState(null);
   const [deleteValue, setDeleteValue] = useState(false);
-  const { content, id, img_url, order } = reviewEditData;
+  const { content, img_url } = reviewEditData;
 
   useEffect(() => {
     axios
@@ -27,7 +26,6 @@ const MyReviewEdit = () => {
     const { name, value } = e.target;
     setReviewEditData({ ...reviewEditData, [name]: value });
   };
-  // console.log(imgValue);
 
   const postpatch = () => {
     const existURL = () => {
@@ -49,18 +47,19 @@ const MyReviewEdit = () => {
       }
       return formData;
     };
-    const a = img_url ? existURL() : noURL();
-    const patchAPI = a.get("img_delete")
+    const imgURL = img_url ? existURL() : noURL();
+    const patchAPI = imgURL.get("img_delete")
       ? `https://threemonth.shop/orders/reviews/${reviewId}?img_delete=[img]`
       : `https://threemonth.shop/orders/reviews/${reviewId}`;
     axios
-      .patch(`${patchAPI}`, a, {
+      .patch(`${patchAPI}`, imgURL, {
         headers: {
           Authorization: `Bearer ${USER_TOKEN}`,
         },
       })
       .catch((error) => error(error.response))
-      .then((res) => console.log(res));
+      .then((res) => setReviewEditData(res.data));
+    navigate("/mypage");
   };
   const imgHandle = (e) => {
     const { files } = e.target;
@@ -100,7 +99,6 @@ const MyReviewEdit = () => {
               <ReviewInputFileContent
                 type="file"
                 onChange={imgHandle}
-                // value={reviewEditData.img_url}
                 accept="image/*"
                 name="img"
                 id="imageinput"
@@ -140,19 +138,6 @@ const MyReviewEdit = () => {
                     </ReviewInputFileBtnContent>
                   ))}
 
-                {/* <PreviewImg src={previewImg ? previewImg : img_url && img_url} /> */}
-                {/* {img_url ? <div /> : <button onClick={asdf}>삭제</button>} */}
-                {/* {sdfg && <button onClick={asdf}>삭제</button>} */}
-                {/* {img_url ? (
-                <button onClick={asdf}>삭제</button>
-              ) : (
-                previewImg && <button onClick={asdf}>삭제</button>
-              )} */}
-                {/* {previewImg ? (
-                <button onClick={asdf}>삭제</button>
-              ) : (
-                img_url && <button onClick={asdf}>삭제</button>
-              )} */}
                 {img_url
                   ? !deleteValue && (
                       <ImgDelBtn onClick={deleteHandler}>삭제</ImgDelBtn>
@@ -223,7 +208,7 @@ const ReviewInputWrap = styled.div`
     grid-template-columns: 1fr;
   }
 `;
-const Wrap = styled.div`
+const Wrap = styled.form`
   margin-right: 20px;
   @media (max-width: 400px) {
     margin-right: 0px;

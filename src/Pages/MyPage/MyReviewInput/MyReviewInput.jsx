@@ -35,7 +35,7 @@ const MyReviewInput = () => {
   const prevDeleteHandler = () => {
     setImgValue();
     setPreviewImg(null);
-    setDeleteValue(true);
+    setDeleteValue(!deleteValue);
   };
 
   const uploadHandler = (e) => {
@@ -46,18 +46,19 @@ const MyReviewInput = () => {
     formData.append("title", "title_test");
     formData.append("order", location.state.selectedId);
 
-    console.log(formData);
-
     axios
       .post(`http://15.164.163.31:8001/orders/reviews`, formData, {
         headers: {
           Authorization: `Bearer ${USER_TOKEN}`,
         },
       })
-      .catch((error) => console.log(error.response))
-      .then((res) => setUploadDataForm(res.data));
-    navigate(-1);
+      .catch((error) => error(error.response))
+      .then((res) => {
+        setUploadDataForm(res.data);
+        navigate("/mypage");
+      });
   };
+
   return (
     <MyReviewInputContainer>
       <MyReviewInputWrap>
@@ -69,7 +70,6 @@ const MyReviewInput = () => {
                 type="text"
                 name="content"
                 placeholder="리뷰를 입력해주세요."
-                // onChange={uploadReview}
                 onChange={uploadFile}
               />
               <PreviewImg src={previewImg && previewImg} />
@@ -82,7 +82,6 @@ const MyReviewInput = () => {
                 style={{ display: "none" }}
               />
               <ReviewInputFileBtnWrap>
-                {/* <div style={{ display: "flex", marginTop: "10px" }}> */}
                 <ReviewInputFileBtnContent
                   style={{ marginBottom: "20px" }}
                   htmlFor="imageinput"
@@ -95,7 +94,6 @@ const MyReviewInput = () => {
                     삭제
                   </PreveiwImgDelBtn>
                 )}
-                {/* </div> */}
               </ReviewInputFileBtnWrap>
             </Wrap>
 

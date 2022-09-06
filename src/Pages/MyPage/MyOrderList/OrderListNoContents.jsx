@@ -9,10 +9,8 @@ const OrderListNoContents = ({ reviewList }) => {
         <MyPageListBox>
           <ListBox>
             <ListBoxMenu>
-              <MenuNum>글 번호</MenuNum>
-              <MenuTitle>주문타이틀</MenuTitle>
               <MenuDate>주문 날짜</MenuDate>
-              <MenuIsReviewChecked>리뷰확인</MenuIsReviewChecked>
+              <MenuTitle>주문타이틀</MenuTitle>
             </ListBoxMenu>
           </ListBox>
           <List>
@@ -52,6 +50,10 @@ const MyPageListTitle = styled.p`
   @media (max-width: 580px) {
     padding: 0 20px;
   }
+  @media (max-width: 580px) {
+    font-size: 1em;
+    padding: 0 20px;
+  }
 `;
 
 const MyPageListBox = styled.div`
@@ -74,22 +76,13 @@ const ListBox = styled.div`
 
 const ListBoxMenu = styled.div`
   display: grid;
-  grid-template-columns: 0.5fr 3fr 1fr 1fr;
-  grid-template-rows: 50px;
+  grid-template-columns: 1fr 5fr;
+  grid-template-rows: 30px;
   box-sizing: border-box;
   border-bottom: 4px solid ${(props) => props.theme.bgColor};
   margin-top: 50px;
-  /* @media (max-width: 580px) {
-    grid-template-columns: 0.5fr 3fr 1fr 1fr ;
-    grid-template-rows: 30px;
-  }
-  @media (max-width: 450px) {
-    grid-template-columns: 0.5fr 2fr 1fr;
-    grid-template-rows: 20px;
-    font-size: 14px;
-  } */
 `;
-const MenuNum = styled.div`
+const MenuDate = styled.div`
   display: flex;
   justify-content: center;
 
@@ -97,27 +90,10 @@ const MenuNum = styled.div`
     font-size: 13px;
   }
 `;
-const MenuTitle = styled(MenuNum)`
+const MenuTitle = styled(MenuDate)`
   @media (max-width: 580px) {
   }
 `;
-
-const MenuDate = styled(MenuNum)`
-  @media (max-width: 580px) {
-    justify-content: flex-end;
-    box-sizing: border-box;
-    padding: 0 10px;
-  }
-`;
-
-const MenuIsReviewChecked = styled.div`
-  display: flex;
-  justify-content: center;
-  @media (max-width: 450px) {
-    display: none;
-  }
-`;
-
 const List = styled.ul`
   width: 100%;
   min-height: 100px;
@@ -134,4 +110,10 @@ const NoContentWrap = styled.div`
 `;
 const NoContent = styled.p`
   color: ${({ theme }) => theme.fontColor};
+  @media (max-width: 610px) {
+    font-size: 0.8em;
+  }
+  @media (max-width: 450px) {
+    font-size: 0.6em;
+  }
 `;

@@ -22,7 +22,10 @@ const FormEdit = () => {
           "Content-Type": "application/json",
         },
       })
-      .then((res) => setEditData(res.data));
+      .then((res) => {
+        setEditData(res.data);
+        navigate("/mypage");
+      });
   }, [formId, navigate, GET_FORM_EDIT_DATA]);
 
   if (location.state === null) {

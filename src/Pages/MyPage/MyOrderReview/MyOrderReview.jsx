@@ -104,7 +104,6 @@ const ListMenu = styled.div`
   box-sizing: border-box;
   border-bottom: 4px solid ${(props) => props.theme.bgColor};
   margin-top: 50px;
-  /* margin-bottom: 20px; */
   @media (max-width: 768px) {
     grid-template-columns: 1.3fr 5fr 1.5fr;
     grid-template-rows: 30px;
@@ -148,9 +147,7 @@ const MenuIsReviewChecked = styled.div`
     padding: 0 10px;
     font-size: 0.8em;
   }
-  @media (max-width: 610px) {
-    font-size: 0.8em;
-  }
+
   @media (max-width: 450px) {
     font-size: 0.6em;
   }

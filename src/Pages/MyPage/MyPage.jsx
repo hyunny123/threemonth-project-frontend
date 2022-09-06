@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { API, USER_TOKEN } from "../../config";
+import { USER_TOKEN } from "../../config";
 import styled from "styled-components";
 
 import MyOrderList from "./MyOrderList/MyOrderList";
@@ -15,7 +15,7 @@ const MyPage = () => {
       created_at: "",
     },
   ]);
-  // console.log(orderList);
+
   const [orderReviewList, setOrderReviewList] = useState([
     {
       id: 0,
@@ -23,7 +23,7 @@ const MyPage = () => {
       title: "",
     },
   ]);
-  // console.log(orderReviewList);
+
   const [reviewList, setReviewList] = useState([
     {
       id: 0,
@@ -31,7 +31,7 @@ const MyPage = () => {
       order: 0,
     },
   ]);
-  // console.log(reviewList);
+
   useEffect(() => {
     axios
       .get(`https://threemonth.shop/orders/userorders?all=True`, {
