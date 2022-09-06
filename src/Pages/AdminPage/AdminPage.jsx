@@ -4,11 +4,11 @@ import AdminProductList from "./AdminMainContents/AdminProduct/AdminProductList"
 import AdminOrderedList from "./AdminMainContents/AdminOrderedList/AdminOrderedList";
 import AdminReviews from "./AdminMainContents/AdminReview/AdminReviews";
 import AdminPageAside from "./AdminPageAside";
-import AdminFAQ from "./AdminMainContents/FAQList/AdminFAQ";
+import AdminFAQ from "./AdminMainContents/AdminFAQ/AdminFAQ";
 // import AdminNotice from "./AdminMainContents/NoticeList/AdminNotice";
 
 const AdminPage = () => {
-  const [asideState, setAsideState] = useState("productHandle");
+  const [asideState, setAsideState] = useState("faq");
   const switchStatus = (status) => {
     switch (status) {
       case "orderedList":
