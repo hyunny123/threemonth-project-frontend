@@ -2,9 +2,11 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Loading from "../../../../components/Loading";
+import AdminAddProduct from "./AdminAddProduct";
 import AdminProductListBox from "./AdminProductListBox";
 
 const AdminProductList = () => {
+  const [addProductOpen, setAddProductOpen] = useState(false);
   const [adminProduct, setAdminProduct] = useState([
     {
       id: 0,
@@ -32,8 +34,15 @@ const AdminProductList = () => {
         <AdminProductListBox props={breadList} />
         <AdminProductListCakeTitle>케이크</AdminProductListCakeTitle>
         <AdminProductListBox props={cakeList} />
-        <AdminAddProduct>상품 추가하기</AdminAddProduct>
       </AdminProductBoxs>
+      <AdminAddProductBtn
+        onClick={() => {
+          setAddProductOpen(!addProductOpen);
+        }}
+      >
+        상품 추가하기
+      </AdminAddProductBtn>
+      {addProductOpen && <AdminAddProduct />}
     </AdminProductContainer>
   );
 };
@@ -64,17 +73,15 @@ const AdminProductListBreadTitle = styled.p`
 `;
 
 const AdminProductListCakeTitle = styled(AdminProductListBreadTitle)``;
-const AdminAddProduct = styled.button`
+const AdminAddProductBtn = styled.button`
   border-style: none;
-  margin-top: 100px;
-  margin-left: 10px;
-  width: 100px;
-  height: 50px;
-  border-radius: 5px;
-  font-size: 20px;
+  box-sizing: border-box;
+  padding: 10px;
+  border: 1px solid ${({ theme }) => theme.fontColor};
   background-color: ${({ theme }) => theme.bgColor};
-  color: ${({ theme }) => theme.fontColor};
-  font-weight: bold;
+  border-radius: 10px;
+  width: 200px;
+  font-size: 18px;
   font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;
 `;

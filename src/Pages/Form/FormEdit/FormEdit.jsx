@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 import Loading from "../../../components/Loading";
 import NotValidBtn from "../../../components/NotValidBtn";
 import { USER_TOKEN, API } from "../../../config";
@@ -10,7 +10,6 @@ import PackageFormEdit from "./PackageFormEdit.jsx";
 
 const FormEdit = () => {
   const location = useLocation();
-  const navigate = useNavigate();
   const { formId } = useParams();
   const [editData, setEditData] = useState({ id: 0, type: "cake" });
   const { GET_FORM_EDIT_DATA } = API;
@@ -24,9 +23,8 @@ const FormEdit = () => {
       })
       .then((res) => {
         setEditData(res.data);
-        navigate("/mypage");
       });
-  }, [formId, navigate, GET_FORM_EDIT_DATA]);
+  }, [formId, GET_FORM_EDIT_DATA]);
 
   if (location.state === null) {
     return <NotValidBtn />;

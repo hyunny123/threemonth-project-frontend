@@ -4,14 +4,12 @@ import styled from "styled-components";
 import { API } from "../../../../config";
 import AdminFAQAdd from "./AdminFAQAdd";
 import AdminFAQBox from "./AdminFAQBox";
-import AdminFAQEdit from "./AdminFAQEdit";
 
 const AdminFAQ = () => {
   const [adminFAQList, setAdminFAQList] = useState([
     { id: 0, question: "", answer: "", created_at: "" },
   ]);
   const [adminFAQAddOpen, setAdminFAQAddOpen] = useState(false);
-  const [adminFAQEditOpen, setAdminFAQEditOpen] = useState(false);
   const { FAQ_LIST } = API;
   useEffect(() => {
     axios
@@ -26,30 +24,27 @@ const AdminFAQ = () => {
       <AdminFAQListBoxs>
         {adminFAQList.map((x, idx) => (
           <AdminFAQLists key={idx}>
-            <AdminFAQBox
-              adminFAQList={x}
-              adminFAQEditOpen={adminFAQEditOpen}
-              setAdminFAQEditOpen={setAdminFAQEditOpen}
-            />
+            <AdminFAQBox adminFAQList={x} />
           </AdminFAQLists>
         ))}
       </AdminFAQListBoxs>
-      <AdminFAQAddBtn
-        onClick={() => {
-          setAdminFAQAddOpen(!adminFAQAddOpen);
-        }}
-      >
-        FAQ 추가하기
-      </AdminFAQAddBtn>
-      {adminFAQAddOpen && (
-        <AdminFAQAdd
-          adminFAQAddOpen={adminFAQAddOpen}
-          setAdminFAQAddOpen={setAdminFAQAddOpen}
-          setAdminFAQList={setAdminFAQList}
-          adminFAQList={adminFAQList}
-        />
-      )}
-      {adminFAQEditOpen && <AdminFAQEdit />}
+      <AdminFAQAddContain>
+        <AdminFAQAddBtn
+          onClick={() => {
+            setAdminFAQAddOpen(!adminFAQAddOpen);
+          }}
+        >
+          FAQ 추가하기
+        </AdminFAQAddBtn>
+        {adminFAQAddOpen && (
+          <AdminFAQAdd
+            adminFAQAddOpen={adminFAQAddOpen}
+            setAdminFAQAddOpen={setAdminFAQAddOpen}
+            setAdminFAQList={setAdminFAQList}
+            adminFAQList={adminFAQList}
+          />
+        )}
+      </AdminFAQAddContain>
     </AdminFAQWrap>
   );
 };
@@ -103,4 +98,9 @@ const AdminFAQLists = styled.div`
   padding: 15px;
   background-color: ${({ theme }) => theme.bgColor};
   align-items: center;
+`;
+
+const AdminFAQAddContain = styled.div`
+  box-sizing: border-box;
+  padding: 20px;
 `;

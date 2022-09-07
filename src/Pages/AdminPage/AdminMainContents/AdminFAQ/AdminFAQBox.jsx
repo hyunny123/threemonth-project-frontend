@@ -24,7 +24,7 @@ const AdminFAQBox = ({ adminFAQList }) => {
       <i
         className="fa-regular fa-pen-to-square"
         onClick={() => {
-          navigate(`/admin/${id}`);
+          navigate(`/admin/faqEdit/${id}`);
         }}
       />
       <i className="fa-solid fa-trash-can" />
