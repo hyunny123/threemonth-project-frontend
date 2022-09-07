@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router";
 import styled from "styled-components";
-import Loading from "../../../components/Loading";
-import NoticeListBox from "./NoticeListBox/NoticeListBox";
+import axios from "axios";
+import Loading from "../../components/Loading";
+import NoticeListNoContents from "./NoticeListNoContents";
+import NoticeListBox from "./NoticeListBox";
 
 const NoticeList = () => {
   const navigate = useNavigate();
@@ -24,6 +26,12 @@ const NoticeList = () => {
   //   return <NoticeListNoContents />;
   // }
 
+  // useEffect(() => {
+  //   axios
+  //     .get(`https://threemonth.shop/announcement/notices`)
+  //     .then((res) => setNoticeFormList(res.data));
+  // });
+
   // const sortedNoticeList = [...noticeFormList]
   //   .sort(function (a, b) {
   //     if (a.id > b.id) {
@@ -43,6 +51,7 @@ const NoticeList = () => {
     <NoticeFormListContainer>
       <NoticeFormList>
         <NoticFormTitle>공지사항</NoticFormTitle>
+        {/* <NoticeListBox noticeFormList={noticeFormList} /> */}
         <NoticeListBox />
         {/* {USER_TOKEN ? (
           <NoticeWriteBtnWrapper>

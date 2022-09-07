@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import styled from "styled-components";
 // import noticeData from "./noticeData.json";
 
-const noticeData = [
+const noticeFormList = [
   {
     id: 1,
     created_at: "2022-08-15",
@@ -29,9 +29,9 @@ const noticeData = [
 
 const NoticeListBox = () => {
   const navigate = useNavigate();
-  const goNoticeDetail = (id) => {
-    navigate(`/notice/${id}`);
-  };
+  // const goNoticeDetail = (id) => {
+  //   navigate(`/noticedetail/${id}`);
+  // };
   return (
     <NoticeListBoxContainer>
       <ListBox>
@@ -41,12 +41,12 @@ const NoticeListBox = () => {
           <MenuDate>작성일</MenuDate>
         </NoticeBoxListMenu>
         <NoticeList>
-          {noticeData.map((list, idx) => (
+          {noticeFormList.map((list, idx) => (
             <NoticeListContents key={idx}>
               <NoticeListBoxContent>{list.id}</NoticeListBoxContent>
               <NoticeListBoxContent
                 onClick={() => {
-                  goNoticeDetail(list.id);
+                  navigate(`/noticedetail/${list.id}`);
                 }}
               >
                 {list.title}
@@ -143,4 +143,5 @@ const NoticeListContents = styled.div`
 const NoticeListBoxContent = styled.div`
   display: flex;
   justify-content: center;
+  cursor: pointer;
 `;

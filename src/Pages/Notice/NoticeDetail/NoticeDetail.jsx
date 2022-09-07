@@ -2,29 +2,32 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
 import styled from "styled-components";
-import { USER_TOKEN } from "../../config";
-import NoticeListNoContents from "./NoticeListNoContents";
-import Loading from "../../components/Loading";
-import NotValidBtn from "../../components/NotValidBtn";
+import { USER_TOKEN } from "../../../config";
+import NoticeListNoContents from "../NoticeListNoContents";
+import Loading from "../../../components/Loading";
+import NotValidBtn from "../../../components/NotValidBtn";
 
-const Notice = () => {
+const NoticeDetail = () => {
   // const [noticeDetailData, setNoticeDetailData] = useState({
   //   id: 0,
   //   title: "",
   //   content: "",
+  //   created_at:"",
   // });
+  //const { id, title, created_at, content } = noticeDetailData;
+
   // const params = useParams();
   const location = useLocation();
   const navigate = useNavigate();
+
+  // useEffect = () => {
+  //   axios.get(`url${params.noticeId}`).then((res) => setNoticeDetailData(res.data));
+  // ,[]};
 
   // const noticeEditHandler = (e) => {
   //   const { name, value } = e.target;
   //   setNoticeDetailData({ ...noticeDetailData, [name]: value });
   // };
-
-  // useEffect = () => {
-  //   axios.get(`url${params.noticeId}`).then((res) => setNoticeDetailData(res.data));
-  // ,[]};
 
   // const noticeDetailInput = () => {
   //   const sortValue = content.replace(/\n/g, "<br>\n");
@@ -33,9 +36,9 @@ const Notice = () => {
   //   };
   // };
 
-  if (location.state === null) {
-    return <NotValidBtn />;
-  }
+  // if (location.state === null) {
+  //   return <NotValidBtn />;
+  // }
 
   // if (noticeData.id === 0) {
   //   return <Loading />;
@@ -45,23 +48,17 @@ const Notice = () => {
       <NoticeDetailForm>
         <NoticeDetailFormTitle>공지사항 상세페이지</NoticeDetailFormTitle>
         <NoticeDetailInputWrapper>
-          <NoticeDetailTitle
-            type="text"
-            // onChange={noticeEditHandler}
-            name="noticetitle"
-            placeholder="제목을 입력하세요."
-          />
-
+          {/* <NoticeDetailTitle name="noticetitle">{title}</NoticeDetailTitle> */}
+          <NoticeDetailTitle name="noticetitle">
+            신제품이 나왔습니다!!!!!!
+          </NoticeDetailTitle>
+          {/* <NoticeDetailDate>작성일자 : {created_at}</NoticeDetailDate> */}
           <NoticeDetailDate>작성일자 : 2022.08.21</NoticeDetailDate>
-          <NoticeDetailContent
-            type="text"
-            name="noticeContent"
-            // onChange={noticeEditHandler}
-            placeholder="내용을 입력해주세요."
-            wrap="hard"
-            rows="20"
-            cols="20"
-          >
+
+          {/* <NoticeDetailContent name="noticeContent">
+            {content}
+          </NoticeDetailContent> */}
+          <NoticeDetailContent name="noticeContent">
             {/* dangerouslySetInnerHTML={noticeDetailInput} */}
             신제품이 나왔어요!!!!
           </NoticeDetailContent>
@@ -78,7 +75,7 @@ const Notice = () => {
           <NoticeDetailUpdateBtn
           // onClick={() => {
           //   if (is_staff) {
-          //     navigate(`/notice/${noticeid}`, {
+          //     navigate(`/notice/${noticeId}/edit`, {
           //       state: { editCheck: true },
           //     });
           //   }else {
@@ -106,26 +103,8 @@ const Notice = () => {
           //           }
           //         });
           //     }
-          //   } else {
-          //     if (is_staff) {
-          //       if (
-          //         window.confirm("컨펌 완료 상태입니다. 삭제하시겠습니까?")
-          //       ) {
-          //         axios
-          //           .delete(`${NOTICE_FORM}${id}`, {
-          //             headers: {
-          //               Authorization: `Bearer ${USER_TOKEN}`,
-          //               "Content-Type": "application/json;charset=UTF-8",
-          //             },
-          //           })
-          //           .then((res) => {
-          //             if (res.status === 204) {
-          //               alert("삭제되었습니다.");
-          //               navigate("/noticelist");
-          //             }
-          //           });
-          //       }
-          //     }
+          //   } else{
+          //      alert("접근 권한이 제한되었습니다.");
           //   }
           // }}
           >
@@ -137,7 +116,7 @@ const Notice = () => {
   );
 };
 
-export default Notice;
+export default NoticeDetail;
 
 const NoticeDetailContainer = styled.div`
   display: flex;

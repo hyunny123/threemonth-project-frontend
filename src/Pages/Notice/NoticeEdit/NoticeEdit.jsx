@@ -1,167 +1,253 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import styled from "styled-components";
 import { USER_TOKEN } from "../../../config";
 
 const NoticeEdit = () => {
-  const [noticeEditForm, setNoticeEditForm] = useState("");
+  const [noticeEditForm, setNoticeEditForm] = useState({
+    title: "",
+    content: "",
+    img_url: "",
+  });
   const navigate = useNavigate();
+  const { noticeId } = useParams();
 
-  const noticeEditDatahandler = (e) => {
-    const { name, value } = e.target;
+  const [imgValue, setImgValue] = useState([]);
+  const [prevImg, setPrevImg] = useState([]);
+
+  const uploadNoticeEditFile = (e) => {
+    const { target } = e;
     setNoticeEditForm({
       ...noticeEditForm,
-      [name]: value,
+      [target.name]: target.value,
     });
   };
 
-  const noticeEditSubmitBtn = () => {
-    // if (title != "" && content != "") {
-    //   axios
-    //     .patch(
-    //       `url`,
-    //       { title, content },
-    //       {
-    //         headers: {
-    //           Authrization: `Bearer ${USER_TOKEN}`,
-    //           "Content-Type": "application/json",
-    //         },
-    //       }
-    //     )
-    //     .then((res) => {
-    //       if (res.status === 200) {
-    //         alert("수정이 완료되었습니다.");
-    //         navigate(`/notice/${noticeId}`);
-    //       }
-    //     });
-    // } else {
-    //   alert("빈칸을 확인하세요.");
-    // }
+  const uploadImg = (e) => {
+    // console.log(e.target.files[0]);
+    // console.log(e.target.files[1]);
+    // console.log(e.target.files[2]);
+    const { files } = e.target;
+    setImgValue({
+      ...imgValue,
+      img1: files[0],
+      img2: files[1],
+      img3: files[2],
+    });
+    prevImgwURLImg(files);
   };
 
+  const prevImgwURLImg = (value) => {
+    const fileArr = value;
+    let fileUrls = [];
+    for (let i = 0; i < fileArr.length; i++) {
+      let files = fileArr[i];
+      let reader = new FileReader();
+      reader.onload = () => {
+        fileUrls[i] = reader.result;
+        setPrevImg([...fileUrls]);
+      };
+      reader.readAsDataURL(files);
+    }
+    // const reader1 = new FileReader();
+    // reader1.readAsDataURL(prev1);
+    // reader1.onloadend = () => {
+    //   setPrevImg({ ...prevImg, img1: reader1.result });
+    // };
+    // const reader2 = new FileReader();
+    // reader2.readAsDataURL(prev2);
+    // reader2.onloadend = () => {
+    //   setPrevImg({ ...prevImg, img2: reader2.result });
+    // };
+    // const reader3 = new FileReader();
+    // reader3.readAsDataURL(prev3);
+    // reader3.onloadend = () => {
+    //   setPrevImg({ ...prevImg, img3: reader3.result });
+    // };
+    // return prevImg;
+  };
+
+  // const noticeCheckValue = title !== "" && content !== "";
+  const noticeSubmitBtn = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("img1", imgValue.img1);
+    formData.append("img2", imgValue.img2);
+    formData.append("img3", imgValue.img3);
+    formData.append("title", noticeEditForm.title);
+    formData.append("content", noticeEditForm.content);
+
+    axios
+      .patch(
+        `http://threemonth.shop/announcement/notices/${noticeId}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${USER_TOKEN}`,
+          },
+        }
+      )
+      .catch((error) => error(error.message))
+      .then((res) => {
+        setNoticeEditForm(res.data);
+        navigate("/noticelist");
+      });
+  };
   return (
-    <NoticeDetailContainer>
-      <NoticeDetailForm>
-        <NoticeDetailFormTitle>공지사항 수정페이지</NoticeDetailFormTitle>
-        <NoticeDetailInputWrapper>
-          <NoticeDetailTitle
+    <NoticeInputContainer>
+      <NoticeInputWrapper>
+        <NoticeInputTitle>공지사항 입력폼</NoticeInputTitle>
+        <InputWrapper>
+          <InputTitle
             type="text"
-            onChange={noticeEditDatahandler}
-            // value={title}
             name="noticetitle"
             placeholder="제목을 입력하세요."
-          >
-            8월 신제품 출시!
-          </NoticeDetailTitle>
-          <NoticeDetailDate>작성일자 : 2022.08.21</NoticeDetailDate>
-          <NoticeDetailContent
-            type="text"
-            name="noticeContent"
-            onChange={noticeEditDatahandler}
-            // value={content}
-            placeholder="내용을 입력해주세요."
-            wrap="hard"
-            rows="20"
-            cols="20"
+            onChange={uploadNoticeEditFile}
           />
-        </NoticeDetailInputWrapper>
-        <NoticeDetailBtnWrap>
-          <NoticeDetailBtn onClick={noticeEditSubmitBtn}>
-            수정완료
-          </NoticeDetailBtn>
-        </NoticeDetailBtnWrap>
-      </NoticeDetailForm>
-    </NoticeDetailContainer>
+          <InputContentWrapper>
+            <InputContent
+              type="text"
+              name="noticeContent"
+              placeholder="내용을 입력해주세요."
+              wrap="hard"
+              rows="20"
+              cols="20"
+              onChange={uploadNoticeEditFile}
+            />
+            <InputImage
+              type="file"
+              accept="image/*"
+              onChange={uploadImg}
+              multiple
+              name="img"
+              id="imageinput"
+              style={{ display: "none" }}
+            />
+          </InputContentWrapper>
+          {prevImg[0] && <PreviewImg src={prevImg[0]} />}
+          {prevImg[1] && <PreviewImg src={prevImg[1]} />}
+          {prevImg[2] && <PreviewImg src={prevImg[2]} />}
+          <NoticeInputFileBtn htmlFor="imageinput">
+            파일 선택하기
+          </NoticeInputFileBtn>
+        </InputWrapper>
+
+        <NoticeInputBtnWrapper>
+          <NoticeInputBtn onClick={noticeSubmitBtn}>작성하기</NoticeInputBtn>
+        </NoticeInputBtnWrapper>
+      </NoticeInputWrapper>
+    </NoticeInputContainer>
   );
 };
 
 export default NoticeEdit;
-const NoticeDetailContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 400px;
-  margin: 100px 0px;
-  color: ${({ theme }) => theme.fontColor};
-`;
 
-const NoticeDetailForm = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 85%;
-  @media (max-width: 768px) {
-    font-size: 15px;
-    width: 90%;
-  }
-`;
-
-const NoticeDetailFormTitle = styled.p`
-  font-size: 30px;
-  @media (max-width: 600px) {
-    font-size: 20px;
-  }
-`;
-
-const NoticeDetailInputWrapper = styled.form`
-  display: grid;
-  justify-content: center;
-  grid-template-rows: repeat(3, 50px);
-  grid-template-columns: 1fr;
-  box-sizing: border-box;
-  margin-top: 50px;
+const NoticeInputContainer = styled.div`
   width: 100%;
-  color: ${({ theme }) => theme.fontColor};
-  border: 7px solid ${({ theme }) => theme.bgColor};
 `;
 
-const NoticeDetailTitle = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0px 20px;
-  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
-  font-size: 17px;
-  @media (max-width: 768px) {
-    font-size: 15px;
-  }
+const NoticeInputWrapper = styled.div`
+  width: 85%;
+  margin: 100px auto;
 `;
 
-const NoticeDetailDate = styled(NoticeDetailTitle)`
-  justify-content: flex-start;
-  height: 60%;
-`;
-
-const NoticeDetailContent = styled.textarea`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 0px 20px;
-  border-style: none;
-  border-bottom: 1px solid ${({ theme }) => theme.bgColor};
-  color: ${({ theme }) => theme.fontColor};
+const NoticeInputTitle = styled.h2`
+  text-align: center;
+  margin: 50px 0;
+  font-size: 30px;
   font-family: ${({ theme }) => theme.fontFamily};
-  font-size: 17px;
+  color: ${({ theme }) => theme.fontColor};
+`;
+
+const InputWrapper = styled.div`
+  min-height: 500px;
+`;
+
+const InputTitle = styled.input`
+  border-style: none;
+  width: 100%;
+  height: 40px;
+  margin-bottom: 30px;
+  padding-left: 20px;
+  box-sizing: border-box;
+  border: 1px solid #cccccc;
+  font-family: ${({ theme }) => theme.fontFamily};
+  color: ${({ theme }) => theme.fontColor};
+  font-size: 1.2em;
   &:focus {
     outline: none;
   }
-  @media (max-width: 768px) {
-    font-size: 15px;
+`;
+
+const InputContentWrapper = styled.div`
+  min-height: 400px;
+  border: 1px solid #cccccc;
+  width: 100%;
+`;
+
+const InputContent = styled.textarea`
+  border-style: none;
+  width: 100%;
+  height: 100%;
+  resize: none;
+  box-sizing: border-box;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  font-family: ${({ theme }) => theme.fontFamily};
+  color: ${({ theme }) => theme.fontColor};
+  &:focus {
+    outline: none;
   }
 `;
 
-const NoticeDetailBtnWrap = styled.div`
+const InputImage = styled.input`
+  /* margin-top: 20px; */
+`;
+
+const NoticeInputFileBtn = styled.label`
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+  border-style: none;
+  height: 40px;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.bgColor};
+  border: 2px solid ${({ theme }) => theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
+  font-family: ${({ theme }) => theme.fontFamily};
+`;
+
+const PreviewImg = styled.img`
+  width: 200px;
+  margin-top: 15px;
+  padding-left: 10px;
+`;
+
+const PreveiwImgDelBtn = styled.button`
+  border-style: none;
+  width: 40px;
+  height: 40px;
+  font-size: 14px;
+  margin-left: 10px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.bgColor};
+  border: 2px solid ${({ theme }) => theme.fontColor};
+  color: ${({ theme }) => theme.fontColor};
+  font-family: ${({ theme }) => theme.fontFamily};
+`;
+const NoticeInputBtnWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-const NoticeDetailBtn = styled.button`
+const NoticeInputBtn = styled.button`
   border-style: none;
-  margin-top: 100px;
   margin-left: 10px;
+  margin-top: 30px;
   width: 200px;
   height: 50px;
   border-radius: 5px;
@@ -175,12 +261,11 @@ const NoticeDetailBtn = styled.button`
     width: 100px;
     height: 50px;
     font-size: 15px;
-    margin-top: 50px;
   }
-  @media (max-width: 650px) {
-    width: 75px;
+  @media (max-width: 400px) {
+    width: 85px;
     height: 45px;
     font-size: 13px;
-    margin-top: 50px;
+    margin-top: 30px;
   }
 `;
