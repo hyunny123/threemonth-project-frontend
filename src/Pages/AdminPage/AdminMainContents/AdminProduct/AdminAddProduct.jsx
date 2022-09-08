@@ -4,7 +4,9 @@ import styled from "styled-components";
 import { USER_TOKEN } from "../../../../config";
 
 const AdminAddProduct = () => {
-  const [addProductContentValue, setAddProductContentValue] = useState("");
+  const [addProductContentValue, setAddProductContentValue] = useState({
+    price: 0,
+  });
   const [addProductImgValue, setAddProductImgValue] = useState({});
   const [productCategory, setProductCategory] = useState("");
   const [addProductImgPrev, setAddProductImgPrev] = useState([]);
@@ -46,14 +48,13 @@ const AdminAddProduct = () => {
       formData.append("title", addProductContentValue.title);
       formData.append("content", addProductContentValue.content);
       formData.append("category", productCategory);
-      axios
-        .post("", formData, {
-          headers: {
-            Authorization: `Bearer ${USER_TOKEN}`,
-          },
-        })
-        .catch((error) => console.log(error.response.status))
-        .then((res) => console.log(res));
+      axios.post("", formData, {
+        headers: {
+          Authorization: `Bearer ${USER_TOKEN}`,
+        },
+      });
+      // .catch((error) => console.log(error.response.status))
+      // .then((res) => console.log(res));
     }
   };
   return (
@@ -79,6 +80,7 @@ const AdminAddProduct = () => {
         빵
       </label>
       <AdminAddProductPrice onChange={addProductTextHandle} />
+      <p>{addProductContentValue.price.toLocaleString()}원</p>
       <AdminAddProductInfo onChange={addProductTextHandle} />
       <AdminAddProductImgs onChange={addProductImgHandle} multiple required />
       <AdminAddProductInputImgBtn htmlFor="imageinput">
@@ -108,7 +110,7 @@ const AdminAddProductWrap = styled.div`
 `;
 const AdminAddProductName = styled.input.attrs((props) => ({
   type: "text",
-  name: "",
+  name: "product_name",
   placeholder: "상품 이름을 입력하세요",
 }))`
   border-style: none;
@@ -128,13 +130,13 @@ const AdminAddProductName = styled.input.attrs((props) => ({
 `;
 const AdminAddProductPrice = styled.input.attrs((props) => ({
   type: "number",
-  name: "",
+  name: "price",
   step: "100",
-  placeholder: "상품 가격을 입력하세요",
+  placeholder: "상품 가격을 숫자만 입력하세요",
 }))`
   border-style: none;
   border: 1px solid black;
-  width: 400px;
+  width: 200px;
   font-family: ${({ theme }) => theme.fontFamily};
   box-sizing: border-box;
   padding: 10px;
@@ -149,7 +151,7 @@ const AdminAddProductPrice = styled.input.attrs((props) => ({
 `;
 const AdminAddProductInfo = styled.textarea.attrs((props) => ({
   type: "text",
-  name: "",
+  name: "additional_explanation",
   placeholder: "상품 설명을 입력하세요",
   rows: "10",
   cols: "10",
