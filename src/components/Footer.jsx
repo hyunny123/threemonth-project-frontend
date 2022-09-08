@@ -44,7 +44,13 @@ const Footer = () => {
               <CafeFormButton onClick={cafeFormClickHandler}>
                 카페납품 제휴
               </CafeFormButton>
-              <AdminButton>Admin</AdminButton>
+              <AdminButton
+                onClick={() => {
+                  navigate("/admin");
+                }}
+              >
+                Admin
+              </AdminButton>
             </ButtonWrapper>
           </SnsContainer>
         </FooterSns>

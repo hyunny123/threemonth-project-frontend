@@ -26,6 +26,8 @@ import MyPage from "./Pages/MyPage/MyPage";
 import MyReviewInput from "./Pages/MyPage/MyReviewInput/MyReviewInput";
 import MyReviewEdit from "./Pages/MyPage/MyReviewEdit/MyReviewEdit";
 import AdminFAQEdit from "./Pages/AdminPage/AdminMainContents/AdminFAQ/AdminFAQEdit";
+import AdminProductEdit from "./Pages/AdminPage/AdminMainContents/AdminProduct/AdminProductEdit";
+import AdminNoticeEdit from "./Pages/AdminPage/AdminMainContents/NoticeList/AdminNoticeEdit";
 
 function Router() {
   return (
@@ -44,7 +46,15 @@ function Router() {
         <Route path="/reserveform" element={<ReserveForm />} />
         <Route path="/formdetail/:formId" element={<FormDetail />} />
         <Route path="/admin" element={<AdminPage />} />
-        <Route path="/admin/:faqEditId" element={<AdminFAQEdit />} />
+        <Route path="/admin/faqEdit/:faqEditId" element={<AdminFAQEdit />} />
+        <Route
+          path="/admin/noticeEdit/:noticeId"
+          element={<AdminNoticeEdit />}
+        />
+        <Route
+          path="/admin/productEdit/:productId"
+          element={<AdminProductEdit />}
+        />
         <Route path="/formdetail/:formId/edit" element={<FormEdit />} />
         <Route path="/terms" element={<HomePageTerms />} />
         <Route path="/privacy" element={<Privacy />} />

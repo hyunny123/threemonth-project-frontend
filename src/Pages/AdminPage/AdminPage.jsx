@@ -8,7 +8,7 @@ import AdminFAQ from "./AdminMainContents/AdminFAQ/AdminFAQ";
 // import AdminNotice from "./AdminMainContents/NoticeList/AdminNotice";
 
 const AdminPage = () => {
-  const [asideState, setAsideState] = useState("faq");
+  const [asideState, setAsideState] = useState("productHandle");
   const switchStatus = (status) => {
     switch (status) {
       case "orderedList":
