@@ -18,7 +18,10 @@ const AdminFAQAdd = ({
     axios
       .post(
         "https://threemonth.shop/announcements/FAQ",
-        { ...addFAQContents },
+        {
+          answer: addFAQContents.addAnswer,
+          question: addFAQContents.addQuestion,
+        },
         {
           headers: {
             Authorization: `Bearer ${USER_TOKEN}`,
@@ -67,7 +70,8 @@ const AdminFAQAddWrap = styled.div`
 const AdminFAQAddQuestion = styled.input`
   margin: 20px 0;
   box-sizing: border-box;
-  padding: 10px;
+  padding-left: 15px;
+  height: 50px;
   border-radius: 10px;
   font-family: ${({ theme }) => theme.fontFamily};
   &:focus {
@@ -89,10 +93,10 @@ const AddFAQPOSTBtn = styled.button`
   border-style: none;
   box-sizing: border-box;
   padding: 10px;
-  width: 200px;
-  font-size: 18px;
   border: 1px solid ${({ theme }) => theme.fontColor};
   background-color: ${({ theme }) => theme.bgColor};
   border-radius: 10px;
+  width: 200px;
+  font-size: 18px;
   font-family: ${({ theme }) => theme.fontFamily};
 `;
