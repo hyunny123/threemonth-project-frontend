@@ -2,12 +2,14 @@ import React from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 
-const NoticeListBox = ({ noticeFormList }) => {
+const AdminNoticeListBox = () => {
   const navigate = useNavigate();
-
+  // const goNoticeDetail = (id) => {
+  //   navigate(`/noticedetail/${id}`);
+  // };
   return (
     <NoticeListBoxContainer>
-      <ListBox>
+      {/* <ListBox>
         <NoticeBoxListMenu>
           <MenuNum>글 번호</MenuNum>
           <MenuTitle>제목</MenuTitle>
@@ -25,17 +27,17 @@ const NoticeListBox = ({ noticeFormList }) => {
                 {list.title}
               </NoticeListBoxContent>
               <NoticeListBoxContent>
-                {String(list.created_at).slice(0, 10)}
+                {list.created_at.slice(0, 10)}
               </NoticeListBoxContent>
             </NoticeListContents>
           ))}
         </NoticeList>
-      </ListBox>
+      </ListBox> */}
     </NoticeListBoxContainer>
   );
 };
 
-export default NoticeListBox;
+export default AdminNoticeListBox;
 
 const NoticeListBoxContainer = styled.div`
   display: flex;

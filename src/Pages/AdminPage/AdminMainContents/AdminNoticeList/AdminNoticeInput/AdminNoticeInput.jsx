@@ -1,27 +1,23 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate, useParams } from "react-router";
-import styled from "styled-components";
-import { USER_TOKEN } from "../../../config";
 
-const NoticeEdit = () => {
-  const [noticeEditForm, setNoticeEditForm] = useState({
-    title: "",
+import { useNavigate } from "react-router";
+import styled from "styled-components";
+import { USER_TOKEN } from "../../../../../config";
+
+const AdminNoticeInput = () => {
+  const [uploadData, setUploadData] = useState({
     content: "",
+    title: "",
     img_url: "",
   });
-  const navigate = useNavigate();
-  const { noticeId } = useParams();
-
   const [imgValue, setImgValue] = useState([]);
   const [prevImg, setPrevImg] = useState([]);
+  const navigate = useNavigate();
 
-  const uploadNoticeEditFile = (e) => {
+  const uploadContent = (e) => {
     const { target } = e;
-    setNoticeEditForm({
-      ...noticeEditForm,
-      [target.name]: target.value,
-    });
+    setUploadData({ ...uploadData, [target.name]: target.value });
   };
 
   const uploadImg = (e) => {
@@ -75,22 +71,18 @@ const NoticeEdit = () => {
     formData.append("img1", imgValue.img1);
     formData.append("img2", imgValue.img2);
     formData.append("img3", imgValue.img3);
-    formData.append("title", noticeEditForm.title);
-    formData.append("content", noticeEditForm.content);
+    formData.append("title", uploadData.title);
+    formData.append("content", uploadData.content);
 
     axios
-      .patch(
-        `http://threemonth.shop/announcement/notices/${noticeId}`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${USER_TOKEN}`,
-          },
-        }
-      )
+      .post(`http://threemonth.shop/announcement/notices`, formData, {
+        headers: {
+          Authorization: `Bearer ${USER_TOKEN}`,
+        },
+      })
       .catch((error) => error(error.message))
       .then((res) => {
-        setNoticeEditForm(res.data);
+        setUploadData(res.data);
         navigate("/noticelist");
       });
   };
@@ -103,7 +95,7 @@ const NoticeEdit = () => {
             type="text"
             name="noticetitle"
             placeholder="제목을 입력하세요."
-            onChange={uploadNoticeEditFile}
+            onChange={uploadContent}
           />
           <InputContentWrapper>
             <InputContent
@@ -113,7 +105,7 @@ const NoticeEdit = () => {
               wrap="hard"
               rows="20"
               cols="20"
-              onChange={uploadNoticeEditFile}
+              onChange={uploadContent}
             />
             <InputImage
               type="file"
@@ -141,7 +133,7 @@ const NoticeEdit = () => {
   );
 };
 
-export default NoticeEdit;
+export default AdminNoticeInput;
 
 const NoticeInputContainer = styled.div`
   width: 100%;

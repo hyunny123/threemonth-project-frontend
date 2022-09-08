@@ -1,67 +1,44 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import styled from "styled-components";
-import { USER_TOKEN } from "../../../config";
-import NoticeListNoContents from "../NoticeListNoContents";
-import Loading from "../../../components/Loading";
-import NotValidBtn from "../../../components/NotValidBtn";
 
 const NoticeDetail = () => {
-  // const [noticeDetailData, setNoticeDetailData] = useState({
-  //   id: 0,
-  //   title: "",
-  //   content: "",
-  //   created_at:"",
-  // });
-  //const { id, title, created_at, content } = noticeDetailData;
+  const [noticeDetailData, setNoticeDetailData] = useState({
+    id: 0,
+  });
 
-  // const params = useParams();
-  const location = useLocation();
+  const params = useParams();
   const navigate = useNavigate();
 
-  // useEffect = () => {
-  //   axios.get(`url${params.noticeId}`).then((res) => setNoticeDetailData(res.data));
-  // ,[]};
+  useEffect(() => {
+    axios
+      .get(`https://threemonth.shop/announcements/notices/${params.noticeId}`)
+      .then((res) => setNoticeDetailData(res.data));
+  }, [params.noticeId]);
 
-  // const noticeEditHandler = (e) => {
-  //   const { name, value } = e.target;
-  //   setNoticeDetailData({ ...noticeDetailData, [name]: value });
-  // };
+  const { title, created_at, content, img1_url, img2_url, img3_url } =
+    noticeDetailData;
 
-  // const noticeDetailInput = () => {
-  //   const sortValue = content.replace(/\n/g, "<br>\n");
-  //   return {
-  //     __html: sortValue,
-  //   };
-  // };
-
-  // if (location.state === null) {
-  //   return <NotValidBtn />;
-  // }
-
-  // if (noticeData.id === 0) {
-  //   return <Loading />;
-  // }
   return (
     <NoticeDetailContainer>
       <NoticeDetailForm>
         <NoticeDetailFormTitle>공지사항 상세페이지</NoticeDetailFormTitle>
         <NoticeDetailInputWrapper>
-          {/* <NoticeDetailTitle name="noticetitle">{title}</NoticeDetailTitle> */}
-          <NoticeDetailTitle name="noticetitle">
-            신제품이 나왔습니다!!!!!!
-          </NoticeDetailTitle>
-          {/* <NoticeDetailDate>작성일자 : {created_at}</NoticeDetailDate> */}
-          <NoticeDetailDate>작성일자 : 2022.08.21</NoticeDetailDate>
+          <NoticeDetailTitle name="noticetitle">{title}</NoticeDetailTitle>
 
-          {/* <NoticeDetailContent name="noticeContent">
-            {content}
-          </NoticeDetailContent> */}
+          <NoticeDetailDate>
+            작성일자 : {String(created_at).slice(0, 10)}
+          </NoticeDetailDate>
+
           <NoticeDetailContent name="noticeContent">
-            {/* dangerouslySetInnerHTML={noticeDetailInput} */}
-            신제품이 나왔어요!!!!
+            {content}
           </NoticeDetailContent>
+          <NoticeDetailImgs>
+            {img1_url && <NoticeDetailImg src={img1_url} />}
+            {img2_url && <NoticeDetailImg src={img2_url} />}
+            {img3_url && <NoticeDetailImg src={img3_url} />}
+          </NoticeDetailImgs>
         </NoticeDetailInputWrapper>
         <NoticeDetailBtnWrap>
           <NoticeDetailBtn
@@ -71,45 +48,6 @@ const NoticeDetail = () => {
           >
             목록으로
           </NoticeDetailBtn>
-
-          <NoticeDetailUpdateBtn
-          // onClick={() => {
-          //   if (is_staff) {
-          //     navigate(`/notice/${noticeId}/edit`, {
-          //       state: { editCheck: true },
-          //     });
-          //   }else {
-          //     alert("수정이 불가합니다.");
-          //   }
-          // }}
-          >
-            수정
-          </NoticeDetailUpdateBtn>
-          <NoticeDetailDeleteBtn
-          // onClick={() => {
-          //   if (is_staff) {
-          //     if (window.confirm("삭제하시겠습니까?")) {
-          //       axios
-          //         .delete(`${NOTICE_FORM}${id}`, {
-          //           headers: {
-          //             Authorization: `Bearer ${USER_TOKEN}`,
-          //             "Content-Type": "application/json;charset=UTF-8",
-          //           },
-          //         })
-          //         .then((res) => {
-          //           if (res.status === 204) {
-          //             alert("삭제되었습니다.");
-          //             navigate("/noticelist");
-          //           }
-          //         });
-          //     }
-          //   } else{
-          //      alert("접근 권한이 제한되었습니다.");
-          //   }
-          // }}
-          >
-            삭제
-          </NoticeDetailDeleteBtn>
         </NoticeDetailBtnWrap>
       </NoticeDetailForm>
     </NoticeDetailContainer>
@@ -175,7 +113,7 @@ const NoticeDetailDate = styled(NoticeDetailTitle)`
   height: 60%;
 `;
 
-const NoticeDetailContent = styled.textarea`
+const NoticeDetailContent = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -191,6 +129,16 @@ const NoticeDetailContent = styled.textarea`
   @media (max-width: 768px) {
     font-size: 15px;
   }
+`;
+const NoticeDetailImgs = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+const NoticeDetailImg = styled.img`
+  height: 100px;
+  margin: 10px 0px;
 `;
 
 const NoticeDetailBtnWrap = styled.div`
