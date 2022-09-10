@@ -1,55 +1,50 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate, useParams } from "react-router";
+import React, { useState } from "react";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
-import { USER_TOKEN } from "../../../../../config";
-import NoticeListNoContents from "../../../../Notice/NoticeListNoContents";
-import Loading from "../../../../../components/Loading";
-import NotValidBtn from "../../../../../components/NotValidBtn";
 
-const AdminNoticeDetail = () => {
-  // const [noticeDetailData, setNoticeDetailData] = useState({
-  //   id: 0,
-  //   // title: "",
-  //   // content: "",
-  //   // created_at: "",
-  // });
+const AdminNoticeDetailBox = ({ adminNoticeDetail }) => {
+  const [noticeDetailOpen, setNoticeDetailOpen] = useState(false);
+  const { id, title, created_at, content, img1_url, img2_url, img3_url } =
+    adminNoticeDetail;
 
-  // const { id, title, created_at, content } = noticeDetailData;
+  const navigate = useNavigate();
+  return (
+    <NoticeDetailContainer>
+      {noticeDetailOpen && (
+        <NoticeDetailForm>
+          <NoticeDetailFormTitle>공지사항 상세페이지</NoticeDetailFormTitle>
+          <NoticeDetailInputWrapper>
+            <NoticeDetailTitle name="noticetitle">{title}</NoticeDetailTitle>
 
-  // const params = useParams();
-  // const location = useLocation();
-  // const navigate = useNavigate();
+            <NoticeDetailDate>
+              작성일자 : {String(created_at).slice(0, 10)}
+            </NoticeDetailDate>
 
-  // useEffect = () => {
-  //   axios
-  //     .get(`https://threemonth.shop/announcements/notices/${params.noticeId}`)
-  //     .then((res) => setNoticeDetailData(res.data));
-  // };
-
-  // // const noticeEditHandler = (e) => {
-  // //   const { name, value } = e.target;
-  // //   setNoticeDetailData({ ...noticeDetailData, [name]: value });
-  // // };
-
-  // const noticeDetailInput = () => {
-  //   const sortValue = content.replace(/\n/g, "<br>\n");
-  //   return {
-  //     __html: sortValue,
-  //   };
-  // };
-
-  // if (location.state === null) {
-  //   return <NotValidBtn />;
-  // }
-
-  // if (noticeData.id === 0) {
-  //   return <Loading />;
-  // }
-  return <NoticeDetailContainer />;
+            <NoticeDetailContent name="noticeContent">
+              {content}
+            </NoticeDetailContent>
+            <NoticeDetailImgs>
+              {img1_url && <NoticeDetailImg src={img1_url} />}
+              {img2_url && <NoticeDetailImg src={img2_url} />}
+              {img3_url && <NoticeDetailImg src={img3_url} />}
+            </NoticeDetailImgs>
+          </NoticeDetailInputWrapper>
+          <NoticeDetailBtnWrap>
+            <NoticeDetailBtn
+              onClick={() => {
+                setNoticeDetailOpen(!noticeDetailOpen);
+              }}
+            >
+              닫기
+            </NoticeDetailBtn>
+          </NoticeDetailBtnWrap>
+        </NoticeDetailForm>
+      )}
+    </NoticeDetailContainer>
+  );
 };
 
-export default AdminNoticeDetail;
+export default AdminNoticeDetailBox;
 
 const NoticeDetailContainer = styled.div`
   display: flex;
@@ -108,7 +103,7 @@ const NoticeDetailDate = styled(NoticeDetailTitle)`
   height: 60%;
 `;
 
-const NoticeDetailContent = styled.textarea`
+const NoticeDetailContent = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -124,6 +119,16 @@ const NoticeDetailContent = styled.textarea`
   @media (max-width: 768px) {
     font-size: 15px;
   }
+`;
+const NoticeDetailImgs = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+const NoticeDetailImg = styled.img`
+  height: 100px;
+  margin: 10px 0px;
 `;
 
 const NoticeDetailBtnWrap = styled.div`

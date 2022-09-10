@@ -1,22 +1,24 @@
+import axios from "axios";
 import React from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import styled from "styled-components";
+import { USER_TOKEN } from "../../../../config";
 
-const AdminNoticeListBox = () => {
+const AdminNoticeListBox = ({ adminNoticeData }) => {
   const navigate = useNavigate();
-  // const goNoticeDetail = (id) => {
-  //   navigate(`/noticedetail/${id}`);
-  // };
+
   return (
     <NoticeListBoxContainer>
-      {/* <ListBox>
+      <ListBox>
         <NoticeBoxListMenu>
           <MenuNum>글 번호</MenuNum>
           <MenuTitle>제목</MenuTitle>
           <MenuDate>작성일</MenuDate>
+          <MenuUpdate>수정</MenuUpdate>
+          <MenuDel>삭제</MenuDel>
         </NoticeBoxListMenu>
         <NoticeList>
-          {noticeFormList.map((list, idx) => (
+          {adminNoticeData.map((list, idx) => (
             <NoticeListContents key={idx}>
               <NoticeListBoxContent>{list.id}</NoticeListBoxContent>
               <NoticeListBoxContent
@@ -29,10 +31,45 @@ const AdminNoticeListBox = () => {
               <NoticeListBoxContent>
                 {list.created_at.slice(0, 10)}
               </NoticeListBoxContent>
+              <NoticeListBoxContent>
+                <i
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    navigate(`/admin/noticeEdit/${list.id}`, {
+                      state: { data: list },
+                    });
+                  }}
+                  className="fa-regular fa-pen-to-square"
+                />
+              </NoticeListBoxContent>
+              <NoticeListBoxContent>
+                <i
+                  onClick={() => {
+                    if (window.confirm("삭제하시겠습니까?")) {
+                      axios
+                        .delete(
+                          `https://threemonth.shop/announcements/notices/${list.id}`,
+                          {
+                            headers: {
+                              Authorization: `Bearer ${USER_TOKEN}`,
+                            },
+                          }
+                        )
+                        .then((res) => {
+                          if (res.status === 204) {
+                            window.location.reload();
+                          }
+                        });
+                    }
+                  }}
+                  style={{ cursor: "pointer" }}
+                  className="fa-solid fa-trash-can"
+                />
+              </NoticeListBoxContent>
             </NoticeListContents>
           ))}
         </NoticeList>
-      </ListBox> */}
+      </ListBox>
     </NoticeListBoxContainer>
   );
 };
@@ -58,17 +95,17 @@ const ListBox = styled.div`
 
 const NoticeBoxListMenu = styled.div`
   display: grid;
-  grid-template-columns: 0.5fr 5fr 1fr;
+  grid-template-columns: 0.5fr 5fr 1fr 0.5fr 0.5fr;
   grid-template-rows: 50px;
   box-sizing: border-box;
   border-bottom: 4px solid ${({ theme }) => theme.bgColor};
   margin-top: 50px;
   @media (max-width: 580px) {
-    grid-template-columns: 0.5fr 5fr 1fr;
+    grid-template-columns: 0.5fr 5fr 1fr 0.5fr 0.5fr;
     grid-template-rows: 30px;
   }
   @media (max-width: 450px) {
-    grid-template-columns: 0.5fr 2fr 1fr;
+    grid-template-columns: 0.5fr 2fr 1fr 0.5fr 0.5fr;
     grid-template-rows: 20px;
     font-size: 14px;
   }
@@ -90,6 +127,8 @@ const MenuDate = styled(MenuNum)`
     padding: 0 10px;
   }
 `;
+const MenuUpdate = styled(MenuNum)``;
+const MenuDel = styled(MenuNum)``;
 
 const NoticeList = styled.ul`
   width: 100%;
@@ -100,7 +139,7 @@ const NoticeList = styled.ul`
 const NoticeListContents = styled.div`
   border-style: none;
   display: grid;
-  grid-template-columns: 0.5fr 5fr 1fr;
+  grid-template-columns: 0.5fr 5fr 1fr 0.5fr 0.5fr;
   width: 100%;
   box-sizing: border-box;
   padding: 10px 10px;

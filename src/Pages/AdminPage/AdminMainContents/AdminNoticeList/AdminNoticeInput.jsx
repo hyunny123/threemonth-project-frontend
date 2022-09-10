@@ -3,13 +3,12 @@ import React, { useState } from "react";
 
 import { useNavigate } from "react-router";
 import styled from "styled-components";
-import { USER_TOKEN } from "../../../../../config";
+import { USER_TOKEN } from "../../../../config";
 
 const AdminNoticeInput = () => {
   const [uploadData, setUploadData] = useState({
     content: "",
     title: "",
-    img_url: "",
   });
   const [imgValue, setImgValue] = useState([]);
   const [prevImg, setPrevImg] = useState([]);
@@ -26,10 +25,9 @@ const AdminNoticeInput = () => {
     // console.log(e.target.files[2]);
     const { files } = e.target;
     setImgValue({
-      ...imgValue,
-      img1: files[0],
-      img2: files[1],
-      img3: files[2],
+      img1_url: files[0],
+      img2_url: files[1],
+      img3_url: files[2],
     });
     prevImgwURLImg(files);
   };
@@ -46,38 +44,22 @@ const AdminNoticeInput = () => {
       };
       reader.readAsDataURL(files);
     }
-    // const reader1 = new FileReader();
-    // reader1.readAsDataURL(prev1);
-    // reader1.onloadend = () => {
-    //   setPrevImg({ ...prevImg, img1: reader1.result });
-    // };
-    // const reader2 = new FileReader();
-    // reader2.readAsDataURL(prev2);
-    // reader2.onloadend = () => {
-    //   setPrevImg({ ...prevImg, img2: reader2.result });
-    // };
-    // const reader3 = new FileReader();
-    // reader3.readAsDataURL(prev3);
-    // reader3.onloadend = () => {
-    //   setPrevImg({ ...prevImg, img3: reader3.result });
-    // };
-    // return prevImg;
   };
 
-  // const noticeCheckValue = title !== "" && content !== "";
   const noticeSubmitBtn = (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("img1", imgValue.img1);
-    formData.append("img2", imgValue.img2);
-    formData.append("img3", imgValue.img3);
+    formData.append("img1", imgValue.img1_url);
+    formData.append("img2", imgValue.img2_url);
+    formData.append("img3", imgValue.img3_url);
     formData.append("title", uploadData.title);
     formData.append("content", uploadData.content);
 
     axios
-      .post(`http://threemonth.shop/announcement/notices`, formData, {
+      .post(`https://threemonth.shop/announcements/notices`, formData, {
         headers: {
           Authorization: `Bearer ${USER_TOKEN}`,
+          "Content-Type": "application/json",
         },
       })
       .catch((error) => error(error.message))
@@ -93,14 +75,14 @@ const AdminNoticeInput = () => {
         <InputWrapper>
           <InputTitle
             type="text"
-            name="noticetitle"
+            name="title"
             placeholder="제목을 입력하세요."
             onChange={uploadContent}
           />
           <InputContentWrapper>
             <InputContent
               type="text"
-              name="noticeContent"
+              name="content"
               placeholder="내용을 입력해주세요."
               wrap="hard"
               rows="20"
@@ -112,7 +94,6 @@ const AdminNoticeInput = () => {
               accept="image/*"
               onChange={uploadImg}
               multiple
-              name="img"
               id="imageinput"
               style={{ display: "none" }}
             />

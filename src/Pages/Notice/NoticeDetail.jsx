@@ -43,7 +43,7 @@ const NoticeDetail = () => {
         <NoticeDetailBtnWrap>
           <NoticeDetailBtn
             onClick={() => {
-              navigate("/noticelist");
+              navigate(-1);
             }}
           >
             목록으로

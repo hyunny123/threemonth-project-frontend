@@ -20,8 +20,6 @@ import QnAEdit from "./Pages/QnA/QnAEdit/QnAEdit";
 import QnAInput from "./Pages/QnA/QnAInput/QnAInput";
 import NoticeDetail from "./Pages/Notice/NoticeDetail";
 import NoticeList from "./Pages/Notice/NoticeList";
-import NoticeInput from "./Pages/AdminPage/AdminMainContents/AdminNoticeList/AdminNoticeInput/AdminNoticeInput";
-import NoticeEdit from "./Pages/AdminPage/AdminMainContents/AdminNoticeList/AdminNoticeEdit/AdminNoticeEdit";
 import MyPage from "./Pages/MyPage/MyPage";
 import MyReviewInput from "./Pages/MyPage/MyReviewInput/MyReviewInput";
 import MyReviewEdit from "./Pages/MyPage/MyReviewEdit/MyReviewEdit";
@@ -47,10 +45,10 @@ function Router() {
         <Route path="/formdetail/:formId" element={<FormDetail />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/admin/faqEdit/:faqEditId" element={<AdminFAQEdit />} />
-        {/* <Route
+        <Route
           path="/admin/noticeEdit/:noticeId"
           element={<AdminNoticeEdit />}
-        /> */}
+        />
         <Route
           path="/admin/productEdit/:productId"
           element={<AdminProductEdit />}
@@ -64,9 +62,6 @@ function Router() {
         <Route path="/qna/:qnaId/edit" element={<QnAEdit />} />
         <Route path="/noticelist" element={<NoticeList />} />
         <Route path="/noticedetail/:noticeId" element={<NoticeDetail />} />
-        {/* <Route path="/noticeinput" element={<NoticeInput />} /> */}
-        {/* <Route path="/noticedetail/:noticeId/edit" element={<NoticeEdit />} /> */}
-        {/* <Route path="/noticedetail/edit" element={<NoticeEdit />} /> */}
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/myreviewinput" element={<MyReviewInput />} />
         <Route path="/mypage/:reviewId/edit" element={<MyReviewEdit />} />
