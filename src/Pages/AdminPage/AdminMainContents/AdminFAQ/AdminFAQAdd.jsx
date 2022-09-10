@@ -14,6 +14,22 @@ const AdminFAQAdd = ({
     const { name, value } = e.target;
     setAddFAQContents({ ...addFAQContents, [name]: value });
   };
+  const [textValue, setTestValue] = useState("");
+  const [testImgHandle, setTestImgHandle] = useState({});
+  const imgHandle = (e) => {
+    const { files } = e.target;
+    setTestImgHandle({
+      ...testImgHandle,
+      img1: files[0],
+      img2: files[1],
+      img3: files[2],
+    });
+  };
+  console.log(testImgHandle);
+  const testHandle = (e) => {
+    const { name, value } = e.target;
+    setTestValue({ ...textValue, [name]: value });
+  };
   const postAddFAQ = () => {
     axios
       .post(
@@ -56,6 +72,37 @@ const AdminFAQAdd = ({
         rows="15"
       />
       <AddFAQPOSTBtn onClick={postAddFAQ}>추가</AddFAQPOSTBtn>
+      <input name="title" onChange={testHandle} />
+      <input name="content" onChange={testHandle} />
+      <label>
+        <input
+          type="file"
+          multiple
+          style={{ display: "none" }}
+          onChange={imgHandle}
+        />{" "}
+        파일선택
+      </label>
+      <button
+        onClick={() => {
+          const formData = new FormData();
+          formData.append("img1", testImgHandle.img1);
+          formData.append("img2", testImgHandle.img2);
+          formData.append("img3", testImgHandle.img3);
+          formData.append("title", textValue.title);
+          formData.append("content", textValue.content);
+          axios
+            .post(`https://threemonth.shop/announcements/notices`, formData, {
+              headers: {
+                Authorization: `Bearer ${USER_TOKEN}`,
+              },
+            })
+            .catch((error) => console.log(error))
+            .then((res) => console.log(res));
+        }}
+      >
+        asdf
+      </button>
     </AdminFAQAddWrap>
   );
 };

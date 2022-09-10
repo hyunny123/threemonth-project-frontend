@@ -18,7 +18,7 @@ const AdminOrderedList = () => {
     axios
       .get(`${FORM_LIST}?fields=id,customer_name,type,title,created_at`)
       .catch((error) => alert(error.response.status))
-      .then((res) => setOrderedList(res.data));
+      .then((res) => setOrderedList(res.data.results));
   }, [FORM_LIST]);
 
   if (orderedList[0].id === 0) {
