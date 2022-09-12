@@ -1,11 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router";
 
 const NoticeListNoContents = () => {
-  const navigate = useNavigate();
-
-  // const { pathname } = useLocation();
   return (
     <NoticeListBoxContainer>
       <ListBox>

@@ -11,7 +11,6 @@ const MyReviewList = ({ reviewList }) => {
     return <ReviewListNoContents />;
   }
 
-  // console.log(reviewList);
   return (
     <MyReviewListContainer>
       <MyReviewListWrap>
@@ -19,9 +18,7 @@ const MyReviewList = ({ reviewList }) => {
         <MyReviewListBox>
           <ListBox>
             <ListBoxMenu>
-              {/* <BoxWrap /> */}
               <MenuNum>리뷰 번호/날짜</MenuNum>
-              {/* <MenuTitle>작성 날짜</MenuTitle> */}
               <MenuTitle>리뷰</MenuTitle>
               <MenuIsReviewChecked>수정/삭제</MenuIsReviewChecked>
             </ListBoxMenu>

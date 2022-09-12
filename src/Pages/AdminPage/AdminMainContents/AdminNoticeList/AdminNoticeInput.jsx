@@ -20,9 +20,6 @@ const AdminNoticeInput = () => {
   };
 
   const uploadImg = (e) => {
-    // console.log(e.target.files[0]);
-    // console.log(e.target.files[1]);
-    // console.log(e.target.files[2]);
     const { files } = e.target;
     setImgValue({
       img1_url: files[0],
@@ -179,9 +176,7 @@ const InputContent = styled.textarea`
   }
 `;
 
-const InputImage = styled.input`
-  /* margin-top: 20px; */
-`;
+const InputImage = styled.input``;
 
 const NoticeInputFileBtn = styled.label`
   display: inline-block;
@@ -204,18 +199,6 @@ const PreviewImg = styled.img`
   padding-left: 10px;
 `;
 
-const PreveiwImgDelBtn = styled.button`
-  border-style: none;
-  width: 40px;
-  height: 40px;
-  font-size: 14px;
-  margin-left: 10px;
-  border-radius: 10px;
-  background-color: ${({ theme }) => theme.bgColor};
-  border: 2px solid ${({ theme }) => theme.fontColor};
-  color: ${({ theme }) => theme.fontColor};
-  font-family: ${({ theme }) => theme.fontFamily};
-`;
 const NoticeInputBtnWrapper = styled.div`
   display: flex;
   justify-content: center;
