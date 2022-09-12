@@ -29,7 +29,7 @@ const AdminProductEdit = () => {
   };
   const imgHandle = (e) => {
     const { files } = e.target;
-    setProductImg();
+    setProductImg({});
     productPrevImg(files);
   };
   const productPrevImg = (value) => {};
