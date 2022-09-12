@@ -71,16 +71,19 @@ const NoticeDetailForm = styled.div`
   justify-content: center;
   align-items: center;
   width: 85%;
-  @media (max-width: 768px) {
-    font-size: 15px;
-    width: 90%;
+  @media (max-width: 580px) {
+    width: 100%;
   }
 `;
 
 const NoticeDetailFormTitle = styled.p`
-  font-size: 30px;
-  @media (max-width: 600px) {
-    font-size: 20px;
+  font-size: 1.6em;
+  @media (max-width: 768px) {
+    font-size: 1.2em;
+  }
+  @media (max-width: 580px) {
+    font-size: 1em;
+    padding: 0 20px;
   }
 `;
 
@@ -103,8 +106,11 @@ const NoticeDetailTitle = styled.div`
   margin: 0px 20px;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
-  @media (max-width: 768px) {
-    font-size: 15px;
+  @media (max-width: 610px) {
+    font-size: 0.8em;
+  }
+  @media (max-width: 450px) {
+    font-size: 0.6em;
   }
 `;
 
@@ -126,8 +132,11 @@ const NoticeDetailContent = styled.div`
   &:focus {
     outline: none;
   }
-  @media (max-width: 768px) {
-    font-size: 15px;
+  @media (max-width: 610px) {
+    font-size: 0.8em;
+  }
+  @media (max-width: 450px) {
+    font-size: 0.6em;
   }
 `;
 const NoticeDetailImgs = styled.div`
@@ -137,8 +146,14 @@ const NoticeDetailImgs = styled.div`
   align-items: center;
 `;
 const NoticeDetailImg = styled.img`
-  height: 100px;
+  width: 600px;
   margin: 10px 0px;
+  @media (max-width: 750px) {
+    width: 80%;
+  }
+  @media (max-width: 750px) {
+    width: 70%;
+  }
 `;
 
 const NoticeDetailBtnWrap = styled.div`
@@ -173,31 +188,3 @@ const NoticeDetailBtn = styled.button`
     margin-top: 50px;
   }
 `;
-
-const NoticeDetailUpdateBtn = styled.button`
-  border-style: none;
-  margin-top: 100px;
-  margin-left: 10px;
-  width: 100px;
-  height: 50px;
-  border-radius: 5px;
-  font-size: 20px;
-  background-color: ${({ theme }) => theme.bgColor};
-  color: ${({ theme }) => theme.fontColor};
-  font-weight: bold;
-  font-family: ${({ theme }) => theme.fontFamily};
-  cursor: pointer;
-  @media (max-width: 900px) {
-    width: 50px;
-    height: 50px;
-    font-size: 15px;
-    margin-top: 50px;
-  }
-  @media (max-width: 650px) {
-    width: 45px;
-    height: 45px;
-    font-size: 13px;
-    margin-top: 50px;
-  }
-`;
-const NoticeDetailDeleteBtn = styled(NoticeDetailUpdateBtn)``;

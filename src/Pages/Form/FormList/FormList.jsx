@@ -21,7 +21,7 @@ const FormList = () => {
   ]);
   const { FORM_LIST } = API;
   useEffect(() => {
-    axios.get(`${FORM_LIST}`).then((res) => setFormList(res.data));
+    axios.get(`${FORM_LIST}`).then((res) => setFormList(res.data.results));
   }, [FORM_LIST]);
 
   if (formList.length === 0) {
