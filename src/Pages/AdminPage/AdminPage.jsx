@@ -5,10 +5,10 @@ import AdminOrderedList from "./AdminMainContents/AdminOrderedList/AdminOrderedL
 import AdminReviews from "./AdminMainContents/AdminReview/AdminReviews";
 import AdminPageAside from "./AdminPageAside";
 import AdminFAQ from "./AdminMainContents/AdminFAQ/AdminFAQ";
-// import AdminNotice from "./AdminMainContents/NoticeList/AdminNotice";
+import AdminNotice from "./AdminMainContents/AdminNoticeList/AdminNotice";
 
 const AdminPage = () => {
-  const [asideState, setAsideState] = useState("faq");
+  const [asideState, setAsideState] = useState("notice");
   const switchStatus = (status) => {
     switch (status) {
       case "orderedList":
@@ -19,8 +19,8 @@ const AdminPage = () => {
         return <AdminProductList />;
       case "faq":
         return <AdminFAQ />;
-      // case "notice":
-      //   return <AdminNotice />;
+      case "notice":
+        return <AdminNotice />;
       default:
         return <AdminOrderedList />;
     }

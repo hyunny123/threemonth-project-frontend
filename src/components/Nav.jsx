@@ -31,7 +31,7 @@ const Nav = () => {
           </Link>
         </NavItem>
         <NavMenu>
-          <Menu onClick={() => alert("준비중인 페이지입니다")}>공지사항</Menu>
+          <Menu onClick={() => navigate("/noticelist")}>공지사항</Menu>
           <Menu
             onClick={() => {
               navigate("/formlist");

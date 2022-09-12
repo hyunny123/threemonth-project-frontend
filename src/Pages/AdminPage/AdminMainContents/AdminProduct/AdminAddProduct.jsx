@@ -53,8 +53,6 @@ const AdminAddProduct = () => {
           Authorization: `Bearer ${USER_TOKEN}`,
         },
       });
-      // .catch((error) => console.log(error.response.status))
-      // .then((res) => console.log(res));
     }
   };
   return (

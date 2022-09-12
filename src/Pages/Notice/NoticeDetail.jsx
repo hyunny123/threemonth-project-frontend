@@ -1,27 +1,61 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router";
 import styled from "styled-components";
 
-const NoticeEdit = () => {
-  const [noticeEditForm, setNoticeEditForm] = useState();
+const NoticeDetail = () => {
+  const [noticeDetailData, setNoticeDetailData] = useState({
+    id: 0,
+  });
+
+  const params = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .get(`https://threemonth.shop/announcements/notices/${params.noticeId}`)
+      .then((res) => setNoticeDetailData(res.data));
+  }, [params.noticeId]);
+
+  const { title, created_at, content, img1_url, img2_url, img3_url } =
+    noticeDetailData;
 
   return (
     <NoticeDetailContainer>
       <NoticeDetailForm>
-        <NoticeDetailFormTitle>공지사항 수정페이지</NoticeDetailFormTitle>
+        <NoticeDetailFormTitle>공지사항 상세페이지</NoticeDetailFormTitle>
         <NoticeDetailInputWrapper>
-          <NoticeDetailTitle>8월 신제품 출시!</NoticeDetailTitle>
-          <NoticeDetailDate>작성일자 : 2022.08.21</NoticeDetailDate>
-          <NoticeDetailContent>신제품이 나왔어요!!!!</NoticeDetailContent>
+          <NoticeDetailTitle name="noticetitle">{title}</NoticeDetailTitle>
+
+          <NoticeDetailDate>
+            작성일자 : {String(created_at).slice(0, 10)}
+          </NoticeDetailDate>
+
+          <NoticeDetailContent name="noticeContent">
+            {content}
+          </NoticeDetailContent>
+          <NoticeDetailImgs>
+            {img1_url && <NoticeDetailImg src={img1_url} />}
+            {img2_url && <NoticeDetailImg src={img2_url} />}
+            {img3_url && <NoticeDetailImg src={img3_url} />}
+          </NoticeDetailImgs>
         </NoticeDetailInputWrapper>
         <NoticeDetailBtnWrap>
-          <NoticeDetailBtn>수정완료</NoticeDetailBtn>
+          <NoticeDetailBtn
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            목록으로
+          </NoticeDetailBtn>
         </NoticeDetailBtnWrap>
       </NoticeDetailForm>
     </NoticeDetailContainer>
   );
 };
 
-export default NoticeEdit;
+export default NoticeDetail;
+
 const NoticeDetailContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -37,16 +71,19 @@ const NoticeDetailForm = styled.div`
   justify-content: center;
   align-items: center;
   width: 85%;
-  @media (max-width: 768px) {
-    font-size: 15px;
-    width: 90%;
+  @media (max-width: 580px) {
+    width: 100%;
   }
 `;
 
 const NoticeDetailFormTitle = styled.p`
-  font-size: 30px;
-  @media (max-width: 600px) {
-    font-size: 20px;
+  font-size: 1.6em;
+  @media (max-width: 768px) {
+    font-size: 1.2em;
+  }
+  @media (max-width: 580px) {
+    font-size: 1em;
+    padding: 0 20px;
   }
 `;
 
@@ -69,8 +106,11 @@ const NoticeDetailTitle = styled.div`
   margin: 0px 20px;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
-  @media (max-width: 768px) {
-    font-size: 15px;
+  @media (max-width: 610px) {
+    font-size: 0.8em;
+  }
+  @media (max-width: 450px) {
+    font-size: 0.6em;
   }
 `;
 
@@ -79,7 +119,7 @@ const NoticeDetailDate = styled(NoticeDetailTitle)`
   height: 60%;
 `;
 
-const NoticeDetailContent = styled.textarea`
+const NoticeDetailContent = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -92,8 +132,27 @@ const NoticeDetailContent = styled.textarea`
   &:focus {
     outline: none;
   }
-  @media (max-width: 768px) {
-    font-size: 15px;
+  @media (max-width: 610px) {
+    font-size: 0.8em;
+  }
+  @media (max-width: 450px) {
+    font-size: 0.6em;
+  }
+`;
+const NoticeDetailImgs = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+const NoticeDetailImg = styled.img`
+  width: 600px;
+  margin: 10px 0px;
+  @media (max-width: 750px) {
+    width: 80%;
+  }
+  @media (max-width: 750px) {
+    width: 70%;
   }
 `;
 

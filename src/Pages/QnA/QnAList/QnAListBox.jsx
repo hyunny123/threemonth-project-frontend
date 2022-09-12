@@ -18,7 +18,6 @@ const QnAListBox = () => {
   useEffect(() => {
     axios
       .get(`${QNA_LIST}`)
-      // .get("/data/data.json")
       .catch((error) => {
         const { response } = error;
         if (response.status === 403) {

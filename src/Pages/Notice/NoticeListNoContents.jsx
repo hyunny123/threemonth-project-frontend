@@ -1,35 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { useLocation, useNavigate } from "react-router";
-
-const noticeData = [
-  {
-    id: 1,
-    created_at: "2022-08-15",
-    title: "광복절날은 정상운영합니다.",
-    description: "안녕하세요 뜨리먼뜨입니다.",
-    // img_src: "이미지주소",
-  },
-  {
-    id: 2,
-    created_at: "2022-08-16",
-    title: "New Event",
-    description: "안녕하세요 뜨리먼뜨입니다.",
-    // img_src: "이미지주소",
-  },
-  {
-    id: 3,
-    created_at: "2022-08-17",
-    title: "내일까지 계속 됩니다.",
-    description: "안녕하세요 뜨리먼뜨입니다.",
-    // img_src: "이미지주소",
-  },
-];
 
 const NoticeListNoContents = () => {
-  const navigate = useNavigate();
-
-  // const { pathname } = useLocation();
   return (
     <NoticeListBoxContainer>
       <ListBox>
@@ -60,7 +32,7 @@ const NoticeListBoxContainer = styled.div`
 `;
 
 const ListBox = styled.div`
-  width: 100%;
+  width: 85%;
   min-height: 400px;
   border-radius: 20px;
 `;

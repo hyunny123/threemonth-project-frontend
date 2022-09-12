@@ -35,13 +35,13 @@ const AdminPageAside = ({ setAsideState }) => {
       >
         FAQ
       </AdminAsideState>
-      {/* <AdminAsideState
+      <AdminAsideState
         onClick={() => {
           ChangeAdminState("notice");
         }}
       >
         공지사항 관리
-      </AdminAsideState> */}
+      </AdminAsideState>
     </AdminPageAsideContainer>
   );
 };

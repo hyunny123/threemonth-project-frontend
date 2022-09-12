@@ -47,7 +47,7 @@ const MyReviewInput = () => {
     formData.append("order", location.state.selectedId);
 
     axios
-      .post(`http://15.164.163.31:8001/orders/reviews`, formData, {
+      .post(`https://threemonth.shop/orders/reviews`, formData, {
         headers: {
           Authorization: `Bearer ${USER_TOKEN}`,
         },
