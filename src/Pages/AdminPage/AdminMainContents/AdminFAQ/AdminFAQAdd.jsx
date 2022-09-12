@@ -14,6 +14,7 @@ const AdminFAQAdd = ({
     const { name, value } = e.target;
     setAddFAQContents({ ...addFAQContents, [name]: value });
   };
+
   const postAddFAQ = () => {
     axios
       .post(

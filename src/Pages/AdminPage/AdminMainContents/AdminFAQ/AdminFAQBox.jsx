@@ -1,8 +1,11 @@
+import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
+import { API, USER_TOKEN } from "../../../../config";
 
 const AdminFAQBox = ({ adminFAQList }) => {
+  const { FAQ_LIST } = API;
   const navigate = useNavigate();
   const { id, question, answer, created_at } = adminFAQList;
   const AdminFAQQuestionHTML = () => {
@@ -27,7 +30,23 @@ const AdminFAQBox = ({ adminFAQList }) => {
           navigate(`/admin/faqEdit/${id}`);
         }}
       />
-      <i className="fa-solid fa-trash-can" />
+      <i
+        onClick={() => {
+          axios
+            .delete(`${FAQ_LIST}/${id}`, {
+              headers: {
+                Authorization: `Bearer ${USER_TOKEN}`,
+                "Content-Type": "application/json",
+              },
+            })
+            .catch((error) => alert(`${error.response.status}`))
+            .then((res) => {
+              alert(`${res.status}, 삭제되었습니다.`);
+              window.location.reload();
+            });
+        }}
+        className="fa-solid fa-trash-can"
+      />
     </>
   );
 };

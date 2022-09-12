@@ -2,19 +2,22 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import styled from "styled-components";
-import { USER_TOKEN } from "../../../../config";
+import { API, USER_TOKEN } from "../../../../config";
 
 const AdminFAQEdit = () => {
+  const { FAQ_LIST } = API;
   const navigate = useNavigate();
   const { faqEditId } = useParams();
-  const [faqEditInit, setFAQEditInit] = useState({
-    answer: "",
+
+  const [editFAQContents, setEditFAQContents] = useState({
     question: "",
+    answer: "",
   });
-  const [editFAQContents, setEditFAQContents] = useState(faqEditInit);
   useEffect(() => {
-    axios.get(`${faqEditId}`).then((res) => setFAQEditInit(res.data));
-  }, [faqEditId]);
+    axios
+      .get(`${FAQ_LIST}/${faqEditId}`)
+      .then((res) => setEditFAQContents(res.data));
+  }, [faqEditId, FAQ_LIST]);
   const EditFAQHandle = (e) => {
     const { name, value } = e.target;
     setEditFAQContents({ ...editFAQContents, [name]: value });
@@ -22,7 +25,7 @@ const AdminFAQEdit = () => {
   const postEditFAQ = () => {
     axios
       .patch(
-        ``,
+        `${FAQ_LIST}/${faqEditId}`,
         { ...editFAQContents },
         {
           headers: {
@@ -39,22 +42,28 @@ const AdminFAQEdit = () => {
       <AdminFAQEditWidth>
         <AdminFAQEditQuestion
           placeholder="질문을 입력해 주세요"
-          name="editQuestion"
-          value={faqEditInit.question}
+          name="question"
+          value={editFAQContents.question}
           onChange={EditFAQHandle}
           required
         />
         <AdminFAQEditAnswer
           placeholder="답변을 입력해 주세요"
-          name="editAnswer"
-          value={faqEditInit.answer}
+          name="answer"
+          value={editFAQContents.answer}
           onChange={EditFAQHandle}
           required
           wrap="hard"
           cols="20"
           rows="20"
         />
-        <EditFAQPOSTBtn onClick={postEditFAQ}>수정하기</EditFAQPOSTBtn>
+        <EditFAQPOSTBtn
+          onClick={() => {
+            postEditFAQ();
+          }}
+        >
+          수정하기
+        </EditFAQPOSTBtn>
       </AdminFAQEditWidth>
     </AdminFAQEditWrap>
   );

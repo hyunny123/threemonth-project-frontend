@@ -16,7 +16,9 @@ const AdminOrderedList = () => {
   const { FORM_LIST } = API;
   useEffect(() => {
     axios
-      .get(`${FORM_LIST}?fields=id,customer_name,type,title,created_at`)
+      .get(
+        `${FORM_LIST}?fields=id,customer_name,type,title,created_at&no_pagination=True`
+      )
       .catch((error) => alert(error.response.status))
       .then((res) => setOrderedList(res.data));
   }, [FORM_LIST]);
