@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
@@ -86,37 +87,43 @@ const PackageInputForm = () => {
     is_packaging &&
     additional_explanation;
 
+  const submitPackageData = {
+    title,
+    customer_name,
+    contact,
+    delivery_date,
+    purpose,
+    delivery_location,
+    orderedproducts,
+    is_packaging,
+    additional_explanation,
+    type: "package",
+  };
+
   const packageFormRequest = (e) => {
     e.preventDefault();
     if (checkValueData) {
       if (countDays > 2) {
         if (orderedproducts.length > 1) {
           if (window.confirm(`${inputConfirmCheck}`)) {
-            fetch(`${POST_INPUT_FORM}`, {
-              method: "POST",
-              headers: {
-                Authorization: `Bearer ${USER_TOKEN}`,
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                title,
-                customer_name,
-                contact,
-                delivery_date,
-                purpose,
-                delivery_location,
-                orderedproducts,
-                is_packaging,
-                additional_explanation,
-                type: "package",
-              }),
-            }).then((res) => {
-              if (res.status === 201) {
-                navigate("/formlist");
-              } else {
-                alert("다시 시도해 주세요. 문제가 지속될 경우 연락바랍니다.");
-              }
-            });
+            axios
+              .post(
+                `${POST_INPUT_FORM}`,
+                { ...submitPackageData },
+                {
+                  headers: {
+                    Authorization: `Bearer ${USER_TOKEN}`,
+                    "Content-Type": "application/json",
+                  },
+                }
+              )
+              .then((res) => {
+                if (res.status === 201) {
+                  navigate("/formlist");
+                } else {
+                  alert("다시 시도해 주세요. 문제가 지속될 경우 연락바랍니다.");
+                }
+              });
           }
         } else {
           alert("최소 2개 이상 선택해 주세요.");

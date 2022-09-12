@@ -31,7 +31,7 @@ const Nav = () => {
           </Link>
         </NavItem>
         <NavMenu>
-          <Menu onClick={() => alert("준비중인 페이지입니다")}>공지사항</Menu>
+          <Menu onClick={() => navigate("/noticelist")}>공지사항</Menu>
           <Menu
             onClick={() => {
               navigate("/formlist");
@@ -39,11 +39,9 @@ const Nav = () => {
           >
             주문서 목록
           </Menu>
-          <Menu onClick={() => alert("준비중인 페이지입니다")}>QnA</Menu>
+          <Menu onClick={() => navigate("/qnalist")}>QnA</Menu>
           {USER_TOKEN ? (
-            <Menu onClick={() => alert(`${myPageNotice}`)}>
-              {USER_NICKNAME}님
-            </Menu>
+            <Menu onClick={() => navigate("/mypage")}>{USER_NICKNAME}님</Menu>
           ) : (
             <Menu
               onClick={() => {
