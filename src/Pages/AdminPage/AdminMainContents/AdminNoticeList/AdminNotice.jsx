@@ -4,7 +4,6 @@ import styled from "styled-components";
 import axios from "axios";
 
 import AdminNoticeListBox from "./AdminNoticeListBox";
-import AdminNoticeDetailBox from "./AdminNoticeDetailBox";
 import AdminNoticeInput from "./AdminNoticeInput";
 
 const AdminNotice = () => {

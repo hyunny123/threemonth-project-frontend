@@ -45,6 +45,10 @@ const AdminNoticeInput = () => {
       reader.readAsDataURL(files);
     }
   };
+  const deletePreviewImgs = () => {
+    setImgValue([]);
+    setPrevImg([]);
+  };
 
   const noticeSubmitBtn = (e) => {
     e.preventDefault();
@@ -104,6 +108,7 @@ const AdminNoticeInput = () => {
           <NoticeInputFileBtn htmlFor="imageinput">
             파일 선택하기
           </NoticeInputFileBtn>
+          <button onClick={deletePreviewImgs}>삭제</button>
         </InputWrapper>
 
         <NoticeInputBtnWrapper>
