@@ -58,8 +58,8 @@ const AdminNoticeEdit = () => {
 
     const fetchAPI =
       imgValue === []
-        ? `https://threemonth.shop/announcements/notices/${noticeId}?img_delete=[img1,img2,img3]`
-        : `https://threemonth.shop/announcements/notices/${noticeId}`;
+        ? `https://threemonths.shop/announcements/notices/${noticeId}?img_delete=[img1,img2,img3]`
+        : `https://threemonths.shop/announcements/notices/${noticeId}`;
     axios
       .patch(`${fetchAPI}`, formData, {
         headers: {

@@ -11,10 +11,10 @@ const AdminReviews = () => {
   if (adminCakeReview === "") <Loading />;
   useEffect(() => {
     axios
-      .get("https://threemonth.shop/orders/reviews?type=cake")
+      .get("https://threemonths.shop/orders/reviews?type=cake")
       .then((res) => setAdminCakeReview(res.data));
     axios
-      .get("https://threemonth.shop/orders/reviews?type=package")
+      .get("https://threemonths.shop/orders/reviews?type=package")
       .then((res) => setAdminGiftReview(res.data));
   }, []);
   return (

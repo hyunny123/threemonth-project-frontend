@@ -2,8 +2,10 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 import styled from "styled-components";
+import { API } from "../../config";
 
 const NoticeDetail = () => {
+  const { NOTICE_GET } = API;
   const [noticeDetailData, setNoticeDetailData] = useState({
     id: 0,
   });
@@ -13,7 +15,7 @@ const NoticeDetail = () => {
 
   useEffect(() => {
     axios
-      .get(`https://threemonth.shop/announcements/notices/${params.noticeId}`)
+      .get(`${NOTICE_GET}/${params.noticeId}`)
       .then((res) => setNoticeDetailData(res.data));
   }, [params.noticeId]);
 

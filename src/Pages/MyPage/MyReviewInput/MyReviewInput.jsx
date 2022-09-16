@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import styled from "styled-components";
 import axios from "axios";
-import { USER_TOKEN } from "../../../config";
+import { API, USER_TOKEN } from "../../../config";
 
 const MyReviewInput = () => {
+  const { REVIEW_EDIT } = API;
   const [uploadDataForm, setUploadDataForm] = useState({
     content: "",
   });
@@ -47,7 +48,7 @@ const MyReviewInput = () => {
     formData.append("order", location.state.selectedId);
 
     axios
-      .post(`https://threemonth.shop/orders/reviews`, formData, {
+      .post(`${REVIEW_EDIT}`, formData, {
         headers: {
           Authorization: `Bearer ${USER_TOKEN}`,
         },

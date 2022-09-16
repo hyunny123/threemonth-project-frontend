@@ -11,7 +11,7 @@ const NoticeListNoContents = () => {
           <MenuDate>작성일</MenuDate>
         </NoticeBoxListMenu>
         <NoNoticeContentWrapper>
-          <NoNoticeContent>신청내역이 없습니다.</NoNoticeContent>
+          <NoNoticeContent>공지사항이 없습니다.</NoNoticeContent>
         </NoNoticeContentWrapper>
       </ListBox>
     </NoticeListBoxContainer>

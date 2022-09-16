@@ -48,7 +48,7 @@ const AdminNoticeListBox = ({ adminNoticeData }) => {
                     if (window.confirm("삭제하시겠습니까?")) {
                       axios
                         .delete(
-                          `https://threemonth.shop/announcements/notices/${list.id}`,
+                          `https://threemonths.shop/announcements/notices/${list.id}`,
                           {
                             headers: {
                               Authorization: `Bearer ${USER_TOKEN}`,

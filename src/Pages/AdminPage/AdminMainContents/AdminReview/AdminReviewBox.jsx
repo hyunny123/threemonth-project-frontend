@@ -8,7 +8,7 @@ const AdminReviewBox = ({ props }) => {
     if (window.confirm("정말 정말 삭제하시겠습니까?")) {
       if (window.confirm("정말 정말 정말 정말 삭제하시겠습니까?")) {
         axios
-          .delete(`https://threemonth.shop/orders/reviews/${id}`, {
+          .delete(`https://threemonths.shop/orders/reviews/${id}`, {
             headers: {
               Authorization: `Bearer ${USER_TOKEN}`,
               "Content-Type": "application/json",

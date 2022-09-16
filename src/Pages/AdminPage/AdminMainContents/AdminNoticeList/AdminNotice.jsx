@@ -17,7 +17,7 @@ const AdminNotice = () => {
 
   useEffect(() => {
     axios
-      .get(`https://threemonth.shop/announcements/notices`)
+      .get(`https://threemonths.shop/announcements/notices`)
       .catch((error) => error(error.message))
       .then((res) => setAdminNoticeData(res.data));
   }, []);

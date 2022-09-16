@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { USER_TOKEN } from "../../config";
+import { API, USER_TOKEN } from "../../config";
 import styled from "styled-components";
 
 import MyOrderList from "./MyOrderList/MyOrderList";
@@ -8,6 +8,7 @@ import MyReviewList from "./MyReviewList/MyReviewList";
 import MyOrderReview from "./MyOrderReview/MyOrderReview";
 
 const MyPage = () => {
+  const { MY_ORDER_LIST, MY_REVIEWABLE_LIST, MY_REVIEW_LIST } = API;
   const [orderList, setOrderList] = useState([
     {
       id: 0,
@@ -34,7 +35,7 @@ const MyPage = () => {
 
   useEffect(() => {
     axios
-      .get(`https://threemonth.shop/orders/userorders?all=True`, {
+      .get(`${MY_ORDER_LIST}`, {
         headers: {
           Authorization: `Bearer ${USER_TOKEN}`,
           "Content-Type": "application/json",
@@ -42,7 +43,7 @@ const MyPage = () => {
       })
       .then((res) => setOrderList(res.data));
     axios
-      .get(`https://threemonth.shop/orders/userorders`, {
+      .get(`${MY_REVIEWABLE_LIST}`, {
         headers: {
           Authorization: `Bearer ${USER_TOKEN}`,
           "Content-Type": "application/json",
@@ -50,7 +51,7 @@ const MyPage = () => {
       })
       .then((res) => setOrderReviewList(res.data));
     axios
-      .get(`https://threemonth.shop/orders/reviews?user_review=True`, {
+      .get(`${MY_REVIEW_LIST}`, {
         headers: {
           Authorization: `Bearer ${USER_TOKEN}`,
           "Content-Type": "application/json",

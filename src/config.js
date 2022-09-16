@@ -1,4 +1,4 @@
-const BASE_URL = "https://threemonth.shop";
+const BASE_URL = "https://threemonths.shop";
 
 export const USER_TOKEN = localStorage.getItem("token");
 export const USER_NICKNAME = localStorage.getItem("nickname");
@@ -44,4 +44,13 @@ export const API = {
 
   // GET Package Review
   GET_PACKAGE_REVIEW: `${BASE_URL}/orders/reviews?type=package`,
+
+  // My Page
+  MY_ORDER_LIST: `${BASE_URL}/orders/userorders?all=True`,
+  MY_REVIEWABLE_LIST: `${BASE_URL}/orders/userorders`,
+  MY_REVIEW_LIST: `${BASE_URL}/orders/reviews?user_review=True`,
+
+  REVIEW_EDIT: `${BASE_URL}/orders/reviews`,
+
+  NOTICE_GET: `${BASE_URL}/announcements/notices`,
 };

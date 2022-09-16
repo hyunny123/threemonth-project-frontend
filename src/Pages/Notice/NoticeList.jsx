@@ -4,8 +4,10 @@ import axios from "axios";
 import Loading from "../../components/Loading";
 import NoticeListNoContents from "./NoticeListNoContents";
 import NoticeListBox from "./NoticeListBox";
+import { API } from "../../config";
 
 const NoticeList = () => {
+  const { NOTICE_GET } = API;
   const [noticeFormList, setNoticeFormList] = useState([
     {
       id: 0,
@@ -16,9 +18,7 @@ const NoticeList = () => {
   ]);
 
   useEffect(() => {
-    axios
-      .get(`https://threemonth.shop/announcements/notices`)
-      .then((res) => setNoticeFormList(res.data));
+    axios.get(`${NOTICE_GET}`).then((res) => setNoticeFormList(res.data));
   }, []);
 
   if (noticeFormList.length === 0) {

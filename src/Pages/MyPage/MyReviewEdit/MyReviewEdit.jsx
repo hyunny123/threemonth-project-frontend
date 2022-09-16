@@ -3,9 +3,10 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 import styled from "styled-components";
-import { USER_TOKEN } from "../../../config";
+import { API, USER_TOKEN } from "../../../config";
 
 const MyReviewEdit = () => {
+  const { REVIEW_EDIT } = API;
   const navigate = useNavigate();
   const { reviewId } = useParams();
   const [reviewEditData, setReviewEditData] = useState({
@@ -19,7 +20,7 @@ const MyReviewEdit = () => {
 
   useEffect(() => {
     axios
-      .get(`https://threemonth.shop/orders/reviews/${reviewId}`)
+      .get(`${REVIEW_EDIT}/${reviewId}`)
       .then((res) => setReviewEditData(res.data));
   }, [reviewId]);
   const uploadEditFile = (e) => {
@@ -49,8 +50,8 @@ const MyReviewEdit = () => {
     };
     const imgURL = img_url ? existURL() : noURL();
     const patchAPI = imgURL.get("img_delete")
-      ? `https://threemonth.shop/orders/reviews/${reviewId}?img_delete=[img]`
-      : `https://threemonth.shop/orders/reviews/${reviewId}`;
+      ? `${REVIEW_EDIT}/${reviewId}?img_delete=[img]`
+      : `${REVIEW_EDIT}/${reviewId}`;
     axios
       .patch(`${patchAPI}`, imgURL, {
         headers: {

@@ -1,11 +1,12 @@
 import React from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { USER_TOKEN } from "../../../config";
+import { API, USER_TOKEN } from "../../../config";
 import ReviewListNoContents from "./ReviewListNoContents";
 import { useNavigate } from "react-router";
 
 const MyReviewList = ({ reviewList }) => {
+  const { REVIEW_EDIT } = API;
   const navigate = useNavigate();
   if (reviewList.length === 0) {
     return <ReviewListNoContents />;
@@ -55,15 +56,12 @@ const MyReviewList = ({ reviewList }) => {
                       onClick={() => {
                         if (window.confirm("삭제하시겠습니까?")) {
                           axios
-                            .delete(
-                              `https://threemonth.shop/orders/reviews/${list.id}`,
-                              {
-                                headers: {
-                                  Authorization: `Bearer ${USER_TOKEN}`,
-                                  "Content-Type": "application/json",
-                                },
-                              }
-                            )
+                            .delete(`${REVIEW_EDIT}/${list.id}`, {
+                              headers: {
+                                Authorization: `Bearer ${USER_TOKEN}`,
+                                "Content-Type": "application/json",
+                              },
+                            })
                             .then((res) => {
                               if (res.status === 204) {
                                 window.location.reload();

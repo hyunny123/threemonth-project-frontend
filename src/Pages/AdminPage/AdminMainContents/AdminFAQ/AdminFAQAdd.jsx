@@ -18,7 +18,7 @@ const AdminFAQAdd = ({
   const postAddFAQ = () => {
     axios
       .post(
-        "https://threemonth.shop/announcements/FAQ",
+        "https://threemonths.shop/announcements/FAQ",
         {
           answer: addFAQContents.addAnswer,
           question: addFAQContents.addQuestion,

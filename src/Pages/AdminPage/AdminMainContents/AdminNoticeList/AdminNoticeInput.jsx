@@ -57,7 +57,7 @@ const AdminNoticeInput = () => {
     formData.append("content", uploadData.content);
 
     axios
-      .post(`https://threemonth.shop/announcements/notices`, formData, {
+      .post(`https://threemonths.shop/announcements/notices`, formData, {
         headers: {
           Authorization: `Bearer ${USER_TOKEN}`,
           "Content-Type": "application/json",
