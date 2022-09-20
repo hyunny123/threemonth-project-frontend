@@ -49,13 +49,17 @@ const MainCarousel = () => {
 export default MainCarousel;
 
 const Container = styled.div`
-  padding-bottom: 10px;
+  /* padding-bottom: 10px; */
+  display: flex;
+  justify-content: center;
+  /* background-color: ${({ theme }) => theme.bgColor}; */
 `;
 
 const CarouselBox = styled.div`
   position: relative;
-  width: 100%;
+  width: 80%;
   height: 600px;
+
   @media screen and (max-width: 2650px) {
     height: 1000px;
   }
@@ -76,6 +80,7 @@ const CarouselBox = styled.div`
   }
   @media screen and (max-width: 515px) {
     height: 400px;
+    width: 100%;
   }
   @media screen and (max-width: 400px) {
     height: 350px;

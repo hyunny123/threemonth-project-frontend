@@ -49,7 +49,7 @@ const GridMain = ({ gridData }, props) => {
         <GridImgBox3>
           <ImgItem3 src={madedesfilter.img_src} />
 
-          <TitleItem classes={classes}>All Handmade </TitleItem>
+          <TitleItem classes={classes} />
         </GridImgBox3>
         <GridImgBox4 onClick={goToCakeList}>
           <ImgItem4 src={cakedesfilter.img_src} />
@@ -66,6 +66,8 @@ export default GridMain;
 const GridContainer = styled.div`
   width: 80%;
   margin: 0 auto;
+  letter-spacing: 0.05em;
+
   @media screen and (max-width: 768px) {
     width: 90%;
   }
@@ -73,21 +75,22 @@ const GridContainer = styled.div`
 
 const GridTitle = styled.h2`
   margin-bottom: 30px;
+  margin-top: 100px;
   font-size: 2.5em;
   line-height: 1.2;
   color: ${({ theme }) => theme.fontColor};
   border-bottom: 3px solid ${({ theme }) => theme.fontColor};
   @media screen and (max-width: 1400px) {
     font-size: 1.7em;
-    margin-top: 30px;
+    margin-top: 70px;
   }
   @media screen and (max-width: 750px) {
     font-size: 1.5em;
-    margin-top: 30px;
+    margin-top: 70px;
   }
   @media screen and (max-width: 500px) {
     font-size: 1em;
-    margin-top: 30px;
+    margin-top: 70px;
   }
 `;
 
@@ -136,7 +139,7 @@ const TitleItem = styled.h3`
   /* color: ${({ classes, theme }) =>
     classes === "true" ? "white" : theme.fontColor}; */
   color: ${({ theme }) => theme.fontColor};
-  text-shadow: 3px 3px 7px RGB(51, 18, 17);
+  /* text-shadow: 3px 3px 7px RGB(51, 18, 17); */
   @media screen and (max-width: 2560px) {
     font-size: 25px;
     color: ${({ theme, packages }) =>

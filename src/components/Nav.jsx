@@ -69,6 +69,7 @@ const NavContainer = styled.nav`
   width: 100%;
   height: 110px;
   margin: 0 auto;
+  letter-spacing: 0.05em;
   background-color: ${({ theme }) => theme.bgColor};
 `;
 

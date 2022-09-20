@@ -1,4 +1,4 @@
-const BASE_URL = "http://threemonths.shop:8001";
+const BASE_URL = "https://threemonth.shop";
 
 export const USER_TOKEN = localStorage.getItem("token");
 export const USER_NICKNAME = localStorage.getItem("nickname");
@@ -34,4 +34,14 @@ export const API = {
 
   //formlist
   FORM_LIST: `${BASE_URL}/orders/`,
+
+  //qnaList
+  QNA_LIST: `${BASE_URL}/announcements/QnA`,
+  FAQ_LIST: `${BASE_URL}/announcements/FAQ`,
+
+  // GET Cake Review
+  GET_CAKE_REVIEW: `${BASE_URL}/orders/reviews?type=cake`,
+
+  // GET Package Review
+  GET_PACKAGE_REVIEW: `${BASE_URL}/orders/reviews?type=package`,
 };
