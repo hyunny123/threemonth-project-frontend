@@ -12,6 +12,11 @@ const FAQ = ({ faqList }) => {
     newSortedList[productIdx].is_open = !newSortedList[productIdx].is_open;
     setFaqOpen(newSortedList);
   };
+  const FAQContent = (value) => {
+    return {
+      __html: value.replace(/\n/g, "<br>\n"),
+    };
+  };
   return (
     <FAQWrap>
       <FAQWidth>
@@ -25,7 +30,12 @@ const FAQ = ({ faqList }) => {
             >
               Q: {x.question}
             </FAQQuestion>
-            {x.is_open && <FAQAnswer>A: {x.answer}</FAQAnswer>}
+            {x.is_open && (
+              <FAQAnswer>
+                A:
+                <div dangerouslySetInnerHTML={FAQContent(x.answer)} />
+              </FAQAnswer>
+            )}
           </FAQMap>
         ))}
       </FAQWidth>
