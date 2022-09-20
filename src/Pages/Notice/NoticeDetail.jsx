@@ -8,34 +8,41 @@ const NoticeDetail = () => {
   const { NOTICE_GET } = API;
   const [noticeDetailData, setNoticeDetailData] = useState({
     id: 0,
+    content: "",
   });
 
   const params = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get(`${NOTICE_GET}/${params.noticeId}`)
-      .then((res) => setNoticeDetailData(res.data));
-  }, [params.noticeId]);
+    axios.get(`${NOTICE_GET}/${params.noticeId}`).then((res) => {
+      setNoticeDetailData(res.data);
+    });
+  }, [NOTICE_GET, params.noticeId]);
 
   const { title, created_at, content, img1_url, img2_url, img3_url } =
     noticeDetailData;
+
+  const noticeInnerHTML = (value) => {
+    return {
+      __html: value.replace(/\n/g, "<br>\n"),
+    };
+  };
 
   return (
     <NoticeDetailContainer>
       <NoticeDetailForm>
         <NoticeDetailFormTitle>공지사항 상세페이지</NoticeDetailFormTitle>
         <NoticeDetailInputWrapper>
-          <NoticeDetailTitle name="noticetitle">{title}</NoticeDetailTitle>
+          <NoticeDetailTitle>{title}</NoticeDetailTitle>
 
           <NoticeDetailDate>
             작성일자 : {String(created_at).slice(0, 10)}
           </NoticeDetailDate>
-
-          <NoticeDetailContent name="noticeContent">
-            {content}
-          </NoticeDetailContent>
+          {/* <NoticeDetailTitle>{content}</NoticeDetailTitle> */}
+          <NoticeDetailContent
+            dangerouslySetInnerHTML={noticeInnerHTML(content)}
+          />
           <NoticeDetailImgs>
             {img1_url && <NoticeDetailImg src={img1_url} />}
             {img2_url && <NoticeDetailImg src={img2_url} />}

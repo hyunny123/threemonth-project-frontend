@@ -53,4 +53,7 @@ export const API = {
   REVIEW_EDIT: `${BASE_URL}/orders/reviews`,
 
   NOTICE_GET: `${BASE_URL}/announcements/notices`,
+
+  //admin Notice
+  ADMIN_NOTICE: `${BASE_URL}/announcements/notices`,
 };

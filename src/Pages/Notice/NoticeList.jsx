@@ -19,7 +19,7 @@ const NoticeList = () => {
 
   useEffect(() => {
     axios.get(`${NOTICE_GET}`).then((res) => setNoticeFormList(res.data));
-  }, []);
+  }, [NOTICE_GET]);
 
   if (noticeFormList.length === 0) {
     return <NoticeListNoContents />;
@@ -61,6 +61,9 @@ const NoticeFormListContainer = styled.div`
 const NoticeFormList = styled.div`
   margin: 80px 0;
   width: 85%;
+  @media (max-width: 580px) {
+    width: 100%;
+  }
 `;
 
 const NoticFormTitle = styled.p`

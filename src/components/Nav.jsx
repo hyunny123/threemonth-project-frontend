@@ -18,10 +18,6 @@ const Nav = () => {
     localStorage.removeItem("prevpath");
     window.location.reload();
   };
-
-  const myPageNotice =
-    "마이페이지는 현재 준비중에 있습니다. 신청하신 폼은 Form 탭 내부 리스트에서 확인하실 수 있습니다.";
-
   return (
     <NavContainer>
       <Wrapper>

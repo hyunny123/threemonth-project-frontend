@@ -1,11 +1,12 @@
 import axios from "axios";
 import React from "react";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
-import { USER_TOKEN } from "../../../../config";
+import { USER_TOKEN, API } from "../../../../config";
 
 const AdminNoticeListBox = ({ adminNoticeData }) => {
   const navigate = useNavigate();
+  const { ADMIN_NOTICE } = API;
 
   return (
     <NoticeListBoxContainer>
@@ -47,14 +48,11 @@ const AdminNoticeListBox = ({ adminNoticeData }) => {
                   onClick={() => {
                     if (window.confirm("삭제하시겠습니까?")) {
                       axios
-                        .delete(
-                          `https://threemonths.shop/announcements/notices/${list.id}`,
-                          {
-                            headers: {
-                              Authorization: `Bearer ${USER_TOKEN}`,
-                            },
-                          }
-                        )
+                        .delete(`${ADMIN_NOTICE}/${list.id}`, {
+                          headers: {
+                            Authorization: `Bearer ${USER_TOKEN}`,
+                          },
+                        })
                         .then((res) => {
                           if (res.status === 204) {
                             window.location.reload();

@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
 import styled from "styled-components";
-import { USER_TOKEN } from "../../../../config";
+import { USER_TOKEN, API } from "../../../../config";
 
 const AdminNoticeEdit = () => {
   const location = useLocation();
@@ -11,6 +11,7 @@ const AdminNoticeEdit = () => {
 
   const navigate = useNavigate();
   const { noticeId } = useParams();
+  const { ADMIN_NOTICE } = API;
 
   const [imgValue, setImgValue] = useState([]);
   const [prevImg, setPrevImg] = useState([]);
@@ -58,8 +59,8 @@ const AdminNoticeEdit = () => {
 
     const fetchAPI =
       imgValue === []
-        ? `https://threemonths.shop/announcements/notices/${noticeId}?img_delete=[img1,img2,img3]`
-        : `https://threemonths.shop/announcements/notices/${noticeId}`;
+        ? `${ADMIN_NOTICE}/${noticeId}?img_delete=[img1,img2,img3]`
+        : `${ADMIN_NOTICE}/${noticeId}`;
     axios
       .patch(`${fetchAPI}`, formData, {
         headers: {
