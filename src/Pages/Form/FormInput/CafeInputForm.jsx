@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
@@ -26,10 +27,12 @@ const CafeInputForm = () => {
     },
   ]);
   useEffect(() => {
-    fetch(`${CAFE_INPUT_GET}`)
-      .then((res) => res.json())
-      .then((data) => [...data].filter((x) => x.id !== 14))
-      .then((data) => setProductList(data));
+    axios.get(`${CAFE_INPUT_GET}`).then((res) => {
+      if (res.status === 200) {
+        const { data } = res;
+        setProductList([...data].filter((x) => x.id !== 14));
+      }
+    });
   }, [CAFE_INPUT_GET]);
 
   const {
@@ -41,7 +44,6 @@ const CafeInputForm = () => {
     cafe_location,
     product_explanation,
     additional_explanation,
-    type,
     contact,
   } = cafeForm;
 
@@ -52,51 +54,55 @@ const CafeInputForm = () => {
       [name]: value,
     });
   };
+  const checkValueData =
+    title &&
+    cafename &&
+    corporate_registration_num &&
+    cafe_owner_name &&
+    customer_name &&
+    cafe_location &&
+    product_explanation &&
+    additional_explanation &&
+    contact;
 
+  const SubmitCafeData = {
+    title,
+    cafename,
+    contact,
+    corporate_registration_num,
+    cafe_owner_name,
+    customer_name,
+    cafe_location,
+    product_explanation,
+    additional_explanation,
+    type: "cafe",
+  };
+  const { POST_INPUT_FORM } = API;
   const inputConfirmCheck =
     "컨펌 과정을 거치게 될 경우 수정이 불가합니다. 신청하시겠습니까?";
   const cafeFormRequest = (e) => {
     e.preventDefault();
-    const checkValueData =
-      title &&
-      cafename &&
-      corporate_registration_num &&
-      cafe_owner_name &&
-      customer_name &&
-      cafe_location &&
-      product_explanation &&
-      additional_explanation &&
-      type &&
-      contact;
-
     if (checkValueData) {
       if (window.confirm(`${inputConfirmCheck}`)) {
-        fetch("http://15.164.163.31:8001/orders/", {
-          method: "post",
-          headers: {
-            Authorization: `Bearer ${USER_TOKEN}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            title,
-            cafename,
-            contact,
-            corporate_registration_num,
-            cafe_owner_name,
-            customer_name,
-            cafe_location,
-            product_explanation,
-            additional_explanation,
-            type,
-          }),
-        }).then((res) => {
-          if (res.status === 201) {
-            alert("신청이 완료되었습니다.");
-            navigate("/formlist");
-          } else {
-            alert("다시 시도해 주세요. 문제가 지속될 경우 연락바랍니다.");
-          }
-        });
+        axios
+          .post(
+            `${POST_INPUT_FORM}`,
+            { ...SubmitCafeData },
+            {
+              headers: {
+                Authorization: `Bearer ${USER_TOKEN}`,
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then((res) => {
+            if (res.status === 201) {
+              alert("신청이 완료되었습니다.");
+              navigate("/formlist");
+            } else {
+              alert("다시 시도해 주세요. 문제가 지속될 경우 연락바랍니다.");
+            }
+          });
       }
     } else {
       alert("빈칸을 확인해 주세요");

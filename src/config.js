@@ -44,4 +44,13 @@ export const API = {
 
   // GET Package Review
   GET_PACKAGE_REVIEW: `${BASE_URL}/orders/reviews?type=package`,
+
+  // My Page
+  MY_ORDER_LIST: `${BASE_URL}/orders/userorders?all=True`,
+  MY_REVIEWABLE_LIST: `${BASE_URL}/orders/userorders`,
+  MY_REVIEW_LIST: `${BASE_URL}/orders/reviews?user_review=True`,
+
+  REVIEW_EDIT: `${BASE_URL}/orders/reviews`,
+
+  NOTICE_GET: `${BASE_URL}/announcements/notices`,
 };

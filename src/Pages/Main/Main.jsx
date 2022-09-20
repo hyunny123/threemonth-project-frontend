@@ -7,6 +7,7 @@ import MainCarousel from "./MainCarousel/MainCarousel";
 import MainGrid from "./MainGrid/MainGrid";
 import MainCakeList from "./MainCakeList/MainCakeList";
 import MainList from "./MainList/MainList";
+import axios from "axios";
 
 const Main = () => {
   const [carouselData, setCarouselData] = useState([
@@ -57,20 +58,27 @@ const Main = () => {
   ]);
 
   const { MAIN_DETAILLIST, MAIN_GRID, MAIN_CAROUSEL } = API;
-
   useEffect(() => {
-    fetch(`${MAIN_CAROUSEL}`)
-      .then((response) => response.json())
-      .then((data) => setCarouselData(data));
-    fetch(`${MAIN_GRID}`)
-      .then((response) => response.json())
-      .then((data) => setGridData(data));
-    fetch(`${MAIN_DETAILLIST}?category=cake`)
-      .then((response) => response.json())
-      .then((data) => setMainCakeList(data));
-    fetch(`${MAIN_DETAILLIST}?category=bread`)
-      .then((response) => response.json())
-      .then((data) => setMainList(data));
+    axios.get(`${MAIN_CAROUSEL}`).then((res) => {
+      if (res.status === 200) {
+        setCarouselData(res.data);
+      }
+    });
+    axios.get(`${MAIN_GRID}`).then((res) => {
+      if (res.status === 200) {
+        setGridData(res.data);
+      }
+    });
+    axios.get(`${MAIN_DETAILLIST}?category=cake`).then((res) => {
+      if (res.status === 200) {
+        setMainCakeList(res.data);
+      }
+    });
+    axios.get(`${MAIN_DETAILLIST}?category=bread`).then((res) => {
+      if (res.status === 200) {
+        setMainList(res.data);
+      }
+    });
   }, [MAIN_CAROUSEL, MAIN_GRID, MAIN_DETAILLIST]);
 
   if (mainList.id === 0) {
