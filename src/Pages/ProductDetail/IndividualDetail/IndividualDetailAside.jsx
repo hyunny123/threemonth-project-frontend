@@ -24,12 +24,17 @@ const IndividualDetailAside = ({ individualData }) => {
       }
     }
   };
+  const productDesHTML = () => {
+    return {
+      __html: description.replace(/\n/g, "<br>\n"),
+    };
+  };
 
   return (
     <IndividualDetailAsideWrapper>
       <IndividualDetailAsideTop>
         <IndividualDetailAsideP>{product_name}</IndividualDetailAsideP>
-        <IndividualDetailAsideP>{description}</IndividualDetailAsideP>
+        <IndividualDetailAsideP dangerouslySetInnerHTML={productDesHTML()} />
         <IndividualDetailAsideP>
           {price.toLocaleString()}원
         </IndividualDetailAsideP>

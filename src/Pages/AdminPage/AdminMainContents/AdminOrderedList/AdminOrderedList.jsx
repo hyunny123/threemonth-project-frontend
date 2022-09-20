@@ -20,11 +20,25 @@ const AdminOrderedList = () => {
         `${FORM_LIST}?fields=id,customer_name,type,title,created_at&no_pagination=True`
       )
       .catch((error) => alert(error.response.status))
-      .then((res) => setOrderedList(res.data));
+      .then((res) => {
+        if (res.data.length > 0) {
+          setOrderedList(res.data);
+        } else {
+          setOrderedList([
+            {
+              id: 0,
+              type: "nolist",
+              title: "",
+            },
+          ]);
+        }
+      });
   }, [FORM_LIST]);
 
-  if (orderedList[0].id === 0) {
+  if (orderedList[0].type === "") {
     return <Loading />;
+  } else if (orderedList[0].type === "nolist") {
+    return <div>아직 등록된 주문서가 없습니다.</div>;
   }
 
   const cafeList = [...orderedList].filter((x) => x.type === "cafe");
