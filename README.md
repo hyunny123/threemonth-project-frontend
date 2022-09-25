@@ -137,24 +137,23 @@ https://github.com/tbhumblestar/threemonths_backend
 ### 이현정
 
 - 홈페이지 구현 사항
-	- 메인페이지 
-		- carousel
-		- grid를 custom props로 특정값을 내려준 후, 그 값을 가지고 media query를 사용해 반응형 사이즈 별로 폰트 컬러를 컨트롤 했다.
-		- grid의 사진을 클릭시 srollIntoView()의 메소드를 사용하여 원하는 내용이 있는 위치로 이동 구현
-		- list는 cake와 제과로 나눠 구현하였으며, image클릭시 individualpage로 이동
-		- product list는 flex-wrap을 이용하여 flex-item 요소들이 내부 로직에 의해 분할 되어 여러행에 걸쳐 배치되도록 구현
-	- 신청서 상세페이지
-		- url로의 직접적인 접근 차단
-			- useNavigate의 두번째 인자인 state를 활용하여 정해진 버튼으로 Router 이동되는 것이 아닌 url 직접 입력하여 변경시 404 Not Found Error 띄어서 뒤로 가기 유도.
-		- 수정버튼 클릭시 staff 권한을 가진 경우 아무조건 없이 수정 페이지로 이동하고, staff가 아닐시 신청서의 state를 확인 후 not_confirmed 상태가 아니라면 수정불가토록 함.
-		- 삭제버튼 클릭시 state가 not_confirmed 일시 다시한번 확인후 삭제 실행하고, 아니라면 staff 권한 확인후 신청서 상태를 상기 시키고 삭제여부를 물어보게 구현
-	- 미디어 쿼리를 이용하여 2560px 부터 320px 까지 CSS 반응형 구현
-	- AWS 구현 사항
-		- S3 버킷을 이용하여 빌드된 정적 파일을 업로드하고, Route 53을 이용하여 도메인을 구매 후 S3 버킷에 호스팅
+  - 메인페이지
+    - carousel
+    - grid를 custom props로 특정값을 내려준 후, 그 값을 가지고 media query를 사용해 반응형 사이즈 별로 폰트 컬러를 컨트롤 했다.
+    - grid의 사진을 클릭시 srollIntoView()의 메소드를 사용하여 원하는 내용이 있는 위치로 이동 구현
+    - list는 cake와 제과로 나눠 구현하였으며, image클릭시 individualpage로 이동
+    - product list는 flex-wrap을 이용하여 flex-item 요소들이 내부 로직에 의해 분할 되어 여러행에 걸쳐 배치되도록 구현
+  - 신청서 상세페이지
+    - url로의 직접적인 접근 차단
+      - useNavigate의 두번째 인자인 state를 활용하여 정해진 버튼으로 Router 이동되는 것이 아닌 url 직접 입력하여 변경시 404 Not Found Error 띄어서 뒤로 가기 유도.
+    - 수정버튼 클릭시 staff 권한을 가진 경우 아무조건 없이 수정 페이지로 이동하고, staff가 아닐시 신청서의 state를 확인 후 not_confirmed 상태가 아니라면 수정불가토록 함.
+    - 삭제버튼 클릭시 state가 not_confirmed 일시 다시한번 확인후 삭제 실행하고, 아니라면 staff 권한 확인후 신청서 상태를 상기 시키고 삭제여부를 물어보게 구현
+  - 미디어 쿼리를 이용하여 2560px 부터 320px 까지 CSS 반응형 구현
+  - AWS 구현 사항
+    - S3 버킷을 이용하여 빌드된 정적 파일을 업로드하고, Route 53을 이용하여 도메인을 구매 후 S3 버킷에 호스팅
 
 ---
 
 <br>
 <br>
 <br>
-

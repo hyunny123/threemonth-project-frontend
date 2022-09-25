@@ -18,10 +18,6 @@ const Nav = () => {
     localStorage.removeItem("prevpath");
     window.location.reload();
   };
-
-  const myPageNotice =
-    "마이페이지는 현재 준비중에 있습니다. 신청하신 폼은 Form 탭 내부 리스트에서 확인하실 수 있습니다.";
-
   return (
     <NavContainer>
       <Wrapper>
@@ -32,13 +28,13 @@ const Nav = () => {
         </NavItem>
         <NavMenu>
           <Menu onClick={() => navigate("/noticelist")}>공지사항</Menu>
-          <Menu
+          {/* <Menu
             onClick={() => {
               navigate("/formlist");
             }}
           >
             주문서 목록
-          </Menu>
+          </Menu> */}
           <Menu onClick={() => navigate("/qnalist")}>QnA</Menu>
           {USER_TOKEN ? (
             <Menu onClick={() => navigate("/mypage")}>{USER_NICKNAME}님</Menu>
@@ -67,6 +63,7 @@ const NavContainer = styled.nav`
   width: 100%;
   height: 110px;
   margin: 0 auto;
+  letter-spacing: 0.05em;
   background-color: ${({ theme }) => theme.bgColor};
 `;
 

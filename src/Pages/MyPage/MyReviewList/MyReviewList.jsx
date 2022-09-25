@@ -15,7 +15,7 @@ const MyReviewList = ({ reviewList }) => {
   return (
     <MyReviewListContainer>
       <MyReviewListWrap>
-        <MyReviewListTitle>리뷰 리스트</MyReviewListTitle>
+        <MyReviewListTitle>내가 쓴 리뷰</MyReviewListTitle>
         <MyReviewListBox>
           <ListBox>
             <ListBoxMenu>

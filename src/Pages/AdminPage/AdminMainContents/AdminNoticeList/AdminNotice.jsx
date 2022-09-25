@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import { API } from "../../../../config";
 
 import AdminNoticeListBox from "./AdminNoticeListBox";
 import AdminNoticeInput from "./AdminNoticeInput";
 
 const AdminNotice = () => {
+  const { ADMIN_NOTICE } = API;
   const [addNoticeInputOpen, setAddNoticeInputOpen] = useState(false);
   const [adminNoticeData, setAdminNoticeData] = useState([
     {
@@ -17,7 +19,7 @@ const AdminNotice = () => {
 
   useEffect(() => {
     axios
-      .get(`https://threemonths.shop/announcements/notices`)
+      .get(`${ADMIN_NOTICE}`)
       .catch((error) => error(error.message))
       .then((res) => setAdminNoticeData(res.data));
   }, []);

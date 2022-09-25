@@ -21,7 +21,7 @@ const MainCakeList = ({ mainCakeList }) => {
                 }}
                 key={idx}
               >
-                <CakeItem src={item.product_images[0].img_src} />
+                <CakeItem src={item.product_images[0].img_url} />
                 <CakeItemTitle>{item.product_name}</CakeItemTitle>
                 <CakeItemPrice>
                   {item.price && item.price.toLocaleString()}원
@@ -41,28 +41,30 @@ const MainCakeListContainer = styled.div`
   width: 80%;
   margin: 0 auto;
   padding: 20px 0px;
+  letter-spacing: 0.05em;
   @media screen and (max-width: 768px) {
     width: 90%;
   }
 `;
 
 const CakeListTitle = styled.h2`
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  margin-top: 100px;
   font-size: 2.5em;
   line-height: 1.2;
   border-bottom: 3px solid ${({ theme }) => theme.fontColor};
   color: ${({ theme }) => theme.fontColor};
   @media screen and (max-width: 1400px) {
     font-size: 1.7em;
-    margin-top: 30px;
+    margin-top: 70px;
   }
   @media screen and (max-width: 750px) {
     font-size: 1.5em;
-    margin-top: 30px;
+    margin-top: 70px;
   }
   @media screen and (max-width: 500px) {
     font-size: 1em;
-    margin-top: 30px;
+    margin-top: 70px;
   }
 `;
 
@@ -87,7 +89,7 @@ const CakeListItem = styled.li`
   margin-top: 25px;
   cursor: pointer;
   @media screen and (max-width: 400px) {
-    margin-right: 0px;
+    margin-right: 20px;
   }
 `;
 

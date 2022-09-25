@@ -8,7 +8,7 @@ const IndividualDetailMain = ({ individualData }) => {
     <IndividualDetailMainWrapper>
       {product_images.map((img, idx) => (
         <div key={idx}>
-          <ProductImg src={img.img_src} alt="image" />
+          <ProductImg src={img.img_url} alt="image" />
         </div>
       ))}
       <Origin>

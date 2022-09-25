@@ -44,7 +44,7 @@ const Footer = () => {
               <CafeFormButton onClick={cafeFormClickHandler}>
                 카페납품 제휴
               </CafeFormButton>
-              <AdminButton>Admin</AdminButton>
+              {/* <AdminButton>Admin</AdminButton> */}
             </ButtonWrapper>
           </SnsContainer>
         </FooterSns>
@@ -100,6 +100,8 @@ const Container = styled.footer`
   min-height: 270px;
   margin: 0 auto;
   padding: 30px 0px;
+  letter-spacing: 0.05em;
+
   background-color: ${({ theme }) => theme.bgColor};
   @media screen and (max-width: 768px) {
     min-height: 350px;
@@ -119,7 +121,7 @@ const Wrapper = styled.div`
   justify-content: space-evenly;
   margin: 0 auto;
   width: 85%;
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 880px) {
     flex-direction: column-reverse;
   }
 `;
@@ -207,7 +209,7 @@ const Icon = styled.img`
   cursor: pointer;
 `;
 const ButtonWrapper = styled.div`
-  @media screen and (max-width: 768px) {
+  /* @media screen and (max-width: 768px) {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -224,13 +226,13 @@ const ButtonWrapper = styled.div`
     justify-content: center;
     align-items: center;
     width: 100%;
-  }
+  } */
 `;
 
 const CafeFormButton = styled.button`
   border-style: none;
   height: 35px;
-  width: 85%;
+  width: 100%;
   font-size: 1em;
   font-family: ${({ theme }) => theme.fontFamily};
   background-color: ${({ theme }) => theme.fontColor};
@@ -238,6 +240,9 @@ const CafeFormButton = styled.button`
   border-radius: 5px;
   margin-top: 5px;
   cursor: pointer;
+  @media screen and (max-width: 950px) {
+    margin-right: 15px;
+  }
   @media screen and (max-width: 768px) {
     margin-right: 15px;
   }
@@ -248,24 +253,24 @@ const CafeFormButton = styled.button`
     font-size: 0.8em;
   }
 `;
-const AdminButton = styled.button`
-  border-style: none;
-  height: 35px;
-  width: 85%;
-  font-size: 1em;
-  font-family: ${({ theme }) => theme.fontFamily};
-  background-color: ${({ theme }) => theme.fontColor};
-  color: ${({ theme }) => theme.bgColor};
-  border-radius: 5px;
-  margin-top: 5px;
-  cursor: pointer;
-  @media screen and (max-width: 768px) {
-    margin-right: 15px;
-  }
-  @media screen and (max-width: 515px) {
-    font-size: 0.9em;
-  }
-`;
+// const AdminButton = styled.button`
+//   border-style: none;
+//   height: 35px;
+//   width: 85%;
+//   font-size: 1em;
+//   font-family: ${({ theme }) => theme.fontFamily};
+//   background-color: ${({ theme }) => theme.fontColor};
+//   color: ${({ theme }) => theme.bgColor};
+//   border-radius: 5px;
+//   margin-top: 5px;
+//   cursor: pointer;
+//   @media screen and (max-width: 768px) {
+//     margin-right: 15px;
+//   }
+//   @media screen and (max-width: 515px) {
+//     font-size: 0.9em;
+//   }
+// `;
 const IconWrapper = styled.a``;
 
 const CompanyWrapper = styled.div`

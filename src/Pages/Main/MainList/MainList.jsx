@@ -22,7 +22,7 @@ const MainList = ({ mainList }) => {
                   goToDetail(item.id);
                 }}
               >
-                <Item src={item.product_images[0].img_src} />
+                <Item src={item.product_images[0].img_url} />
                 <ItemTitle>{item.product_name}</ItemTitle>
                 <ItemPrice>
                   {item.price && item.price.toLocaleString()}원
@@ -42,27 +42,28 @@ const ListContainer = styled.div`
   width: 80%;
   margin: 0 auto;
   padding: 20px 0px;
+  letter-spacing: 0.05em;
   @media screen and (max-width: 768px) {
     width: 90%;
   }
 `;
 const ListTitle = styled.h2`
-  margin-bottom: 20px;
+  margin-bottom: 50px;
   font-size: 2.5em;
   line-height: 1.2;
   border-bottom: 3px solid ${({ theme }) => theme.fontColor};
   color: ${({ theme }) => theme.fontColor};
   @media screen and (max-width: 1400px) {
     font-size: 1.7em;
-    margin-top: 30px;
+    margin-top: 50px;
   }
   @media screen and (max-width: 750px) {
     font-size: 1.5em;
-    margin-top: 30px;
+    margin-top: 50px;
   }
   @media screen and (max-width: 500px) {
     font-size: 1em;
-    margin-top: 30px;
+    margin-top: 50px;
   }
 `;
 
@@ -73,7 +74,6 @@ const ListBox = styled.div`
   margin-top: 30px;
   margin-bottom: 20px;
   padding-bottom: 50px;
-  border-bottom: 3px solid ${({ theme }) => theme.fontColor};
   box-sizing: border-box;
 `;
 
@@ -81,6 +81,7 @@ const ListItems = styled.ul`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
   padding: 20px 0px;
   width: 100%;
   overflow: hidden;
@@ -91,7 +92,7 @@ const ListItem = styled.li`
   margin-right: 35px;
   margin-top: 25px;
   @media screen and (max-width: 400px) {
-    margin-right: 0px;
+    margin: 0 5px;
   }
 `;
 
@@ -104,7 +105,10 @@ const ItemTitle = styled.h3`
     font-size: 16px;
   }
   @media screen and (max-width: 465px) {
-    font-size: 16px;
+    font-size: 14px;
+  }
+  @media screen and (max-width: 360px) {
+    font-size: 12px;
   }
 `;
 const ItemPrice = styled.p`
@@ -114,7 +118,10 @@ const ItemPrice = styled.p`
     font-size: 16px;
   }
   @media screen and (max-width: 465px) {
-    font-size: 16px;
+    font-size: 14px;
+  }
+  @media screen and (max-width: 360px) {
+    font-size: 12px;
   }
 `;
 
@@ -147,7 +154,11 @@ const Item = styled.img`
     height: 130px;
   }
   @media screen and (max-width: 447px) {
-    width: 200px;
-    height: 150px;
+    width: 150px;
+    height: 100px;
+  }
+  @media screen and (max-width: 400px) {
+    width: 120px;
+    height: 80px;
   }
 `;

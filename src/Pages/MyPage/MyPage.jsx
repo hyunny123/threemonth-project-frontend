@@ -58,7 +58,7 @@ const MyPage = () => {
         },
       })
       .then((res) => setReviewList(res.data));
-  }, []);
+  }, [MY_ORDER_LIST, MY_REVIEWABLE_LIST, MY_REVIEW_LIST]);
 
   return (
     <MyPageContainer>

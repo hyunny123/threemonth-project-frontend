@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 import { useNavigate } from "react-router";
 import styled from "styled-components";
-import { USER_TOKEN } from "../../../../config";
+import { USER_TOKEN, API } from "../../../../config";
 
 const AdminNoticeInput = () => {
   const [uploadData, setUploadData] = useState({
@@ -13,6 +13,7 @@ const AdminNoticeInput = () => {
   const [imgValue, setImgValue] = useState([]);
   const [prevImg, setPrevImg] = useState([]);
   const navigate = useNavigate();
+  const { ADMIN_NOTICE } = API;
 
   const uploadContent = (e) => {
     const { target } = e;
@@ -57,7 +58,7 @@ const AdminNoticeInput = () => {
     formData.append("content", uploadData.content);
 
     axios
-      .post(`https://threemonths.shop/announcements/notices`, formData, {
+      .post(`${ADMIN_NOTICE}`, formData, {
         headers: {
           Authorization: `Bearer ${USER_TOKEN}`,
           "Content-Type": "application/json",

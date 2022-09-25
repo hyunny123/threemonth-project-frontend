@@ -124,8 +124,8 @@ const NoticeListContents = styled.div`
   }
   @media (max-width: 430px) {
     grid-template-columns: 1fr 3fr 2fr;
-    grid-template-rows: 20px;
-    font-size: 14px;
+    grid-template-rows: 40px;
+    font-size: 1.3em;
   }
 `;
 

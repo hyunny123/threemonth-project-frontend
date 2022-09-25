@@ -1,4 +1,4 @@
-const BASE_URL = "https://threemonths.shop";
+const BASE_URL = "https://threemonth.shop";
 
 export const USER_TOKEN = localStorage.getItem("token");
 export const USER_NICKNAME = localStorage.getItem("nickname");
@@ -53,4 +53,7 @@ export const API = {
   REVIEW_EDIT: `${BASE_URL}/orders/reviews`,
 
   NOTICE_GET: `${BASE_URL}/announcements/notices`,
+
+  //admin Notice
+  ADMIN_NOTICE: `${BASE_URL}/announcements/notices`,
 };
