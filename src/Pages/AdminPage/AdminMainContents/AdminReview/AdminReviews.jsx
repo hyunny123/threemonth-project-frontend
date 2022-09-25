@@ -2,19 +2,21 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Loading from "../../../../components/Loading";
+import { API } from "../../../../config";
 import AdminReviewBox from "./AdminReviewBox";
 
 const AdminReviews = () => {
+  const { ADMIN_ORDER_REVIEW } = API;
   const [adminCakeReview, setAdminCakeReview] = useState([]);
   const [adminGiftReview, setAdminGiftReview] = useState([]);
 
   if (adminCakeReview === "") <Loading />;
   useEffect(() => {
     axios
-      .get("https://threemonths.shop/orders/reviews?type=cake")
+      .get(`${ADMIN_ORDER_REVIEW}?type=cake`)
       .then((res) => setAdminCakeReview(res.data));
     axios
-      .get("https://threemonths.shop/orders/reviews?type=package")
+      .get(`${ADMIN_ORDER_REVIEW}?type=package`)
       .then((res) => setAdminGiftReview(res.data));
   }, []);
   return (

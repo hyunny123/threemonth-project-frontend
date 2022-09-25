@@ -54,6 +54,8 @@ export const API = {
 
   NOTICE_GET: `${BASE_URL}/announcements/notices`,
 
-  //admin Notice
+  //admin
   ADMIN_NOTICE: `${BASE_URL}/announcements/notices`,
+  ADMIN_FAQ: `${BASE_URL}/announcements/FAQ`,
+  ADMIN_ORDER_REVIEW: `${BASE_URL}/orders/reviews`,
 };
