@@ -15,7 +15,7 @@ const MyOrderList = ({ orderList }) => {
   return (
     <MyPageListContainer>
       <MyPageListWrap>
-        <MyPageListTitle>구매완료 리스트</MyPageListTitle>
+        <MyPageListTitle>주문내역</MyPageListTitle>
         <MyPageListBox>
           <ListBox>
             <ListBoxMenu>

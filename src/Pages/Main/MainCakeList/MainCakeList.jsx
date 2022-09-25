@@ -21,7 +21,7 @@ const MainCakeList = ({ mainCakeList }) => {
                 }}
                 key={idx}
               >
-                <CakeItem src={item.product_images[0].img_src} />
+                <CakeItem src={item.product_images[0].img_url} />
                 <CakeItemTitle>{item.product_name}</CakeItemTitle>
                 <CakeItemPrice>
                   {item.price && item.price.toLocaleString()}원

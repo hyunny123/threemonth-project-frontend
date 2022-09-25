@@ -131,13 +131,14 @@ const NoticeDetailDate = styled(NoticeDetailTitle)`
 const NoticeDetailContent = styled.div`
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  /* align-items: center; */
   margin: 0px 20px;
   border-style: none;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
   font-family: ${({ theme }) => theme.fontFamily};
   font-size: 17px;
+
   &:focus {
     outline: none;
   }

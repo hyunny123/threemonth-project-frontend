@@ -28,13 +28,13 @@ const Nav = () => {
         </NavItem>
         <NavMenu>
           <Menu onClick={() => navigate("/noticelist")}>공지사항</Menu>
-          <Menu
+          {/* <Menu
             onClick={() => {
               navigate("/formlist");
             }}
           >
             주문서 목록
-          </Menu>
+          </Menu> */}
           <Menu onClick={() => navigate("/qnalist")}>QnA</Menu>
           {USER_TOKEN ? (
             <Menu onClick={() => navigate("/mypage")}>{USER_NICKNAME}님</Menu>

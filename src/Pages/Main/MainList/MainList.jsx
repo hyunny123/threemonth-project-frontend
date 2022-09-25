@@ -22,7 +22,7 @@ const MainList = ({ mainList }) => {
                   goToDetail(item.id);
                 }}
               >
-                <Item src={item.product_images[0].img_src} />
+                <Item src={item.product_images[0].img_url} />
                 <ItemTitle>{item.product_name}</ItemTitle>
                 <ItemPrice>
                   {item.price && item.price.toLocaleString()}원

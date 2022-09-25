@@ -16,7 +16,7 @@ const AdminProductList = () => {
   ]);
   useEffect(() => {
     axios
-      .get(`http://15.164.163.31:8001/products/`)
+      .get(`https://threemonths.shop/products/`)
       .catch((error) => alert(`${error}`))
       .then((res) => setAdminProduct(res.data));
   }, []);

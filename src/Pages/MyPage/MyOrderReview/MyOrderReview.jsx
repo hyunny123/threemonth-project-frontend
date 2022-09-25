@@ -12,7 +12,7 @@ const MyOrderReview = ({ orderReviewList }) => {
   return (
     <MyOrderReviewContainer>
       <MyOrderReviewWrap>
-        <MyOrderReviewTitle>리뷰작성 리스트</MyOrderReviewTitle>
+        <MyOrderReviewTitle>리뷰 작성하기</MyOrderReviewTitle>
         <MyReviewListBox>
           <ListBox>
             <ListMenu>
