@@ -1,14 +1,15 @@
 import axios from "axios";
 import React from "react";
 import styled from "styled-components";
-import { USER_TOKEN } from "../../../../config";
+import { API, USER_TOKEN } from "../../../../config";
 
 const AdminReviewBox = ({ props }) => {
+  const { ADMIN_ORDER_REVIEW } = API;
   const adminDeleteReview = (id) => {
     if (window.confirm("정말 정말 삭제하시겠습니까?")) {
       if (window.confirm("정말 정말 정말 정말 삭제하시겠습니까?")) {
         axios
-          .delete(`https://threemonths.shop/orders/reviews/${id}`, {
+          .delete(`${ADMIN_ORDER_REVIEW}/${id}`, {
             headers: {
               Authorization: `Bearer ${USER_TOKEN}`,
               "Content-Type": "application/json",

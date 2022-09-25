@@ -2,10 +2,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Loading from "../../../../components/Loading";
+import { API } from "../../../../config";
 import AdminAddProduct from "./AdminAddProduct";
 import AdminProductListBox from "./AdminProductListBox";
 
 const AdminProductList = () => {
+  const { ITEM_GET } = API;
   const [addProductOpen, setAddProductOpen] = useState(false);
   const [adminProduct, setAdminProduct] = useState([
     {
@@ -16,10 +18,10 @@ const AdminProductList = () => {
   ]);
   useEffect(() => {
     axios
-      .get(`https://threemonths.shop/products/`)
+      .get(`${ITEM_GET}`)
       .catch((error) => alert(`${error}`))
       .then((res) => setAdminProduct(res.data));
-  }, []);
+  }, [ITEM_GET]);
 
   if (adminProduct[0].id === 0) {
     return <Loading />;

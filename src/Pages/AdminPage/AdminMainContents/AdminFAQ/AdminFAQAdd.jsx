@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { USER_TOKEN } from "../../../../config";
+import { API, USER_TOKEN } from "../../../../config";
 
 const AdminFAQAdd = ({
   setAdminFAQAddOpen,
@@ -9,6 +9,7 @@ const AdminFAQAdd = ({
   adminFAQList,
   setAdminFAQList,
 }) => {
+  const { ADMIN_FAQ } = API;
   const [addFAQContents, setAddFAQContents] = useState("");
   const addFAQHandle = (e) => {
     const { name, value } = e.target;
@@ -18,7 +19,7 @@ const AdminFAQAdd = ({
   const postAddFAQ = () => {
     axios
       .post(
-        "https://threemonths.shop/announcements/FAQ",
+        `${ADMIN_FAQ}`,
         {
           answer: addFAQContents.addAnswer,
           question: addFAQContents.addQuestion,
