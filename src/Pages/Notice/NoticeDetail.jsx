@@ -99,7 +99,7 @@ const NoticeDetailFormTitle = styled.p`
 const NoticeDetailInputWrapper = styled.form`
   display: grid;
   justify-content: center;
-  grid-template-rows: repeat(3, 50px);
+  grid-template-rows: repeat(3, minmax(80px, auto));
   grid-template-columns: 1fr;
   box-sizing: border-box;
   margin-top: 50px;
@@ -113,13 +113,14 @@ const NoticeDetailTitle = styled.div`
   align-items: center;
   justify-content: center;
   margin: 0px 20px;
+
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
-  font-size: 17px;
+  font-size: 1.5em;
   @media (max-width: 610px) {
-    font-size: 0.8em;
+    font-size: 0.9em;
   }
   @media (max-width: 450px) {
-    font-size: 0.6em;
+    font-size: 0.7em;
   }
 `;
 
@@ -131,7 +132,8 @@ const NoticeDetailDate = styled(NoticeDetailTitle)`
 const NoticeDetailContent = styled.div`
   display: flex;
   justify-content: flex-start;
-  /* align-items: center; */
+  align-items: center;
+  padding-bottom: 30px;
   margin: 0px 20px;
   border-style: none;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
@@ -157,7 +159,7 @@ const NoticeDetailImgs = styled.div`
 `;
 const NoticeDetailImg = styled.img`
   width: 600px;
-  margin: 10px 0px;
+  margin: 20px 0px;
   @media (max-width: 750px) {
     width: 80%;
   }
