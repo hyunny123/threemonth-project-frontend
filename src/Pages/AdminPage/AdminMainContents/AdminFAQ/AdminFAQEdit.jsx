@@ -90,7 +90,6 @@ const AdminFAQEditQuestion = styled.input`
   box-sizing: border-box;
   padding: 10px;
   border-radius: 10px;
-  font-family: ${({ theme }) => theme.fontFamily};
   width: 100%;
   &:focus {
     outline: none;
@@ -102,7 +101,6 @@ const AdminFAQEditAnswer = styled.textarea`
   padding: 10px;
   resize: none;
   border-radius: 10px;
-  font-family: ${({ theme }) => theme.fontFamily};
   width: 100%;
   &:focus {
     outline: none;
@@ -117,5 +115,4 @@ const EditFAQPOSTBtn = styled.button`
   border: 1px solid ${({ theme }) => theme.fontColor};
   background-color: ${({ theme }) => theme.bgColor};
   border-radius: 10px;
-  font-family: ${({ theme }) => theme.fontFamily};
 `;

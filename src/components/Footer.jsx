@@ -234,7 +234,6 @@ const CafeFormButton = styled.button`
   height: 35px;
   width: 100%;
   font-size: 1em;
-  font-family: ${({ theme }) => theme.fontFamily};
   background-color: ${({ theme }) => theme.fontColor};
   color: ${({ theme }) => theme.bgColor};
   border-radius: 5px;
@@ -258,7 +257,6 @@ const CafeFormButton = styled.button`
 //   height: 35px;
 //   width: 85%;
 //   font-size: 1em;
-//   font-family: ${({ theme }) => theme.fontFamily};
 //   background-color: ${({ theme }) => theme.fontColor};
 //   color: ${({ theme }) => theme.bgColor};
 //   border-radius: 5px;

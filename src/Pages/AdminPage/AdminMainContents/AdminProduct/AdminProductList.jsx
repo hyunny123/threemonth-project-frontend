@@ -84,6 +84,5 @@ const AdminAddProductBtn = styled.button`
   border-radius: 10px;
   width: 200px;
   font-size: 18px;
-  font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;
 `;

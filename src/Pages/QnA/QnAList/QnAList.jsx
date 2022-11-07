@@ -135,7 +135,6 @@ const QnABtn = styled.button`
   font-size: 17px;
   margin-left: 20px;
   background-color: ${({ theme }) => theme.bgColor};
-  font-family: ${({ theme }) => theme.fontFamily};
   border: 1px solid ${({ theme }) => theme.fontColor};
   color: ${({ theme }) => theme.fontColor};
   cursor: pointer;

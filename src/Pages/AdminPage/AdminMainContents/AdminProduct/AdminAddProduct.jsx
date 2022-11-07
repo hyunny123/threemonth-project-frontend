@@ -114,16 +114,12 @@ const AdminAddProductName = styled.input.attrs((props) => ({
   border-style: none;
   border: 1px solid black;
   width: 400px;
-  font-family: ${({ theme }) => theme.fontFamily};
   box-sizing: border-box;
   padding: 10px;
   margin: 10px 0;
   border-radius: 10px;
   &:focus {
     outline: none;
-  }
-  &::placeholder {
-    font-family: ${({ theme }) => theme.fontFamily};
   }
 `;
 const AdminAddProductPrice = styled.input.attrs((props) => ({
@@ -135,16 +131,12 @@ const AdminAddProductPrice = styled.input.attrs((props) => ({
   border-style: none;
   border: 1px solid black;
   width: 200px;
-  font-family: ${({ theme }) => theme.fontFamily};
   box-sizing: border-box;
   padding: 10px;
   margin: 10px 0;
   border-radius: 10px;
   &:focus {
     outline: none;
-  }
-  &::placeholder {
-    font-family: ${({ theme }) => theme.fontFamily};
   }
 `;
 const AdminAddProductInfo = styled.textarea.attrs((props) => ({
@@ -157,16 +149,12 @@ const AdminAddProductInfo = styled.textarea.attrs((props) => ({
   border-style: none;
   border: 1px solid black;
   resize: none;
-  font-family: ${({ theme }) => theme.fontFamily};
   box-sizing: border-box;
   padding: 10px;
   margin: 10px 0;
   border-radius: 10px;
   &:focus {
     outline: none;
-  }
-  &::placeholder {
-    font-family: ${({ theme }) => theme.fontFamily};
   }
 `;
 const AdminAddProductImgs = styled.input.attrs((props) => ({
@@ -191,7 +179,6 @@ const AdminAddProductInputImgBtn = styled.label`
   background-color: ${({ theme }) => theme.bgColor};
   border: 2px solid ${({ theme }) => theme.fontColor};
   color: ${({ theme }) => theme.fontColor};
-  font-family: ${({ theme }) => theme.fontFamily};
 `;
 const AdminAddProductPrevImgWrap = styled.div`
   display: flex;
@@ -211,6 +198,5 @@ const AdminAddProductPostBtn = styled.button`
   border-radius: 10px;
   width: 200px;
   font-size: 18px;
-  font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;
 `;

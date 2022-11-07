@@ -75,7 +75,6 @@ const AdminFAQAddQuestion = styled.input`
   padding-left: 15px;
   height: 50px;
   border-radius: 10px;
-  font-family: ${({ theme }) => theme.fontFamily};
   &:focus {
     outline: none;
   }
@@ -86,7 +85,6 @@ const AdminFAQAddAnswer = styled.textarea`
   padding: 10px;
   resize: none;
   border-radius: 10px;
-  font-family: ${({ theme }) => theme.fontFamily};
   &:focus {
     outline: none;
   }
@@ -100,5 +98,4 @@ const AddFAQPOSTBtn = styled.button`
   border-radius: 10px;
   width: 200px;
   font-size: 18px;
-  font-family: ${({ theme }) => theme.fontFamily};
 `;

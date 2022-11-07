@@ -280,7 +280,6 @@ const CafeFormBtn = styled.button`
   background-color: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
-  font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;
   @media (max-width: 900px) {
     width: 100px;
@@ -306,7 +305,6 @@ const CafeFormUpdateBtn = styled.button`
   background-color: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
-  font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;
   @media (max-width: 900px) {
     width: 50px;

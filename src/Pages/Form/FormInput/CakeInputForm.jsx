@@ -262,7 +262,6 @@ const CakeFormNameInput = styled.input.attrs((props) => ({
   border-style: none;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
-  font-family: ${({ theme }) => theme.fontFamily};
   &:focus {
     outline: none;
   }
@@ -328,7 +327,6 @@ const CakeFormRemarkInput = styled.textarea.attrs((props) => ({
   rows: 1;
   font-size: 17px;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
-  font-family: ${({ theme }) => theme.fontFamily};
   &:focus {
     outline: none;
   }
@@ -369,7 +367,6 @@ const CakeFormBtn = styled.button`
   background-color: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
-  font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;
   @media (max-width: 600px) {
     width: 150px;
