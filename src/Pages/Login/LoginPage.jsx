@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useLocation, useNavigate } from "react-router";
 import { LOGIN_URI } from "./AuthData";
+import LoginSignIn from "./LoginSignIn";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -23,9 +24,10 @@ const LoginPage = () => {
             <LoginPageKakaoBtn />
           </a>
         </LoginPageKakaoWrapper>
-        <LoginPageNotion>
+        {/* <LoginPageNotion>
           현재는 카카오 로그인만을 지원합니다. <br /> 추후 추가될 예정입니다.
-        </LoginPageNotion>
+        </LoginPageNotion> */}
+        <LoginSignIn />
       </LoginPageWidth>
     </LoginPageWrapper>
   );
@@ -69,3 +71,5 @@ const LoginPageNotion = styled.p`
   margin-top: 50px;
   text-align: center;
 `;
+
+const LoginPageContainer = styled.div``;
