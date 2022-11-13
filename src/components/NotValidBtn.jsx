@@ -42,7 +42,6 @@ const NotValidButton = styled.button`
   height: 100px;
   background-color: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
-  font-family: ${({ theme }) => theme.fontFamily};
   font-size: 20px;
   border-radius: 5px;
   margin-top: 20px;

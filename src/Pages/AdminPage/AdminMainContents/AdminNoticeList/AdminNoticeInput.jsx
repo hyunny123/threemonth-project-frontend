@@ -132,7 +132,6 @@ const NoticeInputTitle = styled.h2`
   text-align: center;
   margin: 50px 0;
   font-size: 30px;
-  font-family: ${({ theme }) => theme.fontFamily};
   color: ${({ theme }) => theme.fontColor};
 `;
 
@@ -148,7 +147,6 @@ const InputTitle = styled.input`
   padding-left: 20px;
   box-sizing: border-box;
   border: 1px solid #cccccc;
-  font-family: ${({ theme }) => theme.fontFamily};
   color: ${({ theme }) => theme.fontColor};
   font-size: 1.2em;
   &:focus {
@@ -170,7 +168,6 @@ const InputContent = styled.textarea`
   box-sizing: border-box;
   padding: 10px 20px;
   font-size: 1.2em;
-  font-family: ${({ theme }) => theme.fontFamily};
   color: ${({ theme }) => theme.fontColor};
   &:focus {
     outline: none;
@@ -191,7 +188,6 @@ const NoticeInputFileBtn = styled.label`
   background-color: ${({ theme }) => theme.bgColor};
   border: 2px solid ${({ theme }) => theme.fontColor};
   color: ${({ theme }) => theme.fontColor};
-  font-family: ${({ theme }) => theme.fontFamily};
 `;
 
 const PreviewImg = styled.img`
@@ -217,7 +213,6 @@ const NoticeInputBtn = styled.button`
   background-color: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
-  font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;
   @media (max-width: 900px) {
     width: 100px;

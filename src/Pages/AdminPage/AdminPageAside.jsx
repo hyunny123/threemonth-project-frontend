@@ -62,7 +62,6 @@ const AdminAsideState = styled.button`
   background-color: transparent;
   border-bottom: 1px solid black;
   font-size: 20px;
-  font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;
   &:focus {
     background-color: ${({ theme }) => theme.bgColor};

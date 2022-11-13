@@ -107,7 +107,6 @@ const DetailIndividualReservBtn = styled.button`
   width: 70%;
   border-radius: 5px;
   font-size: 18px;
-  font-family: ${({ theme }) => theme.fontFamily};
   color: ${({ theme }) => theme.fontColor};
   border: 1px solid ${({ theme }) => theme.fontColor};
   background-color: ${({ theme }) => theme.bgColor};
@@ -133,7 +132,6 @@ const DetailCommentWrap = styled.div`
   width: 85%;
   min-height: 100px;
   background-color: #deb17a;
-  font-family: ${({ theme }) => theme.fontFamily};
 `;
 const DetailCommentTitle = styled.p`
   font-size: 30px;

@@ -26,10 +26,12 @@ import MyReviewEdit from "./Pages/MyPage/MyReviewEdit/MyReviewEdit";
 import AdminFAQEdit from "./Pages/AdminPage/AdminMainContents/AdminFAQ/AdminFAQEdit";
 import AdminProductEdit from "./Pages/AdminPage/AdminMainContents/AdminProduct/AdminProductEdit";
 import AdminNoticeEdit from "./Pages/AdminPage/AdminMainContents/AdminNoticeList/AdminNoticeEdit";
+import GlobalStyles from "./styles/GlobalStyles";
 
 function Router() {
   return (
     <BrowserRouter>
+      <GlobalStyles />
       <Nav />
       <Routes>
         <Route path="/" element={<Main />} />

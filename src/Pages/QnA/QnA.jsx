@@ -211,7 +211,6 @@ const QnADetailEditBtn = styled.button`
   border-radius: 10px;
   cursor: pointer;
   background-color: ${({ theme }) => theme.bgColor};
-  font-family: ${({ theme }) => theme.fontFamily};
   &:nth-child(2) {
     margin-left: 20px;
   }
@@ -231,7 +230,6 @@ const QnACommentWrap = styled.div`
   border-radius: 10px;
   min-height: 100px;
   background-color: ${({ theme }) => theme.bgColor};
-  font-family: ${({ theme }) => theme.fontFamily};
 `;
 const QnACommentInputWrap = styled.div`
   display: grid;
@@ -259,7 +257,6 @@ const QnACommentInput = styled.input`
   &:focus {
     outline: none;
   }
-  font-family: ${({ theme }) => theme.fontFamily};
   @media (max-width: 500px) {
     font-size: 12px;
   }
@@ -273,7 +270,6 @@ const PostCommentBtn = styled.button`
   background-color: ${({ theme }) => theme.bgColor};
   border: 2px solid ${({ theme }) => theme.fontColor};
   color: ${({ theme }) => theme.fontColor};
-  font-family: ${({ theme }) => theme.fontFamily};
   @media (max-width: 700px) {
     font-size: 13px;
   }

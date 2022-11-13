@@ -106,7 +106,6 @@ const NoticeListContents = styled.div`
   padding: 10px 10px;
   background-color: #fff;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
-  font-family: ${({ theme }) => theme.fontFamily};
   font-size: 1em;
   @media (max-width: 768px) {
     grid-template-columns: 1fr 5fr 1fr;

@@ -124,7 +124,6 @@ const DetailCommentWrap = styled.div`
   width: 85%;
   min-height: 100px;
   background-color: #deb17a;
-  font-family: ${({ theme }) => theme.fontFamily};
 `;
 const DetailCommentTitle = styled.p`
   font-size: 30px;
