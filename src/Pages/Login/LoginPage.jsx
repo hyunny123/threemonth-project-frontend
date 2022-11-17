@@ -18,16 +18,19 @@ const LoginPage = () => {
   return (
     <LoginPageWrapper>
       <LoginPageWidth>
-        <LoginPageKakaoWrapper>
-          <LoginPageKakaoTitle>카카오 로그인</LoginPageKakaoTitle>
-          <a href={LOGIN_URI}>
-            <LoginPageKakaoBtn />
-          </a>
-        </LoginPageKakaoWrapper>
         {/* <LoginPageNotion>
           현재는 카카오 로그인만을 지원합니다. <br /> 추후 추가될 예정입니다.
         </LoginPageNotion> */}
         <LoginSignIn />
+        <LoginSocailWrappr>
+          <LoginPageSocialTitle>소셜 로그인</LoginPageSocialTitle>
+          <LoginPageKakaoWrapper>
+            <LoginPageKakaoTitle>카카오 로그인</LoginPageKakaoTitle>
+            <a href={LOGIN_URI}>
+              <LoginPageKakaoBtn />
+            </a>
+          </LoginPageKakaoWrapper>
+        </LoginSocailWrappr>
       </LoginPageWidth>
     </LoginPageWrapper>
   );
@@ -49,6 +52,9 @@ const LoginPageWidth = styled.div`
   align-items: center;
   width: 700px;
   min-height: 500px;
+  margin: 100px auto;
+  background: #f1e6d1;
+  padding: 50px 20px;
 `;
 
 const LoginPageKakaoWrapper = styled.div`
@@ -56,13 +62,26 @@ const LoginPageKakaoWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 20px 160px;
+  margin: 20px;
 `;
+
+const LoginSocailWrappr = styled.div`
+  /* margin-top: 20px; */
+`;
+const LoginPageSocialTitle = styled.h1`
+  font-size: 2rem;
+  font-weight: 600;
+  /* margin-bottom: 0.5rem; */
+  margin: rem;
+`;
+
 const LoginPageKakaoTitle = styled.p``;
 const LoginPageKakaoBtn = styled.img.attrs((props) => ({
   src: "/images/kakao_login_medium.png",
   alt: "카카오 로그인 버튼",
 }))`
-  margin-top: 10px;
+  margin-top: 20px;
 `;
 
 const LoginPageNotion = styled.p`
@@ -71,5 +90,3 @@ const LoginPageNotion = styled.p`
   margin-top: 50px;
   text-align: center;
 `;
-
-const LoginPageContainer = styled.div``;

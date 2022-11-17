@@ -1,8 +1,10 @@
 import React from "react";
+import { useLocation, useNavigate } from "react-router";
 import styled from "styled-components";
 import { Mail, Lock } from "tabler-icons-react";
 
 const LoginSignIn = () => {
+  const navigate = useNavigate();
   return (
     <LoginCardContainer>
       <LoginCard>
@@ -41,10 +43,26 @@ const LoginSignIn = () => {
                 아이디 저장
               </RememberCheckBoxLabel>
             </FormCheckBox>
-            <FormFindPassword>비밀번호 찾기</FormFindPassword>
+            <FormFindPassword
+              onClick={() => {
+                navigate("signuppage");
+              }}
+            >
+              비밀번호 찾기
+            </FormFindPassword>
           </FormItemOther>
           <FormSubmitBtn>로그인</FormSubmitBtn>
         </LoginCardForm>
+        <LoginCardSignUp>
+          <LoginCardSignUpSub>아직 가입하지시 않으셨나요?</LoginCardSignUpSub>
+          <LoginCardSignUpTag
+            onClick={() => {
+              navigate("/signuppage");
+            }}
+          >
+            회원가입
+          </LoginCardSignUpTag>
+        </LoginCardSignUp>
       </LoginCard>
     </LoginCardContainer>
   );
@@ -152,3 +170,16 @@ const FormSubmitBtn = styled.button`
   letter-spacing: 2px;
   transition: background 0.5s;
 `;
+
+const LoginCardSignUp = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 30px;
+`;
+
+const LoginCardSignUpTag = styled.div`
+  cursor: pointer;
+`;
+
+const LoginCardSignUpSub = styled.div``;
