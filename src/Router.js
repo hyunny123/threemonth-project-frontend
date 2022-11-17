@@ -26,6 +26,7 @@ import MyReviewEdit from "./Pages/MyPage/MyReviewEdit/MyReviewEdit";
 import AdminFAQEdit from "./Pages/AdminPage/AdminMainContents/AdminFAQ/AdminFAQEdit";
 import AdminProductEdit from "./Pages/AdminPage/AdminMainContents/AdminProduct/AdminProductEdit";
 import AdminNoticeEdit from "./Pages/AdminPage/AdminMainContents/AdminNoticeList/AdminNoticeEdit";
+import LoginSignUp from "./Pages/Login/LoginSignUp";
 
 function Router() {
   return (
@@ -40,6 +41,7 @@ function Router() {
         />
         <Route path="/kakaologin" element={<LoginKakao />} />
         <Route path="/loginpage" element={<LoginPage />} />
+        <Route path="signuppage" element={<LoginSignUp />} />
         <Route path="/formlist" element={<FormList />} />
         <Route path="/reserveform" element={<ReserveForm />} />
         <Route path="/formdetail/:formId" element={<FormDetail />} />
