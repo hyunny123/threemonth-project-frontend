@@ -7,7 +7,6 @@ import IndividualDetail from "./Pages/ProductDetail/IndividualDetail/IndividualD
 import LoginKakao from "./Pages/Login/LoginKakao";
 import FormList from "./Pages/Form/FormList/FormList";
 import FormDetail from "./Pages/Form/FormDetail/FormDetail";
-import AdminPage from "./Pages/AdminPage/AdminPage";
 import Footer from "./components/Footer";
 import FormEdit from "./Pages/Form/FormEdit/FormEdit";
 import ReserveForm from "./Pages/Form/FormInput/ReserveForm";
@@ -23,9 +22,6 @@ import NoticeList from "./Pages/Notice/NoticeList";
 import MyPage from "./Pages/MyPage/MyPage";
 import MyReviewInput from "./Pages/MyPage/MyReviewInput/MyReviewInput";
 import MyReviewEdit from "./Pages/MyPage/MyReviewEdit/MyReviewEdit";
-import AdminFAQEdit from "./Pages/AdminPage/AdminMainContents/AdminFAQ/AdminFAQEdit";
-import AdminProductEdit from "./Pages/AdminPage/AdminMainContents/AdminProduct/AdminProductEdit";
-import AdminNoticeEdit from "./Pages/AdminPage/AdminMainContents/AdminNoticeList/AdminNoticeEdit";
 import LoginSignUp from "./Pages/Login/LoginSignUp";
 
 function Router() {
@@ -45,16 +41,6 @@ function Router() {
         <Route path="/formlist" element={<FormList />} />
         <Route path="/reserveform" element={<ReserveForm />} />
         <Route path="/formdetail/:formId" element={<FormDetail />} />
-        <Route path="/admin" element={<AdminPage />} />
-        <Route path="/admin/faqEdit/:faqEditId" element={<AdminFAQEdit />} />
-        <Route
-          path="/admin/noticeEdit/:noticeId"
-          element={<AdminNoticeEdit />}
-        />
-        <Route
-          path="/admin/productEdit/:productId"
-          element={<AdminProductEdit />}
-        />
         <Route path="/formdetail/:formId/edit" element={<FormEdit />} />
         <Route path="/terms" element={<HomePageTerms />} />
         <Route path="/privacy" element={<Privacy />} />
