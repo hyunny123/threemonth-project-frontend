@@ -124,7 +124,6 @@ const ListBoxContents = styled.div`
   grid-template-columns: 0.5fr 3fr 1fr 1fr 1fr;
   width: 100%;
   background-color: white;
-  font-family: ${({ theme }) => theme.fontFamily};
   border-bottom: 1px solid ${(props) => props.theme.bgColor};
   font-size: 1em;
   cursor: pointer;

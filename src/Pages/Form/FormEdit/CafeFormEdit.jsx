@@ -316,7 +316,7 @@ const CafeFormCafeNameInput = styled.input.attrs((props) => ({
   border-style: none;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
-  font-family: ${({ theme }) => theme.fontFamily};
+
   &:focus {
     outline: none;
   }
@@ -325,7 +325,6 @@ const CafeFormCafeNameInput = styled.input.attrs((props) => ({
   }
 
   &::placeholder {
-    font-family: ${({ theme }) => theme.fontFamily};
   }
 `;
 
@@ -407,12 +406,11 @@ const CafeFormDescriptionInput = styled.textarea`
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
   resize: none;
-  font-family: ${({ theme }) => theme.fontFamily};
+
   &:focus {
     outline: none;
   }
   &::placeholder {
-    font-family: ${({ theme }) => theme.fontFamily};
   }
   @media (max-width: 600px) {
     font-size: 13px;
@@ -444,7 +442,6 @@ const CafeFormBtn = styled.button`
   background-color: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
-  font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;
   @media (max-width: 600px) {
     width: 150px;

@@ -140,7 +140,6 @@ const QnaTitleEditInput = styled.input`
   height: 40px;
   margin-bottom: 20px;
   font-size: 1.2em;
-  font-family: ${({ theme }) => theme.fontFamily};
   &:focus {
     outline: none;
   }
@@ -158,7 +157,6 @@ const QnaContentEditInput = styled.textarea`
   box-sizing: border-box;
   padding: 10px 20px;
   font-size: 1.2em;
-  font-family: ${({ theme }) => theme.fontFamily};
   &:focus {
     outline: none;
   }
@@ -177,7 +175,6 @@ const QnAEditSubmitBtn = styled.button`
   margin-top: 30px;
   background-color: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
-  font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;
   @media (max-width: 600px) {
     width: 150px;

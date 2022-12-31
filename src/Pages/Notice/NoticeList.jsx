@@ -61,8 +61,14 @@ const NoticeFormListContainer = styled.div`
 const NoticeFormList = styled.div`
   margin: 80px 0;
   width: 85%;
+  min-height: 400px;
+  @media (max-width: 2400px) {
+    width: 85%;
+    min-height: 470px;
+  }
   @media (max-width: 580px) {
     width: 100%;
+    min-height: 350px;
   }
 `;
 

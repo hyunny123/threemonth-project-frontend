@@ -106,7 +106,6 @@ const DetailIndividualReservBtn = styled.button`
   width: 70%;
   border-radius: 5px;
   font-size: 18px;
-  font-family: ${({ theme }) => theme.fontFamily};
   color: ${({ theme }) => theme.fontColor};
   border: 1px solid ${({ theme }) => theme.fontColor};
   background-color: ${({ theme }) => theme.bgColor};

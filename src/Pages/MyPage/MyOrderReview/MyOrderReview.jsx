@@ -159,7 +159,6 @@ const OrderReviewWrapper = styled.div`
   grid-template-columns: 1fr 5fr 1fr;
   width: 100%;
   background-color: white;
-  font-family: ${({ theme }) => theme.fontFamily};
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 1em;
   box-sizing: border-box;
@@ -247,7 +246,6 @@ const OrderReviewBtn = styled.button`
   color: ${({ theme }) => theme.fontColor};
   width: 80px;
   height: 40px;
-  font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;
 
   @media (max-width: 768px) {

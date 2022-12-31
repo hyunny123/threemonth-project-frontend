@@ -138,7 +138,6 @@ const NoticeDetailContent = styled.div`
   border-style: none;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
-  font-family: ${({ theme }) => theme.fontFamily};
   font-size: 17px;
 
   &:focus {
@@ -185,7 +184,6 @@ const NoticeDetailBtn = styled.button`
   background-color: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
-  font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;
   @media (max-width: 900px) {
     width: 100px;

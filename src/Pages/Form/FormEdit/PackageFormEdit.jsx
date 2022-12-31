@@ -364,7 +364,7 @@ const PackageEditFormNameInput = styled.input.attrs((props) => ({
   border-style: none;
   border-bottom: 1px solid ${({ theme }) => theme.bgColor};
   font-size: 17px;
-  font-family: ${({ theme }) => theme.fontFamily};
+
   &:focus {
     outline: none;
   }
@@ -372,7 +372,6 @@ const PackageEditFormNameInput = styled.input.attrs((props) => ({
     font-size: 15px;
   }
   &::placeholder {
-    font-family: ${({ theme }) => theme.fontFamily};
   }
   @media (max-width: 600px) {
     font-size: 13px;
@@ -436,7 +435,6 @@ const PackageEditFormDescriptionDiv = styled.div`
   resize: none;
   padding: 20px 0;
   box-sizing: border-box;
-  font-family: ${({ theme }) => theme.fontFamily};
   @media (max-width: 768px) {
     font-size: 15px;
   }
@@ -480,7 +478,6 @@ const PackageEditFormRemarkInput = styled.textarea.attrs((props) => ({
   border-bottom: ${({ theme }) => theme.bgColor};
   font-size: 17px;
   resize: none;
-  font-family: ${({ theme }) => theme.fontFamily};
   &:focus {
     outline: none;
   }
@@ -501,7 +498,6 @@ const PackageEditFormBtn = styled.button`
   background-color: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
-  font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;
   @media (max-width: 600px) {
     width: 150px;
@@ -529,7 +525,6 @@ const PackageFormBtn = styled.button`
   background-color: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
   font-weight: bold;
-  font-family: ${({ theme }) => theme.fontFamily};
   cursor: pointer;
   @media (max-width: 600px) {
     width: 150px;

@@ -23,10 +23,12 @@ import MyPage from "./Pages/MyPage/MyPage";
 import MyReviewInput from "./Pages/MyPage/MyReviewInput/MyReviewInput";
 import MyReviewEdit from "./Pages/MyPage/MyReviewEdit/MyReviewEdit";
 import LoginSignUp from "./Pages/Login/LoginSignUp";
+import GlobalStyles from "./styles/GlobalStyles";
 
 function Router() {
   return (
     <BrowserRouter>
+      <GlobalStyles />
       <Nav />
       <Routes>
         <Route path="/" element={<Main />} />

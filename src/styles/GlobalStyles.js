@@ -20,6 +20,9 @@ const GlobalStyles = createGlobalStyle`
     body {
       font-family: 'GangwonEdu_OTFBoldA';
     }
+    button,input,textarea,label{
+      font-family: 'GangwonEdu_OTFBoldA';
+    }
 `;
 
 export default GlobalStyles;

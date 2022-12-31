@@ -147,7 +147,6 @@ const ReviewInputContainer = styled.div`
   width: 100%;
   min-height: 350px;
   background-color: ${({ theme }) => theme.bgColor};
-  font-family: ${({ theme }) => theme.fontFamily};
 `;
 const ReviewInputWrap = styled.div`
   display: grid;
@@ -177,7 +176,6 @@ const ReviewInputContent = styled.input`
   &:focus {
     outline: none;
   }
-  font-family: ${({ theme }) => theme.fontFamily};
   @media (max-width: 1010px) {
     font-size: 0.8em;
   }
@@ -206,7 +204,6 @@ const ReviewInputFileBtnContent = styled.label`
   background-color: ${({ theme }) => theme.bgColor};
   border: 2px solid ${({ theme }) => theme.fontColor};
   color: ${({ theme }) => theme.fontColor};
-  font-family: ${({ theme }) => theme.fontFamily};
   @media (max-width: 900px) {
     font-size: 0.8em;
   }
@@ -238,7 +235,6 @@ const PreveiwImgDelBtn = styled.button`
   background-color: ${({ theme }) => theme.bgColor};
   border: 2px solid ${({ theme }) => theme.fontColor};
   color: ${({ theme }) => theme.fontColor};
-  font-family: ${({ theme }) => theme.fontFamily};
   @media (max-width: 900px) {
     font-size: 0.8em;
   }
@@ -256,7 +252,6 @@ const ReviewInputFileBtn = styled.button`
   background-color: ${({ theme }) => theme.bgColor};
   border: 2px solid ${({ theme }) => theme.fontColor};
   color: ${({ theme }) => theme.fontColor};
-  font-family: ${({ theme }) => theme.fontFamily};
 
   @media (max-width: 1010px) {
     font-size: 0.8em;

@@ -1,4 +1,4 @@
-const BASE_URL = "https://threemonth.shop";
+const BASE_URL = "https://threemonths.shop";
 
 export const USER_TOKEN = localStorage.getItem("token");
 export const USER_NICKNAME = localStorage.getItem("nickname");
