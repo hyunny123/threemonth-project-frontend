@@ -10,6 +10,29 @@
   (실제 서비스 중인 웹 페이지 입니다.)
 
 ---
+## 0.1 프로젝트 영상
+<div align="center">
+
+  |카카오로그인|
+  |:-:|
+  |<img witdh=1000 src="https://github.com/hyunny123/react_project/assets/99958421/91052bd1-9116-4ed3-b932-82592728f17f">|
+
+  |메인페이지|
+  |:-:|
+  |<img witdh=1000 src="https://github.com/hyunny123/react_project/assets/99958421/fba181ac-51fb-43c2-a998-8cd8b05ef6de">|
+  
+  |메인페이지 + 상세페이지|
+  |:-:|
+  |<img witdh=1000 src="https://github.com/hyunny123/react_project/assets/99958421/e4fd0968-758f-4347-a712-ce7753de951c">|
+    
+  |패키지구매|
+  |:-:|
+  |<img witdh=1000 src="https://github.com/hyunny123/react_project/assets/99958421/b10a32ef-c4ae-47d9-841e-ad22a1ee7593">|
+
+  
+</div>
+
+---
 
 <br>
 <br>
