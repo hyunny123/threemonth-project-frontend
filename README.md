@@ -24,6 +24,14 @@
   |메인페이지 + 상세페이지|
   |:-:|
   |<img witdh=1000 src="https://github.com/hyunny123/react_project/assets/99958421/e4fd0968-758f-4347-a712-ce7753de951c">|
+
+  |케이크 구매 + 마이페이지 리뷰작성 + 수정|
+  |:-:|
+  |<img witdh=1000 src="https://github.com/hyunny123/react_project/assets/99958421/19de7048-2525-4bdf-ab9e-bffaa5a1b059">|
+
+  |마이페이지 리뷰삭제|
+  |:-:|
+  |<img witdh=1000 src="https://github.com/hyunny123/react_project/assets/99958421/cf4616ad-d891-43a1-aafa-7e55690347b6">|
     
   |패키지구매|
   |:-:|
